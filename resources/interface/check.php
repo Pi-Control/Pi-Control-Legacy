@@ -1,0 +1,3 @@
+<?php
+fwrite(STDOUT, 'successful');
+?>
