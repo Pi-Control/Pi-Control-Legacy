@@ -18,7 +18,7 @@ function rpi_getHostAddr()
 	{
 		return 'unknown';
 	}
-	
+
 	if (!$ip = $_SERVER['SERVER_ADDR'])
 	{
 		return gethostbyname($this->getHostname());
@@ -27,15 +27,15 @@ function rpi_getHostAddr()
 }
 
 function rpi_getCoreTemprature()
-{	
+{
 	$file = 85000;
-	
+
 	while ($file == 85000)
 		$file = @shell_exec('cat /sys/class/thermal/thermal_zone0/temp');
-	
+
 	if ($file != false)
 		return number_format(round((trim($file)/1000), 2), 2, '.', '');
-	
+
 	return 0;
 }
 
@@ -73,9 +73,9 @@ function rpi_getCPUType()
 {
 	$file = shell_exec('cat /proc/cpuinfo');
 	preg_match('#Hardware\s*:\s*([^\s]+)#i', $file, $match);
-	
+
 	if (isset($match[1]))
-	{	
+	{
 		return $match[1];
 	}
 	return NULL;
@@ -93,11 +93,11 @@ function rpi_getCPULoad($accurate = false)
 		$file = shell_exec('top -bn2 -d 2 | grep ^%Cpu | tail -n1');
 	else
 		$file = shell_exec('top -bn1 | grep ^%Cpu | tail -n1');
-	
+
 	preg_match('#([\d\.,]+) id#i', $file, $match);
-	
+
 	if (isset($match[1]))
-	{	
+	{
 		return round(100-trim($match[1]), 0);
 	}
 	return NULL;
@@ -132,20 +132,23 @@ function rpi_getRpiRevision()
 	$revision[16] = array('revision' => '0010', 'model' => 'B+', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
 	$revision[17] = array('revision' => '0011', 'model' => 'Compute Module', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
 	$revision[18] = array('revision' => '0012', 'model' => 'A+', 'pcb' => 1, 'memory' => 256, 'manufacturer' => 'Sony');
-	
+
 	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module');
 	$revision_memory = array(0 => 256, 1 => 512, 2 => 1024);
 	$revision_manufacturer = array(0 => 'Sony', 1 => 'Egoman', 2 => 'Embest', 3 => 'Unbekannt', 4 => 'Embest');
-	
+
 	$file = shell_exec('cat /proc/cpuinfo');
 	preg_match('#\nRevision\s*:\s*([\da-f]+)#i', $file, $match);
-	
+
 	if (isset($match[1]))
 	{
+		if ($match[1][0] == '1')
+			$match[1] = substr($match[1], 1);
+
 		if (strlen($match[1]) == 4)
-		{
 			return $revision[hexdec($match[1])];
-		}
+		elseif (strlen($match[1]) == 6 && $match[1][0] != 'a')
+			return $revision[hexdec(substr($match[1], -4))];
 		elseif (strlen($match[1]) == 6)
 		{
 			return array('revision' => $match[1],
@@ -153,18 +156,6 @@ function rpi_getRpiRevision()
 						 'pcb' => hexdec(substr($match[1], 5)),
 						 'memory' => $revision_memory[bindec(substr(decbin(hexdec(substr($match[1], 0, 1))), 1))],
 						 'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
-		}
-		elseif (strlen($match[1]) == 7)
-		{
-			$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module');
-			$revision_memory = array(0 => 256, 1 => 512, 2 => 1024);
-			$revision_manufacturer = array(0 => 'Sony', 1 => 'Egoman', 2 => 'Embest', 3 => 'Unbekannt', 4 => 'Embest');
-			
-			return array('revision' => $match[1],
-						 'model' => $revision_model[hexdec(substr($match[1], 4, 2))],
-						 'pcb' => hexdec(substr($match[1], 6)),
-						 'memory' => $revision_memory[bindec(substr(decbin(hexdec(substr($match[1], 1, 1))), 1))],
-						 'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 2, 1))]);
 		}
 	}
 	
@@ -175,7 +166,7 @@ function rpi_getRpiSerial()
 {
 	$file = shell_exec('cat /proc/cpuinfo');
 	preg_match('#\nSerial\s*:\s*([\da-f]+)#i', $file, $match);
-	
+
 	return $match[1];
 }
 
@@ -188,7 +179,7 @@ function rpi_getMemorySplit()
 		$config = @shell_exec('cat /boot/config.txt');
 		preg_match('#gpu_mem=([0-9]+)#i', $config, $match);
 		$total = intval($match[1]);
-		
+
 		if ($total == 16)
 		{
 			return array('system' => '496 MiB', 'video' => '16 MiB');
@@ -207,11 +198,11 @@ function rpi_getMemorySplit()
 		}
 		return array('system' => '256 MiB', 'video' => '256 MiB');
 	}
-		
-	// 256MB		
+
+	// 256MB
 	$mem   = $this->getMemoryUsage();
 	$total = round($mem['total'] / 1024 / 1024, 0);
-	
+
 	if ($total <= 128)
 	{
 		return array('system' => '128 MiB', 'video' => '128 MiB');
@@ -232,7 +223,7 @@ function rpi_getMemoryUsage()
 	exec('free -bo', $data);
 	list($type, $total, $used, $free, $shared, $buffers, $cached) = preg_split('#\s+#', $data[1]);
 	$usage = round(($used - $buffers - $cached) / $total * 100);
-	
+
 	return array('percent' => $usage, 'total' => $total, 'free' => ($free + $buffers + $cached), 'used' => ($used - $buffers - $cached));
 }
 
@@ -241,34 +232,34 @@ function rpi_getSwapUsage()
 	exec('free -bo', $data);
 	list($type, $total, $used, $free) = preg_split('#\s+#', $data[2]);
 	$usage = round($used / $total * 100);
-	
+
 	return array('percent' => $usage, 'total' => $total, 'free' => $free, 'used' => $used);
 }
 
 /*function rpi_getSwapUsage()
 {
 	exec('/sbin/swapon -s | grep -E "[[:digit:]].+[[:digit:]]" -o | tr -s [:blank:] "|"', $data);
-	
+
 	if (!isset($data[0]))
 		return 0;
-	
+
 	list($total, $used) = preg_split('/|/', $data[0]);
 	$usage = @round($used / $total * 100);
-	
+
 	return array('percent' => $usage, 'total' => $total, 'free' => ($total - $used), 'used' => $used);
 }*/
 
 function rpi_getMemoryInfo()
 {
 	exec('df -lT | grep -vE "tmpfs|rootfs|Filesystem|Dateisystem"', $data);
-	
+
 	$devices = array();
 	$totalSize = 0;
 	$usedSize = 0;
 	foreach ($data as $row)
 	{
 		list($device, $type, $blocks, $use, $available, $used, $mountpoint) = preg_split('#[^\dA-Z/]+#i', $row);
-		
+
 		$totalSize += $blocks * 1024;
 		$usedSize  += $use * 1024;
 		$devices[] = array(
@@ -281,9 +272,9 @@ function rpi_getMemoryInfo()
 						'mountpoint' => $mountpoint
 						);
 	}
-	
+
 	$devices[] = array('total' => $totalSize, 'used' => $usedSize, 'free' => $totalSize - $usedSize, 'percent' => round(($usedSize * 100 / $totalSize), 0));
-	
+
 	return $devices;
 }
 
@@ -291,13 +282,13 @@ function rpi_getUsbDevices()
 {
 	exec('lsusb', $data);
 	$devices = array();
-	
+
 	foreach ($data as $row)
 	{
 		preg_match('#[0-9a-f]{4}:[0-9a-f]{4}\s+(.+)#i', $row, $match);
 		$devices[] = trim($match[1]);
 	}
-	
+
 	return $devices;
 }
 
@@ -319,26 +310,26 @@ function rpi_getAllUsers()
 		call_user_func_array('array_multisort', $args);
 		return array_pop($args);
 	}
-	
+
 	exec('/usr/bin/who', $dataLoggedIn);
 	exec('/usr/bin/lastlog | grep -vE "Benutzername|Username"', $dataAll);
-	
+
 	$usersLoggedIn = array();
 	$usersAll = array();
-	
+
 	foreach ($dataLoggedIn as $row)
 	{
 		$split = preg_split('/(( ){2,}|\(|\))/i', $row);
-		
+
 		$usersLoggedIn[$split[0]][] = array('port' => $split[1], 'lastLogin' => strtotime($split[2]), 'lastLoginAddress' => $split[3]);
 	}
-	
+
 	foreach ($dataAll as $row)
 	{
 		$split = preg_split('/( ){2,}/i', $row);
-		
+
 		if (count($split) == 4)
-		{			
+		{
 			$usersAll[] = array('username' => $split[0],
 							 'port' => $split[1],
 							 'lastLoginAddress' => $split[2],
@@ -355,9 +346,9 @@ function rpi_getAllUsers()
 							 'isLoggedIn' => isset($usersLoggedIn[$split[0]]) ? true : false);
 		}
 	}
-	
+
 	$usersAll = array_orderby($usersAll, 'isLoggedIn', SORT_DESC, 'username', SORT_ASC);
-	
+
 	return $usersAll;
 }
 ?>
