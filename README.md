@@ -12,5 +12,6 @@ Pi Control 1.3.2
     - [x] Netzwerktraffic nun auch unter "Netzwerk" aktuell
     - [x] Wetter (Stadt und UK hinzugefügt)
     - [x] Statistik überarbeitet
+    - [x] Leichte Designanpassungen
     - [x] Bugfix #1: Revision
 - [x] Noch zu erledigen
