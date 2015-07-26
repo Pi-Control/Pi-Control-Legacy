@@ -45,7 +45,7 @@
 <script type="text/javascript">
 	google.load('visualization', '1', {packages:['controls']});
 	google.setOnLoadCallback(createTable);
-	
+
 	function createTable()
 	{
 {loop="logArray"}
@@ -56,10 +56,10 @@
 		}).done(function(data)
 		{
 			var myData = new google.visualization.DataTable(data);
-			
+
 			$('#chart_log_{$value.log}').html('');
 			var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_log_{$value.log}'));
-			
+
 			var myDateSlider = new google.visualization.ControlWrapper({
 				'controlType': 'DateRangeFilter',
 				'containerId': 'chart_control_log_{$value.log}',
@@ -72,19 +72,19 @@
 					}
 				}
 			});
-			
+
 			var myLine = new google.visualization.ChartWrapper({
 				'chartType' : 'AreaChart',
 				'containerId' : 'chart_log_{$value.log}',
 				'options': {
-					vAxis: { title: '{$value.title}', viewWindowMode: 'explicit', viewWindow: { max: data.max, min: data.min } },
+					vAxis: { title: '{$value.title}', viewWindow: { max: data.max, min: data.min } },
 					dateFormat: 'dd.MM.yy HH:mm',
 					hAxis: { format: 'dd.MM. HH:mm' },
 					focusTarget: 'category',
 					crosshair: { orientation: 'vertical', trigger: 'both', color: '#AAAAAA', opacity: 0.4 }
 				}
 			});
-			
+
 			var formatter = new google.visualization.NumberFormat(
 				{ suffix: '{$value.unit}' }
 			);
