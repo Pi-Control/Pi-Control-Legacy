@@ -599,6 +599,21 @@ body {
 	font-size: 11px;
 }
 
+.settings_shortcut {
+	float: right;
+	padding: 4px;
+}
+
+.settings_shortcut img {
+	-webkit-transition: -webkit-transform .2s ease-in-out;
+	transition: transform .2s ease-in-out;
+}
+
+.settings_shortcut:hover img {
+	-webkit-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+
 .padding-0 {
 	padding: 0px !important;
 }

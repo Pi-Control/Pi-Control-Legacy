@@ -15,14 +15,11 @@ function rpi_getHostname()
 function rpi_getHostAddr()
 {
 	if (!isset($_SERVER['SERVER_ADDR']))
-	{
 		return 'unknown';
-	}
-
+	
 	if (!$ip = $_SERVER['SERVER_ADDR'])
-	{
 		return gethostbyname($this->getHostname());
-	}
+
 	return $ip;
 }
 
@@ -43,9 +40,8 @@ function rpi_getCpuClock()
 {
 	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
 	if ($file != false)
-	{
 		return round(trim($file)/1000);
-	}
+
 	return 0;
 }
 
@@ -53,9 +49,8 @@ function rpi_getCpuMinClock()
 {
 	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq');
 	if ($file != false)
-	{
 		return round(trim($file)/1000);
-	}
+
 	return 0;
 }
 
@@ -63,9 +58,8 @@ function rpi_getCpuMaxClock()
 {
 	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq');
 	if ($file != false)
-	{
 		return round(trim($file)/1000);
-	}
+
 	return 0;
 }
 
@@ -75,9 +69,8 @@ function rpi_getCPUType()
 	preg_match('#Hardware\s*:\s*([^\s]+)#i', $file, $match);
 
 	if (isset($match[1]))
-	{
 		return $match[1];
-	}
+
 	return NULL;
 }
 
@@ -97,9 +90,8 @@ function rpi_getCPULoad($accurate = false)
 	preg_match('#([\d\.,]+) id#i', $file, $match);
 
 	if (isset($match[1]))
-	{
 		return round(100-trim($match[1]), 0);
-	}
+
 	return NULL;
 }
 
@@ -158,7 +150,7 @@ function rpi_getRpiRevision()
 						 'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -181,21 +173,13 @@ function rpi_getMemorySplit()
 		$total = intval($match[1]);
 
 		if ($total == 16)
-		{
 			return array('system' => '496 MiB', 'video' => '16 MiB');
-		}
 		elseif ($total == 32)
-		{
 			return array('system' => '480 MiB', 'video' => '32 MiB');
-		}
 		elseif ($total == 64)
-		{
 			return array('system' => '448 MiB', 'video' => '64 MiB');
-		}
 		elseif ($total == 128)
-		{
 			return array('system' => '384 MiB', 'video' => '128 MiB');
-		}
 		return array('system' => '256 MiB', 'video' => '256 MiB');
 	}
 

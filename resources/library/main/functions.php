@@ -8,7 +8,7 @@ function setConfigValue($name, $value, $path = CONFIG_PATH)
 		{
 			$file_string = '';
 			$if_variable_set = false;
-
+			
 			foreach ($file as $data)
 			{
 				if ('$'.$name.' ' == substr($data, 0, strlen($name)+2))
@@ -397,7 +397,7 @@ function urlIsPublic($url)
 
 function showSettingsIcon($url)
 {
-	return '<a href="'.$url.'" style="float: right; padding: 4px;"><img src="public_html/img/settings_icon.png" alt="Einstellungen" title="Einstellungen" /></a>';
+	return '<a href="'.$url.'" class="settings_shortcut"><img src="public_html/img/settings_icon.png" alt="Einstellungen" title="Einstellungen" /></a>';
 }
 
 function showGoBackIcon($url)
