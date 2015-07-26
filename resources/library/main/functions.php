@@ -20,16 +20,16 @@ function setConfigValue($name, $value, $path = CONFIG_PATH)
 				{
 					if ($data == '?>')
 						continue;
-
+					
 					$file_string .= $data;
 				}
 			}
-
+			
 			if ($if_variable_set !== true)
 				$file_string .= '$'.$name.' = '.$value.';'."\n";
-
+			
 			$file_string .= '?>';
-
+			
 			if (($f_file = fopen($path.'/config.php', 'w')))
 			{
 				if (fwrite($f_file, $file_string))
@@ -62,10 +62,10 @@ function getConfigValue($name, $path = CONFIG_PATH)
 		else
 			$name = 'default_'.$name;
 	}
-
+	
 	if (!isset($$name) && include $path.'/default_config.php')
 		$name = 'default_'.$name;
-
+	
 	return $$name;
 }
 
@@ -73,7 +73,7 @@ function sizeUnit($size)
 {
 	if ($size == '')
 		$size = 0;
-
+	
 	if ($size < 1024)
 		return number_format($size, 0, ',', '').' Byte';
 	elseif ($size < 1024000)
@@ -90,7 +90,7 @@ function return_bytes($size)
 {
 	$size = trim($size);
 	$last = strtolower($size[strlen($size)-1]);
-
+	
 	switch ($last)
 	{
 		case 'g':
@@ -125,14 +125,14 @@ function formatTime($time, $type = 'd.m.Y H:i')
 {
 	if ($time == '')
 		return false;
-
+	
 	return date($type, $time);
 }
 
 function checkUpdate($what = '')
 {
 	global $config;
-
+	
 	if (function_exists('fsockopen') && ini_get('allow_url_fopen') !== false)
 	{
 		if (!$sock = @fsockopen('www.google.com', 80, $num, $error, 5))
@@ -144,7 +144,7 @@ function checkUpdate($what = '')
 				$output = '';
 				$check = '';
 				$i = 0;
-
+				
 				foreach($xml as $data)
 				{
 					if ($data->versioncode == $config['versions']['versioncode']+1)
@@ -154,7 +154,7 @@ function checkUpdate($what = '')
 					}
 					else
 						$check = 'no update';
-
+					
 					$i++;
 				}
 
@@ -181,7 +181,7 @@ function checkUpdate($what = '')
 										'checksum' => (string) $xml->update[$i]->checksum,
 										'log' => (string) nl2br($xml->update[$i]->log),
 										'date' => (string) $xml->update[$i]->date);
-
+					
 					return $output;
 				}
 				elseif ($check == 'no update')
@@ -210,7 +210,7 @@ function getDateFormat($time)
 	$minute = ($minute < 10) ? '0'.$minute : $minute;
 	$second = floor($time % 60);
 	$second = ($second < 10) ? '0'.$second : $second;
-
+	
 	return $day.$hour.':'.$minute.':'.$second;
 }
 
@@ -234,20 +234,20 @@ function getAllNetworkConnections()
 {
 	$shell_string = '';
 	$output = array();
-
+	
 	exec('/sbin/ifconfig | grep -E -o "^[[:alnum:]]*" | grep -E -v "(lo)"', $networkInterfaces);
-
+	
 	foreach ($networkInterfaces as $interface)
 		$shell_string .= '/sbin/ifconfig '.$interface.(($networkInterfaces[count($networkInterfaces)-1] != $interface) ? ' && echo "-#-" && ' : '');
-
+	
 	$streamInterfaces = explode('-#-', shell_exec($shell_string));
-
+	
 	foreach ($streamInterfaces as $streamInterface)
 	{
 		$wirelessOption = '';
-
+		
 		$output0 = $networkInterfaces[count($output)];
-
+		
 		if (substr($output0, 0, 3) == 'ppp')
 		{
 			$output1 = 'Unbekannt';
@@ -258,53 +258,53 @@ function getAllNetworkConnections()
 			$output1 = trim(strtoupper(substr($streamInterface, strpos($streamInterface, 'HWaddr', 0) + 7, 17)));
 			$output2 = trim(substr($streamInterface, strpos($streamInterface, 'inet addr:', 0) + 10, strpos($streamInterface, 'Bcast:', 0) - strpos($streamInterface, 'inet addr:', 0) - 10));
 		}
-
+		
 		if (strlen($output2) >= 50)
 			$output2 = 0;
-
+		
 		preg_match('#RX bytes:([\d]+)#', $streamInterface, $match_rx);
 		preg_match('#TX bytes:([\d]+)#', $streamInterface, $match_tx);
-
+		
 		$output3 = $match_rx[1];
 		$output4 = $match_tx[1];
-
+		
 		if (substr($output0, 0, 4) == 'wlan')
 		{
 			$streamWirelessInterface = shell_exec('/sbin/iwconfig '.$output0);
-
+			
 			if (0 == substr_count($streamWirelessInterface, 'Not-Associated'))
 			{
 				$posConfig_start = @strpos($streamWirelessInterface, 'ESSID:"', 0) + 7;
 				$posConfig_end = @strpos($streamWirelessInterface, '"', $posConfig_start);
 				$wirelessOption['ssid'] = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
-
+				
 				$posConfig_start = @strpos($streamWirelessInterface, 'Access Point:', 0) + 13;
 				$posConfig_end = @strpos($streamWirelessInterface, 'Bit Rate', $posConfig_start);
 				$wirelessOption['mac'] = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
-
+				
 				$posConfig_start = @strpos($streamWirelessInterface, 'Signal level=', 0) + 13;
 				$posConfig_end = @strpos($streamWirelessInterface, '/100', $posConfig_start);
 				$wirelessOption['signal'] = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
 			}
 		}
-
+		
 		$output[] = array('interface' => $output0, 'mac' => $output1, 'ip' => $output2, 'sent' => $output4, 'receive' => $output3, 'option' => $wirelessOption);
 	}
-
+	
 	return $output;
 }
 
 function scanAccessPoints($networkConnections, $ssh = NULL)
 {
 	$wlan = array();
-
+	
 	foreach ($networkConnections as $interface)
 	{
 		if (substr($interface['interface'], 0, 4) != 'wlan')
 			continue;
-
+		
 		$wlan[$interface['interface']] = array();
-
+		
 		if (empty($ssh))
 			$streamWlan = shell_exec('/sbin/iwlist '.$interface['interface'].' scan');
 		else
@@ -315,34 +315,34 @@ function scanAccessPoints($networkConnections, $ssh = NULL)
 				$streamWlan = stream_get_contents($stream);
 			}
 		}
-
+		
 		for ($i = 1; $i <= substr_count($streamWlan, 'ESSID:"'); $i += 1)
 		{
 			$posCell_start = @strpos($streamWlan, 'Cell '.(($i < 10) ? '0' : '').$i.' - Address:', 0) + 19;
 			$posCell_end = @strpos($streamWlan, 'Cell '.((($i+1) < 10) ? '0' : '').($i+1), $posCell_start);
 			if ($posCell_end === false)
 				$posCell_end = strlen($streamWlan);
-
+			
 			$string = substr($streamWlan, $posCell_start, ($posCell_end - $posCell_start));
-
+			
 			$posConfig_start = @strpos($string, 'ESSID:"', 0) + 7;
 			$posConfig_end = @strpos($string, '"', $posConfig_start);
 			$wirelessOption['ssid'] = trim(substr($string, $posConfig_start, ($posConfig_end - $posConfig_start)));
-
+			
 			$wirelessOption['mac'] = substr(trim($string), 0, 17);
-
+			
 			$posConfig_start = @strpos($string, 'Frequency:', 0) + 10;
 			$posConfig_end = @strpos($string, 'Channel', $posConfig_start);
 			$wirelessOption['channel'] = trim(str_replace(')', '', substr($string, $posConfig_end+8, 3)));
-
+			
 			$posConfig_start = @strpos($string, 'Signal level=', 0) + 13;
 			if (strpos(substr($string, $posConfig_start, 20), 'dBm'))
 				$posConfig_end = @strpos($string, 'dBm', $posConfig_start);
 			else
 				$posConfig_end = @strpos($string, '/100', $posConfig_start);
-
+			
 			$wirelessOption['signal'] = trim(substr($string, $posConfig_start, ($posConfig_end - $posConfig_start)));
-
+			
 			if (strpos(substr($string, $posConfig_start, 20), 'dBm'))
 			{
 				if ($wirelessOption['signal'] <= -100)
@@ -352,10 +352,10 @@ function scanAccessPoints($networkConnections, $ssh = NULL)
 				else
 					$wirelessOption['signal'] = 2 * ($wirelessOption['signal'] + 100);
 			}
-
+			
 			$posConfig_start = @strpos($string, 'Encryption key:', 0) + 15;
 			$wirelessOption['encryptionKey'] = trim(substr($string, $posConfig_start, 3));
-
+			
 			$posConfig_start = @strpos($string, 'IE: IEEE', 0) + 7;
 			$posConfig_end = @strpos($string, '/', $posConfig_start);
 			$wirelessOption['encryption'] = trim(substr($string, $posConfig_end+1, 4));
@@ -366,11 +366,11 @@ function scanAccessPoints($networkConnections, $ssh = NULL)
 				else
 					$wirelessOption['encryption'] = '-';
 			}
-
+			
 			$wlan[$interface['interface']][] = $wirelessOption;
 		}
 	}
-
+	
 	return $wlan;
 }
 
@@ -388,10 +388,10 @@ function urlIsPublic($url)
 {
 	$ip = gethostbyname($url);
 	$long = ip2long($ip);
-
+	
 	if (($long >= 167772160 && $long <= 184549375) || ($long >= -1408237568 && $long <= -1407188993) || ($long >= -1062731776 && $long <= -1062666241) || ($long >= 2130706432 && $long <= 2147483647) || $long == -1)
 		return false;
-
+	
 	return true;
 }
 
@@ -411,7 +411,7 @@ function getDirectory($folder_)
 	$fileArray = array();
 	$folder = array();
 	$file = array();
-
+	
 	foreach (@scandir($folder_) as $file_)
 	{
 		if ($file_[0] != '.')
@@ -423,15 +423,15 @@ function getDirectory($folder_)
 			}
 		}
 	}
-
+	
 	if (isset($folderArray))
 		foreach ($folderArray as $row)
 			$folder[] = $row;
-
+	
 	if (isset($fileArray))
 		foreach ($fileArray as $row)
 			$file[] = $row;
-
+	
 	return array ($folder, $file);
 }
 
@@ -442,53 +442,53 @@ function getAllFiles($folder_)
 	$folder = array();
 	$file = array();
 	$errorArray = array();
-
+	
 	foreach (@scandir($folder_) as $file_)
 		if ($file_[0] != '.')
 			if (is_dir($folder_.'/'.$file_))
 				$folderArray[] = $file_;
 			else
 				$fileArray[] = $file_;
-
+	
 	if (isset($folderArray))
 	{
 		foreach ($folderArray as $row)
 		{
 			list ($file_return, $error_log) = getAllFiles($folder_.'/'.$row);
 			$file[$row] = $file_return;
-
+			
 			if (is_writeable($folder_.'/'.$row) !== true)
 				$errorArray[] = $folder_.'/'.$row.'/';
-
+			
 			$errorArray = array_merge($errorArray, $error_log);
 		}
 	}
-
+	
 	if (isset($fileArray))
 	{
 		foreach ($fileArray as $row)
 		{
 			$file[] = $row;
-
+			
 			if (is_writeable($folder_.'/'.$row) !== true)
 				$errorArray[] = $folder_.'/'.$row;
 		}
 	}
-
+	
 	return array($file, $errorArray);
 }
 
 function delete($folder)
 {
 	chmod($folder, 0777);
-
+	
 	if (is_dir($folder))
 	{
 		$handle = opendir($folder);
 		while ($filename = readdir($handle))
 			if ($filename != '.' && $filename != '..')
 				delete($folder.'/'.$filename);
-
+		
 		closedir($handle);
 		rmdir($folder);
 	}
@@ -512,10 +512,10 @@ function checkInternetConnection()
 function showHelper($url, $extern = false)
 {
 	global $config;
-
+	
 	if ($extern === false)
 		$url = $config['urls']['helpUrl'].'#'.$url;
-
+	
 	return '<a href="'.$url.'" title="Klicke für Hilfe" target="_blank" class="helper">&nbsp;</a>';
 }
 
@@ -528,7 +528,7 @@ function addCronToCrontab($cron_entry, $ssh)
 	$second_last_line = count($lines)-2;
 	$hashtag = 0;
 	$hashtag_line = 0;
-
+	
 	if (!in_array($cron_entry, $lines))
 	{
 		if (substr(trim($lines[$last_line]), 0, 1) == '')
@@ -544,7 +544,7 @@ function addCronToCrontab($cron_entry, $ssh)
 				$hashtag_line = $last_line;
 			}
 		}
-
+		
 		if (substr(trim($lines[$last_line]), 0, 1) == '#')
 		{
 			$hashtag = 2;
@@ -565,14 +565,14 @@ function addCronToCrontab($cron_entry, $ssh)
 				elseif ($hashtag == 2)
 					$new_file .= $cron_entry."\n";
 			}
-
+			
 			$new_file .= $lines[$line_count]."\n";
 			$line_count += 1;
 		}
-
+		
 		if (file_exists(TEMP_PATH.'/crontab.tmp.php') && is_file(TEMP_PATH.'/crontab.tmp.php'))
 			unlink(TEMP_PATH.'/crontab.tmp.php');
-
+		
 		if (($file = fopen(TEMP_PATH.'/crontab.tmp.php', 'w+')))
 		{
 			if (!fwrite($file, $new_file))
@@ -580,7 +580,7 @@ function addCronToCrontab($cron_entry, $ssh)
 		}
 		else
 			return 3;
-
+		
 		if (($stream = ssh2_scp_send($ssh, TEMP_PATH.'/crontab.tmp.php', '/etc/crontab')))
 		{
 			unlink(TEMP_PATH.'/crontab.tmp.php');
@@ -597,10 +597,10 @@ function getWeather($type, $postcode, $city)
 {
 	$location = '';
 	$country_config = getConfigValue('config_weather_country');
-
+	
 	if ($type == 'postcode' && $postcode == '00000')
 		return 2;
-
+	
 	if ($country_config == 'germany' || $country_config == 'austria' || $country_config == 'swiss')
 	{
 		if ($type == 'postcode' && (!(strlen($postcode) == 4 || strlen($postcode) == 5) || $postcode < 1 || $postcode > 99999))
@@ -614,56 +614,56 @@ function getWeather($type, $postcode, $city)
 
 	if ($type == 'city' && !strlen($city) >= 3)
 		return 0;
-
+	
 	if ($type == 'postcode')
 		$location = $postcode;
 	else
 		$location = $city;
-
-		$country = 'germany';
-
-		switch ($country_config)
+		
+	$country = 'germany';
+	
+	switch ($country_config)
+	{
+		case 'austria': $country = 'austria'; break;
+		case 'swiss': $country = 'swiss'; break;
+		case 'uk': $country = 'uk'; break;
+	}
+	
+	if ($json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country.'&units=metric&lang=de'))
+	{
+		$obj = json_decode($json);
+		
+		$data = array();
+		$data['city'] = $obj->name; // Stadt
+		$data['country'] = $obj->sys->country; // Land
+		$data['temp'] = str_replace('.', ',' , round($obj->main->temp)); // Temperatur
+		$data['temp_min'] = str_replace('.', ',' , round($obj->main->temp_min)); // Mindest Temperatur
+		$data['temp_max'] = str_replace('.', ',' , round($obj->main->temp_max)); // Höchst Temperatur
+		$data['humidity'] = $obj->main->humidity; // Luftfeuchtigkeit
+		$data['wind'] = str_replace('.', ',' , round($obj->wind->speed)); // Windstärke
+		$data['icon'] = $obj->weather[0]->icon; // Wetter Icon
+		$data['description'] = $obj->weather[0]->description; // Wetter Beschreibung
+		
+		if (empty($obj->name))
 		{
-			case 'austria': $country = 'austria'; break;
-			case 'swiss': $country = 'swiss'; break;
-			case 'uk': $country = 'uk'; break;
-		}
-
-		if ($json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country.'&units=metric&lang=de'))
-		{
+			$json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country);
 			$obj = json_decode($json);
 
-			$data = array();
 			$data['city'] = $obj->name; // Stadt
 			$data['country'] = $obj->sys->country; // Land
-			$data['temp'] = str_replace('.', ',' , round($obj->main->temp)); // Temperatur
-			$data['temp_min'] = str_replace('.', ',' , round($obj->main->temp_min)); // Mindest Temperatur
-			$data['temp_max'] = str_replace('.', ',' , round($obj->main->temp_max)); // Höchst Temperatur
-			$data['humidity'] = $obj->main->humidity; // Luftfeuchtigkeit
-			$data['wind'] = str_replace('.', ',' , round($obj->wind->speed)); // Windstärke
-			$data['icon'] = $obj->weather[0]->icon; // Wetter Icon
-			$data['description'] = $obj->weather[0]->description; // Wetter Beschreibung
-
-			if (empty($obj->name))
-			{
-				$json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country);
-				$obj = json_decode($json);
-
-				$data['city'] = $obj->name; // Stadt
-				$data['country'] = $obj->sys->country; // Land
-			}
-
-			return $data;
 		}
-		else
-			return 1;
+		
+		return $data;
+	}
+	else
+		return 1;
 }
 
 function array_sort($array, $on, $order = SORT_ASC)
 {
 	$new_array = array();
 	$sortable_array = array();
-
+	
 	if (count($array) > 0)
 	{
 		foreach ($array as $k => $v)
@@ -679,7 +679,7 @@ function array_sort($array, $on, $order = SORT_ASC)
 			else
 				$sortable_array[$k] = $v;
 		}
-
+		
 		switch ($order)
 		{
 			case SORT_ASC:
@@ -689,11 +689,11 @@ function array_sort($array, $on, $order = SORT_ASC)
 				arsort($sortable_array);
 				break;
 		}
-
+		
 		foreach ($sortable_array as $k => $v)
 			$new_array[$k] = $array[$k];
 	}
-
+	
 	return $new_array;
 }
 ?>

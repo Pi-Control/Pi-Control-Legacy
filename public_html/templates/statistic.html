@@ -56,10 +56,10 @@
 		}).done(function(data)
 		{
 			var myData = new google.visualization.DataTable(data);
-
+			
 			$('#chart_log_{$value.log}').html('');
 			var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_log_{$value.log}'));
-
+			
 			var myDateSlider = new google.visualization.ControlWrapper({
 				'controlType': 'DateRangeFilter',
 				'containerId': 'chart_control_log_{$value.log}',
@@ -72,7 +72,7 @@
 					}
 				}
 			});
-
+			
 			var myLine = new google.visualization.ChartWrapper({
 				'chartType' : 'AreaChart',
 				'containerId' : 'chart_log_{$value.log}',
@@ -84,7 +84,7 @@
 					crosshair: { orientation: 'vertical', trigger: 'both', color: '#AAAAAA', opacity: 0.4 }
 				}
 			});
-
+			
 			var formatter = new google.visualization.NumberFormat(
 				{ suffix: '{$value.unit}' }
 			);
