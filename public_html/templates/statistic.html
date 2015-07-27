@@ -7,14 +7,35 @@
 	</div>
 </div>
 </noscript>
+<div class="sidebar">
+	<div class="box">
+		<div class="inner-header">
+			<span>Zeitraum</span>
+		</div>
+		<div class="inner">
+			<select onchange="changeRange(this)">
+				<option name="" value="seven">Alles (7 Tage)</option>
+				<option name="" value="six">Letzten 6 Tage</option>
+				<option name="" value="five">Letzten 5 Tage</option>
+				<option name="" value="four">Letzten 4 Tage</option>
+				<option name="" value="three">Letzten 3 Tage</option>
+				<option name="" value="two">Letzten 2 Tage</option>
+				<option name="" value="one">Letzten 24 Stunden</option>
+			</select>
+		</div>
+	</div>
+</div>
 <!-- Container -->
-<div>
+<div class="container-600">
 	<div class="box">
 		<div class="inner-header no-border-bottom">
 			<span>Statistik</span>
 			{function="showSettingsIcon('?s=settings&amp;do=statistic')"}
 		</div>
 	</div>
+</div>
+<div class="clear_both"></div>
+<div>
 {if="empty($logArray) && $logArrayCount > 0"}
 	<div class="box">
 		<div class="inner">
@@ -55,12 +76,14 @@
 			async: true
 		}).done(function(data)
 		{
+			period_{$value.log} = data.periods;
+			
 			var myData = new google.visualization.DataTable(data);
 			
 			$('#chart_log_{$value.log}').html('');
 			var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_log_{$value.log}'));
 			
-			var myDateSlider = new google.visualization.ControlWrapper({
+			myDateSlider_{$value.log} = new google.visualization.ControlWrapper({
 				'controlType': 'DateRangeFilter',
 				'containerId': 'chart_control_log_{$value.log}',
 				'options': {
@@ -91,7 +114,7 @@
 {loop="$value.columns"}
 			formatter.format(myData, {$value});
 {/loop}
-			myDashboard.bind(myDateSlider, myLine);
+			myDashboard.bind(myDateSlider_{$value.log}, myLine);
 			myDashboard.draw(myData);
 		}).fail(function(xhr, textStatus)
 		{
@@ -102,4 +125,74 @@
 		});
 {/loop}
 	}
+	
+	function changeRange(dropdown) {
+		switch (dropdown.value)
+		{
+			case 'seven':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.seven)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+			case 'six':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.six)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+			case 'five':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.five)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+			case 'four':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.four)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+			case 'three':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.three)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+			case 'two':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.two)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+			case 'one':
+{loop="logArray"}
+				if (typeof myDateSlider_{$value.log} != 'undefined')
+				{
+	        		myDateSlider_{$value.log}.setState({'lowValue': new Date(period_{$value.log}.one)});
+	        		myDateSlider_{$value.log}.draw();
+				}
+{/loop}
+					break;
+				
+		}
+    }
 </script>
