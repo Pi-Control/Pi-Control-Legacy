@@ -6,8 +6,14 @@
 	<meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no" />
 {if="$config_slim_header"}
 	<style type="text/css">
-		#header_logo { display: none; }		
+		#header_logo { display: none; }
 		#header_navi { background: url(public_html/img/logo.png) no-repeat right; background-size: 15%; }
+	</style>
+{/if}
+{if="$config_fixed_header == false"}
+	<style type="text/css">
+		#header { position: static !important; }
+		#content { padding-top: 12px !important; }
 	</style>
 {/if}
 	<link type="text/css" rel="stylesheet" href="public_html/css/style.css" />

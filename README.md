@@ -11,7 +11,8 @@ Pi Control 1.3.2
     - [x] Statistik: Fehler mit Punkt und Komma behoben
     - [x] Netzwerktraffic nun auch unter "Netzwerk" aktuell
     - [x] Wetter (Stadt und UK hinzugefügt)
-    - [x] Statistik überarbeitet
+    - [x] Statistik überarbeitet (Zeitraum Einstellung)
     - [x] Leichte Designanpassungen
+    - [x] Header kann im Responsive-Design fixiert werden
     - [x] Bugfix #1: Revision
 - [x] Noch zu erledigen

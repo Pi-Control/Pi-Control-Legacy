@@ -42,6 +42,7 @@ else
 
 $tpl->assign('is_mobile', 'false');
 $tpl->assign('config_slim_header', getConfigValue('config_slim_header'));
+$tpl->assign('config_fixed_header', getConfigValue('config_fixed_header'));
 $tpl->assign('javascript_time', time()+date('Z', time()));
 $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('navi_plugin_available', isset($plugin_available['status']) ? array_sort($plugin_available['status'], 'name', SORT_ASC) : $plugin_available_string);

@@ -25,4 +25,5 @@ $default_config_weather_country = 'germany';
 $default_config_webserver_port = 80;
 $default_config_statistic_hide = '';
 $default_config_network_count = '';
+$default_config_fixed_header = true;
 ?>

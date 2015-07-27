@@ -4,12 +4,13 @@ $tpl = new RainTPL;
 if (isset($_POST['submit_main'])) // Einstellungen zum Pi Control
 {
 	setConfigValue('config_access_public', ((isset($_POST['value']) && $_POST['value'] == 'checked') ? 'true' : 'false'));
-	$set_config_slim_header = setConfigValue('config_slim_header', ((isset($_POST['slim_header']) && $_POST['slim_header'] == 'checked') ? 'true' : 'false'));
+	setConfigValue('config_slim_header', ((isset($_POST['slim_header']) && $_POST['slim_header'] == 'checked') ? 'true' : 'false'));
+	$set_config_fixed_header = setConfigValue('config_fixed_header', ((isset($_POST['fixed_header']) && $_POST['fixed_header'] == 'checked') ? 'true' : 'false'));
 	
-	if ($set_config_slim_header === 0)
+	if ($set_config_fixed_header === 0)
 		$tpl->msg('green', '', 'Die Einstellungen wurden erfolgreich gespeichert.');
 	else
-		$tpl->msg('red', '', $error_code['0x0041'].$set_config_slim_header);
+		$tpl->msg('red', '', $error_code['0x0041'].$set_config_fixed_header);
 	
 	if (!headers_sent($filename, $linenum))
 		exit(header('Location: ?s=settings&do=pic&statusmsg=saved'));
@@ -134,7 +135,7 @@ elseif (isset($_POST['submit_temperatur'])) // Temperaturüberwachung
 			}
 			
 			if ($if_error !== true)
-			{				
+			{
 				if (getConfigValue('config_temp_mail_id') == '')
 				{
 					$random_1 = rand(1, 1000);
@@ -167,7 +168,7 @@ elseif (isset($_POST['submit_temperatur'])) // Temperaturüberwachung
 							else
 							{
 								if ($value = file($config['urls']['tempMonitoringUrl'].'check&id='.getConfigValue('config_temp_mail_id').'&mail='.urlencode(trim($_POST['ip_mail'])).'&code='.getConfigValue('config_temp_mail_code')))
-								{								
+								{
 									if ($value[0] == '0')
 									{
 										// E-Mail und Code stimmen nicht überein
@@ -244,7 +245,7 @@ elseif (isset($_POST['submit_temperatur'])) // Temperaturüberwachung
 			$tpl->msg('red', '', $error_code['2x0008']);
 	}
 	else
-	{		
+	{
 		if (($set_config_temp = setConfigValue('config_temp', 'false')) === 0)
 		{
 			if ($cron->ifExist() === true)
@@ -306,6 +307,7 @@ $temp_option_timeout = getConfigValue('config_temp_option_timeout')-time();
 
 $tpl->assign('config_access_public', getConfigValue('config_access_public'));
 $tpl->assign('config_slim_header', getConfigValue('config_slim_header'));
+$tpl->assign('config_fixed_header', getConfigValue('config_fixed_header'));
 $tpl->assign('config_webserver_port', getConfigValue('config_webserver_port'));
 $tpl->assign('urlispublic', urlIsPublic($_SERVER['REMOTE_ADDR']));
 $tpl->assign('config_access_protection', getConfigValue('config_access_protection'));

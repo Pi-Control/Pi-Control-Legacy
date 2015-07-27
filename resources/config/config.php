@@ -25,4 +25,5 @@ $config_statistic_hide = '';
 $config_network_count = '';
 $config_weather_city = '';
 $config_weather_type = 'postcode';
+$config_fixed_header = true;
 ?>
