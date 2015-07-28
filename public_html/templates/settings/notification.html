@@ -1,0 +1,37 @@
+<div>
+    <div class="box">
+        <div class="inner-header">
+            <span>Benachrichtigung</span>
+        </div>
+        <div class="inner-bottom">
+            Die Benachrichtigung werden über <a href="https://www.pushbullet.com/" target="_blank">Pushbullet</a> realisiert.
+        </div>
+        <div class="inner-bottom">
+            <table class="table_simple">
+                <tr>
+                    <td><strong>Aktivieren</strong></td>
+                    <td><input type="checkbox" /> <a href="?s=settings&amp;do=notification&amp;send_note"><button>Senden</button></a></td>
+                </tr>
+                <tr>
+                    <td><strong>Zugangstoken</strong></td>
+                    <td><input type="text" value="VQY6SLkyg5LL2DeMFFuftItuSC9mOlIm" maxlength="32" style="width: 250px;" /> Verifiziert als <strong>{$me}</strong></td>
+                </tr>
+            </table>
+        </div>
+        <div class="inner">
+            <strong>Deine Geräte</strong><br /><br />
+            <table class="table">
+                <tr>
+                    <th>Gerätebezeichnung</th>
+                    <th>Letzte Änderung</th>
+                </tr>
+{loop="$devices"}
+                <tr>
+                    <td>{$value.nickname}</td>
+                    <td>{function="date('d.m.Y H:i', $value.modified)"}</td>
+                </tr>
+{/loop}
+            </table>
+        </div>
+    </div>
+</div>
