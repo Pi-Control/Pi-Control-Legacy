@@ -50,6 +50,11 @@ $error_code['0x0043'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Feh
 $error_code['0x0044'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0044-'; // resources/content/settings/overview.php
 $error_code['0x0045'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0045-'; // resources/content/settings/overview.php
 $error_code['0x0046'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0046-'; // resources/content/settings/overview.php
+$error_code['0x0047'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0047-'; // resources/content/settings/notification.php
+$error_code['0x0048'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0048-'; // resources/content/settings/notification.php
+$error_code['0x0049'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0049-'; // resources/content/settings/notification.php
+$error_code['0x0050'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0050-'; // resources/content/settings/notification.php
+$error_code['0x0051'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0051-'; // resources/content/settings/notification.php
 
 $error_code['0x1001'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x1001-'; // Platzhalter für Plugin-Fehler
 $error_code['0x1002'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x1002-'; // Platzhalter für Plugin-Fehler
@@ -63,6 +68,8 @@ $error_code['1x0005'] = 'Konnte den Cron nicht anlegen! Bitte <a href="'.$config
 $error_code['1x0006'] = 'Platzhalter. Fehlercode: 1x0006'; // resources/content/plugins.php
 $error_code['1x0007'] = 'Platzhalter. Fehlercode: 1x0007'; // resources/content/plugins.php
 $error_code['1x0008'] = 'Platzhalter. Fehlercode: 1x0008'; // resources/content/plugins.php
+$error_code['1x0009'] = 'Pushbullet meldet einen Fehler mit einer Anfrage. Fehlercode: 1x0009<br /><br />'; // resources/content/settings/notification.php
+$error_code['1x0010'] = 'Pushbullet meldet einen Fehler mit einer Anfrage. Fehlercode: 1x0010<br /><br />'; // resources/content/settings/notification.php
 
 $error_code['2x0001'] = 'Bitte gebe eine gültige Zahl ein!'; // resources/content/settings/overview.php
 $error_code['2x0002'] = 'Die Passwörter stimmen nicht überein! Bitte prüfe deine Eingaben.'; // resources/content/settings/pic.php
@@ -78,4 +85,5 @@ $error_code['2x0011'] = 'Der Hostname ist ungültig! Er darf nur aus mindestens 
 $error_code['2x0012'] = 'Ungültiger Port. Der Port muss zwischen 0 und 65535 liegen.'; // resources/content/pic.php
 $error_code['2x0013'] = 'Der Verlauf konnte nicht gefunden werden: '; // resources/content/settings/statistic.php
 $error_code['2x0014'] = 'Stadtname ist ungültig!'; // resources/content/settings/overview.php
+$error_code['2x0015'] = 'Zugangstoken ist ungültig!'; // resources/content/settings/notification.php
 ?>
