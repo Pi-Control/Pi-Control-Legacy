@@ -55,6 +55,8 @@ $error_code['0x0048'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Feh
 $error_code['0x0049'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0049-'; // resources/content/settings/notification.php
 $error_code['0x0050'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0050-'; // resources/content/settings/notification.php
 $error_code['0x0051'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0051-'; // resources/content/settings/notification.php
+$error_code['0x0052'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0052-'; // resources/content/settings/notification.php
+$error_code['0x0053'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0053-'; // resources/content/settings/notification.php
 
 $error_code['0x1001'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x1001-'; // Platzhalter für Plugin-Fehler
 $error_code['0x1002'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x1002-'; // Platzhalter für Plugin-Fehler
@@ -86,4 +88,5 @@ $error_code['2x0012'] = 'Ungültiger Port. Der Port muss zwischen 0 und 65535 li
 $error_code['2x0013'] = 'Der Verlauf konnte nicht gefunden werden: '; // resources/content/settings/statistic.php
 $error_code['2x0014'] = 'Stadtname ist ungültig!'; // resources/content/settings/overview.php
 $error_code['2x0015'] = 'Zugangstoken ist ungültig!'; // resources/content/settings/notification.php
+$error_code['2x0016'] = 'Bitte gebe eine gültige Zahl für den Speicherverbrauch ein!'; // resources/content/settings/notification.php
 ?>

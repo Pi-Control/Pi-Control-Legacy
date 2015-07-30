@@ -62,23 +62,23 @@
                         <td><strong>die CPU-Temperatur einen Wert überschreitet</strong></td>
                         <td><input type="checkbox" name="cb_cpu_temp" value="checked" {if="$config_notification_cpu_temp"}checked{/if} />
                             <select name="dd_cpu_temp">
-									<option style="background: #30FF00;" value="40" {if="$config_temp_celsius == 40"}selected="selected"{/if}>40 °C</option>
-									<option style="background: #55FF00;" value="45" {if="$config_temp_celsius == 45"}selected="selected"{/if}>45 °C</option>
-									<option style="background: #80FF00;" value="50" {if="$config_temp_celsius == 50"}selected="selected"{/if}>50 °C</option>
-									<option style="background: #AAFF00;" value="55" {if="$config_temp_celsius == 55"}selected="selected"{/if}>55 °C</option>
-									<option style="background: #D5FF00;" value="60" {if="$config_temp_celsius == 60"}selected="selected"{/if}>60 °C</option>
-									<option style="background: #FFFF00;" value="65" {if="$config_temp_celsius == 65"}selected="selected"{/if}>65 °C</option>
-									<option style="background: #FFD500;" value="70" {if="$config_temp_celsius == 70"}selected="selected"{/if}>70 °C</option>
-									<option style="background: #FFAA00;" value="75" {if="$config_temp_celsius == 75"}selected="selected"{/if}>75 °C</option>
-									<option style="background: #FF8000;" value="80" {if="$config_temp_celsius == 80"}selected="selected"{/if}>80 °C</option>
-									<option style="background: #FF5500;" value="85" {if="$config_temp_celsius == 85"}selected="selected"{/if}>85 °C</option>
-									<option style="background: #FF2B00;" value="90" {if="$config_temp_celsius == 90"}selected="selected"{/if}>90 °C</option>
+									<option style="background: #30FF00;" value="40" {if="$config_notification_cpu_temp_value == 40"}selected="selected"{/if}>40 °C</option>
+									<option style="background: #55FF00;" value="45" {if="$config_notification_cpu_temp_value == 45"}selected="selected"{/if}>45 °C</option>
+									<option style="background: #80FF00;" value="50" {if="$config_notification_cpu_temp_value == 50"}selected="selected"{/if}>50 °C</option>
+									<option style="background: #AAFF00;" value="55" {if="$config_notification_cpu_temp_value == 55"}selected="selected"{/if}>55 °C</option>
+									<option style="background: #D5FF00;" value="60" {if="$config_notification_cpu_temp_value == 60"}selected="selected"{/if}>60 °C</option>
+									<option style="background: #FFFF00;" value="65" {if="$config_notification_cpu_temp_value == 65"}selected="selected"{/if}>65 °C</option>
+									<option style="background: #FFD500;" value="70" {if="$config_notification_cpu_temp_value == 70"}selected="selected"{/if}>70 °C</option>
+									<option style="background: #FFAA00;" value="75" {if="$config_notification_cpu_temp_value == 75"}selected="selected"{/if}>75 °C</option>
+									<option style="background: #FF8000;" value="80" {if="$config_notification_cpu_temp_value == 80"}selected="selected"{/if}>80 °C</option>
+									<option style="background: #FF5500;" value="85" {if="$config_notification_cpu_temp_value == 85"}selected="selected"{/if}>85 °C</option>
+									<option style="background: #FF2B00;" value="90" {if="$config_notification_cpu_temp_value == 90"}selected="selected"{/if}>90 °C</option>
 								</select></td>
                     </tr>
                     <tr>
                         <td><strong>der Speicherverbrauch (Gesamtspeicher) einen Wert überschreitet</strong></td>
                         <td><input type="checkbox" name="cb_memory" value="checked" {if="$config_notification_memory"}checked{/if} />
-                            <input type="text" name="tx_memory" style="width: 30px;" maxlength="2" /> %</td>
+                            <input type="text" name="tx_memory" value="{$config_notification_memory_value}" style="width: 30px;" maxlength="2" /> %</td>
                     </tr>
                     <!--<tr>
                         <td><strong>sich ein Benutzer an den Raspberry Pi anmeldet</strong></td>
