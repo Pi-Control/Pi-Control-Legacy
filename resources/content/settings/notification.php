@@ -3,6 +3,11 @@ $tpl = new RainTPL;
 
 if (isset($_GET['save']) && isset($_POST['submit']))
 {
+    $lastPush = json_decode(getConfigValue('config_notification_last_push'), true);
+    
+    if ($lastPush === NULL)
+        $lastPush = array();
+    
     if (($_POST['token'] != '' && strlen($_POST['token']) == 32) || (!isset($_POST['activate'])))
     {
         if (($set_config_notification = setConfigValue('config_notification', (isset($_POST['activate']) && $_POST['activate'] == 'checked' ? 'true' : 'false'))) !== 0)
@@ -20,17 +25,18 @@ if (isset($_GET['save']) && isset($_POST['submit']))
             $tpl->msg('red', '', $error_code['2x0015']);
     }
     
-    if (isset($_POST['cb_picontrol']))
-    {
-        if (($set_config_notification_picontrol = setConfigValue('config_notification_picontrol', ($_POST['cb_picontrol'] == 'checked' ? 'true' : 'false'))) !== 0)
+    if (($set_config_notification_picontrol = setConfigValue('config_notification_picontrol', ($_POST['cb_picontrol'] == 'checked' ? 'true' : 'false'))) !== 0)
 			$tpl->msg('red', '', $error_code['0x0049'].$set_config_notification_picontrol);
-    }
     
     if (($set_config_notification_cpu_temp = setConfigValue('config_notification_cpu_temp', (isset($_POST['cb_cpu_temp']) && $_POST['cb_cpu_temp'] == 'checked' ? 'true' : 'false'))) !== 0)
 		$tpl->msg('red', '', $error_code['0x0050'].$set_config_notification_cpu_temp);
     
     if (isset($_POST['dd_cpu_temp']) && strlen($_POST['dd_cpu_temp']) == 2 && is_numeric($_POST['dd_cpu_temp']) && $_POST['dd_cpu_temp'] >= 40 && $_POST['dd_cpu_temp'] <= 90)
     {
+        $lastPush['cpu_temp']['time'] = 0;
+        $lastPush['cpu_temp']['value'] = 0;
+        $lastPush['cpu_temp']['notification_iden'] = '';
+        
         if (($set_config_notification_cpu_temp_value = setConfigValue('config_notification_cpu_temp_value', $_POST['dd_cpu_temp'])) !== 0)
 			$tpl->msg('red', '', $error_code['0x0051'].$set_config_notification_cpu_temp_value);
     }
@@ -40,11 +46,17 @@ if (isset($_GET['save']) && isset($_POST['submit']))
     
     if (isset($_POST['tx_memory']) && is_numeric($_POST['tx_memory']) && $_POST['tx_memory'] >= 1 && $_POST['tx_memory'] <= 99)
     {
+        $lastPush['memory']['time'] = 0;
+        $lastPush['memory']['value'] = 0;
+        $lastPush['memory']['notification_iden'] = '';
+        
         if (($set_config_notification_memory_value = setConfigValue('config_notification_memory_value', $_POST['tx_memory'])) !== 0)
 			$tpl->msg('red', '', $error_code['0x0053'].$set_config_notification_memory_value);
     }
     else
         $tpl->msg('red', '', $error_code['2x0016']);
+    
+    setConfigValue('config_notification_last_push', '\''.json_encode($lastPush).'\'');
 }
 
 $token = getConfigValue('config_notification_token');

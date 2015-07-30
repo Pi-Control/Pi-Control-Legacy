@@ -21,7 +21,7 @@ if (getConfigValue('config_notification_picontrol') == true && (getConfigValue('
         setConfigValue('config_last_update_check', time());
     else
     {
-        if ($lastPush['picontrol']['value'] < $picontrol_update['versioncode']  && $lastPush['picontrol']['time']+3600 < time())
+        if ($lastPush['picontrol']['value'] < $picontrol_update['versioncode']  && $lastPush['picontrol']['time']+21600 < time())
         {
             setConfigValue('config_last_update_check', time()-86400);
         
@@ -34,9 +34,11 @@ if (getConfigValue('config_notification_picontrol') == true && (getConfigValue('
             $return = json_decode(curl_exec($ch), true);
             curl_close($ch);
             
+            // Reduziere Traffic, da selbst bei Fehler erst wieder nach 21600 Sek. geprüft wird
+            $lastPush['picontrol']['time'] = time();
+            
             if (!isset($return['error']))
             {
-                $lastPush['picontrol']['time'] = time();
                 $lastPush['picontrol']['value'] = $picontrol_update['versioncode'];
                 $lastPush['picontrol']['notification_iden'] = $return['iden'];
             }
@@ -102,6 +104,6 @@ if (getConfigValue('config_notification_memory') == true)
     elseif (getConfigValue('config_notification_memory_value') > $percent)
         $lastPush['memory']['value'] = 0;
 }
-var_dump(json_encode($lastPush));
+
 setConfigValue('config_notification_last_push', '\''.json_encode($lastPush).'\'');
 ?>
