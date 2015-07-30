@@ -24,7 +24,7 @@ if (getConfigValue('config_notification_picontrol') == true && (getConfigValue('
         if ($lastPush['picontrol']['value'] < $picontrol_update['versioncode']  && $lastPush['picontrol']['time']+21600 < time())
         {
             setConfigValue('config_last_update_check', time()-86400);
-        
+            
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://api.pushbullet.com/v2/pushes');
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
