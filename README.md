@@ -14,5 +14,6 @@ Pi Control 1.3.2
     - [x] Statistik überarbeitet (Zeitraum Einstellung)
     - [x] Leichte Designanpassungen
     - [x] Header kann im Responsive-Design fixiert werden
+    - [x] Benachrichtigung (via Pushbullet) hinzugefügt
     - [x] Bugfix #1: Revision
 - [x] Noch zu erledigen
