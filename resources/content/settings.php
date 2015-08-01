@@ -21,6 +21,9 @@ switch ((isset($_GET['do']) ? $_GET['do'] : ''))
 	case 'statistic':
 		include_once CONTENT_PATH.'/settings/statistic.php';
 			break;
+	case 'notification':
+		include_once CONTENT_PATH.'/settings/notification.php';
+			break;
 	default:
 		$tpl->draw('settings');
 }

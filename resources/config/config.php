@@ -26,4 +26,12 @@ $config_network_count = '';
 $config_weather_city = '';
 $config_weather_type = 'postcode';
 $config_fixed_header = true;
+$config_notification = false;
+$config_notification_token = '';
+$config_notification_last_push = '';
+$config_notification_picontrol = false;
+$config_notification_cpu_temp = false;
+$config_notification_cpu_temp_value = 65;
+$config_notification_memory = false;
+$config_notification_memory_value = 80;
 ?>
