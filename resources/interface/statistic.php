@@ -1,73 +1,50 @@
 <?php
 (include_once realpath(dirname(__FILE__)).'/../main_config.php') or die(print(json_encode(array('status' => 600))));
 (include_once LIBRARY_PATH.'/main/functions.php') or die(print(json_encode(array('status' => 601))));
-(include_once LIBRARY_PATH.'/main/classes.php') or die(print(json_encode(array('status' => 602))));
+(include_once LIBRARY_PATH.'/main/functions_statistic.php') or die(print(json_encode(array('status' => 602))));
+(include_once LIBRARY_PATH.'/main/classes.php') or die(print(json_encode(array('status' => 603))));
 
 if (isset($_GET['type'], $_GET['log']))
-{	
+{
 	$log = new Logging();
 	$log->setFile(LOG_PATH.'/'.$_GET['log'].'.log.txt');
 	$logArray = $log->getAll();
 	
-	$counter = (isset($_GET['limit']) ? count($logArray) - (($_GET['limit'] > count($logArray)) ? count($logArray) : $_GET['limit']) : 0);
+	$counter = (isset($_GET['limit']) ? (($_GET['limit'] > 2016) ? 2016 : $_GET['limit']) : 2016);
 	
 	switch ($_GET['type'])
 	{
 		case 'coretemp':
-		$arr = array();
-		$lastTime = NULL;
-		for ($i = $counter; $i < count($logArray); $i++)
-		{
-			if ($lastTime !== NULL && $lastTime > $logArray[$i][0])
-				continue;
+			$arr = array();
+			Interface_getRowsFromLog($arr, $logArray, 'coretemp');
 			
-			$arr['rows'][] = array('date' => $logArray[$i][0], 'temp' => floatval(str_replace(array("\n", ','), array('', '.'), $logArray[$i][1])));
-			
-			$lastTime = $logArray[$i][0];
-		}
-			break;
+			if (isset($arr['rows']))
+				$arr['rows'] = array_slice($arr['rows'], -$counter);
+				break;
 		
 		case 'cpuload':
-		$arr = array();
-		$lastTime = NULL;
-		for ($i = $counter; $i < count($logArray); $i++)
-		{
-			if ($lastTime !== NULL && $lastTime > $logArray[$i][0])
-				continue;
+			$arr = array();
+			Interface_getRowsFromLog($arr, $logArray, 'cpuload');
 			
-			$arr['rows'][] = array('date' => $logArray[$i][0], 'load' => floatval(str_replace(array("\n", ','), array('', '.'), $logArray[$i][1])));
-			
-			$lastTime = $logArray[$i][0];
-		}
-			break;
+			if (isset($arr['rows']))
+				$arr['rows'] = array_slice($arr['rows'], -$counter);
+				break;
 		
 		case 'ram':
-		$arr = array();
-		$lastTime = NULL;
-		for ($i = $counter; $i < count($logArray); $i++)
-		{
-			if ($lastTime !== NULL && $lastTime > $logArray[$i][0])
-				continue;
+			$arr = array();
+			Interface_getRowsFromLog($arr, $logArray, 'ram');
 			
-			$arr['rows'][] = array('date' => $logArray[$i][0], 'load' => floatval(str_replace(array("\n", ','), array('', '.'), $logArray[$i][1])));
-			
-			$lastTime = $logArray[$i][0];
-		}
-			break;
+			if (isset($arr['rows']))
+				$arr['rows'] = array_slice($arr['rows'], -$counter);
+				break;
 		
 		case 'network':
-		$arr = array();
-		$lastTime = NULL;
-		for ($i = $counter; $i < count($logArray); $i++)
-		{
-			if ($lastTime !== NULL && $lastTime > $logArray[$i][0])
-				continue;
+			$arr = array();
+			Interface_getRowsFromLog($arr, $logArray, 'network');
 			
-			$arr['rows'][] = array('date' => $logArray[$i][0], 'up' => floatval(str_replace(array("\n", ','), array('', '.'), round($logArray[$i][1]/1048576,2))), 'down' => floatval(str_replace(array("\n", ','), array('', '.'), round($logArray[$i][2]/1048576,2))));
-			
-			$lastTime = $logArray[$i][0];
-		}
-			break;
+			if (isset($arr['rows']))
+				$arr['rows'] = array_slice($arr['rows'], -$counter);
+				break;
 	}
 	
 	if (file_exists(LOG_PATH.'/'.$_GET['log'].'.log.txt') && is_file(LOG_PATH.'/'.$_GET['log'].'.log.txt') && filesize(LOG_PATH.'/'.$_GET['log'].'.log.txt') == 0)

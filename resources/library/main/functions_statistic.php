@@ -115,4 +115,90 @@ function getRowsFromLog(&$arr, &$info, $log, $type)
 	calculateEmptyRows($arr, $type, $firstTime);
 	calculatePeriods($info, $lastTime);
 }
+
+/* for interface/statistic.php */
+
+function Interface_getValueRow($value)
+{
+	return floatval(str_replace(array("\n", ','), array('', '.'), $value));
+}
+
+function Interface_calculateEmptyRows(&$arr, $type, $firstTime)
+{
+	$buffer = array();
+
+	if (isset($arr['rows']) && count($arr['rows']) < 2016)
+	{
+		for ($i = 0; $i < (2016 - count($arr['rows'])); $i++)
+		{
+			if ($type == 'network')
+			{
+				$buffer[] = array('date' => $firstTime-(($i+1) * 300), 'up' => floatval(0), 'down' => floatval(0));
+			}
+			elseif ($type == 'coretemp')
+			{
+				$buffer[] = array('date' => $firstTime-(($i+1) * 300), 'temp' => floatval(0));
+			}
+			else
+			{
+				$buffer[] = array('date' => $firstTime-(($i+1) * 300), 'load' => floatval(0));
+			}
+		}
+		$arr['rows'] = array_merge($buffer, $arr['rows']);
+	}
+}
+
+function Interface_getRowsFromLog(&$arr, $log, $type)
+{
+	$lastTime = NULL;
+	$firstTime = 0;
+	
+	foreach ($log as $row)
+	{
+		if ($lastTime !== NULL && $lastTime > $row[0])
+			continue;
+		
+		if ($lastTime !== NULL && $lastTime+400 < $row[0])
+		{
+			$skipped = round(($row[0] - $lastTime)/300);
+			for ($i = 0; $i < $skipped; $i++)
+			{
+				if ($type == 'network')
+				{
+					$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'up' => floatval(0), 'down' => floatval(0));
+				}
+				elseif ($type == 'coretemp')
+				{
+					$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'temp' => floatval(0));
+				}
+				else
+				{
+					$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'load' => floatval(0));
+				}
+			}
+		}
+		else
+		{
+			if ($type == 'network')
+			{
+				$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'up' => Interface_getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2)), 'down' => Interface_getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[2])/1048576,2)));
+			}
+			elseif ($type == 'coretemp')
+			{
+				$arr['rows'][] = array('date' => $row[0], 'temp' => Interface_getValueRow($row[1]));
+			}
+			else
+			{
+				$arr['rows'][] = array('date' => $row[0], 'load' => Interface_getValueRow($row[1]));
+			}
+			
+			if ($firstTime == 0)
+				$firstTime = $row[0];
+		}
+		
+		$lastTime = $row[0];
+	}
+	
+	Interface_calculateEmptyRows($arr, $type, $firstTime);
+}
 ?>
