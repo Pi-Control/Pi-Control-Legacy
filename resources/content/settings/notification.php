@@ -1,6 +1,9 @@
 <?php
 $tpl = new RainTPL;
 
+$cron = new Cron;
+$cron->setFile('notification');
+
 if (isset($_GET['save']) && isset($_POST['submit']))
 {
     $lastPush = json_decode(getConfigValue('config_notification_last_push'), true);
@@ -12,6 +15,32 @@ if (isset($_GET['save']) && isset($_POST['submit']))
     {
         if (($set_config_notification = setConfigValue('config_notification', (isset($_POST['activate']) && $_POST['activate'] == 'checked' ? 'true' : 'false'))) !== 0)
 			$tpl->msg('red', '', $error_code['0x0047'].$set_config_notification);
+        
+        if (isset($_POST['activate']) && $_POST['activate'] == 'checked')
+        {
+            if ($cron->ifExist() === false)
+            {
+                $cron->setInterval(1);
+                $cron->setSource(TEMP_PATH.'/notification.tmp.php');
+                if ($cron->save() === true)
+                    $tpl->msg('green', '', 'Die Benachrichtigung wurde aktiviert.');
+                else
+                    $tpl->msg('red', '', $error_code['0x0054']);
+            }
+        }
+        else
+        {
+            if ($cron->ifExist() === true)
+            {
+                $cron->readFile();
+                $cron->setInterval($cron->getInterval());
+                if ($cron->delete() === true)
+                    $tpl->msg('green', '', 'Die Benachrichtigung wurde deaktiviert.');
+                else
+                    $tpl->msg('red', '', $error_code['0x0055']);
+            }
+        }
+        
     }
     
     if (isset($_POST['token']))

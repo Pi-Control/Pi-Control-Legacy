@@ -10,7 +10,7 @@ $errors = array();
 if (($set_config_fixed_header = setConfigValue('config_fixed_header', 'true')) !== 0)
 	$errors[] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x2001-'.$set_config_fixed_header;
 
-if (($set_config_notification = setConfigValue('config_notification', 'true')) !== 0)
+if (($set_config_notification = setConfigValue('config_notification', 'false')) !== 0)
 	$errors[] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x2002-'.$set_config_notification;
 
 if (($set_config_notification_token  = setConfigValue('config_notification_token', '\'\'')) !== 0)

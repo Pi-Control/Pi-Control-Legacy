@@ -57,6 +57,8 @@ $error_code['0x0050'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Feh
 $error_code['0x0051'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0051-'; // resources/content/settings/notification.php
 $error_code['0x0052'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0052-'; // resources/content/settings/notification.php
 $error_code['0x0053'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x0053-'; // resources/content/settings/notification.php
+$error_code['0x0054'] = 'Konnte die Benachrichtigung nicht aktivieren! Fehlercode: 0x0054'; // resources/content/settings/notification.php
+$error_code['0x0055'] = 'Konnte die Benachrichtigung nicht deaktivieren! Fehlercode: 0x0055'; // resources/content/settings/notification.php
 
 $error_code['0x1001'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x1001-'; // Platzhalter für Plugin-Fehler
 $error_code['0x1002'] = 'Konnte Wert nicht in Konfigurationsdatei speichern! Fehlercode: 0x1002-'; // Platzhalter für Plugin-Fehler
