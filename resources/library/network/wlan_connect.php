@@ -5,7 +5,8 @@
 if (isset($_POST['interface'], $_POST['ssid'], $_POST['psk']))
 {
 	include_once LIBRARY_PATH.'/main/ssh_connection.php';
-	if ($stream = ssh2_exec($ssh, 'sudo wpa_passphrase "'.escapeshellarg($_POST['ssid']).'" "'.escapeshellarg($_POST['psk']).'" | grep "psk=[[:alnum:]]"'))
+	
+	if ($stream = ssh2_exec($ssh, 'sudo wpa_passphrase '.escapeshellarg($_POST['ssid']).' '.escapeshellarg($_POST['psk']).' | grep "psk=[[:alnum:]]"'))
 	{
 		stream_set_blocking($stream, true);
 		$stream_ssh = stream_get_contents($stream);
@@ -26,10 +27,14 @@ if (isset($_POST['interface'], $_POST['ssid'], $_POST['psk']))
 	$interface_file = deleteInterface($interface_file, $_POST['interface']);
 	
 	$wpa_settings = array();
-	$wpa_settings[] = '	wpa-ssid '.$_POST['ssid'];
+	$wpa_settings[] = 'allow-hotplug '.$_POST['interface'];
+	$wpa_settings[] = 'iface '.$_POST['interface'].' inet dhcp';
+	$wpa_settings[] = '	wpa-ap-scan 1';
+	$wpa_settings[] = '	wpa-scan-ssid 1';
+	$wpa_settings[] = '	wpa-ssid "'.$_POST['ssid'].'"';
 	$wpa_settings[] = '	wpa-psk '.$psk_string;
 	
-	$new_interface = addInterface($interface_file, array('iface '.$_POST['interface'].' inet dhcp'."\n", implode("\n", $wpa_settings)));
+	$new_interface = addInterface($interface_file, array('auto '.$_POST['interface']."\n", implode("\n", $wpa_settings)));
 	
 	if (($interface_status = writeToInterface($ssh, $new_interface)) != 0)
 		echo 'Fehler beim speichern. Fehlercode: '.$interface_status;

@@ -59,7 +59,7 @@ function getInterface($file, $interface, $return_rows = false)
 		if (substr($row, 0, 1) != '#' && $row != '')
 		{
 			if (substr($row, 0, 5) == 'iface')
-			{				
+			{
 				$iface = explode(' ', $row);
 				
 				if ($iface[1] == $interface)
@@ -68,7 +68,7 @@ function getInterface($file, $interface, $return_rows = false)
 					{
 						case 'dhcp':
 						if (substr($iface[1], 0, 4) == 'wlan')
-						{ 
+						{
 							$if_iface = $i;
 							$output = array($iface, array());
 						}
@@ -91,6 +91,20 @@ function getInterface($file, $interface, $return_rows = false)
 							break;
 					}
 				}
+			}
+			elseif (substr($row, 0, 4) == 'auto')
+			{
+				$iface = explode(' ', $row);
+				
+				if ($iface[1] == $interface)
+					$rows[] = $i;
+			}
+			elseif (substr($row, 0, 13) == 'allow-hotplug')
+			{
+				$iface = explode(' ', $row);
+				
+				if ($iface[1] == $interface)
+					$rows[] = $i;
 			}
 			elseif ($if_iface != 0)
 			{
@@ -138,7 +152,7 @@ function getInterface($file, $interface, $return_rows = false)
 }
 
 function addInterface($file, $interface)
-{	
+{
 	return array_merge($file, $interface);
 }
 
