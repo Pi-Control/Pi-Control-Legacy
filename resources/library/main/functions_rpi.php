@@ -289,38 +289,44 @@ function rpi_getAllUsers()
 		return array_pop($args);
 	}
 	
-	exec('/usr/bin/who', $dataLoggedIn);
-	exec('/usr/bin/lastlog | grep -vE "Benutzername|Username"', $dataAll);
+	exec('/usr/bin/who --ips', $dataLoggedIn);
+	exec('/usr/bin/lastlog | grep -vE "Benutzername|Username" | cut -f 1 -d " "', $dataAllUsers);
 	
 	$usersLoggedIn = array();
 	$usersAll = array();
 	
 	foreach ($dataLoggedIn as $row)
 	{
-		$split = preg_split('/(( ){2,}|\(|\))/i', $row);
-		$usersLoggedIn[$split[0]][] = array('port' => $split[1], 'lastLogin' => strtotime($split[2]), 'lastLoginAddress' => $split[3]);
+		$split = preg_split('/\s+/i', $row);
+		$usersLoggedIn[$split[0]][] = array('port' => $split[1], 'lastLogin' => strtotime($split[2].' '.$split[3].' '.$split[4]), 'lastLoginAddress' => $split[5]);
 	}
 	
-	foreach ($dataAll as $row)
+	foreach ($dataAllUsers as $row)
 	{
-		$split = preg_split('/( ){2,}/i', $row);
+		$userLastLoginInformation = '';
+		$userLastLoginInformation = shell_exec('/usr/bin/last -i -f /var/log/wtmp | grep -m 1 "^'.$row.' "');
 		
-		if (count($split) == 4)
+		if ($userLastLoginInformation == '')
+			$userLastLoginInformation = shell_exec('/usr/bin/last -i -f /var/log/wtmp.1 | grep -m 1 "^'.$row.' "');
+		
+		if ($userLastLoginInformation != '')
 		{
-			$usersAll[] = array('username' => $split[0],
+			$split = preg_split('/\s+/i', $userLastLoginInformation);
+			
+			$usersAll[] = array('username' => $row,
 							 'port' => $split[1],
 							 'lastLoginAddress' => $split[2],
-							 'lastLogin' => strtotime($split[3]),
-							 'isLoggedIn' => isset($usersLoggedIn[$split[0]]) ? true : false,
-							 'loggedIn' => $usersLoggedIn[$split[0]]);
+							 'lastLogin' => strtotime($split[4].' '.$split[5].' '.$split[6]),
+							 'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false,
+							 'loggedIn' => $usersLoggedIn[$row]);
 		}
 		else
 		{
-			$usersAll[] = array('username' => $split[0],
+			$usersAll[] = array('username' => $row,
 							 'port' => '-',
 							 'lastLoginAddress' => '-',
 							 'lastLogin' => 'Nie',
-							 'isLoggedIn' => isset($usersLoggedIn[$split[0]]) ? true : false);
+							 'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false);
 		}
 	}
 	
