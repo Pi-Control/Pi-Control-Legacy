@@ -102,6 +102,8 @@ if ($token != '')
         $pushbullet_error = true;
     }
 }
+else
+    $pushbullet_error = true;
 
 $tpl->assign('pushbullet_error', $pushbullet_error);
 $tpl->assign('me', $output_me['name']);
