@@ -37,7 +37,7 @@ function calculateEmptyRows(&$arr, $type, $firstTime)
 							);
 			}
 		}
-		$arr['rows'] = array_merge($buffer, $arr['rows']);
+		$arr['rows'] = array_merge(array_reverse($buffer), $arr['rows']);
 	}
 }
 
