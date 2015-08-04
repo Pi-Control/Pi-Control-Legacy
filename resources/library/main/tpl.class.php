@@ -521,7 +521,7 @@ class PiTpl
 	 */
 	
 	public function showDebug()
-	{		
+	{
 		printf(PHP_EOL.'<!-- DEBUG - Start -->'.PHP_EOL.'	<hr /><p>Ladezeit: %f<br />Fehler: %s</p>'.PHP_EOL.'<!-- DEBUG - End -->'.PHP_EOL, round(microtime(true)-$this->runtimeStart, 5), ($this->ifError) ? 'true' : 'false');
 		
 		return true;
@@ -645,7 +645,7 @@ class PiTpl
 		if ($this->tplSSH === NULL)
 			if (self::loadSSH() !== true)
 				if ($cancelIfError !== 0)
-					return self::error('SSH-Zugriffsfehler', self::_t('Kein SSH-Zugriff, bitte anmelden! <a href="?s=ssh_login">Jetzt anmelden.</a>'), ($cancelIfError === 1) ? false : true);
+					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="?s=ssh_login">Jetzt anmelden.</a>'), ($cancelIfError === 1) ? false : true);
 		
 		if ($this->tplSSH === NULL || ($stream = ssh2_exec($this->tplSSH, $command)) === false)
 			return false;
@@ -705,7 +705,7 @@ class PiTpl
 			$index_uniqid = $config_uniqid;
 		
 		if (isset($index_ssh_port, $index_ssh_username, $index_ssh_pasword))
-		{			
+		{
 			if (isset($_SESSION['ssh']))
 				return array('type' => 'session', 'port' => $index_ssh_port, 'username' => $index_ssh_username);
 			elseif (isset($index_uniqid) && $index_uniqid !== NULL)

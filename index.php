@@ -96,7 +96,8 @@ try
 	{
 		if (isset($_GET['s']) && (!isset($site[$_GET['s']]) || file_exists(CONTENT_PATH.'/'.$site[$_GET['s']]) === false))
 		{
-			$tpl->error('Fehler', 'Leider existiert die angeforderte Seite nicht.');
+			$tpl->setHeaderTitle(_t('Fehler'));
+			$tpl->error(_t('Fehler'), _t('Leider existiert die angeforderte Seite nicht.'));
 		}
 		else
 			include_once CONTENT_PATH.'/overview.php';
