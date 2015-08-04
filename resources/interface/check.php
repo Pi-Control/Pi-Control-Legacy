@@ -1,3 +1,0 @@
-<?php
-fwrite(STDOUT, 'successful');
-?>

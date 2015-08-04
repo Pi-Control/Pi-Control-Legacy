@@ -1,24 +1,27 @@
 <?php
-$tpl = new RainTPL;
+$tpl->setHeaderTitle(_t('Übersicht'));
 
 if (isset($_GET['action']) && !empty($_GET['action']))
 {
-	include_once LIBRARY_PATH.'/main/ssh_connection.php';
 	switch ($_GET['action'])
 	{
 		case 'system_shutdown':
-			ssh2_exec($ssh, 'sudo shutdown -h now');
-			if (!headers_sent($filename, $linenum))
-				exit(header('Location: resources/content/overview_action.php?shutdown'));
+			if (is_array($SSHReturn = $tpl->executeSSH('sudo /sbin/shutdown -h now', true, 1)))
+				list ($SSHError, $SSHOutput) = $SSHReturn;
+			
+			if (empty($SSHError))
+				$tpl->redirect('resources/content/overview_action.php?shutdown');
 			else
-				$tpl->error('Weiterleitung', 'Header bereits gesendet. Redirect nicht m&ouml;glich, klicke daher stattdessen <a href="resources/content/overview_action.php?shutdown">diesen Link</a> an.');
+				$tpl->msg('red', $tpl->_t('Herunterfahren nicht möglich'), nl2br($SSHError));
 				break;
 		case 'system_restart':
-			ssh2_exec($ssh, 'sudo shutdown -r now');
-			if (!headers_sent($filename, $linenum))
-				exit(header('Location: resources/content/overview_action.php?restart'));
+			if (is_array($SSHReturn = $tpl->executeSSH('sudo /sbin/shutdown -r now', true, 1)))
+				list ($SSHError, $SSHOutput) = $SSHReturn;
+			
+			if (empty($SSHError))
+				$tpl->redirect('resources/content/overview_action.php?restart');
 			else
-				$tpl->error('Weiterleitung', 'Header bereits gesendet. Redirect nicht m&ouml;glich, klicke daher stattdessen <a href="resources/content/overview_action.php?restart">diesen Link</a> an.');
+				$tpl->msg('red', $tpl->_t('Neustarten nicht möglich'), nl2br($SSHError));
 				break;
 	}
 }
@@ -26,9 +29,9 @@ if (isset($_GET['action']) && !empty($_GET['action']))
 $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
 
-$tpl->assign('js_variables', 'var reload_timeout = '.(getConfigValue('config_overview_reload_time')*1000).'; var overview_path = \''.str_replace(dirname($_SERVER['SCRIPT_FILENAME']).'/', '', LIBRARY_PATH).'/overview\'');
-$tpl->assign('show_weather', getConfigValue('config_overview_weather'));
-$tpl->assign('weather', (getConfigValue('config_overview_weather') === true) ? getWeather(getConfigValue('config_weather_type'), getConfigValue('config_weather_postcode'), getConfigValue('config_weather_city')) : '');
+$tpl->assign('js_variables', 'var reload_timeout = '.($tpl->getConfig('other.overview_reload_time', 30)*1000).'; var overview_path = \''.str_replace(dirname($_SERVER['SCRIPT_FILENAME']).'/', '', LIBRARY_PATH).'/overview\'');
+$tpl->assign('show_weather', $tpl->getConfig('overview.weather', 'true'));
+$tpl->assign('weather', ($tpl->getConfig('overview.weather') === 'true') ? getWeather($tpl->getConfig('weather.postcode', 00000)) : '');
 $tpl->assign('run_time', getDateFormat(rpi_getRuntime()));
 $tpl->assign('start_time', date('d.m.Y H:i', time() - rpi_getRuntime()));
 $tpl->assign('cpu_clock', rpi_getCpuClock().' MHz');
@@ -37,7 +40,7 @@ $tpl->assign('cpu_type', rpi_getCPUType());
 $tpl->assign('cpu_temp', number_format(rpi_getCoreTemprature(), 2, ',', '').' &deg;C');
 $tpl->assign('ram_percentage', $ram['percent'].'%');
 $tpl->assign('memory', end($memory));
-$tpl->assign('usb_devices', (getConfigValue('config_overview_connected_devices') === true) ? rpi_getUsbDevices() : '');
+$tpl->assign('usb_devices', ($tpl->getConfig('overview.connected_devices', 'true') === 'true') ? rpi_getUsbDevices() : '');
 
 $tpl->draw('overview');
 ?>

@@ -1,11 +1,11 @@
 <?php
 $config = array(
 	'ssh' => array(
-		'ssh_ip'				=> 'localhost'
+		'ssh_ip'				=> $_SERVER['SERVER_ADDR']
 	),
 	'versions' => array(
-		'version'				=> '1.3.2',
-		'versioncode'			=> 15,
+		'version'				=> '2.0',
+		'versioncode'			=> 16,
 		'android_comp_level'	=> 4
 	),
 	'urls' => array(
@@ -25,15 +25,20 @@ $config = array(
 	)
 );
 
-defined('LIBRARY_PATH')		or define('LIBRARY_PATH',	realpath($config['paths']['resources'].'/library/'));
-defined('CONTENT_PATH')		or define('CONTENT_PATH',	realpath($config['paths']['resources'].'/content/'));
-defined('CONFIG_PATH')		or define('CONFIG_PATH',	realpath($config['paths']['resources'].'/config/'));
-defined('PLUGINS_PATH')		or define('PLUGINS_PATH',	realpath($config['paths']['resources'].'/plugins/'));
-defined('UPDATE_PATH')		or define('UPDATE_PATH',	realpath($config['paths']['resources'].'/update/'));
-defined('TEMPLATES_PATH')	or define('TEMPLATES_PATH',	realpath(dirname(__FILE__).'/../public_html/templates/'));
-defined('TEMP_PATH')		or define('TEMP_PATH',		realpath($config['paths']['resources'].'/temp/'));
-defined('LOG_PATH')			or define('LOG_PATH',		realpath($config['paths']['resources'].'/log/'));
-defined('CRON_PATH')		or define('CRON_PATH',		realpath($config['paths']['resources'].'/cron/'));
+defined('RESOURCE_PATH')	or define('RESOURCE_PATH',	realpath($config['paths']['resources']).'/');
+defined('LIBRARY_PATH')		or define('LIBRARY_PATH',	realpath($config['paths']['resources'].'/library/').'/');
+defined('CONTENT_PATH')		or define('CONTENT_PATH',	realpath($config['paths']['resources'].'/content/').'/');
+defined('CONFIG_PATH')		or define('CONFIG_PATH',	realpath($config['paths']['resources'].'/config/').'/');
+defined('PLUGINS_PATH')		or define('PLUGINS_PATH',	realpath($config['paths']['resources'].'/plugins/').'/');
+defined('UPDATE_PATH')		or define('UPDATE_PATH',	realpath($config['paths']['resources'].'/update/').'/');
+defined('TEMPLATES_PATH')	or define('TEMPLATES_PATH',	realpath(dirname(__FILE__).'/../public_html/templates/').'/');
+defined('TEMP_PATH')		or define('TEMP_PATH',		realpath($config['paths']['resources'].'/temp/').'/');
+defined('LOG_PATH')			or define('LOG_PATH',		realpath($config['paths']['resources'].'/log/').'/');
+defined('CRON_PATH')		or define('CRON_PATH',		realpath($config['paths']['resources'].'/cron/').'/');
+defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath($config['paths']['resources'].'/languages/').'/');
+
+$globalLanguage				= 'de';
+
 
 if (isset($_GET['debug']))
 {
@@ -55,7 +60,7 @@ function myErrorHandler($code, $msg, $file, $line)
 	if (isset($_COOKIE['debug']) && $_COOKIE['debug'] == 'debug_mode')
 		return false;
 	else
-		return true;
+		return false; // true
 }
 
 error_reporting(E_ALL ^ E_STRICT);

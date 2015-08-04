@@ -1,12 +1,10 @@
 <?php
-$tpl = new RainTPL;
-
 $interfaces_config_error = false;
 
 if (!($interface_file = file('/etc/network/interfaces')))
 	$interfaces_config_error = true;
 
-include_once LIBRARY_PATH.'/network/network_functions.php';
+include_once LIBRARY_PATH.'network/network.function.php';
 
 if (isset($_GET['new']) && $_GET['new'] == '' && $interfaces_config_error != true) // Interface hinzufügen
 {
@@ -104,7 +102,7 @@ elseif (isset($_GET['delete']) && $_GET['delete'] != '' && $interfaces_config_er
 {
 	$new_interface_file = deleteInterface($interface_file, $_GET['delete']);
 	
-	include_once LIBRARY_PATH.'/main/ssh_connection.php';
+	$ssh = $tpl->getSSHResource();
 	if (writeToInterface($ssh, $new_interface_file) === 0)
 	{
 		if (!headers_sent($filename, $linenum))
