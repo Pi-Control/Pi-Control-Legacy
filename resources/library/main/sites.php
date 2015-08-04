@@ -8,6 +8,8 @@ $site = array(
 	'statistic' => 'statistic.php',
 	'plugins' => 'plugins.php',
 	'plugin_search' => 'plugin_search.php',
-	'settings' => 'settings.php'
+	'settings' => 'settings.php',
+	'ssh_login' => 'ssh_login.php',
+	'terminal' => 'terminal.php'
 );
 ?>
