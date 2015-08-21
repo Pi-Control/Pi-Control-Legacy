@@ -6,10 +6,15 @@
 			<?php echo showGoBackIcon('?s=network'); ?>
 		</div>
 		<form action="?s=network&amp;hostname=save" method="post">
-			<div class="inner-bottom">
-				<strong>Hostname:</strong> <input type="text" name="hostname" value="<?php echo $data['hostname']; ?>" />
+			<div class="inner-table">
+				<table class="table table-borderless table-form">
+					<tr>
+						<td>Hostname</td>
+						<td><input type="text" name="hostname" value="<?php echo $data['hostname']; ?>" /></td>
+					</tr>
+				</table>
 			</div>
-			<div class="inner">
+			<div class="inner-end">
 				<input type="submit" name="submit" value="Speichern" />
 			</div>
 		</form>

@@ -3,10 +3,8 @@
 <!-- Sidebar -->
 <div class="sidebar">
 	<div class="box">
-		<div class="inner-bottom sidebar_navi padding-0">
+		<div class="inner-navi">
 			<a href="?s=network">Übersicht</a>
-		</div>
-		<div class="inner sidebar_navi padding-0">
 			<a href="?s=network_configuration">Konfiguration</a>
 		</div>
 	</div>
@@ -26,12 +24,12 @@
 			<span>Netzwerkkonfiguration</span>
 		</div>
 <?php if ($data['interface_loopback'] <= 1) { ?>
-		<div class="inner-bottom">
+		<div class="inner">
 			<strong class="red">Es wurde ein Problem in der Konfigurationsdatei festgestellt. Die Datei ist womöglich nicht richtig konfiguriert. Daher kann es zu Problemen kommen.</strong>
 		</div>
 <?php } ?>
-		<div class="inner-bottom">
-			<table class="table">
+		<div class="inner-table">
+			<table class="table table-borderless">
 				<tr>
 					<th style="width: 45%;">Interface</th>
 					<th style="width: 20%;">Protokoll</th>
@@ -48,7 +46,7 @@
 <?php } ?>
 			</table>
 		</div>
-		<div class="inner">
+		<div class="inner-end">
 			<a href="?s=network_configuration&amp;new"><button>Hinzufügen</button></a>
 		</div>
 	</div>

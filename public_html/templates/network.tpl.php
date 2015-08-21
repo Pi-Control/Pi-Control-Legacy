@@ -1,10 +1,8 @@
 <!-- Sidebar -->
 <div class="sidebar">
 	<div class="box">
-		<div class="inner-bottom sidebar_navi padding-0">
+		<div class="inner-navi">
 			<a href="?s=network"><?php _e('Übersicht'); ?></a>
-		</div>
-		<div class="inner sidebar_navi padding-0">
 			<a href="?s=network_configuration"><?php _e('Konfiguration'); ?></a>
 		</div>
 	</div>
@@ -12,8 +10,8 @@
 		<div class="inner-header">
 			<span><?php _e('Traffic'); ?></span>
 		</div>
-		<div class="inner">
-			<table class="table">
+		<div class="inner-table">
+			<table class="table table-borderless">
 				<tr>
 					<th style="width: 20%;"><?php _e('Interface'); ?></th>
 					<th style="width: 40%;"><?php _e('Gesendet'); ?></th>
@@ -33,10 +31,10 @@
 		<div class="inner-header">
 			<span><?php _e('Hostname'); ?></span>
 		</div>
-		<div class="inner-bottom justify">
+		<div class="inner justify">
 			<?php _e('Dein Raspberry Pi wird im Netzwerk unter folgendem Namen angezeigt: <strong>%s</strong>', $data['hostname']); ?>
 		</div>
-		<div class="inner">
+		<div class="inner-end">
 			<a href="?s=network&amp;hostname"><button><?php _e('Ändern'); ?></button></a>
 		</div>
 	</div>
@@ -47,8 +45,8 @@
 		<div class="inner-header">
 			<span><?php _e('Netzwerk'); ?></span>
 		</div>
-		<div class="inner">
-			<table class="table">
+		<div class="inner-table">
+			<table class="table table-borderless">
 					<tr>
 						<th style="width: 2%;"></th>
 						<th style="width: 10%;"><?php _e('Interface'); ?></th>
@@ -60,7 +58,7 @@
 						<td>
 	<?php if (isset($value['option']['signal'])) { echo getImageFromSignal($value['option']['signal']); } else {
 			if ($value['ip'] != 0) { ?>
-							<img src="public_html/img/nm_signal_100.png" />
+							<img src="public_html/img/nm_signal_wire.png" />
 		<?php } else { ?>
 							<img src="public_html/img/nm_signal_disable.png" />
 	<?php } } ?></td>
@@ -77,8 +75,8 @@
 		<div class="inner-header">
 			<span><?php echo $key; ?></span>
 		</div>
-		<div class="inner">
-			<table class="table">
+		<div class="inner-table">
+			<table class="table table-borderless responsive-network-wlan-table">
 				<tr>
 					<th style="width: 1%;"></th>
 					<th style="width: 52%;"><?php _e('Netzwerkname'); ?></th>
@@ -104,4 +102,4 @@
 	</div>
 <?php } ?>
 </div>
-<div class="clear_both"></div>
+<div class="clear-both"></div>

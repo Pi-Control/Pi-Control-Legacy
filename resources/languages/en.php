@@ -54,7 +54,7 @@ $langArray = array(
 	'Netzwerkname' => 'Networkname',
 	'Sicherheit' => 'Security',
 	'Kanal' => 'Channel',
-	'Keine WLAN-Netzwerke gefunden. <a href="?s=network&amp;refresh_wlan=%s">Erneut suchen.</a>' => 'Founded no WLAN-APs. <a href="?s=network&amp;refresh_wlan=%s">Search again.</a>',
+	'Keine WLAN-Netzwerke gefunden. <a href="?s=network&amp;refresh_wlan=%s">Erneut suchen.</a>' => 'No WLAN-APs founded. <a href="?s=network&amp;refresh_wlan=%s">Search again.</a>',
 	'Dateiname "%s" ist ungültig.' => 'Filename "%s" is invalid.',
 	'Datei "%s" existiert nicht oder ist keine gültige Datei.' => 'File "%s" does not exists or is not a valid file.',
 	'Konnte Datei "%s" nicht öffnen und auslesen.' => 'Could not open and read file "%s".',

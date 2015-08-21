@@ -37,7 +37,7 @@ defined('LOG_PATH')			or define('LOG_PATH',		realpath($config['paths']['resource
 defined('CRON_PATH')		or define('CRON_PATH',		realpath($config['paths']['resources'].'/cron/').'/');
 defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath($config['paths']['resources'].'/languages/').'/');
 
-$globalLanguage				= 'en';
+$globalLanguage				= 'de';
 
 
 if (isset($_GET['debug']))

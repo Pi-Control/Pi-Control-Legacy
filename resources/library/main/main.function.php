@@ -349,7 +349,7 @@ function getImageFromSignal($signal)
 }
 
 function getAllNetworkConnections()
-{	
+{
 	$shell_string = '';
 	$output = array();
 	
@@ -498,12 +498,12 @@ function urlIsPublic($url)
 
 function showSettingsIcon($url)
 {
-	echo '<a href="'.$url.'" style="float: right; padding: 4px;"><img src="public_html/img/settings_icon.png" alt="'._t('Einstellungen').'" title="'._t('Einstellungen').'" /></a>';
+	echo '<a href="'.$url.'" class="settings-shortcut-icon"><img src="public_html/img/gear-16.png" alt="'._t('Einstellungen').'" title="'._t('Einstellungen').'" /></a>'.PHP_EOL;
 }
 
 function showGoBackIcon($url)
 {
-	echo '<a href="'.$url.'" style="float: right; padding: 4px;"><img src="public_html/img/go_back_icon.png" alt="Zurück" title="Zurück" /></a>';
+	echo '<a href="'.$url.'" class="go-back-icon"><img src="public_html/img/go_back_icon2.png" alt="'._t('Zurück').'" title="'._t('Zurück').'" /></a>';
 }
 
 function getDirectory($folder_)
@@ -526,7 +526,7 @@ function getDirectory($folder_)
 	}
 	
 	if (isset($folderArray))
-		foreach ($folderArray as $row)	
+		foreach ($folderArray as $row)
 			$folder[] = $row;
 	
 	if (isset($fileArray))

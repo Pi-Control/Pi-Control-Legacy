@@ -1,5 +1,5 @@
 <script type="text/javascript">{$js_variables}</script>
-<script type="text/javascript" src="public_html/js/overview_status_reload.js"></script>
+<script type="text/javascript" src="public_html/js/overview.status_refresh.js"></script>
 <!-- Sidebar -->
 <div class="sidebar">
 	<div class="box">
@@ -7,7 +7,13 @@
 			<span><?php _e('System'); ?></span>
 		</div>
 		<div class="inner">
-			<a href="?action=system_restart" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich neustarten?'); ?>') == false) ? false : true);"><button class="system_restart"><?php _e('Neustarten'); ?></button></a><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></a>
+			<table class="table-overview-system">
+				<tr>
+					<td><a href="?action=system_restart" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich neustarten?'); ?>') == false) ? false : true);"><button><?php _e('Neustarten'); ?></button></td>
+					<td></td>
+					<td><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 <?php if ($data['show_weather'] === true) { ?>
@@ -48,87 +54,32 @@
 			<span><?php _e('Übersicht'); ?></span>
 			<?php showSettingsIcon('?s=settings&amp;do=overview'); ?>
 		</div>
-		<div class="inner">
-			<table class="table _status">
-				<tr>
-					<th><?php _e('Information'); ?></th>
-					<th colspan="2"><?php _e('Wert'); ?> <a href="#reload" title="<?php _e('Aktualisieren'); ?>"><img src="public_html/img/refresh.png" class="overview_status_refresh" width="12" alt="<?php _e('Aktualisieren'); ?>" /></a></th>
-				</tr>
-				<tr>
-					<td class="width-50"><?php _e('Laufzeit'); ?> / <?php _e('Startzeit'); ?></td>
-					<td class="width-25"><?php echo $data['run_time']; ?></td>
-					<td class="width-25"><?php echo $data['start_time']; ?></td>
-				</tr>
-				<tr>
-					<td><?php _e('CPU-Takt'); ?></td>
-					<td colspan="2"><?php echo $data['cpu_clock']; ?></td>
-				</tr>
-				<tr>
-					<td><?php _e('CPU-Auslastung'); ?></td>
-					<td colspan="2" class="padding-0">
-						<div class="overview_status_td">
-							<div class="progress">
-								<div style="width: <?php echo $data['cpu_load']; ?>;"></div>
-								<div><?php echo $data['cpu_load']; ?></div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td><?php _e('CPU-Typ'); ?></td>
-					<td colspan="2"><?php echo $data['cpu_type']; ?></td>
-				</tr>
-				<tr>
-					<td><?php _e('CPU-Temperatur'); ?></td>
-					<td colspan="2"><?php echo $data['cpu_temp']; ?></td>
-				</tr>
-				<tr>
-					<td><?php _e('RAM'); ?></td>
-					<td colspan="2" class="padding-0">
-						<div class="overview_status_td">
-							<div class="progress">
-								<div style="width: <?php echo $data['ram_percentage']; ?>;"></div>
-								<div><?php echo $data['ram_percentage']; ?></div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td><?php _e('Speicher belegt / frei'); ?></td>
-					<td><?php echo sizeUnit($data['memory']['used']); ?></td>
-					<td><?php echo sizeUnit($data['memory']['free']); ?></td>
-				</tr>
-				<tr>
-					<td><?php _e('Gesamtspeicher'); ?></td>
-					<td colspan="2"><?php echo sizeUnit($data['memory']['total']); ?></td>
-				</tr>
-				<tr>
-					<td colspan="3" class="padding-0">
-						<div class="overview_status_td">
-							<div class="progress">
-								<div style="width: <?php echo $data['memory']['percent']; ?>%;"></div>
-								<div><?php echo $data['memory']['percent']; ?>%</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<div class="overview_status_reload_bar"></div>
-			<div class="overview_display_more">
-				<a href="?s=detailed_overview"><?php _e('Mehr anzeigen'); ?></a>
-			</div>
+		<div class="inner flex-container">
+			<div class="flex-box-refresh"><div><div class="refresh-bar"></div></div><a href="#refresh"><img src="public_html/img/refresh-16.png" title="<?php _e('Aktualisieren'); ?>" /></a></div>
+			<div class="flex-box"><strong><?php _e('Startzeit'); ?></strong><?php echo $data['start_time']; ?></div>
+			<div class="flex-box"><strong><?php _e('Laufzeit'); ?></strong><?php echo $data['run_time']; ?></div>
+			<div class="flex-box"><strong><?php _e('CPU-Takt'); ?></strong><?php echo $data['cpu_clock']; ?></div>
+			<div class="flex-box"><strong><?php _e('CPU-Auslastung'); ?></strong><div class="progressbar"><div style="width: <?php echo $data['cpu_load']; ?>;"><?php echo $data['cpu_load']; ?></div></div></div>
+			<div class="flex-box"><strong><?php _e('CPU-Temperatur'); ?></strong><?php echo $data['cpu_temp']; ?></div>
+			<div class="flex-box"><strong><?php _e('RAM'); ?></strong><div class="progressbar"><div style="width: <?php echo $data['ram_percentage']; ?>;"><?php echo $data['ram_percentage']; ?></div></div></div>
+			<div class="flex-box"><strong>Speicher belegt</strong><?php echo sizeUnit($data['memory']['used']); ?></div>
+			<div class="flex-box"><strong>Speicher frei</strong><?php echo sizeUnit($data['memory']['free']); ?></div>
+			<div class="flex-box"><strong><?php _e('Gesamtspeicher'); ?></strong><?php echo sizeUnit($data['memory']['total']); ?></div>
+		</div>
+		<div class="inner text-align-center">
+			<a class="show-more" href="?s=detailed_overview"><?php _e('Mehr anzeigen'); ?></a>
 		</div>
 	</div>
 </div>
-<div class="clear_both"></div>
+<div class="clear-both"></div>
 <?php if (is_array($data['usb_devices'])) { ?>
 <div>
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Angeschlossene Geräte'); ?></span>
 		</div>
-		<div class="inner">
-			<table class="table">
+		<div class="inner-table">
+			<table class="table table-borderless">
 				<tr>
 					<th style="width: 100%;"><?php _e('Bezeichnung'); ?></th>
 				</tr>
