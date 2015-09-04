@@ -16,29 +16,22 @@ $config = array(
 		'pluginDownloadUrl'		=> 'http://picontrol.willy-tech.de/web/1-0/plugins/',
 		'tempMonitoringUrl'		=> 'http://picontrol.willy-tech.de/web/1-0/?s=temp_mail_',
 		'helpUrl'				=> 'http://picontrol.willy-tech.de/web/1-0/?s=help'
-	),
-	'paths' => array(
-		'main'					=> realpath(dirname(__FILE__).'/../'),
-		'resources'				=> realpath(dirname(__FILE__)),
-		'images'				=> realpath(dirname(__FILE__).'/../public_html/img/'),
-		'install'				=> realpath(dirname(__FILE__).'/../install/')
 	)
 );
 
-defined('RESOURCE_PATH')	or define('RESOURCE_PATH',	realpath($config['paths']['resources']).'/');
-defined('LIBRARY_PATH')		or define('LIBRARY_PATH',	realpath($config['paths']['resources'].'/library/').'/');
-defined('CONTENT_PATH')		or define('CONTENT_PATH',	realpath($config['paths']['resources'].'/content/').'/');
-defined('CONFIG_PATH')		or define('CONFIG_PATH',	realpath($config['paths']['resources'].'/config/').'/');
-defined('PLUGINS_PATH')		or define('PLUGINS_PATH',	realpath($config['paths']['resources'].'/plugins/').'/');
-defined('UPDATE_PATH')		or define('UPDATE_PATH',	realpath($config['paths']['resources'].'/update/').'/');
+defined('RESOURCE_PATH')	or define('RESOURCE_PATH',	realpath(dirname(__FILE__)).'/');
+defined('LIBRARY_PATH')		or define('LIBRARY_PATH',	realpath(dirname(__FILE__).'/library/').'/');
+defined('CONTENT_PATH')		or define('CONTENT_PATH',	realpath(dirname(__FILE__).'/content/').'/');
+defined('CONFIG_PATH')		or define('CONFIG_PATH',	realpath(dirname(__FILE__).'/config/').'/');
+defined('PLUGINS_PATH')		or define('PLUGINS_PATH',	realpath(dirname(__FILE__).'/plugins/').'/');
+defined('UPDATE_PATH')		or define('UPDATE_PATH',	realpath(dirname(__FILE__).'/update/').'/');
 defined('TEMPLATES_PATH')	or define('TEMPLATES_PATH',	realpath(dirname(__FILE__).'/../public_html/templates/').'/');
-defined('TEMP_PATH')		or define('TEMP_PATH',		realpath($config['paths']['resources'].'/temp/').'/');
-defined('LOG_PATH')			or define('LOG_PATH',		realpath($config['paths']['resources'].'/log/').'/');
-defined('CRON_PATH')		or define('CRON_PATH',		realpath($config['paths']['resources'].'/cron/').'/');
-defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath($config['paths']['resources'].'/languages/').'/');
+defined('TEMP_PATH')		or define('TEMP_PATH',		realpath(dirname(__FILE__).'/temp/').'/');
+defined('LOG_PATH')			or define('LOG_PATH',		realpath(dirname(__FILE__).'/log/').'/');
+defined('CRON_PATH')		or define('CRON_PATH',		realpath(dirname(__FILE__).'/cron/').'/');
+defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath(dirname(__FILE__).'/languages/').'/');
 
 $globalLanguage				= 'de';
-
 
 if (isset($_GET['debug']))
 {
