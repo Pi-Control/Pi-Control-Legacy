@@ -742,3 +742,52 @@ input[name=ssh-login]:checked + label .inner-table .ssh-login-table-clickable-ar
     width: 60px;
     text-align: center;
 }
+
+/* LOGIN */
+
+.login-body {
+    background: <?php echo $colorPallet[6]; ?>; /* 7 */
+}
+
+.login-wrapper {
+    width: 300px;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.login-logo {
+    background: url('../img/logo.png') center bottom no-repeat;
+    background-size: 60% auto;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.login-table {
+    width: 100%;
+    padding: 10px;
+}
+
+input.login-input-text {
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 15px;
+    background: <?php echo $colorPallet[8]; ?>;
+    border: 1px solid <?php echo $colorPallet[8]; ?>;
+    color: #FFFFFF;
+}
+
+input.login-input-text:focus  {
+    border: 1px solid <?php echo $colorPallet[9]; ?>;
+}
+
+input.login-input-button {
+    background: none;
+    color: <?php echo $colorPallet[1]; ?>;
+    border: 1px solid <?php echo $colorPallet[3]; ?>;
+    padding: 10px 20px 10px 20px;
+}
