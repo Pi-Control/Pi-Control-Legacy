@@ -498,7 +498,7 @@ function urlIsPublic($url)
 
 function showSettingsIcon($url)
 {
-	echo '<a href="'.$url.'" class="settings-shortcut-icon"><img src="public_html/img/gear-16.png" alt="'._t('Einstellungen').'" title="'._t('Einstellungen').'" /></a>'.PHP_EOL;
+	echo '<a href="'.$url.'" class="settings-shortcut-icon"><img src="public_html/img/gear.svg" alt="'._t('Einstellungen').'" title="'._t('Einstellungen').'" /></a>'.PHP_EOL;
 }
 
 function showGoBackIcon($url)

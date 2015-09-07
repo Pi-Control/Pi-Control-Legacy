@@ -55,7 +55,7 @@
 			<?php showSettingsIcon('?s=settings&amp;do=overview'); ?>
 		</div>
 		<div class="inner flex-container">
-			<div class="flex-box-refresh"><div><div class="refresh-bar"></div></div><a href="#refresh"><img src="public_html/img/refresh-16.png" title="<?php _e('Aktualisieren'); ?>" /></a></div>
+			<div class="flex-box-refresh"><div><div class="refresh-bar"></div></div><a href="#refresh"><img src="public_html/img/refresh.svg" title="<?php _e('Aktualisieren'); ?>" /></a></div>
 			<div class="flex-box"><strong><?php _e('Startzeit'); ?></strong><?php echo $data['start_time']; ?></div>
 			<div class="flex-box"><strong><?php _e('Laufzeit'); ?></strong><?php echo $data['run_time']; ?></div>
 			<div class="flex-box"><strong><?php _e('CPU-Takt'); ?></strong><?php echo $data['cpu_clock']; ?></div>
