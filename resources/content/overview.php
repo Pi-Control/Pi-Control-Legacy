@@ -29,9 +29,9 @@ if (isset($_GET['action']) && !empty($_GET['action']))
 $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
 
-$tpl->assign('js_variables', 'var reload_timeout = '.($tpl->getConfig('other.overview_reload_time', 30)*1000).'; var overview_path = \''.str_replace(dirname($_SERVER['SCRIPT_FILENAME']).'/', '', LIBRARY_PATH).'/overview\'');
-$tpl->assign('show_weather', $tpl->getConfig('overview.weather', 'true'));
-$tpl->assign('weather', ($tpl->getConfig('overview.weather') === 'true') ? getWeather($tpl->getConfig('weather.postcode', 00000)) : '');
+$tpl->assign('js_variables', 'var reload_timeout = '.($tpl->getConfig('main:other.overview_reload_time', 30)*1000).'; var overview_path = \''.str_replace(dirname($_SERVER['SCRIPT_FILENAME']).'/', '', LIBRARY_PATH).'/overview\'');
+$tpl->assign('show_weather', $tpl->getConfig('main:overview.weather', 'true'));
+$tpl->assign('weather', ($tpl->getConfig('main:overview.weather') === 'true') ? getWeather($tpl->getConfig('main:weather.postcode', 00000)) : '');
 $tpl->assign('run_time', getDateFormat(rpi_getRuntime()));
 $tpl->assign('start_time', date('d.m.Y H:i', time() - rpi_getRuntime()));
 $tpl->assign('cpu_clock', rpi_getCpuClock().' MHz');
@@ -40,7 +40,7 @@ $tpl->assign('cpu_type', rpi_getCPUType());
 $tpl->assign('cpu_temp', number_format(rpi_getCoreTemprature(), 2, ',', '').' &deg;C');
 $tpl->assign('ram_percentage', $ram['percent'].'%');
 $tpl->assign('memory', end($memory));
-$tpl->assign('usb_devices', ($tpl->getConfig('overview.connected_devices', 'true') === 'true') ? rpi_getUsbDevices() : '');
+$tpl->assign('usb_devices', ($tpl->getConfig('main:overview.connected_devices', 'true') === 'true') ? rpi_getUsbDevices() : '');
 
 $tpl->draw('overview');
 ?>

@@ -13,10 +13,18 @@
 
 function setConfig($config, $value, $customFile = NULL)
 {
-	$configFile = CONFIG_PATH.'/config.ini.php'; // Standard-Konfig
+	$configPath = CONFIG_PATH;
+	$configFileSuffix = '.config.ini.php'; // Standard-Konfig
 	
 	if ($customFile !== NULL)
-		$configFile = $customFile;
+		$configPath = $customFile;
+	
+	$file = explode(':', $config);
+	
+	if (count($file) != 2)
+		return false;
+	
+	$configFile = $configPath.$file[0].$configFileSuffix;
 	
 	if (file_exists($configFile) !== true || is_file($configFile) !== true)
 		return false;
@@ -26,7 +34,7 @@ function setConfig($config, $value, $customFile = NULL)
 	if (!strlen($config) > 0 || !is_string($config))
 		return false;
 	
-	$var = explode('.', $config);
+	$var = explode('.', $file[1]);
 	
 	if (count($var) != 2)
 		return false;
@@ -48,10 +56,18 @@ function setConfig($config, $value, $customFile = NULL)
 
 function getConfig($config, $default = NULL, $customFile = NULL)
 {
-	$configFile = CONFIG_PATH.'/config.ini.php'; // Standard-Konfig
+	$configPath = CONFIG_PATH;
+	$configFileSuffix = '.config.ini.php'; // Standard-Konfig
 	
 	if ($customFile !== NULL)
-		$configFile = $customFile;
+		$configPath = $customFile;
+	
+	$file = explode(':', $config);
+	
+	if (count($file) != 2)
+		return $default;
+	
+	$configFile = $configPath.$file[0].$configFileSuffix;
 	
 	if (file_exists($configFile) !== true || is_file($configFile) !== true)
 		return $default;
@@ -64,7 +80,7 @@ function getConfig($config, $default = NULL, $customFile = NULL)
 	if (!count($configArray) > 0)
 		return $default;
 		
-	$var = explode('.', $config);
+	$var = explode('.', $file[1]);
 	
 	if (count($var) != 2)
 		return $default;
@@ -93,13 +109,13 @@ function writeConfig($configArray, $configFile)
 	{
 		if (is_array($val))
 		{
-			$res[] = "\r\n[$key]";
+			$res[] = PHP_EOL."[$key]";
 			
 			foreach ($val as $skey => $sval)
 				$res[] = "$skey = ".(is_numeric($sval) ? $sval : '"'.$sval.'"');
 		}
 		else
-			$res[] = "\r\n$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
+			$res[] = PHP_EOL."$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
 	}
 	
 	$res[] = ';?>';
@@ -122,7 +138,7 @@ function writeConfig($configArray, $configFile)
 		// file was locked so now we can store information
 		if ($canWrite)
 		{
-			fwrite($fp, implode("\r\n", $res));
+			fwrite($fp, implode(PHP_EOL, $res));
 			flock($fp, LOCK_UN);
 		}
 		fclose($fp);

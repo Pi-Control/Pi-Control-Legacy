@@ -15,7 +15,8 @@ class PiTpl
 	// Pfade
 	private $tplFolderPath = 'public_html/templates/';
 	private $tplFileSuffix = '.tpl.php';
-	private $tplConfigPath = 'config/config.ini.php';
+	private $tplConfigs = array('main', 'cron');
+	private $tplConfigSuffix = '.config.ini.php';
 	private $tplLanguagePath = 'resources/languages/';
 	
 	// Laufzeit
@@ -54,10 +55,12 @@ class PiTpl
 	function __construct()
 	{
 		$this->runtimeStart = microtime(true);
-		$this->tplConfigPath = RESOURCE_PATH.$this->tplConfigPath;
 		
-		if (file_exists($this->tplConfigPath) === true && is_file($this->tplConfigPath) === true)
-			$this->tplConfigArray = parse_ini_file($this->tplConfigPath, true);
+		foreach ($this->tplConfigs as $configFile)
+		{
+			if (file_exists(CONFIG_PATH.$configFile.$this->tplConfigSuffix) === true && is_file(CONFIG_PATH.$configFile.$this->tplConfigSuffix) === true)
+				$this->tplConfigArray[$configFile] = parse_ini_file(CONFIG_PATH.$configFile.$this->tplConfigSuffix, true);
+		}
 	}
 	
 	/**
@@ -155,16 +158,19 @@ class PiTpl
 		if (!strlen($config) > 0 || !is_string($config))
 			return false;
 		
-		$var = explode('.', $config);
+		$file = explode(':', $config);
+		
+		if (count($file) != 2)
+			return false;
+		
+		$var = explode('.', $file[1]);
 		
 		if (count($var) != 2)
 			return false;
 		
-		$this->tplConfigArray[$var[0]][$var[1]] = $value;
+		$this->tplConfigArray[$file[0]][$var[0]][$var[1]] = $value;
 		
-		writeConfig($this->tplConfigArray, $this->tplConfigPath);
-		
-		return true;
+		return writeConfig($this->tplConfigArray[$file[0]], CONFIG_PATH.$file[0].$this->tplConfigSuffix);
 	}
 	
 	/**
@@ -184,16 +190,21 @@ class PiTpl
 		
 		if (!count($this->tplConfigArray) > 0)
 			return $default;
-			
-		$var = explode('.', $config);
+		
+		$file = explode(':', $config);
+		
+		if (count($file) != 2)
+			return $default;
+		
+		$var = explode('.', $file[1]);
 		
 		if (count($var) != 2)
 			return $default;
 		
-		if (!isset($this->tplConfigArray[$var[0]][$var[1]]))
+		if (!isset($this->tplConfigArray[$file[0]][$var[0]][$var[1]]))
 			return $default;
-				
-		return $this->tplConfigArray[$var[0]][$var[1]];
+		
+		return $this->tplConfigArray[$file[0]][$var[0]][$var[1]];
 	}
 	
 	/**
