@@ -91,6 +91,41 @@ function getConfig($config, $default = NULL, $customFile = NULL)
 	return $configArray[$var[0]][$var[1]];
 }
 
+function removeConfig($config, $customFile = NULL)
+{
+	$configPath = CONFIG_PATH;
+	$configFileSuffix = '.config.ini.php'; // Standard-Konfig
+	
+	if ($customFile !== NULL)
+		$configPath = $customFile;
+	
+	$file = explode(':', $config);
+	
+	if (count($file) != 2)
+		return false;
+	
+	$configFile = $configPath.$file[0].$configFileSuffix;
+	
+	if (file_exists($configFile) !== true || is_file($configFile) !== true)
+		return false;
+	
+	$configArray = parse_ini_file($configFile, true);
+	
+	if (!strlen($config) > 0 || !is_string($config))
+		return false;
+	
+	$var = explode('.', $file[1]);
+	
+	if (count($var) == 1)
+		unset($configArray[$var[0]]);
+	elseif (count($var) == 2)
+		unset($configArray[$var[0]][$var[1]]);
+	else
+		return false;
+	
+	return writeConfig($configArray, $configFile);
+}
+
 /**
  * Schreibt Konfig-Ini-Datei mit neuen Werten.
  *
@@ -794,5 +829,23 @@ function array_sort($array, $on, $order = SORT_ASC)
 	}
 	
 	return $new_array;
+}
+
+function generateUniqId($length = 16)
+{
+	$random1 = rand(1, 1000);
+	$random2 = rand(1, 1000);
+	$random3 = rand(1, 1000);
+	
+	$random11 = 'random'.rand(1, 3);
+	$random12 = 'random'.rand(1, 3);
+	$random13 = 'random'.rand(1, 3);
+	
+	$random = md5($$random11 - $$random12 + $$random13);
+	$microtime = md5(microtime(true));
+
+	$uniqid = strtoupper(substr(md5($random.$microtime.uniqid()), 0, $length));
+	
+	return $uniqid;
 }
 ?>

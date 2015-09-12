@@ -207,6 +207,28 @@ class PiTpl
 		return $this->tplConfigArray[$file[0]][$var[0]][$var[1]];
 	}
 	
+	public function removeConfig($config)
+	{
+		if (!strlen($config) > 0 || !is_string($config))
+			return false;
+		
+		$file = explode(':', $config);
+		
+		if (count($file) != 2)
+			return false;
+		
+		$var = explode('.', $file[1]);
+		
+		if (count($var) == 1)
+			unset($this->tplConfigArray[$file[0]][$var[0]]);
+		elseif (count($var) == 2)
+			unset($this->tplConfigArray[$file[0]][$var[0]][$var[1]]);
+		else
+			return false;
+		
+		return writeConfig($this->tplConfigArray[$file[0]], CONFIG_PATH.$file[0].$this->tplConfigSuffix);
+	}
+	
 	/**
 	 * Übergibt dem TPL-System eine Variable
 	 *
