@@ -46,6 +46,7 @@
 	                    <td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="Anmelden" /></td>
 	                </tr>
 	            </table>
+				<input type="hidden" name="referer" value="<?php echo $data['referer']; ?>" />
 			</form>
     </div>
 	<div style="position: absolute; bottom: 0; left: 0; right: 0; margin: auto; width: 300px; text-align: center; padding-bottom: 5px; font-size: 11px; color: #1565C0;">Entwickelt von Willy Fritzsche. 2013-2015.<br />

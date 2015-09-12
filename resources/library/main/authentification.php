@@ -8,7 +8,12 @@ if (!isset($_SESSION['token']))
         die($authentificationMsg);
     else
     {
-        header('Location: ?i=login');
+        $referer = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+        
+        if ($referer != '')
+            $referer = '&referer='.urlencode($referer);
+        
+        header('Location: ?i=login'.$referer);
         exit();
     }
 }

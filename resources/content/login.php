@@ -17,6 +17,12 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
     if ($pUsername != '' && $pPassword != '')
     {
         $_SESSION['token'] = 'gesetzt';
+        
+        if (isset($_REQUEST['referer']) && $_REQUEST['referer'] != '')
+        {
+            header('Location: ?'.urldecode($_POST['referer']));
+            exit();
+        }
     }
 }
 
@@ -25,6 +31,9 @@ if (isset($_GET['logout']))
     unset($_SESSION['token']);
     session_destroy();
 }
+
+if (isset($_REQUEST['referer']))
+    $tpl->assign('referer', isset($_REQUEST['referer']) ? urlencode($_REQUEST['referer']) : '');
 
 $tpl->draw('login');
 ?>
