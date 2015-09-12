@@ -12,4 +12,8 @@ $site = array(
 	'ssh_login' => 'ssh_login.php',
 	'terminal' => 'terminal.php'
 );
+
+$include = array(
+	'login' => 'resources/content/login.php'
+);
 ?>

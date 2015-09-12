@@ -8,7 +8,7 @@
 	<link type="text/css" rel="stylesheet" href="../css/style.css.php" />
 	<link rel="shortcut icon" href="public_html/img/favicon.png" type="image/png" />
 	<script type="text/javascript" src="public_html/js/jquery.min.js"></script>
-	<title><?php echo $data['title']; ?></title>
+	<title>Pi Control | <?php _e('Login'); ?></title>
 </head>
 <body class="login-body">
     <!--<div style="width: 300px; height: 350px; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
@@ -32,21 +32,25 @@
             </div>
         </div>
     </div>-->
-    <!--<div class="login-wrapper">
+    <div class="login-wrapper">
             <div class="login-logo"></div>
-            <table class="login-table">
-                <tr>
-                    <td><input type="text" class="login-input-text" placeholder="Benutzername" /></td>
-                </tr>
-                <tr>
-                    <td><input type="password" class="login-input-text" placeholder="Passwort" /></td>
-                </tr>
-                <tr>
-                    <td style="text-align: right;"><input type="submit" class="login-input-button" value="Anmelden" /></td>
-                </tr>
-            </table>
-    </div>-->
-    <div class="login-wrapper" style="display: table; width: 570px; height: 200px;">
+			<form action="?i=login" method="post">
+	            <table class="login-table">
+	                <tr>
+	                    <td><input type="text" name="username" class="login-input-text" placeholder="Benutzername" /></td>
+	                </tr>
+	                <tr>
+	                    <td><input type="password" name="password" class="login-input-text" placeholder="Passwort" /></td>
+	                </tr>
+	                <tr>
+	                    <td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="Anmelden" /></td>
+	                </tr>
+	            </table>
+			</form>
+    </div>
+	<div style="position: absolute; bottom: 0; left: 0; right: 0; margin: auto; width: 300px; text-align: center; padding-bottom: 5px; font-size: 11px; color: #1565C0;">Entwickelt von Willy Fritzsche. 2013-2015.<br />
+Das Raspberry Pi Logo steht unter der Lizenz von www.raspberrypi.org</div>
+    <!--<div class="login-wrapper" style="display: table; width: 570px; height: 200px;">
         <div style="display: table-cell; width: 270px; vertical-align: top;">
             <div class="login-logo"></div>
             <div style="width: 250px; margin: 0px auto; text-align: justify; color: #FFFFFF;">
@@ -69,6 +73,6 @@
                 </tr>
             </table>
         </div>
-    </div>
+    </div>-->
 </body>
 </html>
