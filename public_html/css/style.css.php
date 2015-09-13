@@ -494,8 +494,9 @@ img {
     text-decoration: none;
     float: right;
     margin: 15px;
+}
 
-}.settings-shortcut-icon img {
+.settings-shortcut-icon img {
     width: 16px;
     height: 16px;
 }
@@ -768,6 +769,7 @@ input[name=ssh-login]:checked + label .inner-table .ssh-login-table-clickable-ar
     left: 0;
     right: 0;
     margin: auto;
+	padding-bottom: 40px;
 }
 
 .login-logo {
@@ -799,11 +801,33 @@ input.login-input-text:focus  {
     border: 1px solid <?php echo $colorPallet[9]; ?>;
 }
 
+label.login-input-checkbox::before {
+    background: none;
+    border: 1px solid <?php echo $colorPallet[3]; ?>;
+}
+
+label.login-input-checkbox {
+    color: <?php echo $colorPallet[1]; ?>;
+}
+
 input.login-input-button {
     background: none;
     color: <?php echo $colorPallet[1]; ?>;
     border: 1px solid <?php echo $colorPallet[3]; ?>;
     padding: 10px 20px 10px 20px;
+}
+
+.login-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 300px;
+	text-align: center;
+	padding-bottom: 5px;
+	font-size: 11px;
+	color: #1565C0;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -817,4 +841,16 @@ input.login-input-button {
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: <?php echo $colorPallet[4]; ?>;
+}
+
+@media screen and (max-height: 290px) {
+    
+    .login-wrapper {
+        padding: 0px;
+    }
+	
+    .login-footer {
+        display: none;
+    }
+    
 }
