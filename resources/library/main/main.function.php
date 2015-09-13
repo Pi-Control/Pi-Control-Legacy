@@ -82,13 +82,12 @@ function getConfig($config, $default = NULL, $customFile = NULL)
 		
 	$var = explode('.', $file[1]);
 	
-	if (count($var) != 2)
+	if (count($var) == 1 && isset($configArray[$var[0]]))
+		return $configArray[$var[0]];
+	elseif (count($var) == 2 && isset($configArray[$var[0]][$var[1]]))
+		return $configArray[$var[0]][$var[1]];
+	else
 		return $default;
-	
-	if (!isset($configArray[$var[0]][$var[1]]))
-		return $default;
-			
-	return $configArray[$var[0]][$var[1]];
 }
 
 function removeConfig($config, $customFile = NULL)

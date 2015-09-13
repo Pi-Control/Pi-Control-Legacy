@@ -168,6 +168,14 @@ class PiTpl
 		if (count($var) != 2)
 			return false;
 		
+		if (!isset($this->tplConfigArray[$file[0]]))
+		{
+			if (file_exists(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true && is_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true)
+				$this->tplConfigArray[$file[0]] = parse_ini_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix, true);
+			else
+				return false;
+		}
+		
 		$this->tplConfigArray[$file[0]][$var[0]][$var[1]] = $value;
 		
 		return writeConfig($this->tplConfigArray[$file[0]], CONFIG_PATH.$file[0].$this->tplConfigSuffix);
@@ -198,13 +206,20 @@ class PiTpl
 		
 		$var = explode('.', $file[1]);
 		
-		if (count($var) != 2)
-			return $default;
+		if (!isset($this->tplConfigArray[$file[0]]))
+		{
+			if (file_exists(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true && is_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true)
+				$this->tplConfigArray[$file[0]] = parse_ini_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix, true);
+			else
+				return false;
+		}
 		
-		if (!isset($this->tplConfigArray[$file[0]][$var[0]][$var[1]]))
+		if (count($var) == 1 && isset($this->tplConfigArray[$file[0]][$var[0]]))
+			return $this->tplConfigArray[$file[0]][$var[0]];
+		elseif (count($var) == 2 && isset($this->tplConfigArray[$file[0]][$var[0]][$var[1]]))
+			return $this->tplConfigArray[$file[0]][$var[0]][$var[1]];
+		else
 			return $default;
-		
-		return $this->tplConfigArray[$file[0]][$var[0]][$var[1]];
 	}
 	
 	public function removeConfig($config)
