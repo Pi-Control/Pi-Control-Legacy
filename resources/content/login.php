@@ -14,11 +14,6 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
 {
     $pUsername = strtolower(trim($_POST['username']));
     $pPassword = $_POST['password'];
-	
-	//$tpl->setConfig('user:user_willy.username', 'Willy');
-	//$tpl->setConfig('user:user_willy.password', md5('1234'));
-	//$tpl->setConfig('user:user_willy.last_login', time());
-	//$tpl->setConfig('user:user_willy.created', time());
     
 	if (($userinfo = $tpl->getConfig('user:user_'.$pUsername, 0)) === 0)
 		goto error;
@@ -56,9 +51,12 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
 
 if (isset($_GET['logout']))
 {
-	$uniqid = $_SESSION['TOKEN'];
-    removeConfig('login:token_'.$uniqid);
-	unset($_SESSION['TOKEN']);
+	if (isset($_SESSION['TOKEN']))
+	{
+		$uniqid = $_SESSION['TOKEN'];
+    	removeConfig('login:token_'.$uniqid);
+		unset($_SESSION['TOKEN']);
+	}
     session_destroy();
 }
 
