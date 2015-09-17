@@ -46,7 +46,7 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
 	exit();
 	
 	error:
-	echo 'Fehler bei der Anmeldung!';
+	$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!');
 }
 
 if (isset($_GET['logout']))

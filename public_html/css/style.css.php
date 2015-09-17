@@ -758,30 +758,42 @@ input[name=ssh-login]:checked + label .inner-table .ssh-login-table-clickable-ar
 
 .login-body {
     background: <?php echo $colorPallet[6]; ?>; /* 7 */
+	height: 100%;
 }
 
 .login-wrapper {
-    width: 300px;
-    height: 250px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-	padding-bottom: 40px;
+	height: 100%;
+	width: 400px;
+	left: 50%;
+	position: relative;
+	margin-left: -200px;
+	min-height: 300px;
+	display: table;
+}
+
+.login-container {
+	height: 90%;
+	display: table-row;
+}
+
+.login-container-inner {
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .login-logo {
     background: url('../img/logo.svg') center bottom no-repeat;
     background-size: 60% auto;
     height: 60px;
+	margin: 0px auto 0px;
     margin-bottom: 20px;
+	width: 300px;
 }
 
 .login-table {
-    width: 100%;
-    padding: 10px;
+	width: 300px;
+	margin: 0px auto 0px;
+	border-spacing: 5px;
 }
 
 input.login-input-text {
@@ -791,6 +803,7 @@ input.login-input-text {
     background: <?php echo $colorPallet[8]; ?>;
     border: 1px solid <?php echo $colorPallet[8]; ?>;
     color: #FFFFFF;
+	margin: 0px;
 }
 
 input.login-input-text:hover  {
@@ -818,16 +831,29 @@ input.login-input-button {
 }
 
 .login-footer {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-	width: 300px;
+	height: 10%;
+	display: table-row;
+}
+
+.login-footer-inner {
+	display: table-cell;
+	vertical-align: bottom;
 	text-align: center;
-	padding-bottom: 5px;
+	padding: 5px;
 	font-size: 11px;
-	color: #1565C0;
+	color: <?php echo $colorPallet[8]; ?>;
+}
+
+.login-error {
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 2px;
+	color: #B71C1C;
+	font-weight: bold;
+	margin: 0px auto 0px;
+	margin-bottom: 11px;
+	padding: 20px;
+	text-align: center;
+	width: 248px;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -841,16 +867,4 @@ input.login-input-button {
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: <?php echo $colorPallet[4]; ?>;
-}
-
-@media screen and (max-height: 290px) {
-    
-    .login-wrapper {
-        padding: 0px;
-    }
-	
-    .login-footer {
-        display: none;
-    }
-    
 }
