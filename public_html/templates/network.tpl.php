@@ -58,9 +58,9 @@
 						<td>
 	<?php if (isset($value['option']['signal'])) { echo getImageFromSignal($value['option']['signal']); } else {
 			if ($value['ip'] != 0) { ?>
-							<img src="public_html/img/nm_signal_wire.png" />
+							<span class="svg-network-signal-wire"></span>
 		<?php } else { ?>
-							<img src="public_html/img/nm_signal_disable.png" />
+							<span class="svg-network-signal-disabled"></span>
 	<?php } } ?></td>
 						<td><?php echo $value['interface']; ?></td>
 						<td><?php if ($value['ip'] != 0) { ?><a href="http://<?php echo $value['ip']; ?>" target="_blank"><?php echo $value['ip']; ?></a><?php } else { ?><?php _e('Nicht verbunden'); ?><?php } ?></td>

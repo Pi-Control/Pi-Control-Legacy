@@ -385,15 +385,15 @@ function getDateFormat($time)
 function getImageFromSignal($signal)
 {
 	if ($signal <= 10)
-		return '<img src="public_html/img/nm_signal_00.png" />';
+		return '<span class="svg-network-signal-00"></span>';
 	elseif ($signal <= 25)
-		return '<img src="public_html/img/nm_signal_25.png" />';
+		return '<span class="svg-network-signal-25"></span>';
 	elseif ($signal <= 50)
-		return '<img src="public_html/img/nm_signal_50.png" />';
+		return '<span class="svg-network-signal-50"></span>';
 	elseif ($signal <= 75)
-		return '<img src="public_html/img/nm_signal_75.png" />';
+		return '<span class="svg-network-signal-75"></span>';
 	elseif ($signal <= 100)
-		return '<img src="public_html/img/nm_signal_100.png" />';
+		return '<span class="svg-network-signal-100"></span>';
 	else
 		return false;
 }
@@ -548,7 +548,7 @@ function urlIsPublic($url)
 
 function showSettingsIcon($url)
 {
-	echo '<a href="'.$url.'" class="settings-shortcut-icon"><img src="public_html/img/gear.svg" alt="'._t('Einstellungen').'" title="'._t('Einstellungen').'" /></a>'.PHP_EOL;
+	echo '<a href="'.$url.'" class="settings-shortcut-icon"><img src="public_html/img/gear-icon.svg" alt="'._t('Einstellungen').'" title="'._t('Einstellungen').'" /></a>'.PHP_EOL;
 }
 
 function showGoBackIcon($url)

@@ -515,6 +515,26 @@ img {
     color: #009688;
 }
 
+.svg-control-pen, .svg-control-cross, .svg-control-plus {
+	background: url('../img/control-icons.svg') no-repeat;
+	background-size: auto 100%;
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
+.svg-control-pen {
+	background-position: 0px;
+}
+
+.svg-control-cross {
+	background-position: -16px;
+}
+
+.svg-control-plus {
+	background-position: -32px;
+}
+
 /* *********************************************** */
 
 input[type="text"], input[type="password"] {
@@ -678,6 +698,42 @@ input[type=checkbox] {
 }
 
 /* Netzwerk */
+.svg-network-signal-0, .svg-network-signal-25, .svg-network-signal-50, .svg-network-signal-75, .svg-network-signal-100, .svg-network-signal-disabled, .svg-network-signal-wire {
+	background: url('../img/network-signal-icons.svg') no-repeat;
+	background-size: auto 100%;
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
+.svg-network-signal-0 {
+	background-position: 0px;
+}
+
+.svg-network-signal-25 {
+	background-position: -16px;
+}
+
+.svg-network-signal-50 {
+	background-position: -32px;
+}
+
+.svg-network-signal-75 {
+	background-position: -48px;
+}
+
+.svg-network-signal-100 {
+	background-position: -64px;
+}
+
+.svg-network-signal-disabled {
+	background-position: -80px;
+}
+
+.svg-network-signal-wire {
+	background-position: -96px;
+}
+
 @media screen and (max-width: 410px) {
     
     .responsive-network-wlan-table tr th:nth-child(5), .responsive-network-wlan-table tr td:nth-child(5) {
