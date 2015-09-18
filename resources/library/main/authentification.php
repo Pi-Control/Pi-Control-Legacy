@@ -10,7 +10,7 @@ if (isset($_SESSION['TOKEN']))
 	$uniqid = $_SESSION['TOKEN'];
     $tokenCreated = getConfig('login:token_'.$uniqid.'.created', 0);
 	
-	if ($tokenCreated == 0 || $tokenCreated < time()-1800)
+	if ($tokenCreated == 0 || $tokenCreated < time()-43200)
 	{
 		removeConfig('login:token_'.$uniqid);
 		unset($_SESSION['TOKEN']);
