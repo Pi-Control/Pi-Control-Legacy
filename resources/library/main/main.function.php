@@ -403,7 +403,7 @@ function getAllNetworkConnections()
 	$shell_string = '';
 	$output = array();
 	
-	exec('/sbin/ifconfig | grep -E -o "^[[:alnum:]]*" | grep -E -v "(lo)"', $networkInterfaces);
+	exec('/sbin/ifconfig | grep -E -o "^[[:alnum:][:punct:]]*" | grep -E -v "(lo)"', $networkInterfaces);
 
 	foreach ($networkInterfaces as $interface)
 		$shell_string .= '/sbin/ifconfig '.$interface.(($networkInterfaces[count($networkInterfaces)-1] != $interface) ? ' && echo "-#-" && ' : '');
