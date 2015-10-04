@@ -48,12 +48,12 @@ catch(Exception $e)
 <head>
 	<meta charset="utf-8">
 	<title>Pi Control</title>
-	<style type=text/css>body{color:#333;background:#f6f6f6;font-family:Arial,Helvetica,Verdana,sans-serif;font-size:13px;margin:10px;overflow:scroll;overflow-x:auto;padding:0}.box{background:#fcc;margin:0 auto 0;max-width:800px}.inner-header{border-bottom:1px solid #fc0517;font-size:20px;padding:20px}.inner-bottom{border-bottom:1px solid #fbb;padding:20px}.inner{padding:20px}</style>
+	<style type="text/css">body{color:#333;background:#f6f6f6;font-family:Arial,Helvetica,Verdana,sans-serif;font-size:13px;margin:10px;overflow:scroll;overflow-x:auto;padding:0}.box{background:#fcc;margin:0 auto 0;max-width:800px}.inner-header{border-bottom:1px solid #fc0517;font-size:20px;padding:20px}.inner-bottom{border-bottom:1px solid #fbb;padding:20px}.inner{padding:20px}</style>
 </head>
 <body>
 <div class="box">
 	<div class="inner-header"><span>Fehler</span></div>
-	<div class="inner-bottom"><strong class="red">Leredider ist beim Aufbau der Seite ein Fehler aufgetreten!</strong><br /><br />'.implode("<br />\n", $errorHandler).'</div>
+	<div class="inner-bottom"><strong class="red">Leider ist beim Aufbau der Seite ein Fehler aufgetreten!</strong><br /><br />'.implode("<br />\n", $errorHandler).'</div>
 	<div class="inner">Bitte melde das Problem.</div>
 </div>
 </body>
