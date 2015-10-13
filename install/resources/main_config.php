@@ -4,8 +4,8 @@ $config = array(
 		'ssh_ip'				=> 'localhost'
 	),
 	'versions' => array(
-		'version'				=> '1.3.2',
-		'versioncode'			=> 15,
+		'version'				=> '1.3.3',
+		'versioncode'			=> 16,
 		'android_comp_level'	=> 4
 	),
 	'urls' => array(

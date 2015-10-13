@@ -593,6 +593,73 @@ function addCronToCrontab($cron_entry, $ssh)
 		return 2;
 }
 
+function getWeatherIcon($icon)
+{
+	switch ($icon)
+	{
+		case 32:
+		case 36:
+			return '01d';
+		case 31:
+			return '01n';
+		case 30:
+		case 34:
+			return '02d';
+		case 29:
+		case 33:
+			return '02n';
+		case 26:
+		case 44:
+			return '03d';
+		case 27:
+		case 28:
+			return '04d';
+		case 1:
+		case 2:
+		case 9:
+		case 11:
+		case 12:
+		case 40:
+			return '09d';
+		case 0:
+		case 3:
+		case 4:
+		case 37:
+		case 38:
+		case 39:
+		case 45:
+		case 47:
+			return '11d';
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 10:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+		case 18:
+		case 35:
+		case 41:
+		case 42:
+		case 43:
+		case 46:
+			return '13d';
+		case 19:
+		case 20:
+		case 21:
+		case 22:
+		case 23:
+		case 24:
+		case 25:
+			return '50d';
+		default:
+			return '01d';
+	}
+}
+
 function getWeather($type, $postcode, $city)
 {
 	$location = '';
@@ -629,29 +696,25 @@ function getWeather($type, $postcode, $city)
 		case 'uk': $country = 'uk'; break;
 	}
 	
-	if ($json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country.'&units=metric&lang=de'))
+	$yahooApiUrl = 'http://query.yahooapis.com/v1/public/yql';
+    $yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
+    $yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
+	
+	if ($json = file_get_contents($yqlQueryUrl))
 	{
-		$obj = json_decode($json);
+		$obj = json_decode($json, true);
+		$obj = $obj['query']['results']['channel'];
 		
 		$data = array();
-		$data['city'] = $obj->name; // Stadt
-		$data['country'] = $obj->sys->country; // Land
-		$data['temp'] = str_replace('.', ',' , round($obj->main->temp)); // Temperatur
-		$data['temp_min'] = str_replace('.', ',' , round($obj->main->temp_min)); // Mindest Temperatur
-		$data['temp_max'] = str_replace('.', ',' , round($obj->main->temp_max)); // Höchst Temperatur
-		$data['humidity'] = $obj->main->humidity; // Luftfeuchtigkeit
-		$data['wind'] = str_replace('.', ',' , round($obj->wind->speed)); // Windstärke
-		$data['icon'] = $obj->weather[0]->icon; // Wetter Icon
-		$data['description'] = $obj->weather[0]->description; // Wetter Beschreibung
-		
-		if (empty($obj->name))
-		{
-			$json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country);
-			$obj = json_decode($json);
-
-			$data['city'] = $obj->name; // Stadt
-			$data['country'] = $obj->sys->country; // Land
-		}
+		$data['city'] = $obj['location']['city']; // Stadt
+		$data['country'] = $obj['location']['country']; // Land
+		$data['temp'] = str_replace('.', ',' , round($obj['item']['condition']['temp'])); // Temperatur
+		$data['temp_min'] = str_replace('.', ',' , round($obj['item']['forecast']['low'])); // Mindesttemperatur
+		$data['temp_max'] = str_replace('.', ',' , round($obj['item']['forecast']['high'])); // Höchsttemperatur
+		$data['humidity'] = $obj['atmosphere']['humidity']; // Luftfeuchtigkeit
+		$data['wind'] = str_replace('.', ',' , round($obj['wind']['speed'])); // Windstärke
+		$data['icon'] = getWeatherIcon($obj['item']['condition']['code']); // Wetter Icon
+		$data['description'] = $obj['item']['condition']['text']; // Wetter Beschreibung
 		
 		return $data;
 	}
