@@ -182,7 +182,7 @@ if (function_exists('mcrypt_encrypt') !== false)
 else
 	$cf_mcrypt = false;
 
-if (ini_get('allow_url_fopen') !== false) 
+if (ini_get('allow_url_fopen') !== false)
 	$cf_auf = 1;
 else
 	$cf_auf = false;
@@ -193,7 +193,7 @@ else
 	$cf_zipa = false;
 
 $cf_dist_name = rpi_getDistribution();
-if ($cf_dist_name == 'Raspbian GNU/Linux 7')
+if ($cf_dist_name == 'Raspbian GNU/Linux 7' || $cf_dist_name == 'Raspbian GNU/Linux 8')
 	$cf_dist = 1;
 else
 	$cf_dist = false;
