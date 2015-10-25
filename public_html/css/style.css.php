@@ -241,6 +241,7 @@ body {
 	text-decoration: none;
 	background: <?php echo $colorPallet[7]; ?>;
 	color: #FFFFFF;
+	border-radius: 2px;
 }
 
 #footer-table tr:nth-child(2) td:last-child {
