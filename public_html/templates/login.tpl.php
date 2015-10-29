@@ -11,7 +11,7 @@
 	<title>Pi Control | <?php _e('Login'); ?></title>
 </head>
 <body class="login-body">
-    <div class="login-wrapper">
+	<div class="login-wrapper">
 		<div class="login-container">
 			<div class="login-container-inner">
 				<div class="login-logo"></div>
@@ -24,18 +24,18 @@
 	}
 ?>
 				<form action="?i=login" method="post">
-		            <table class="login-table">
-		                <tr>
-		                    <td colspan="2"><input type="text" name="username" class="login-input-text" placeholder="Benutzername" /></td>
-		                </tr>
-		                <tr>
-		                    <td colspan="2"><input type="password" name="password" class="login-input-text" placeholder="Passwort" /></td>
-		                </tr>
-		                <tr>
-		                    <td><input type="checkbox" name="keepLoggedIn" value="checked" id="keepLoggedIn" /><label class="checkbox login-input-checkbox" for="keepLoggedIn" title="Cookies müssen für diese Funktion aktiviert sein.">Angemeldet bleiben</label></td>
-		                    <td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="Anmelden" /></td>
-		                </tr>
-		            </table>
+					<table class="login-table">
+						<tr>
+							<td colspan="2"><input type="text" name="username" class="login-input-text" placeholder="Benutzername" /></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="password" name="password" class="login-input-text" placeholder="Passwort" /></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="keepLoggedIn" value="checked" id="keepLoggedIn" /><label class="checkbox login-input-checkbox" for="keepLoggedIn" title="Cookies müssen für diese Funktion aktiviert sein.">Angemeldet bleiben</label></td>
+							<td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="Anmelden" /></td>
+						</tr>
+					</table>
 					<input type="hidden" name="referer" value="<?php echo $data['referer']; ?>" />
 				</form>
 			</div>

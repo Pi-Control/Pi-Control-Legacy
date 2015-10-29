@@ -27,7 +27,7 @@ function rpi_getHostAddr()
 }
 
 function rpi_getCoreTemprature()
-{	
+{
 	$file = 85000;
 	
 	while ($file == 85000)
@@ -75,7 +75,7 @@ function rpi_getCPUType()
 	preg_match('#Hardware\s*:\s*([^\s]+)#i', $file, $match);
 	
 	if (isset($match[1]))
-	{	
+	{
 		return $match[1];
 	}
 	return NULL;
@@ -93,7 +93,7 @@ function rpi_getCPULoad()
 	preg_match('#([\d\.]+) id#i', $file, $match);
 	
 	if (isset($match[1]))
-	{	
+	{
 		return round(100-trim($match[1]), 0);
 	}
 	return NULL;
@@ -204,7 +204,7 @@ function rpi_getMemorySplit()
 		return array('system' => '256 MiB', 'video' => '256 MiB');
 	}
 		
-	// 256MB		
+	// 256MB
 	$mem   = $this->getMemoryUsage();
 	$total = round($mem['total'] / 1024 / 1024, 0);
 	
@@ -268,12 +268,12 @@ function rpi_getMemoryInfo()
 		$totalSize += $blocks * 1024;
 		$usedSize  += $use * 1024;
 		$devices[] = array(
-						'device'     => $device,
-						'type'       => $type,
-						'total'      => $blocks * 1024,
-						'used'       => $use * 1024,
-						'free'       => $available * 1024,
-						'percent'    => round(($use * 100 / $blocks), 0),
+						'device'	 => $device,
+						'type'	   => $type,
+						'total'	  => $blocks * 1024,
+						'used'	   => $use * 1024,
+						'free'	   => $available * 1024,
+						'percent'	=> round(($use * 100 / $blocks), 0),
 						'mountpoint' => $mountpoint
 						);
 	}

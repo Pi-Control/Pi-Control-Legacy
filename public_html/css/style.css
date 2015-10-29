@@ -682,19 +682,19 @@ fieldset.title legend {
 }
 
 @-webkit-keyframes rotate {
-    0% { -webkit-transform: scale(1) rotate(0deg); }
-    100% { -webkit-transform: scale(1) rotate(360deg); }
+	0% { -webkit-transform: scale(1) rotate(0deg); }
+	100% { -webkit-transform: scale(1) rotate(360deg); }
 }
 
 @-moz-keyframes rotate {
-    0% { -moz-transform: scale(1) rotate(0deg); }
-    100% { -moz-transform: scale(1) rotate(360deg); }
+	0% { -moz-transform: scale(1) rotate(0deg); }
+	100% { -moz-transform: scale(1) rotate(360deg); }
 }
 
 .rotate_icon {
 	animation: rotate 0.9s linear infinite;
-    -moz-animation: rotate 0.9s linear infinite;
-    -webkit-animation: rotate 0.9s linear infinite;
+	-moz-animation: rotate 0.9s linear infinite;
+	-webkit-animation: rotate 0.9s linear infinite;
 }
 
 @keyframes pulse {
@@ -714,8 +714,8 @@ fieldset.title legend {
 
 .pulse_background {
 	animation: pulse 2s alternate infinite;
-    -moz-animation: pulse 2s alternate infinite;
-    -webkit-animation: pulse 2s alternate infinite;
+	-moz-animation: pulse 2s alternate infinite;
+	-webkit-animation: pulse 2s alternate infinite;
 }
 
 @media (max-width: 899px) {
