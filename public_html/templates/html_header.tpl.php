@@ -15,6 +15,18 @@
 <body>
 <!-- Header -->
 	<div id="header">
+		<div id="header-top">
+			<div id="header-top-inner">
+				<div id="header-top-inner-row">
+					<div class="header-top-inner-cell header-top-inner-username">
+						Angemeldet als Willy
+					</div>
+					<div class="header-top-inner-cell header-top-inner-logout">
+						<a href="#">Abmelden</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<input type="checkbox" id="header-mobile" />
 		<div id="inner-header">
 			<label for="header-mobile">&#9776;</label>

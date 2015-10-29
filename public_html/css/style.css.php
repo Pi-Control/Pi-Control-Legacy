@@ -56,7 +56,7 @@ a:hover {
 
 body {
     color: #333333;
-    background: #F2F2F2;
+    background: #EEEEEE;
     font-family: Arial, Helvetica, Verdana, sans-serif;
     font-size: 13px;
     margin: 0px;
@@ -71,11 +71,54 @@ body {
     z-index: 50000;
 }
 
+#header-top {
+	background: <?php echo $colorPallet[8]; ?>;
+}
+
+#header-top-inner {
+	color: #DDDDDD;
+	display: table;
+	font-size: 12px;
+	margin: 0px auto 0px;
+	max-width: 900px;
+}
+
+#header-top-inner-row {
+	display: table-row;
+}
+
+.header-top-inner-cell {
+	display: table-cell;
+}
+
+.header-top-inner-cell a {
+	color: #DDDDDD;
+	padding: 5px;
+	transition: all 100ms linear;
+}
+
+.header-top-inner-cell a:hover {
+	color: #FFFFFF;
+	background: <?php echo $colorPallet[7]; ?>;
+	text-decoration: none;
+}
+
+.header-top-inner-username {
+	text-align: right;
+	padding: 5px;
+	padding-right: 15px;
+}
+
+.header-top-inner-logout {
+	width: 1%;
+}
+
 #inner-header {
-    background: url('../img/logo.svg') right 15px center no-repeat;
+    background: url('../img/logo.svg') left 15px center no-repeat;
     background-size: auto 60%;
     margin: 0 auto;
     max-width: 900px;
+	text-align: right;
 }
 
 #header-navi {
@@ -99,6 +142,8 @@ body {
 
 #header-navi .navi-dropdown {
     display: inline-block;
+	text-align: left;
+	position: relative;
 }
 
 #header-navi .navi-dropdown-container {
@@ -109,6 +154,7 @@ body {
     position: absolute;
     transition: 100ms linear;
     transform: translateY(-5px);
+	right: 0px;
 }
 
 #header-navi .navi-dropdown:hover .navi-dropdown-container {
@@ -146,46 +192,88 @@ body {
 }
 
 #footer {
-    border-top: 2px solid <?php echo $colorPallet[7]; ?>;
-    height: 100px;
-    margin: 0 auto;
+    background: #FFFFFF;
+	border-top: 1px solid #DDDDDD;
+    min-height: 100px;
+	font-size: 12px;
+}
+
+#footer-inner {
+	margin: 0 auto;
     max-width: 900px;
 }
 
-#footer-navi {
-    display: inline-block;
+#footer-table {
+	margin: 20px auto;
+	border-spacing: 0px;
 }
 
-#footer-navi a {
-    display: inline-block;
-    padding: 10px 15px 6px 15px;
-    text-decoration: none;
-    border-bottom: 4px solid transparent;
+#footer-table tr td, #footer-table tr th {
+	padding: 4px;
+}
+
+#footer-table tr th {
+	text-align: left;
+	padding-bottom: 10px;
+}
+
+#footer-table tr td {
+	vertical-align: top;
+	padding: 0px;
+}
+
+#footer-table tr:nth-child(2) td:first-child {
+	padding-right: 50px;
+}
+
+#footer-table tr th:nth-child(2) {
+	padding-right: 54px;
+}
+
+#footer-table tr:nth-child(2) td a {
+	display: inline-block;
+	text-decoration: none;
+	padding: 4px;
     transition: all 100ms linear;
 }
 
-#footer-navi a:hover {
-    background: <?php echo $colorPallet[7]; ?>;
-    border-bottom: 4px solid <?php echo $colorPallet[8]; ?>;
-    color: #FFFFFF;
+#footer-table tr:nth-child(2) td a:hover {
+	text-decoration: none;
+	background: <?php echo $colorPallet[7]; ?>;
+	color: #FFFFFF;
+	border-radius: 2px;
 }
 
-#footer-time {
-    display: inline-block;
-    float: right;
-    padding: 10px 15px 10px 15px;
+#footer-table tr:nth-child(2) td:last-child {
+	padding: 4px;
+}
+
+#footer-table tr:last-child td {
+	vertical-align: bottom;
+}
+
+#footer-table tr:last-child td strong {
+	display: block;
+	padding: 4px;
+	padding-bottom: 10px;
+}
+
+#footer-table tr:last-child td span {
+	display: block;
+	padding: 4px;
 }
 
 #footer-copyright {
+	border-top: 1px solid #EEEEEE;
+	margin: 0px auto;
+	padding: 20px;
     text-align: center;
+	width: 60%;
 }
 
 .box {
     background: #FFFFFF;
     border-radius: 2px;
-    /*box-shadow: 0px 0px 5px #DDDDDD;*/
-    border: 1px solid #EDEDED;
-    border-bottom: 3px solid #DDDDDD;
     margin-bottom: 20px;
 }
 
@@ -306,7 +394,6 @@ body {
 
 .table-borderless td:last-child, .table-borderless th:last-child {
     padding-right: 15px;
-    
 }
 
 .rotate-icon {
@@ -362,6 +449,7 @@ body {
     width: 100%;
     border: 0px;
     pointer-events: none;
+	border-radius: 2px;
 }
 
 .error::before, .success::before, .info::before {
@@ -372,32 +460,30 @@ body {
     font-size: 35px;
     font-weight: bold;
     padding-top: 2px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
 }
 
 .error::before {
     content: "!";
     background: #F44336;
     color: #D32F2F;
-    border-bottom: 3px solid #D32F2F;
 }
 
 .success::before {
     content: "\2713";
     background: #009688;
     color: #00796B;
-    border-bottom: 3px solid #00796B;
 }
 
 .info::before {
     content: "!?";
     background: #FFC107;
     color: #FFA000;
-    border-bottom: 3px solid #FFA000;
 }
 
 .error > div, .success > div, .info > div {
     display: table-cell;
-    border-bottom: 3px solid #DDDDDD;
     vertical-align: middle;
 }
 
@@ -640,14 +726,28 @@ input[type=checkbox] {
 
 @media screen and (max-width: 600px) {
     
+	.header-top-inner-cell a {
+		padding: 10px;
+	}
+	
+	.header-top-inner-username {
+		padding: 10px;
+	}
+	
     #header-mobile ~ #inner-header {
         min-height: 55px;
+		text-align: left;
+		background-position: right 15px center;
     }
     
     #header-navi {
         display: none;
     }
     
+	#header-navi .navi-dropdown-container {
+		right: auto;
+	}
+	
     #header-mobile ~ #inner-header > label {
         display: inline-block;
         line-height: 55px;
