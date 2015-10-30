@@ -79,6 +79,10 @@
 					<td>{if="$cf_cli == 1"}<strong class="green">verf&uuml;gbar</strong>{else}<strong class="red">nicht verf&uuml;gbar. Info beachten!</strong>{/if}</td>
 				</tr>
 				<tr>
+					<td width="50%">Funktion zum Laden externe Daten: PHP-cURL<br /><span style="font-size: 11px; color: #AAAAAA;">Info: Funktion mittels "sudo apt-get install php5-curl" nachinstallieren.</span></td>
+					<td>{if="$cf_curl == 1"}<strong class="green">verf&uuml;gbar</strong>{else}<strong class="red">nicht verf&uuml;gbar. Info beachten!</strong>{/if}</td>
+				</tr>
+				<tr>
 					<td width="50%">Distribution<br /><span style="font-size: 11px; color: #AAAAAA;">Info: Pi Control wurde nur für Raspian entwickelt und optimiert.</span></td>
 					<td>{if="$cf_dist == 1"}<strong class="green">{$cf_dist_name}</strong>{else}<strong class="red">{$cf_dist_name}. Info beachten!</strong>{/if}</td>
 				</tr>

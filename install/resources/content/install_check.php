@@ -203,6 +203,11 @@ if (trim(exec('dpkg -s php5-cli | grep Status: ')))
 else
 	$cf_cli = false;
 
+if (function_exists('curl_init') !== false)
+	$cf_curl = 1;
+else
+	$cf_curl = false;
+
 if (isset($_GET['next']) && $_GET['next'] == '')
 {
 	if ($cf_ssh == 1 && $cf_mcrypt == 1 && $cf_cli == 1 && $cf_folder_1 == 1 && $cf_folder_2 == 1 && $cf_folder_3 == 1 && $cf_file_1 == 1 && $cf_file_2 == 1 && $cf_file_3 == 1 && $cf_file_4 == 1 && $cf_file_5 == 1)
@@ -239,6 +244,7 @@ $tpl->assign('cf_zipa', $cf_zipa);
 $tpl->assign('cf_dist_name', $cf_dist_name);
 $tpl->assign('cf_dist', $cf_dist);
 $tpl->assign('cf_cli', $cf_cli);
+$tpl->assign('cf_curl', $cf_curl);
 
 $tpl->draw('install_check');
 ?>

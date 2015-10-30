@@ -50,9 +50,16 @@ if (isset($_GET['send']) && $_GET['send'] == '')
 		$tpl->msg('red', '', 'Bitte alle Felder ausfüllen.');
 }
 
+$cf_dist_name = rpi_getDistribution();
+if ($cf_dist_name == 'Raspbian GNU/Linux 8')
+	$cf_dist = 1;
+else
+	$cf_dist = false;
+
 $tpl->assign('port', (isset($_POST['port'])) ? $_POST['port'] : '22');
 $tpl->assign('username', (isset($_POST['username'])) ? $_POST['username'] : 'root');
 $tpl->assign('ssh_login_check', $ssh_login_check);
+$tpl->assign('cf_dist', $cf_dist);
 
 $tpl->draw('install_connection');
 ?>

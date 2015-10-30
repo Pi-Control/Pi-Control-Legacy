@@ -19,6 +19,7 @@
 		</div>
 		<div class="inner-bottom" align="justify">
 			In diesem Schritt müssen die Anmeldeinformationen für den Raspberry Pi Benutzer eingegeben werden. Die Daten werden verschlüsselt auf deinem Raspberry Pi gespeichert und nur zur Nutzung von systemseitigen Funktionen genutzt.
+			{if="$cf_dist == 1"}<div style="background: #FFCDD2; border-radius: 4px; padding: 10px; margin-top: 10px; font-size: 12px;">Mit Debian 8 (Jessie) wurde der root-Benutzer deaktiviert. Entweder der Benutzer wird wieder <a href="http://linuxconfig.org/enable-ssh-root-login-on-debian-linux-server" target="_blank">aktiviert</a> oder der Benutzer "pi" wird verwendet. Dabei ist jedoch zu beachten, dass dadurch das Pi Control in einigen Funktionen eingeschränkt ist: Cron-Plugin und Netzwerkfunktionen funktionieren nicht einwandfrei und Cron für das Pi Control muss manuell erstellt werden. Mit Version 2.0 wird es eine Lösung dafür geben.</div>{/if}
 		</div>
 		<form action="?s=install_connection&amp;send" method="post">
 			<div class="inner-bottom">

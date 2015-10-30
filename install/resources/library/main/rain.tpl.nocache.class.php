@@ -84,7 +84,7 @@ class RainTPL{
                 
 
 		/**
-		 * PHP tags <? ?> 
+		 * PHP tags <? ?>
 		 * True: php tags are enabled into the template
 		 * False: php tags are disabled into the template and rendered as html
 		 *
@@ -224,10 +224,10 @@ class RainTPL{
 	
 			if( !$this->cache && !$return_string ){
 				extract( $this->var );
-				if(self::CACHE_EXPIRE_TIME>0) 
-					include $this->tpl['compiled_filename']; 
-				else 
-					eval('?>'.$this->tpl['compiled_string'].'<?');
+				if(self::CACHE_EXPIRE_TIME>0)
+					include $this->tpl['compiled_filename'];
+				else
+					eval('?>'.$this->tpl['compiled_string']);
 				unset( $this->tpl );
 			}
 	
@@ -242,10 +242,10 @@ class RainTPL{
 				//----------------------
 					ob_start();
 					extract( $this->var );
-					if(self::CACHE_EXPIRE_TIME>0) 
-						include $this->tpl['compiled_filename']; 
-					else 
-						eval('?>'.$this->tpl['compiled_string'].'<?');
+					if(self::CACHE_EXPIRE_TIME>0)
+						include $this->tpl['compiled_filename'];
+					else
+						eval('?>'."\n\n".$this->tpl['compiled_string'].'<?');
 					$raintpl_contents = ob_get_clean();
 				//----------------------
 	
@@ -344,7 +344,7 @@ class RainTPL{
 	*/
 	protected function xml_reSubstitution($capture) {
     		return "<?php echo '<?xml ".stripslashes($capture[1])." ?>'; ?>";
-	} 
+	}
 
 	/**
 	 * Compile and write the compiled template file
@@ -363,7 +363,7 @@ class RainTPL{
 			$template_code = str_replace( array("<?","?>"), array("&lt;?","?&gt;"), $template_code );
 
 		//xml re-substitution
-		$template_code = preg_replace_callback ( "/##XML(.*?)XML##/s", array($this, 'xml_reSubstitution'), $template_code ); 
+		$template_code = preg_replace_callback ( "/##XML(.*?)XML##/s", array($this, 'xml_reSubstitution'), $template_code );
 
 		//compile template
 		$template_compiled = "<?php if(!class_exists('raintpl')){exit;}?>" . $this->compileTemplate( $template_code, $tpl_basedir );
@@ -381,7 +381,7 @@ class RainTPL{
 
 		//write compiled file
 		if(self::CACHE_EXPIRE_TIME>0)
-			file_put_contents( $compiled_filename, $template_compiled ); 
+			file_put_contents( $compiled_filename, $template_compiled );
 		else
 			$this->tpl['compiled_string']=$template_compiled;
 	}
