@@ -10,7 +10,7 @@ if (!isset($config))
 		),
 		'versions' => array(
 			'version'				=> '2.0',
-			'versioncode'			=> 16,
+			'versioncode'			=> 17,
 			'android_comp_level'	=> 4
 		),
 		'urls' => array(

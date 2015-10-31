@@ -48,7 +48,7 @@ $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('navi_plugin_available', isset($plugin_available['status']) ? array_sort($plugin_available['status'], 'name', SORT_ASC) : $plugin_available_string);
 $tpl->assign('navi_plugin_updates', isset($update_plugins) ? $update_plugins : '');
 $tpl->assign('update_picontrol', isset($picontrol_update) ? $picontrol_update : '');
-$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 0)+140);
+$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 1446288824)+140); // TODO Entfernen des Default-Wertes (0)
 
 $tpl->draw('html_header');
 ?>
