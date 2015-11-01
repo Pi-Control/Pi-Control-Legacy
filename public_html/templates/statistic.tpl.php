@@ -100,11 +100,13 @@
 				'chartType' : 'AreaChart',
 				'containerId' : 'chart_log_<?php echo $value['log']; ?>',
 				'options': {
-					vAxis: { title: '<?php echo $value['title']; ?>', viewWindow: { max: data.max, min: data.min } },
+					vAxis: { viewWindow: { max: data.max, min: data.min }, textPosition: 'in', textStyle: { fontSize: 11, color: '#AAAAAA' }, gridlines: { color: '#fff' } },
 					dateFormat: 'dd.MM.yy HH:mm',
-					hAxis: { format: 'dd.MM. HH:mm' },
+					hAxis: { format: 'dd.MM. HH:mm', textPosition: 'out', gridlines: { color: '#fff' } , textStyle: { fontSize: 11, color: '#AAAAAA' }},
 					focusTarget: 'category',
-					crosshair: { orientation: 'vertical', trigger: 'both', color: '#AAAAAA', opacity: 0.4 }
+					crosshair: { orientation: 'vertical', trigger: 'both', color: '#AAAAAA', opacity: 0.4 },
+					chartArea: {width: '100%', height: '80%', top: 0},
+					legend: {position: 'bottom', alignment: 'end', textStyle: { fontSize: 11, color: '#AAAAAA' } },
 				}
 			});
 			

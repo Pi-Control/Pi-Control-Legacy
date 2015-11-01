@@ -518,6 +518,10 @@ body {
 	text-align: center;
 }
 
+.padding-0, .box .padding-0 {
+	padding: 0px;
+}
+
 img {
 	/*display: block;*/
 }

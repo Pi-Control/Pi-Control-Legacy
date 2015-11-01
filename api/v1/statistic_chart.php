@@ -35,7 +35,7 @@ switch ($_GET['type'])
 		{
 			$arr['rows'] = array_slice($arr['rows'], -2016);
 			$arr['max'] = 100;
-			$arr['min'] = 0;
+			$arr['min'] = 0.01;
 			$arr['periods'] = $info['periods'];
 		}
 			break;
@@ -51,7 +51,7 @@ switch ($_GET['type'])
 		{
 			$arr['rows'] = array_slice($arr['rows'], -2016);
 			$arr['max'] = 100;
-			$arr['min'] = 0;
+			$arr['min'] = 0.01;
 			$arr['periods'] = $info['periods'];
 		}
 			break;
