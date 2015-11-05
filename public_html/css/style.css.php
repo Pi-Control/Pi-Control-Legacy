@@ -510,6 +510,52 @@ body {
 	pointer-events: all;
 }
 
+.google-controls .google-visualization-controls-rangefilter-thumblabel {
+	font-size: 14px;
+	font-weight: normal;
+	color: #666666;
+	line-height: 27px;
+	height: 27px;
+}
+
+.google-controls .google-visualization-controls-slider-horizontal {
+	background-color: <?php echo $colorPallet[1]; ?>;
+	border: 0;
+	outline: 0;
+	border-radius: 3px;
+	position: relative;
+	height: 5px;
+	top: -0.2em;
+	margin: 0 0.3em;
+}
+
+.google-controls .google-visualization-controls-slider-horizontal .google-visualization-controls-slider-thumb {
+	background-color: <?php echo $colorPallet[7]; ?>;
+	border: 1px solid <?php echo $colorPallet[7]; ?>;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	top: -6px;
+}
+
+.google-controls .google-visualization-controls-slider-horizontal:hover .google-visualization-controls-slider-thumb,
+.google-controls .google-visualization-controls-slider-horizontal:active .google-visualization-controls-slider-thumb {
+	background-color: #FFFFFF;
+	cursor: pointer;
+	cursor: col-resize;
+}
+
+.google-controls .google-visualization-controls-slider-horizontal .google-visualization-controls-slider-handle {
+	background-color: <?php echo $colorPallet[3]; ?>;
+	opacity: 1;
+	height: 5px;
+}
+
+.google-controls .google-visualization-controls-slider-horizontal:hover .google-visualization-controls-slider-handle,
+.google-controls .google-visualization-controls-slider-horizontal:focus .google-visualization-controls-slider-handle {
+	cursor: pointer;
+}
+
 .clear-both {
 	clear: both;
 }

@@ -50,7 +50,7 @@
 	</div>
 <?php } ?>
 <?php foreach ($data['logArray'] as $value) { ?>
-	<div class="box" id="dashboard_log_<?php echo $value['log']; ?>">
+	<div class="box google-controls" id="dashboard_log_<?php echo $value['log']; ?>">
 		<div class="inner-header">
 			<span><?php echo $value['label']; ?></span>
 		</div>
