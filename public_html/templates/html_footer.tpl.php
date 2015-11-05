@@ -20,7 +20,7 @@
 					<td>2.0.0</td>
 				</tr>
 				<tr>
-					<td><strong>LIZENZ</strong><span>Raspberry Pi ist eine Trademark<br />der <a href="http://www.raspberrypi.org/" target="_blank">Raspberry Pi Foundation</a>.</span></td>
+					<td><strong>LIZENZ</strong><span>Raspberry Pi ist ein Markenzeichen<br />der <a href="http://www.raspberrypi.org/" target="_blank">Raspberry Pi Foundation</a>.</span></td>
 				</tr>
 			</table>
 			<div id="footer-copyright">Mit <span style="color: #F44336;">&#10084;</span> <?php _e('entwickelt von'); ?> <a href="http://willy-tech.de/" target="_blank">Willy Fritzsche</a>. 2013-2016</div>

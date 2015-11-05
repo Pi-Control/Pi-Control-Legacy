@@ -864,6 +864,10 @@ input[type=checkbox] {
 		display: block;
 	}
 	
+	#footer-table {
+		margin: 20px 10px;
+	}
+	
 	input[type=text], input[type=password] {
 		width: auto !important;
 	}
@@ -872,17 +876,21 @@ input[type=checkbox] {
 
 @media screen and (max-width: 450px) {
 	
-	#footer-navi {
-		display: block;
-		text-align: center;
+	#footer-table tr:nth-child(2) td:first-child {
+		padding-right: 30px;
 	}
 	
-	#footer-time {
-		float: none;
-		text-align: center;
-		display: block;
+	#footer-table tr th:nth-child(2) {
+		padding-right: 34px;
 	}
 	
+	#footer-table tr td:last-child {
+		width: 20%;
+	}
+	
+	#footer-table tr:nth-child(2) td a {
+		padding: 10px 4px;
+	}
 }
 
 /* Netzwerk */
