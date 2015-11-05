@@ -421,7 +421,6 @@ body {
 	text-align: center;
 	font-weight: normal;
 	display: inline-block;
-	
 }
 
 .progressbar > div:hover {
@@ -445,7 +444,6 @@ body {
 .text-align-center {
 	text-align: center;
 }
-
 
 .error, .success, .info {
 	display: table;
@@ -554,6 +552,39 @@ body {
 .google-controls .google-visualization-controls-slider-horizontal:hover .google-visualization-controls-slider-handle,
 .google-controls .google-visualization-controls-slider-horizontal:focus .google-visualization-controls-slider-handle {
 	cursor: pointer;
+}
+
+.settings-overview-flex-container {
+	padding: 0;
+	margin: 0;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.settings-overview-flex-container > .settings-overview-flex-box {
+	min-width: 120px;
+	width: 27%;
+	border: 1px solid <?php echo $colorPallet[7]; ?>;
+	border-radius: 2px;
+	display: block;
+	font-weight: bold;
+	padding: 20px;
+	text-align: center;
+	text-decoration: none;
+	transition: all 100ms linear;
+	margin: 5px;
+}
+
+.settings-overview-flex-container > .settings-overview-flex-box:hover {
+	background: <?php echo $colorPallet[8]; ?>;
+	border: 1px solid <?php echo $colorPallet[8]; ?>;
+	color: #FFFFFF;
 }
 
 .clear-both {
