@@ -28,7 +28,7 @@ foreach ($fileArray as $file)
 		$statistics[] = substr($file, 0, -4);
 }
 	
-if (!isset($_GET['reset']))
+if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']) || !isset($_GET['log']) || !isset($_GET['label'])))
 {
 	if (isset($_POST['submit']))
 	{
@@ -46,7 +46,7 @@ if (!isset($_GET['reset']))
 		{
 			$logArray[] = array('log' => 'coretemp',
 								'label' => 'CPU-Temperatur',
-								'size' => filesize($folder.'/'.$file),
+								'type' => 'coretemp',
 								'display' => (array_search('coretemp', $hiddenStatistics) !== false) ? 0 : 1);
 			
 			$statistics[] = 'coretemp';
@@ -55,7 +55,7 @@ if (!isset($_GET['reset']))
 		{
 			$logArray[] = array('log' => 'cpuload',
 								'label' => 'CPU-Auslastung',
-								'size' => filesize($folder.'/'.$file),
+								'type' => 'cpuload',
 								'display' => (array_search('cpuload', $hiddenStatistics) !== false) ? 0 : 1);
 			
 			$statistics[] = 'coretemp';
@@ -64,7 +64,7 @@ if (!isset($_GET['reset']))
 		{
 			$logArray[] = array('log' => 'ram',
 								'label' => 'RAM-Auslastung',
-								'size' => filesize($folder.'/'.$file),
+								'type' => 'ram',
 								'display' => (array_search('ram', $hiddenStatistics) !== false) ? 0 : 1);
 			
 			$statistics[] = 'coretemp';
@@ -73,7 +73,7 @@ if (!isset($_GET['reset']))
 		{
 			$logArray[] = array('log' => substr($file, 0, -4),
 								'label' => substr($file , 8, -4),
-								'size' => filesize($folder.'/'.$file),
+								'type' => 'network',
 								'display' => (array_search(substr($file, 0, -4), $hiddenStatistics) !== false) ? 0 : 1);
 			
 			$statistics[] = substr($file, 0, -4);
@@ -84,21 +84,23 @@ if (!isset($_GET['reset']))
 	
 	$tpl->draw('settings/statistic');
 }
-else
+elseif (isset($_GET['reset']))
 {
 	if (array_search(urldecode($_GET['reset']), $statistics) === false)
-		$tpl->msg('red', '', $error_code['2x0013'].urldecode($_GET['reset']));
+		$tpl->msg('error', '', $error_code['2x0013'].urldecode($_GET['reset']));
 	
 	if (isset($_GET['confirm']) && $_GET['confirm'] == '')
 	{
 		if (array_search(urldecode($_GET['reset']), $statistics) !== false)
 		{
-			if (($logFile = fopen(LOG_PATH.'/'.urldecode($_GET['reset']).'.log.txt', 'w')) !== false)
-				$tpl->msg('green', '', 'Verlauf wurde erfolgreich zurückgesetzt.');
+			if (($logFile = fopen(LOG_PATH.'/stat'.urldecode($_GET['reset']).'.log.txt', 'w')) !== false)
+			{
+				$tpl->msg('success', '', 'Verlauf wurde erfolgreich zurückgesetzt.');
+				fclose($logFile);
+			}
 			else
-				$tpl->msg('red', '', 'Verlauf konnte nicht zurückgesetzt werden.');
+				$tpl->msg('error', '', 'Verlauf konnte nicht zurückgesetzt werden.');
 			
-			fclose($logFile);
 		}
 	}
 	
@@ -115,5 +117,9 @@ else
 	$tpl->assign('label', $label);
 	
 	$tpl->draw('settings/statistic_reset');
+}
+elseif (isset($_GET['download'], $_GET['type'], $_GET['log'], $_GET['label']))
+{
+	$tpl->redirect('api/v1/statistic_download.php?log='.$_GET['log'].'&type='.$_GET['type'].'&label='.$_GET['label']);
 }
 ?>

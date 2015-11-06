@@ -527,12 +527,16 @@ td.table-center, th.table-center {
 	color: #FFC107;
 }
 
-.error .inner-header::before, .success .inner-header::before, .info .inner-header::before {
+.error .inner-header::before, .success .inner-header::before, .info .inner-header::before, .inner-cross::before {
 	content: "\2715";
 	float: right;
 	margin: 15px;
 	cursor: pointer;
 	pointer-events: all;
+}
+
+.inner-cross::before {
+	margin: -2px 0px 0px 0px;
 }
 
 .google-controls .google-visualization-controls-rangefilter-thumblabel {
