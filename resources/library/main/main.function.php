@@ -553,7 +553,7 @@ function showSettingsIcon($url)
 
 function showGoBackIcon($url)
 {
-	echo '<a href="'.$url.'" class="go-back-icon"><img src="public_html/img/go_back_icon2.png" alt="'._t('Zurück').'" title="'._t('Zurück').'" /></a>';
+	echo '<a href="'.$url.'" class="go-back-icon"><img src="public_html/img/arrow-icon.svg" alt="'._t('Zurück').'" title="'._t('Zurück').'" /></a>'.PHP_EOL;
 }
 
 function getDirectory($folder_)

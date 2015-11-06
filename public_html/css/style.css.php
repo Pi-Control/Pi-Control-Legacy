@@ -295,6 +295,29 @@ body {
 	padding: 15px;
 }
 
+.box .inner-info {
+	background: <?php echo $colorPallet[1]; ?>;
+	margin-bottom: 15px;
+	display: table;
+	width: 100%;
+	display: inline-block;
+}
+
+.box .inner-info::before {
+	background: url('../img/info-icon.svg') no-repeat center center <?php echo $colorPallet[6]; ?>;
+	background-size: 40% auto;
+	content: " ";
+	display: table-cell;
+	height: 100%;
+	width: 60px;
+}
+
+.box .inner-info > div {
+	display: table-cell;
+	padding: 15px;
+	color: <?php echo $colorPallet[7]; ?>;
+}
+
 .box .inner-end {
 	text-align: right;
 }
@@ -397,6 +420,10 @@ body {
 
 .table-borderless td:last-child, .table-borderless th:last-child {
 	padding-right: 15px;
+}
+
+td.table-center, th.table-center {
+	text-align: center;
 }
 
 .rotate-icon {
@@ -681,6 +708,32 @@ img {
 	margin: 15px;
 }
 
+.go-back-icon img {
+	width: 16px;
+	height: 16px;
+}
+
+.svg-small {
+	width: 16px;
+	height: 16px;
+}
+
+.svg-middle {
+	vertical-align: middle;
+}
+
+.svg-negative-margin {
+	margin: -3px;
+}
+
+.svg-negative-margin-vertical {
+	margin: -3px auto;
+}
+
+.button-small {
+	padding: 2px 5px;
+}
+
 .red {
 	color: #F44336;
 }
@@ -778,7 +831,6 @@ label.checkbox::before {
 	background: #FFFFFF;
 	transition: all 100ms linear;
 }
-
 
 label.checkbox::before {
 	margin: 3px 3px -1px 0px;
