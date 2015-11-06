@@ -808,6 +808,23 @@ input[type="button"]:focus, button:focus, input[type="submit"]:focus {
 	outline: none;
 }
 
+select {
+	border: 1px solid #DDDDDD;
+	border-radius: 2px;
+	padding: 5px;
+	margin: 2px 0px;
+	transition: all 100ms linear;
+}
+
+select:hover {
+	border: 1px solid #CCCCCC;
+}
+
+select:focus {
+	border: 1px solid <?php echo $colorPallet[8]; ?>;
+	outline: none;
+}
+
 label.checkbox {
 	display: inline-block;
 	cursor: pointer;

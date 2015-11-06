@@ -7,7 +7,7 @@
 	<link type="text/css" rel="stylesheet" href="public_html/css/style.css.php" />
 	<link rel="shortcut icon" href="public_html/img/favicon.png" type="image/png" />
 	<script type="text/javascript" src="public_html/js/jquery.min.js"></script>
-	<script type="text/javascript">var time = <?php echo $data['javascript_time']; ?>; var req_url = '{<?php echo $data['javascript_req_url']; ?>}';</script>
+	<script type="text/javascript">var req_url = '{<?php echo $data['javascript_req_url']; ?>}';</script>
 	<script type="text/javascript" src="public_html/js/main.js"></script>
 	<script type="text/javascript" src="public_html/js/feedback.js"></script>
 	<title><?php echo $data['title']; ?></title>
