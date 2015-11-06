@@ -295,12 +295,18 @@ body {
 	padding: 15px;
 }
 
+.box .inner-margin-vertical {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
 .box .inner-info {
 	background: <?php echo $colorPallet[1]; ?>;
 	margin-bottom: 15px;
 	display: table;
 	width: 100%;
 	display: inline-block;
+	vertical-align: top;
 }
 
 .box .inner-info::before {

@@ -1,4 +1,4 @@
-<script type="text/javascript">{$js_variables}</script>
+<script type="text/javascript"><?php echo $data['js_variables']; ?></script>
 <script type="text/javascript" src="public_html/js/overview.status_refresh.js"></script>
 <!-- Sidebar -->
 <div class="sidebar">
@@ -56,15 +56,15 @@
 		</div>
 		<div class="inner flex-container">
 			<div class="flex-box-refresh"><div><div class="refresh-bar"></div></div><a href="#refresh"><img src="public_html/img/refresh.svg" title="<?php _e('Aktualisieren'); ?>" /></a></div>
-			<div class="flex-box"><strong><?php _e('Startzeit'); ?></strong><?php echo $data['start_time']; ?></div>
-			<div class="flex-box"><strong><?php _e('Laufzeit'); ?></strong><?php echo $data['run_time']; ?></div>
-			<div class="flex-box"><strong><?php _e('CPU-Takt'); ?></strong><?php echo $data['cpu_clock']; ?></div>
+			<div class="flex-box"><strong><?php _e('Startzeit'); ?></strong><span><?php echo $data['start_time']; ?></span></div>
+			<div class="flex-box"><strong><?php _e('Laufzeit'); ?></strong><span><?php echo $data['run_time']; ?></span></div>
+			<div class="flex-box"><strong><?php _e('CPU-Takt'); ?></strong><span><?php echo $data['cpu_clock']; ?></span></div>
 			<div class="flex-box"><strong><?php _e('CPU-Auslastung'); ?></strong><div class="progressbar"><div style="width: <?php echo $data['cpu_load']; ?>;"><?php echo $data['cpu_load']; ?></div></div></div>
-			<div class="flex-box"><strong><?php _e('CPU-Temperatur'); ?></strong><?php echo $data['cpu_temp']; ?></div>
+			<div class="flex-box"><strong><?php _e('CPU-Temperatur'); ?></strong><span><?php echo $data['cpu_temp']; ?></span></div>
 			<div class="flex-box"><strong><?php _e('RAM'); ?></strong><div class="progressbar"><div style="width: <?php echo $data['ram_percentage']; ?>;"><?php echo $data['ram_percentage']; ?></div></div></div>
-			<div class="flex-box"><strong>Speicher belegt</strong><?php echo sizeUnit($data['memory']['used']); ?></div>
-			<div class="flex-box"><strong>Speicher frei</strong><?php echo sizeUnit($data['memory']['free']); ?></div>
-			<div class="flex-box"><strong><?php _e('Gesamtspeicher'); ?></strong><?php echo sizeUnit($data['memory']['total']); ?></div>
+			<div class="flex-box"><strong>Speicher belegt</strong><span><?php echo sizeUnit($data['memory']['used']); ?></span></div>
+			<div class="flex-box"><strong>Speicher frei</strong><span><?php echo sizeUnit($data['memory']['free']); ?></span></div>
+			<div class="flex-box"><strong><?php _e('Gesamtspeicher'); ?></strong><span><?php echo sizeUnit($data['memory']['total']); ?></span></div>
 		</div>
 		<div class="inner text-align-center">
 			<a class="show-more" href="?s=detailed_overview"><?php _e('Mehr anzeigen'); ?></a>

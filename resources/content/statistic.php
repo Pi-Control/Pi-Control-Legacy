@@ -4,7 +4,7 @@ $tpl->setHeaderTitle(_t('Statistik'));
 $folder = LOG_PATH.'/statistic';
 $fileArray = array();
 $logArray = array();
-$hiddenStatistics = array_filter(explode('~', $tpl->getConfig('main:statistic.hide', '')));
+$hiddenStatistics = array_filter(explode('~', $tpl->getConfig('main:statistic.hidden', '')));
 
 foreach (@scandir($folder) as $file)
 {

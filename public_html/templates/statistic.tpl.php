@@ -28,27 +28,23 @@
 <!-- Container -->
 <div class="container-600">
 	<div class="box">
-		<div class="inner-header no-border-bottom">
+		<div class="inner-header">
 			<span>Statistik</span>
 			<?php showSettingsIcon('?s=settings&amp;do=statistic'); ?>
 		</div>
+<?php if(empty($data['logArray']) && $data['logArrayCount'] > 0) { ?>
+		<div class="inner-info">
+			<div>Alle Statistiken sind ausgeblendet!</div>
+		</div>
+<?php } elseif (empty($data['logArray'])) { ?>
+		<div class="inner-info">
+			<div>Es sind noch keine Statistiken verfügbar. Werte werden alle 5 Minuten eingetragen.</div>
+		</div>
+<?php } ?>
 	</div>
 </div>
 <div class="clear-both"></div>
 <div>
-<?php if(empty($data['logArray']) && $data['logArrayCount'] > 0) { ?>
-	<div class="box">
-		<div class="inner-single">
-			<strong class="red">Alle Statistiken sind ausgeblendet!</strong>
-		</div>
-	</div>
-<?php } elseif (empty($data['logArray'])) { ?>
-	<div class="box">
-		<div class="inner-single">
-			<strong class="red">Es sind noch keine Statistiken verfügbar. Werte werden alle 5 Minuten eingetragen.</strong>
-		</div>
-	</div>
-<?php } ?>
 <?php foreach ($data['logArray'] as $value) { ?>
 	<div class="box google-controls" id="dashboard_log_<?php echo $value['log']; ?>">
 		<div class="inner-header">

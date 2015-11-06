@@ -4,6 +4,9 @@
 			<span>Einstellungen zur Statistik</span>
 			<?php showGoBackIcon('?s=statistic'); ?>
 		</div>
+		<div class="inner">
+			Blende nicht benötigte Statistiken aus, um die Ladezeiten zu verbessern und um besser den Überblick zu behalten.
+		</div>
 		<div class="inner-info">
 			<div>Statistiken werden, unabhängig vom Anzeigestatus, aufgezeichnet.</div>
 		</div>

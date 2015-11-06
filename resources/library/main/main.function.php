@@ -271,6 +271,11 @@ function return_bytes($size)
 	return $size;
 }
 
+function numberFormat($value, $precision = 2, $delimiter = ',')
+{
+	return number_format($value, $precision, $delimiter, '');
+}
+
 function getFolderSize($folder_path, $folder_size = 0)
 {
 	if (!is_dir($folder_path))
