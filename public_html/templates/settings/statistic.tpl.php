@@ -23,8 +23,8 @@
 					<tr>
 						<td align="center"><input type="checkbox" name="check[]" id="cb<?php echo urlencode($value['log']); ?>" value="<?php echo $value['log']; ?>" <?php if ($value['display'] == 1) echo 'checked="checked"'; ?> /><label class="checkbox only-checkbox" for="cb<?php echo urlencode($value['log']); ?>">&nbsp;</label></td>
 						<td><?php echo $value['label']; ?></td>
-						<td class="table-center"><a href="?s=settings&amp;do=statistic&amp;download&amp;log=<?php echo urlencode($value['log']); ?>&amp;type=<?php echo urlencode($value['type']); ?>&amp;label=<?php echo urlencode($value['label']); ?>"><button type="button" class="button-small">CSV</button></a></td>
-						<td><a href="?s=settings&amp;do=statistic&amp;reset=<?php echo urlencode($value['log']); ?>"><button type="button" class="button-small">Zurücksetzen</button></a></td>
+						<td class="table-center"><a href="?s=settings&amp;do=statistic&amp;download&amp;log=<?php echo urlencode($value['log']); ?>&amp;type=<?php echo urlencode($value['type']); ?>&amp;label=<?php echo urlencode($value['label']); ?>" class="text-decoration-none"><span class="button button-small">CSV</span></a></td>
+						<td><a href="?s=settings&amp;do=statistic&amp;reset=<?php echo urlencode($value['log']); ?>" class="text-decoration-none"><span class="button button-small">Zurücksetzen</span></a></td>
 					</tr>
 <?php } ?>
 				</table>

@@ -740,16 +740,44 @@ img {
 	margin: -3px auto;
 }
 
-.button-small {
-	padding: 2px 5px;
-}
-
 .red {
 	color: #F44336;
 }
 
 .green {
 	color: #009688;
+}
+
+.text-decoration-none, .text-decoration-none:hover {
+	text-decoration: none;
+}
+
+.order-1 {
+	order: 1;
+}
+
+.order-2 {
+	order: 2;
+}
+
+.order-3 {
+	order: 3;
+}
+
+.order-4 {
+	order: 4;
+}
+
+.order-5 {
+	order: 5;
+}
+
+.order-6 {
+	order: 6;
+}
+
+a img {
+	border: 0px;
 }
 
 .svg-control-pen, .svg-control-cross, .svg-control-plus {
@@ -791,7 +819,7 @@ input[type="text"]:focus, input[type="password"]:focus  {
 	outline: none;
 }
 
-input[type="button"], button, input[type="submit"] {
+input[type="button"], button, input[type="submit"], .button {
 	background: none;
 	border: 1px solid <?php echo $colorPallet[7]; ?>;
 	border-radius: 2px;
@@ -801,13 +829,13 @@ input[type="button"], button, input[type="submit"] {
 	transition: all 100ms linear;
 }
 
-input[type="button"]:hover, button:hover, input[type="submit"]:hover {
+input[type="button"]:hover, button:hover, input[type="submit"]:hover, .button:hover {
 	background: <?php echo $colorPallet[8]; ?>;
 	border: 1px solid <?php echo $colorPallet[8]; ?>;
 	color: #FFFFFF;
 }
 
-input[type="button"]:focus, button:focus, input[type="submit"]:focus {
+input[type="button"]:focus, button:focus, input[type="submit"]:focus, .button:focus {
 	background: <?php echo $colorPallet[9]; ?>;
 	border: 1px solid <?php echo $colorPallet[9]; ?>;
 	color: #FFFFFF;
@@ -869,16 +897,25 @@ input[type=checkbox]:checked + label.checkbox::before {
 	background: <?php echo $colorPallet[9]; ?>;
 	content: "\2713";
 	font-size: 13px;
-	color: #fff;
+	color: #FFFFFF;
 	text-align: center;
-	line-height: 13px;
+	line-height: 15px;
 }
 
 input[type=checkbox] {
 	display: none;
 }
 
+.button-small {
+	padding: 2px 5px;
+}
+
 @media screen and (max-width: 899px) {
+	
+	#content {
+		display: flex;
+		flex-direction: column;
+	}
 	
 	.container-600 {
 		max-width: inherit;

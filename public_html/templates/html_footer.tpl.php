@@ -13,10 +13,10 @@
 						<a href="http://willy-tech.de/kontakt/" target="_blank"><?php _e('Feedback'); ?></a><br />
 						<a href="#" target="_blank"><?php _e('Hilfe'); ?></a><br />
 						<a href="https://play.google.com/store/apps/details?id=de.willytech.picontrol" target="_blank" title="<?php _e('Öffne Play Store'); ?>"><?php _e('App im Play Store'); ?></a></td>
-					<td rowspan="2"><a href="#">Mein Blog</a><br />
-						<a href="#">Twitter</a><br />
-						<a href="#">GitHub</a><br />
-						<a href="#">Spenden</a></td>
+					<td rowspan="2"><a href="http://willy-tech.de/" target="_blank">Mein Blog</a><br />
+						<a href="https://twitter.com/Willys_TechBlog" target="_blank">Twitter</a><br />
+						<a href="https://github.com/willfri" target="_blank">GitHub</a><br />
+						<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7PKQV4RWDS7E4" target="_blank">Spenden</a></td>
 					<td>2.0.0</td>
 				</tr>
 				<tr>

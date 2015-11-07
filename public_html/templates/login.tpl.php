@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="login-footer">
-			<div class="login-footer-inner">Entwickelt von Willy Fritzsche. 2013-2015.<br />Das Raspberry Pi Logo steht unter der Lizenz von www.raspberrypi.org</div>
+			<div class="login-footer-inner">Mit &#10084; entwickelt von Willy Fritzsche. 2013-2016<br />Raspberry Pi ist ein Markenzeichen der Raspberry Pi Foundation.</div>
 		</div>
 	</div>
 </body>

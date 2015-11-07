@@ -7,7 +7,7 @@
 	</div>
 </div>
 </noscript>
-<div class="sidebar">
+<div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-header">
 			<span>Zeitraum</span>
@@ -26,7 +26,7 @@
 	</div>
 </div>
 <!-- Container -->
-<div class="container-600">
+<div class="container-600 order-1">
 	<div class="box">
 		<div class="inner-header">
 			<span>Statistik</span>
@@ -44,7 +44,7 @@
 	</div>
 </div>
 <div class="clear-both"></div>
-<div>
+<div class="order-3">
 <?php foreach ($data['logArray'] as $value) { ?>
 	<div class="box google-controls" id="dashboard_log_<?php echo $value['log']; ?>">
 		<div class="inner-header">

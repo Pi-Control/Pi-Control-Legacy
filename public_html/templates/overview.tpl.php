@@ -1,7 +1,7 @@
 <script type="text/javascript"><?php echo $data['js_variables']; ?></script>
 <script type="text/javascript" src="public_html/js/overview.status_refresh.js"></script>
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('System'); ?></span>
@@ -9,9 +9,9 @@
 		<div class="inner">
 			<table class="table-overview-system">
 				<tr>
-					<td><a href="?action=system_restart" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich neustarten?'); ?>') == false) ? false : true);"><button><?php _e('Neustarten'); ?></button></td>
+					<td><a href="?action=system_restart" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich neu starten?'); ?>') == false) ? false : true);"><button><?php _e('Neu starten'); ?></button></a></td>
 					<td></td>
-					<td><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></td>
+					<td><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></a></td>
 				</tr>
 			</table>
 		</div>
@@ -48,7 +48,7 @@
 <?php } ?>
 </div>
 <!-- Container -->
-<div class="container-600">
+<div class="container-600 order-1">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Übersicht'); ?></span>
@@ -73,7 +73,7 @@
 </div>
 <div class="clear-both"></div>
 <?php if (is_array($data['usb_devices'])) { ?>
-<div>
+<div class="order-3">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Angeschlossene Geräte'); ?></span>

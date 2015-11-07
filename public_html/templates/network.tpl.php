@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-navi">
 			<a href="?s=network"><?php _e('Übersicht'); ?></a>
@@ -40,7 +40,7 @@
 	</div>
 </div>
 <!-- Container -->
-<div class="container-600">
+<div class="container-600 order-1">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Netzwerk'); ?></span>
