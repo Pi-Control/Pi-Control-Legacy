@@ -383,7 +383,7 @@ body {
 	width: 50%;
 }
 
-.table-form td:first-child {
+.table-form td:first-child, .table-form-header  td:first-child {
 	font-weight: bold;
 	width: 25%;
 }
@@ -780,6 +780,13 @@ a img {
 	border: 0px;
 }
 
+.subtitle {
+	font-weight: bold;
+	color: <?php echo $colorPallet[6]; ?>;
+	display: inline-block;
+	font-size: 16px;
+}
+
 .svg-control-pen, .svg-control-cross, .svg-control-plus {
 	background: url('../img/control-icons.svg') no-repeat;
 	background-size: auto 100%;
@@ -1006,6 +1013,10 @@ input[type=checkbox] {
 	
 	#footer-table tr:nth-child(2) td a {
 		padding: 10px 4px;
+	}
+	
+	.responsive-detailed-overview-table td:first-child {
+		width: 40%;
 	}
 }
 

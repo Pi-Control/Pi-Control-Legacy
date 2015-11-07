@@ -44,11 +44,14 @@ if (isset($_GET['debug']))
 {
 	if ($_GET['debug'] == 'hide')
 	{
-		setcookie('debug', NULL, -1);
+		setcookie('debug', NULL, 0);
 		unset($_COOKIE['debug']);
 	}
 	else
+	{
 		setcookie('debug', 'debug_mode', time()+3600);
+		$_COOKIE['debug'] = 'debug_mode'; // Setze, damit direkt verfuegbar
+	}
 }
 
 $errorHandler = array();
@@ -70,7 +73,7 @@ set_error_handler('myErrorHandler');
 header('Content-Type: text/html; charset=utf-8');
 
 if (isset($_COOKIE['debug'], $_GET['s']) && $_COOKIE['debug'] == 'debug_mode')
-	echo '<!DOCTYPE HTML><div style="background: #FF0000; color: #FFFFFF; padding: 2px;">DEBUG: PHP-Fehlermeldungen werden angezeigt. <a href="'.$_SERVER['REQUEST_URI'].'&debug=hide" style="color: #FFFF00;">Deaktivieren.</a></div>';
+	echo '<!DOCTYPE HTML><div style="background: #F44336; color: #FFFFFF; padding: 3px;">DEBUG: PHP-Fehlermeldungen werden angezeigt. <a href="'.$_SERVER['REQUEST_URI'].'&debug=hide" style="color: #FFFF00;">Deaktivieren.</a></div>';
 
 if (!isset($doNotCheckForAuthentification))
 	(include LIBRARY_PATH.'main/authentification.php') or die('Nicht gefunden!');

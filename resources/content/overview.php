@@ -33,7 +33,7 @@ $tpl->assign('js_variables', 'var reload_timeout = '.($tpl->getConfig('main:othe
 $tpl->assign('show_weather', $tpl->getConfig('main:overview.weather', 'true'));
 $tpl->assign('weather', ($tpl->getConfig('main:overview.weather') === 'true') ? getWeather($tpl->getConfig('main:weather.postcode', 00000)) : '');
 $tpl->assign('run_time', getDateFormat(rpi_getRuntime()));
-$tpl->assign('start_time', date('d.m.Y H:i', time() - rpi_getRuntime()));
+$tpl->assign('start_time', formatTime(time() - rpi_getRuntime()));
 $tpl->assign('cpu_clock', rpi_getCpuClock().' MHz');
 $tpl->assign('cpu_load', rpi_getCPULoad().'%');
 $tpl->assign('cpu_type', rpi_getCPUType());
