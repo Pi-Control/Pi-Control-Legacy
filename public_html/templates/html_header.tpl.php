@@ -76,6 +76,7 @@
 <!-- Cron -->
 		<div class="box error">
 			<div>
+				<span></span>
 				<div class="inner-header">
 					<span>Fehler mit dem Cron</span>
 				</div>

@@ -482,8 +482,18 @@ td.table-center, th.table-center {
 	display: table;
 	width: 100%;
 	border: 0px;
-	pointer-events: none;
 	border-radius: 2px;
+}
+
+.error > div > span, .success > div > span, .info > div > span {
+	width: 16px;
+	height: 16px;
+	background: url('../img/cross-icon.svg') no-repeat center center;
+	background-size: 16px;
+	float: right;
+	margin: 15px;
+	display: block;
+	cursor: pointer;
 }
 
 .error::before, .success::before, .info::before {
@@ -531,18 +541,6 @@ td.table-center, th.table-center {
 
 .info .inner-header span {
 	color: #FFC107;
-}
-
-.error .inner-header::before, .success .inner-header::before, .info .inner-header::before, .inner-cross::before {
-	content: "\2715";
-	float: right;
-	margin: 15px;
-	cursor: pointer;
-	pointer-events: all;
-}
-
-.inner-cross::before {
-	margin: -2px 0px 0px 0px;
 }
 
 .google-controls .google-visualization-controls-rangefilter-thumblabel {

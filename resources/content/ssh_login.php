@@ -13,34 +13,33 @@ if (isset($_POST['submit']))
 			if ($ssh_auth === true)
 			{
 				if ($tpl->setSSHInfo(intval(trim($_POST['port'])), trim($_POST['username']), trim($_POST['password']), (isset($_POST['save_passwd']) && $_POST['save_passwd'] == 'checked') ? true : false) === true)
-					$tpl->msg('green', '', _t('Verbindung zum Raspberry Pi wurde hergestellt.'));
+					$tpl->msg('success', '', _t('Verbindung zum Raspberry Pi wurde hergestellt.'));
 				else
-					$tpl->msg('red', '', _t('Fehler beim Speichern der Daten!'));
+					$tpl->msg('error', '', _t('Fehler beim Speichern der Daten!'));
 			}
 			else
-				$tpl->msg('red', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte überprüfe die eingegebenen Daten.
-		Schlägt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie möglich weiterhelfen.'));
+				$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte überprüfe die eingegebenen Daten. Schlägt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie möglich weiterhelfen.'));
 		}
 		else
-			$tpl->msg('red', '', _t('Ungültiger Port. Der Port muss zwischen 0 und 65535 liegen.'));
+			$tpl->msg('error', '', _t('Ungültiger Port. Der Port muss zwischen 0 und 65535 liegen.'));
 	}
 	else
-		$tpl->msg('red', '', _t('Bitte alle Felder ausfüllen.'));
+		$tpl->msg('error', '', _t('Bitte alle Felder ausfüllen.'));
 }
 
 // Abmelden
 if (isset($_GET['logout']))
 {
 	if ($tpl->logoutSSH() === true)
-		$tpl->msg('green', '', _t('Erfolgreich abgemeldet.'));
+		$tpl->msg('success', '', _t('Erfolgreich abgemeldet.'));
 	else
-		$tpl->msg('red', '', _t('Beim Abmelden ist ein Fehler aufgetreten!'));
+		$tpl->msg('error', '', _t('Beim Abmelden ist ein Fehler aufgetreten!'));
 }
 
 $SSHInfo = $tpl->getSSHInfo();
 
 if (!is_array($SSHInfo))
-	$tpl->msg('red', '', _t('Konnte SSH-Informationen nicht abrufen.'), false);
+	$tpl->msg('error', '', _t('Konnte SSH-Informationen nicht abrufen.'), false);
 
 $tpl->assign('ssh_info', $SSHInfo);
 $tpl->assign('logged_in', is_array($tpl->executeSSH('ls', true, 0)));
