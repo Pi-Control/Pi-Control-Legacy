@@ -10,17 +10,17 @@
 <div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-header">
-			<span>Zeitraum</span>
+			<span><?php _e('Zeitraum'); ?></span>
 		</div>
 		<div class="inner">
 			<select onchange="changeRange(this)">
-				<option name="" value="seven">Alles (7 Tage)</option>
-				<option name="" value="six">Letzten 6 Tage</option>
-				<option name="" value="five">Letzten 5 Tage</option>
-				<option name="" value="four">Letzten 4 Tage</option>
-				<option name="" value="three">Letzten 3 Tage</option>
-				<option name="" value="two">Letzten 2 Tage</option>
-				<option name="" value="one">Letzten 24 Stunden</option>
+				<option name="" value="seven"><?php _e('Alles (7 Tage)'); ?></option>
+				<option name="" value="six"><?php _e('Letzten 6 Tage'); ?></option>
+				<option name="" value="five"><?php _e('Letzten 5 Tage'); ?></option>
+				<option name="" value="four"><?php _e('Letzten 4 Tage'); ?></option>
+				<option name="" value="three"><?php _e('Letzten 3 Tage'); ?></option>
+				<option name="" value="two"><?php _e('Letzten 2 Tage'); ?></option>
+				<option name="" value="one"><?php _e('Letzten 24 Stunden'); ?></option>
 			</select>
 		</div>
 	</div>
@@ -29,16 +29,16 @@
 <div class="container-600 order-1">
 	<div class="box">
 		<div class="inner-header">
-			<span>Statistik</span>
+			<span><?php _e('Statistik'); ?></span>
 			<?php showSettingsIcon('?s=settings&amp;do=statistic'); ?>
 		</div>
 <?php if(empty($data['logArray']) && $data['logArrayCount'] > 0) { ?>
 		<div class="inner-info">
-			<div>Alle Statistiken sind ausgeblendet!</div>
+			<div><?php _e('Alle Statistiken sind ausgeblendet!'); ?></div>
 		</div>
 <?php } elseif (empty($data['logArray'])) { ?>
 		<div class="inner-info">
-			<div>Es sind noch keine Statistiken verfügbar. Werte werden alle 5 Minuten eingetragen.</div>
+			<div><?php _e('Es sind noch keine Statistiken verfügbar. Werte werden alle 5 Minuten eingetragen.'); ?></div>
 		</div>
 <?php } ?>
 	</div>
@@ -48,7 +48,7 @@
 <?php foreach ($data['logArray'] as $value) { ?>
 	<div class="box google-controls" id="dashboard_log_<?php echo $value['log']; ?>">
 		<div class="inner-header">
-			<span><?php echo $value['label']; ?></span>
+			<span><?php _e($value['label']); ?></span>
 		</div>
 		<div class="inner text-center padding-0" id="chart_log_<?php echo $value['log']; ?>">
 			<img src="public_html/img/loader2.svg" style="margin: 20px;" />
@@ -117,9 +117,9 @@
 		}).fail(function(xhr, textStatus)
 		{
 			if (xhr.status == 412)
-				$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red">Es sind noch keine Werte verfügbar. Werte werden alle 5 Minuten eingetragen.</strong>');
+				$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es sind noch keine Werte verfügbar. Werte werden alle 5 Minuten eingetragen.'); ?></strong>');
 			else
-				$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red">Es ist ein Fehler aufgetreten! Fehlercode: '+xhr.status+'</strong>');
+				$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehlercode: %s', '\'+xhr.status+\''); ?></strong>');
 		});
 <?php } ?>
 	}

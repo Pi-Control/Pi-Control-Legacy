@@ -2,7 +2,7 @@
 <div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-navi">
-			<a href="?s=network"><?php _e('Übersicht'); ?></a>
+			<a href="?s=network"><?php _e('&Uuml;bersicht'); ?></a>
 			<a href="?s=network_configuration"><?php _e('Konfiguration'); ?></a>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 			<?php _e('Dein Raspberry Pi wird im Netzwerk unter folgendem Namen angezeigt: <strong>%s</strong>', $data['hostname']); ?>
 		</div>
 		<div class="inner-end">
-			<a href="?s=network&amp;hostname"><button><?php _e('Ändern'); ?></button></a>
+			<a href="?s=network&amp;hostname"><button><?php _e('&Auml;ndern'); ?></button></a>
 		</div>
 	</div>
 </div>

@@ -51,7 +51,7 @@
 <div class="container-600 order-1">
 	<div class="box">
 		<div class="inner-header">
-			<span><?php _e('Übersicht'); ?></span>
+			<span><?php _e('&Uuml;bersicht'); ?></span>
 			<?php showSettingsIcon('?s=settings&amp;do=overview'); ?>
 		</div>
 		<div class="inner flex-container">
@@ -62,8 +62,8 @@
 			<div class="flex-box"><strong><?php _e('CPU-Auslastung'); ?></strong><div class="progressbar"><div style="width: <?php echo $data['cpu_load']; ?>;"><?php echo $data['cpu_load']; ?></div></div></div>
 			<div class="flex-box"><strong><?php _e('CPU-Temperatur'); ?></strong><span><?php echo $data['cpu_temp']; ?></span></div>
 			<div class="flex-box"><strong><?php _e('RAM'); ?></strong><div class="progressbar"><div style="width: <?php echo $data['ram_percentage']; ?>;"><?php echo $data['ram_percentage']; ?></div></div></div>
-			<div class="flex-box"><strong>Speicher belegt</strong><span><?php echo sizeUnit($data['memory']['used']); ?></span></div>
-			<div class="flex-box"><strong>Speicher frei</strong><span><?php echo sizeUnit($data['memory']['free']); ?></span></div>
+			<div class="flex-box"><strong><?php _e('Speicher belegt'); ?></strong><span><?php echo sizeUnit($data['memory']['used']); ?></span></div>
+			<div class="flex-box"><strong><?php _e('Speicher frei'); ?></strong><span><?php echo sizeUnit($data['memory']['free']); ?></span></div>
 			<div class="flex-box"><strong><?php _e('Gesamtspeicher'); ?></strong><span><?php echo sizeUnit($data['memory']['total']); ?></span></div>
 		</div>
 		<div class="inner text-align-center">
@@ -76,7 +76,7 @@
 <div class="order-3">
 	<div class="box">
 		<div class="inner-header">
-			<span><?php _e('Angeschlossene Geräte'); ?></span>
+			<span><?php _e('Angeschlossene Ger&auml;te'); ?></span>
 		</div>
 		<div class="inner-table">
 			<table class="table table-borderless">

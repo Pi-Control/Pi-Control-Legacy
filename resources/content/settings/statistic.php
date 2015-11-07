@@ -93,14 +93,13 @@ elseif (isset($_GET['reset']))
 	{
 		if (array_search(urldecode($_GET['reset']), $statistics) !== false)
 		{
-			if (($logFile = fopen(LOG_PATH.'/stat'.urldecode($_GET['reset']).'.log.txt', 'w')) !== false)
+			if (($logFile = fopen($folder.urldecode($_GET['reset']).'.csv', 'w')) !== false)
 			{
 				$tpl->msg('success', '', 'Verlauf wurde erfolgreich zurückgesetzt.');
 				fclose($logFile);
 			}
 			else
 				$tpl->msg('error', '', 'Verlauf konnte nicht zurückgesetzt werden.');
-			
 		}
 	}
 	

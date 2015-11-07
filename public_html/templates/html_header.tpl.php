@@ -19,10 +19,10 @@
 			<div id="header-top-inner">
 				<div id="header-top-inner-row">
 					<div class="header-top-inner-cell header-top-inner-username">
-						Angemeldet als Willy
+						<?php _e('Angemeldet als %s', 'Willy'); ?>
 					</div>
 					<div class="header-top-inner-cell header-top-inner-logout">
-						<a href="#">Abmelden</a>
+						<a href="#"><?php _e('Abmelden'); ?></a>
 					</div>
 				</div>
 			</div>
@@ -31,7 +31,7 @@
 		<div id="inner-header">
 			<label for="header-mobile">&#9776;</label>
 			<div id="header-navi">
-				<a href="?s=overview"><?php _e('Übersicht'); ?></a>
+				<a href="?s=overview"><?php _e('&Uuml;bersicht'); ?></a>
 				<a href="?s=network"><?php _e('Netzwerk'); ?></a>
 				<a href="?s=statistic"><?php _e('Statistik'); ?></a>
 				<a href="?s=terminal"><?php _e('Terminal'); ?></a>

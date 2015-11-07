@@ -43,7 +43,7 @@ class PiTpl
 	
 	// Headertitel
 	private $tplHeaderTitle = '';
-	private $tplHeaderTitleFormat = 'Pi Control | %s';
+	private $tplHeaderTitleFormat = '%s | Pi Control';
 	
 	// Footer
 	private $tplFooterConfig = array();
@@ -115,8 +115,9 @@ class PiTpl
 	{
 		$args = func_get_args();
 		
-		if (isset($this->tplLanguageFileArray[$args[0]]) && $this->tplLanguage != 'de')
-			$args[0] = $this->tplLanguageFileArray[$args[0]];
+		$checksum = substr(md5($args[0]), 0, 8);
+		if (isset($this->tplLanguageFileArray[$checksum]) && $this->tplLanguage != 'de')
+			$args[0] = $this->tplLanguageFileArray[$checksum];
 		
 		return call_user_func_array('sprintf', $args);
 	}
@@ -135,8 +136,9 @@ class PiTpl
 	{
 		$args = func_get_args();
 		
-		if (isset($this->tplLanguageFileArray[$args[0]]) && $this->tplLanguage != 'de')
-			$args[0] = $this->tplLanguageFileArray[$args[0]];
+		$checksum = substr(md5($args[0]), 0, 8);
+		if (isset($this->tplLanguageFileArray[$checksum]) && $this->tplLanguage != 'de')
+			$args[0] = $this->tplLanguageFileArray[$checksum];
 		
 		echo call_user_func_array('sprintf', $args);
 		

@@ -203,8 +203,9 @@ function _t()
 	if (file_exists($langFile) === true && is_file($langFile) === true)
 		include $langFile;
 	
-	if (isset($langArray[$args[0]]) && $lang != 'de')
-		$args[0] = $langArray[$args[0]];
+	$checksum = substr(md5($args[0]), 0, 8);
+	if (isset($langArray[$checksum]) && $lang != 'de')
+		$args[0] = $langArray[$checksum];
 	
 	return call_user_func_array('sprintf', $args);
 }
@@ -231,8 +232,9 @@ function _e()
 	if (file_exists($langFile) === true && is_file($langFile) === true)
 		include $langFile;
 	
-	if (isset($langArray[$args[0]]) && $lang != 'de')
-		$args[0] = $langArray[$args[0]];
+	$checksum = substr(md5($args[0]), 0, 8);
+	if (isset($langArray[$checksum]) && $lang != 'de')
+		$args[0] = $langArray[$checksum];
 	
 	echo call_user_func_array('sprintf', $args);
 	

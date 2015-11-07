@@ -1,5 +1,5 @@
 <?php
-$tpl->setHeaderTitle(_t('Übersicht'));
+$tpl->setHeaderTitle(_t('&Uuml;bersicht'));
 
 if (isset($_GET['action']) && !empty($_GET['action']))
 {
