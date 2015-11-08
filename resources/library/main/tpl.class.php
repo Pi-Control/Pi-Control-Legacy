@@ -360,14 +360,14 @@ class PiTpl
 		$this->tplLoadedHeader = true;
 		
 		if (file_exists($fileName) !== true || is_file($fileName) !== true)
-			throw new FileException(self::_t('Datei "%s" existiert nicht oder ist keine gültige Datei.', $fileName));
+			throw new FileException(self::_t('Datei "%s" existiert nicht oder ist keine g&uuml;ltige Datei.', $fileName));
 		
 		$tplMain = $this->tpl;
 		
 		// Übergebe Titel
 		$data['title'] = sprintf($this->tplHeaderTitleFormat, $this->tplHeaderTitle);
 		
-		(include_once $fileName) or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', $fileName), __LINE__);
+		(include_once $fileName) or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $fileName), __LINE__);
 		
 		return true;
 	}
@@ -410,13 +410,13 @@ class PiTpl
 		$this->tplLoadedFooter = true;
 		
 		if (file_exists($fileName) !== true || is_file($fileName) !== true)
-			throw new FileException(self::_t('Datei "%s" existiert nicht oder ist keine gültige Datei.', $fileName));
+			throw new FileException(self::_t('Datei "%s" existiert nicht oder ist keine g&uuml;ltige Datei.', $fileName));
 		
 		$tplMain = $this->tpl;
 		$tplConfig = $this->tplFooterConfig;
 		$tplErrorHandler = $this->tplFooterErrorHandler;
 		
-		(include_once $fileName) or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', $fileName), __LINE__);
+		(include_once $fileName) or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $fileName), __LINE__);
 		
 		return true;
 	}
@@ -438,16 +438,16 @@ class PiTpl
 			return false;
 		
 		if (!strlen($tplFileName) >= 1 || !is_string($tplFileName))
-			return self::tplError(self::_t('Dateiname "%s" ist ungültig.', $tplFileName), __LINE__-1);
+			return self::tplError(self::_t('Dateiname "%s" ist ung&uuml;ltig.', $tplFileName), __LINE__-1);
 		
 		if (file_exists($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true || is_file($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true)
-			return self::tplError(self::_t('Datei "%s" existiert nicht oder ist keine gültige Datei.', $tplFileName), __LINE__-1);
+			return self::tplError(self::_t('Datei "%s" existiert nicht oder ist keine g&uuml;ltige Datei.', $tplFileName), __LINE__-1);
 		
 		self::drawMsg();
 		
 		$data = $this->tplVariables;
 		
-		(include_once $this->tplFolderPath.$tplFileName.$this->tplFileSuffix) or self::error(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', $tplFileName), __LINE__);
+		(include_once $this->tplFolderPath.$tplFileName.$this->tplFileSuffix) or self::error(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $tplFileName), __LINE__);
 		
 		// Optisch schöner
 		echo PHP_EOL;
@@ -555,7 +555,7 @@ class PiTpl
 		else
 		{
 			self::error(self::_t('Weiterleitung'),
-						self::_t('<strong class="red">Header bereits gesendet. Redirect nicht m&ouml;glich, klicke daher stattdessen <a href="setup.php">diesen Link</a> an.</strong>', $url),
+						'<strong class="red">'.self::_t('Header bereits gesendet. Redirect nicht m&ouml;glich, klicke daher stattdessen <a href="%s">diesen Link</a> an.', $url).'</strong>',
 						true);
 		}
 		
@@ -643,8 +643,8 @@ class PiTpl
 	{
 		$ssh = NULL;
 		
-		(include CONFIG_PATH.'/config_ssh.php') or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', CONFIG_PATH.'/config_ssh.php'), __LINE__);
-		(include CONFIG_PATH.'/config_uniqid.php') or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', CONFIG_PATH.'/config_uniqid.php'), __LINE__);
+		(include CONFIG_PATH.'/config_ssh.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_ssh.php'), __LINE__);
+		(include CONFIG_PATH.'/config_uniqid.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_uniqid.php'), __LINE__);
 		
 		if (isset($config_ssh_port, $config_ssh_username, $config_ssh_password) && $config_ssh_port != '' && $config_ssh_username != '' && $config_ssh_password != '')
 		{
@@ -695,7 +695,7 @@ class PiTpl
 		if ($this->tplSSH === NULL)
 			if (self::loadSSH() !== true)
 				if ($cancelIfError !== 0)
-					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="?s=ssh_login">Jetzt anmelden.</a>'), ($cancelIfError === 1) ? false : true);
+					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'), ($cancelIfError === 1) ? false : true);
 		
 		if ($this->tplSSH === NULL || ($stream = ssh2_exec($this->tplSSH, $command)) === false)
 			return false;
@@ -741,8 +741,8 @@ class PiTpl
 	
 	public function getSSHInfo()
 	{
-		(include CONFIG_PATH.'/config_ssh.php') or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', CONFIG_PATH.'/config_ssh.php'), __LINE__);
-		(include CONFIG_PATH.'/config_uniqid.php') or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', CONFIG_PATH.'/config_uniqid.php'), __LINE__);
+		(include CONFIG_PATH.'/config_ssh.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_ssh.php'), __LINE__);
+		(include CONFIG_PATH.'/config_uniqid.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_uniqid.php'), __LINE__);
 		
 		if (isset($config_ssh_port, $config_ssh_username, $config_ssh_password) && $config_ssh_port != '' && $config_ssh_username != '' && $config_ssh_password != '')
 		{

@@ -1,5 +1,5 @@
 <?php
-$tpl->setHeaderTitle(_t('Detaillierte Übersicht'));
+$tpl->setHeaderTitle(_t('Detaillierte &Uuml;bersicht'));
 
 $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();

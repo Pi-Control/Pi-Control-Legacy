@@ -9,9 +9,9 @@
 		<div class="inner">
 			<table class="table-overview-system">
 				<tr>
-					<td><a href="?action=system_restart" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich neu starten?'); ?>') == false) ? false : true);"><button><?php _e('Neu starten'); ?></button></a></td>
+					<td><a href="?action=system_restart" onClick="return ((confirm('<?php _e('M&ouml;chtest du deinen Raspberry Pi wirklich neu starten?'); ?>') == false) ? false : true);"><button><?php _e('Neu starten'); ?></button></a></td>
 					<td></td>
-					<td><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('Willst du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></a></td>
+					<td><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('M&ouml;chtest du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></a></td>
 				</tr>
 			</table>
 		</div>
@@ -23,18 +23,18 @@
 		</div>
 		<div class="inner">
 	<?php if ($data['weather'] === 0) { ?>
-			<strong class="red">Die aktuelle Postleitzahl ist ungültig.</strong>
+			<strong class="red"><? _e('Die aktuelle Postleitzahl ist ungültig.'); ?></strong>
 	<?php } elseif ($data['weather'] === 1) { ?>
-			<strong class="red">Das Wetter kann aktuell nicht abgerufen werden.</strong>
+			<strong class="red"><? _e('Das Wetter kann aktuell nicht abgerufen werden.'); ?></strong>
 	<?php } elseif ($data['weather'] === 2) { ?>
-			<strong class="red">Wetter wurde noch nicht konfiguriert. <a href="?s=settings&do=overview">Zu den Einstellungen.</a></strong>
+			<strong class="red"><? _e('Wetter wurde noch nicht konfiguriert. <a href="%s">Zu den Einstellungen.</a>', '?s=settings&do=overview'); ?></strong>
 	<?php } else { ?>
 			<strong>{$weather.city}</strong><br /><br />
 			<table style="margin: 0px auto 0px;">
 				<tr>
 					<td style="width: 100px; text-align: center;">
-						<img src="public_html/img/weather/{$weather.icon}.png" title="{$weather.description}" alt="Wetter" /><br />
-						<span style="font-size: 11px;" title="Windstärke | Luftfeuchtigkeit">{$weather.wind} km/h | {$weather.humidity} %</span>
+						<img src="public_html/img/weather/{$weather.icon}.png" title="{$weather.description}" alt="<? _e('Wetter'); ?>" /><br />
+						<span style="font-size: 11px;" title="<? _e('Windst&auml;rke | Luftfeuchtigkeit'); ?>">{$weather.wind} km/h | {$weather.humidity} %</span>
 					</td>
 					<td style="width: 100px; text-align: center;"><span style="font-size: 30px;">
 						{$weather.temp} &deg;C</span><br />

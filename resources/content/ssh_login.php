@@ -18,13 +18,13 @@ if (isset($_POST['submit']))
 					$tpl->msg('error', '', _t('Fehler beim Speichern der Daten!'));
 			}
 			else
-				$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte überprüfe die eingegebenen Daten. Schlägt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie möglich weiterhelfen.'));
+				$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte &uuml;berpr&uuml;fe die eingegebenen Daten. Schl&auml;gt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie m&ouml;glich weiterhelfen.'));
 		}
 		else
-			$tpl->msg('error', '', _t('Ungültiger Port. Der Port muss zwischen 0 und 65535 liegen.'));
+			$tpl->msg('error', '', _t('Ung&uuml;ltiger Port. Der Port muss zwischen 0 und 65535 liegen.'));
 	}
 	else
-		$tpl->msg('error', '', _t('Bitte alle Felder ausfüllen.'));
+		$tpl->msg('error', '', _t('Bitte alle Felder ausf&uuml;llen.'));
 }
 
 // Abmelden

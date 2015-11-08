@@ -432,6 +432,14 @@ td.table-center, th.table-center {
 	text-align: center;
 }
 
+td.table-left, th.table-left {
+	text-align: left;
+}
+
+td.table-right, th.table-right {
+	text-align: right;
+}
+
 .rotate-icon {
 	animation: rotate 0.9s linear infinite;
 	-moz-animation: rotate 0.9s linear infinite;

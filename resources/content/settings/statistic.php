@@ -35,7 +35,7 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 		$hiddenStatistics = array_diff($statistics, (isset($_POST['check'])) ? $_POST['check'] : array());
 		
 		if ($tpl->setConfig('main:statistic.hidden', implode('~', $hiddenStatistics)) !== false)
-			$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.');
+			$tpl->msg('success', '', _t('Die Einstellungen wurden erfolgreich gespeichert.'));
 		else
 			$tpl->msg('error', '', $error_code['0x0043']);
 	}
@@ -45,7 +45,7 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 		if (substr($file , 0, -4) == 'coretemp')
 		{
 			$logArray[] = array('log' => 'coretemp',
-								'label' => 'CPU-Temperatur',
+								'label' => _t('CPU-Temperatur'),
 								'type' => 'coretemp',
 								'display' => (array_search('coretemp', $hiddenStatistics) !== false) ? 0 : 1);
 			
@@ -54,7 +54,7 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 		elseif (substr($file , 0, -4) == 'cpuload')
 		{
 			$logArray[] = array('log' => 'cpuload',
-								'label' => 'CPU-Auslastung',
+								'label' => _t('CPU-Auslastung'),
 								'type' => 'cpuload',
 								'display' => (array_search('cpuload', $hiddenStatistics) !== false) ? 0 : 1);
 			
@@ -63,7 +63,7 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 		elseif (substr($file , 0, -4) == 'ram')
 		{
 			$logArray[] = array('log' => 'ram',
-								'label' => 'RAM-Auslastung',
+								'label' => _t('RAM-Auslastung'),
 								'type' => 'ram',
 								'display' => (array_search('ram', $hiddenStatistics) !== false) ? 0 : 1);
 			
@@ -95,11 +95,11 @@ elseif (isset($_GET['reset']))
 		{
 			if (($logFile = fopen($folder.urldecode($_GET['reset']).'.csv', 'w')) !== false)
 			{
-				$tpl->msg('success', '', 'Verlauf wurde erfolgreich zurückgesetzt.');
+				$tpl->msg('success', '', _t('Verlauf wurde erfolgreich zur&uuml;ckgesetzt.'));
 				fclose($logFile);
 			}
 			else
-				$tpl->msg('error', '', 'Verlauf konnte nicht zurückgesetzt werden.');
+				$tpl->msg('error', '', _t('Verlauf konnte nicht zur&uuml;ckgesetzt werden.'));
 		}
 	}
 	
@@ -107,9 +107,9 @@ elseif (isset($_GET['reset']))
 	
 	switch (urldecode($_GET['reset']))
 	{
-		case 'coretemp': $label = 'CPU-Temperatur'; break;
-		case 'cpuload': $label = 'CPU-Auslastung'; break;
-		case 'ram': $label = 'RAM-Auslastung'; break;
+		case 'coretemp': $label = _t('CPU-Temperatur'); break;
+		case 'cpuload': $label = _t('CPU-Auslastung'); break;
+		case 'ram': $label = _t('RAM-Auslastung'); break;
 	}
 	
 	$tpl->assign('log', $_GET['reset']);

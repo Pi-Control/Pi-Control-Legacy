@@ -15,11 +15,11 @@
 					<div class="ssh-login-table-clickable-area"></div>
 					<table class="table table-borderless">
 						<tr>
-							<th colspan="2"><?php _e('<strong>Anmeldung über ein Passwort</strong><span> [Klicken zum aktivieren]</span>'); ?></th>
+							<th colspan="2"><strong><?php _e('Anmeldung &uuml;ber ein Passwort'); ?></strong><span> [<?php _e('Klicken zum aktivieren'); ?>]</span></th>
 						</tr>
 						<tr>
 							<td style="width: 30%;"><strong><?php _e('SSH-Port'); ?></strong></td>
-							<td><input type="text" name="port" style="width: 50px;" value="<?php echo $data['ssh_info']['port']; ?>" maxlength="5" /> <span class="small_info"><?php _e('Standard: 22'); ?></span></td>
+							<td><input type="text" name="port" style="width: 50px;" value="<?php echo $data['ssh_info']['port']; ?>" maxlength="5" /> <span class="small_info"><?php _e('Standard: %d', 22); ?></span></td>
 						</tr>
 						<tr>
 							<td><strong><?php _e('SSH-Benutzername'); ?></strong></td>
@@ -45,7 +45,7 @@
 					<div class="ssh-login-table-clickable-area"></div>
 					<table class="table table-borderless">
 						<tr>
-							<th colspan="2"><?php _e('<strong>Anmeldung über einen Publickey</strong><span> [Klicken zum aktivieren]</span>'); ?></th>
+							<th colspan="2"><strong><?php _e('Anmeldung &uuml;ber einen Publickey'); ?></strong><span> [<?php _e('Klicken zum aktivieren'); ?>]</span></th>
 						</tr>
 						<tr>
 								<td style="width: 30%;"><strong><?php _e('SSH-Port'); ?></strong></td>
@@ -64,7 +64,7 @@
 								<td><input type="password" name="password_" style="width: 40%;" /></td>
 							</tr>
 							<tr>
-								<td><strong><?php _e('SSH-Passphrase'); ?></strong></td>
+								<td><strong><?php _e('SSH-Passwort'); ?></strong></td>
 								<td><input type="password" name="password_" style="width: 40%;" /></td>
 							</tr>
 							<tr>
