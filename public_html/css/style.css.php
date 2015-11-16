@@ -421,7 +421,6 @@ body {
 
 .table-borderless td:first-child, .table-borderless th:first-child {
 	padding-left: 15px;
-	
 }
 
 .table-borderless td:last-child, .table-borderless th:last-child {
@@ -549,6 +548,11 @@ td.table-right, th.table-right {
 
 .info .inner-header span {
 	color: #FFC107;
+}
+
+.small-info {
+	color: #999999;
+    font-size: 11px;
 }
 
 .google-controls .google-visualization-controls-rangefilter-thumblabel {
@@ -872,7 +876,7 @@ select:focus {
 	outline: none;
 }
 
-label.checkbox {
+label.checkbox, label.radio {
 	display: inline-block;
 	cursor: pointer;
 	position: relative;
@@ -882,11 +886,11 @@ label.checkbox {
 	transition: all 100ms linear;
 }
 
-label.only-checkbox {
+label.only-checkbox, label.only-radio {
 	padding-left: 0px;
 }
 
-label.checkbox::before {
+label.checkbox::before, label.radio::before {
 	content: "";
 	display: inline-block;
 	width: 14px;
@@ -895,7 +899,7 @@ label.checkbox::before {
 	position: absolute;
 	left: 0;
 	bottom: 1px;
-	border: 1px solid #DDD;
+	border: 1px solid #DDDDDD;
 	background: #FFFFFF;
 	transition: all 100ms linear;
 }
@@ -903,6 +907,11 @@ label.checkbox::before {
 label.checkbox::before {
 	margin: 3px 3px -1px 0px;
 	border-radius: 2px;
+}
+
+label.radio::before {
+	margin: 3px 3px -1px 0px;
+	border-radius: 50%;
 }
 
 input[type=checkbox]:checked + label.checkbox::before {
@@ -915,8 +924,188 @@ input[type=checkbox]:checked + label.checkbox::before {
 	line-height: 15px;
 }
 
-input[type=checkbox] {
+input[type=radio]:checked + label.radio::before {
+	border: 5px solid <?php echo $colorPallet[9]; ?>;
+	background: #FFFFFF;
+	color: #FFFFFF;
+	text-align: center;
+	width: 6px;
+	height: 6px;
+}
+
+input[type=checkbox], input[type=radio] {
 	display: none;
+}
+
+label.settings-pi-control-theme-color-red::before {
+	border-color: <?php echo $colors['red'][7]; ?>;
+	background: <?php echo $colors['red'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-red::before {
+	border-color: <?php echo $colors['red'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-pink::before {
+	border-color: <?php echo $colors['pink'][7]; ?>;
+	background: <?php echo $colors['pink'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-pink::before {
+	border-color: <?php echo $colors['pink'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-purple::before {
+	border-color: <?php echo $colors['purple'][7]; ?>;
+	background: <?php echo $colors['purple'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-purple::before {
+	border-color: <?php echo $colors['purple'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-deepPurple::before {
+	border-color: <?php echo $colors['deepPurple'][7]; ?>;
+	background: <?php echo $colors['deepPurple'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-deepPurple::before {
+	border-color: <?php echo $colors['deepPurple'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-indigo::before {
+	border-color: <?php echo $colors['indigo'][7]; ?>;
+	background: <?php echo $colors['indigo'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-indigo::before {
+	border-color: <?php echo $colors['indigo'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-blue::before {
+	border-color: <?php echo $colors['blue'][7]; ?>;
+	background: <?php echo $colors['blue'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-blue::before {
+	border-color: <?php echo $colors['blue'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-lightBlue::before {
+	border-color: <?php echo $colors['lightBlue'][7]; ?>;
+	background: <?php echo $colors['lightBlue'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-lightBlue::before {
+	border-color: <?php echo $colors['lightBlue'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-cyan::before {
+	border-color: <?php echo $colors['cyan'][7]; ?>;
+	background: <?php echo $colors['cyan'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-cyan::before {
+	border-color: <?php echo $colors['cyan'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-teal::before {
+	border-color: <?php echo $colors['teal'][7]; ?>;
+	background: <?php echo $colors['teal'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-teal::before {
+	border-color: <?php echo $colors['teal'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-green::before {
+	border-color: <?php echo $colors['green'][7]; ?>;
+	background: <?php echo $colors['green'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-green::before {
+	border-color: <?php echo $colors['green'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-lightGreen::before {
+	border-color: <?php echo $colors['lightGreen'][7]; ?>;
+	background: <?php echo $colors['lightGreen'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-lightGreen::before {
+	border-color: <?php echo $colors['lightGreen'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-lime::before {
+	border-color: <?php echo $colors['lime'][7]; ?>;
+	background: <?php echo $colors['lime'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-lime::before {
+	border-color: <?php echo $colors['lime'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-yellow::before {
+	border-color: <?php echo $colors['yellow'][7]; ?>;
+	background: <?php echo $colors['yellow'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-yellow::before {
+	border-color: <?php echo $colors['yellow'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-amber::before {
+	border-color: <?php echo $colors['amber'][7]; ?>;
+	background: <?php echo $colors['amber'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-amber::before {
+	border-color: <?php echo $colors['amber'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-orange::before {
+	border-color: <?php echo $colors['orange'][7]; ?>;
+	background: <?php echo $colors['orange'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-orange::before {
+	border-color: <?php echo $colors['orange'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-deepOrange::before {
+	border-color: <?php echo $colors['deepOrange'][7]; ?>;
+	background: <?php echo $colors['deepOrange'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-deepOrange::before {
+	border-color: <?php echo $colors['deepOrange'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-brown::before {
+	border-color: <?php echo $colors['brown'][7]; ?>;
+	background: <?php echo $colors['brown'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-brown::before {
+	border-color: <?php echo $colors['brown'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-grey::before {
+	border-color: <?php echo $colors['grey'][7]; ?>;
+	background: <?php echo $colors['grey'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-grey::before {
+	border-color: <?php echo $colors['grey'][7]; ?>;
+}
+
+label.settings-pi-control-theme-color-blueGrey::before {
+	border-color: <?php echo $colors['blueGrey'][7]; ?>;
+	background: <?php echo $colors['blueGrey'][7]; ?>;
+}
+
+input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::before {
+	border-color: <?php echo $colors['blueGrey'][7]; ?>;
 }
 
 .button-small {

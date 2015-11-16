@@ -6,8 +6,8 @@ switch ((isset($_GET['do']) ? $_GET['do'] : ''))
 	case 'overview':
 		include_once CONTENT_PATH.'/settings/overview.php';
 			break;
-	case 'pic':
-		include_once CONTENT_PATH.'/settings/pic.php';
+	case 'pi_control':
+		include_once CONTENT_PATH.'/settings/pi_control.php';
 			break;
 	case 'update':
 		include_once CONTENT_PATH.'/settings/update.php';
