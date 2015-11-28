@@ -40,6 +40,7 @@ class PiTpl
 	
 	private $tpl = NULL;
 	private $tplConfigArray = array();
+	public $tplDraw = false;
 	
 	// Headertitel
 	private $tplHeaderTitle = '';
@@ -430,24 +431,27 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function draw($tplFileName)
+	public function draw($tplFileName = '')
 	{
 		self::drawHeader();
 		
 		if ($this->ifError === true)
 			return false;
 		
-		if (!strlen($tplFileName) >= 1 || !is_string($tplFileName))
-			return self::tplError(self::_t('Dateiname "%s" ist ung&uuml;ltig.', $tplFileName), __LINE__-1);
+		$this->tplDraw = true;
 		
-		if (file_exists($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true || is_file($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true)
-			return self::tplError(self::_t('Datei "%s" existiert nicht oder ist keine g&uuml;ltige Datei.', $tplFileName), __LINE__-1);
+		if (strlen($tplFileName) >= 1 && is_string($tplFileName))
+		{
+			if (file_exists($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true || is_file($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true)
+				return self::tplError(self::_t('Datei "%s" existiert nicht oder ist keine g&uuml;ltige Datei.', $tplFileName), __LINE__-1);
+		}
 		
 		self::drawMsg();
 		
 		$data = $this->tplVariables;
 		
-		(include_once $this->tplFolderPath.$tplFileName.$this->tplFileSuffix) or self::error(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $tplFileName), __LINE__);
+		if (strlen($tplFileName) >= 1 && is_string($tplFileName))
+			(include_once $this->tplFolderPath.$tplFileName.$this->tplFileSuffix) or self::error(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $tplFileName), __LINE__);
 		
 		// Optisch schöner
 		echo PHP_EOL;

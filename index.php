@@ -39,6 +39,9 @@ try
 		else
 			include_once CONTENT_PATH.'/overview.php';
 	}
+	
+	if ($tpl->tplDraw === false)
+		$tpl->draw();
 }
 catch(Exception $e)
 {
