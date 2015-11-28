@@ -2,7 +2,7 @@
 <div id="message_box_<?php echo $data['id']; ?>">
 	<div class="box <?php echo $data['type']; ?>">
 		<div>
-			<span></span>
+			<?php if ($data['cancelable'] === true) { ?><span></span><?php } ?>
 			<?php if ($data['title'] != '') { ?><div class="inner-header">
 				<span><?php echo $data['title']; ?></span>
 			</div><?php } ?>

@@ -9,23 +9,33 @@ function pluginDisabled($pluginId)
 
 function pluginConfig($pluginId)
 {
+	global $config;
+	
 	if (!file_exists(PLUGINS_PATH.'/'.$pluginId.'/plugin.config.php') || !is_file(PLUGINS_PATH.'/'.$pluginId.'/plugin.config.php') || !include PLUGINS_PATH.'/'.$pluginId.'/plugin.config.php')
 		return false;
 	
 	if (!isset($pluginConfig) || empty($pluginConfig))
 		return false;
 	
+	if ($pluginConfig['id'] != $pluginId)
+		return false;
+	
 	$pluginConfig['disabled'] = pluginDisabled($pluginId);
 	
-	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/settings/settings.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/settings/settings.php'))
+	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/resources/content/settings/settings.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/resources/content/settings/settings.php'))
 		$pluginConfig['settings'] = true;
 	else
 		$pluginConfig['settings'] = false;
 	
-	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/widget/widget.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/widget/widget.php'))
+	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/resources/content/widget/widget.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/resources/content/widget/widget.php'))
 		$pluginConfig['widget'] = true;
 	else
 		$pluginConfig['widget'] = false;
+	
+	if ($pluginConfig['version']['require'] >= $config['versions']['versioncode'])
+		$pluginConfig['compatible'] = true;
+	else
+		$pluginConfig['compatible'] = false;
 	
 	return $pluginConfig;
 }
@@ -45,11 +55,16 @@ function pluginList($listDisabled = true, $listConfig = true)
 		if (!file_exists(PLUGINS_PATH.'/'.$plugin.'/plugin.config.php') || !is_file(PLUGINS_PATH.'/'.$plugin.'/plugin.config.php'))
 			continue;
 		
-		if ($listDisabled === false && pluginDisabled($plugin) === true)
+		$pluginConfig = pluginConfig($plugin);
+		
+		if (!is_array($pluginConfig))
+			continue;
+		
+		if ($listDisabled === false && $pluginConfig['disabled'] === true)
 			continue;
 		
 		if ($listConfig === true)
-			$pluginList[] = pluginConfig($plugin);
+			$pluginList[$plugin] = $pluginConfig;
 		else
 			$pluginList[] = $plugin;
 	}
