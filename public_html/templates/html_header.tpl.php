@@ -37,8 +37,10 @@
 				<a href="?s=terminal"><?php _e('Terminal'); ?></a>
 				<div class="navi-dropdown"><a href="?s=plugins"><?php _e('Plugins'); ?></a>
 					<div class="navi-dropdown-container">
-						<a href="#">Temperatur</a>
-						<a href="#">GPIO</a>
+<?php if (is_array($data['navi_plugins'])) {
+	foreach ($data['navi_plugins'] as $plugin) { ?>
+						<a href="#"><?php echo $plugin['name']; ?></a>
+<?php } } /*else { echo '<span style="margin: 20px; display: block; text-align: center;">'.$data['navi_plugins'].'</span>'; }*/ ?>
 					</div>
 				</div>
 			</div>

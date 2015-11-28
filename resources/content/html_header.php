@@ -2,23 +2,19 @@
 $tpl = new PiTpl;
 $tpl->assign('title', (isset($data['title']) && $data['title'] != '') ? $data['title'] : 'Pi Control');
 
+$pluginHeaderNavi = array();
+$pluginHeaderNaviString = '';
+
 if (file_exists(PLUGINS_PATH) && is_dir(PLUGINS_PATH))
 {
-	$plugin_available = array();
-	
-	/*foreach (getPlugins() as $plugin)
+	foreach (pluginList(false) as $plugin)
 	{
-		$plugin_information = NULL;
-		$plugin_information = getPluginInfo($plugin);
-		
-		if (is_array($plugin_information))
-			$plugin_available['all'][] = array('name' => $plugin_information['name'], 'id' => $plugin_information['id']);
-			if ($plugin_information['status'] == 'enable')
-				$plugin_available['status'][] = array('name' => $plugin_information['name'], 'id' => $plugin_information['id']);
-	}*/
+		if (is_array($plugin))
+			$pluginHeaderNavi[] = array('name' => $plugin['name'], 'id' => $plugin['id']);
+	}
 	
-	if (!isset($plugin_available['status']))
-		$plugin_available_string = '<strong class="red">'._t('Keine Plugins!').'</strong>';
+	if (empty($pluginHeaderNavi))
+		$pluginHeaderNaviString = '<strong class="red">'._t('Keine Plugins!').'</strong>';
 	
 	if (($tpl->getConfig('cron:updateCheck.plugins', 0)+86400) < time() || (isset($_GET['s']) && $_GET['s'] == 'plugin_search'))
 	{
@@ -40,13 +36,13 @@ if (file_exists(PLUGINS_PATH) && is_dir(PLUGINS_PATH))
 	}
 }
 else
-	$plugin_available_string = '<strong class="red">Pluginordner nicht gefunden!</strong>';
+	$pluginHeaderNaviString = '<strong class="red">Pluginordner nicht gefunden!</strong>';
 
 $tpl->assign('config_slim_header', $tpl->getConfig('main:other.slim_header', 'true'));
 $tpl->assign('javascript_time', time()+date('Z', time()));
 $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
-$tpl->assign('navi_plugin_available', isset($plugin_available['status']) ? array_sort($plugin_available['status'], 'name', SORT_ASC) : $plugin_available_string);
-$tpl->assign('navi_plugin_updates', isset($update_plugins) ? $update_plugins : '');
+$tpl->assign('navi_plugins', !empty($pluginHeaderNavi) ? array_sort($pluginHeaderNavi, 'name', SORT_ASC) : $pluginHeaderNaviString);
+$tpl->assign('navi_plugins_updates', isset($update_plugins) ? $update_plugins : '');
 $tpl->assign('update_picontrol', isset($picontrol_update) ? $picontrol_update : '');
 $tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 1448999193)+140); // TODO Entfernen des Default-Wertes (0)
 

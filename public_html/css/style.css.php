@@ -383,7 +383,7 @@ body {
 	width: 50%;
 }
 
-.table-form td:first-child, .table-form-header  td:first-child {
+.table-form td:first-child, .table-form-header td:first-child {
 	font-weight: bold;
 	width: 25%;
 }
@@ -392,11 +392,11 @@ body {
 	background: <?php echo $colorPallet[0]; ?>;
 }
 
-.table-form tr:nth-child(odd) {
+.table-form tr:nth-child(odd), .table-reverse tr:nth-child(odd) {
 	background: #FFFFFF;
 }
 
-.table-form tr:nth-child(even) {
+.table-form tr:nth-child(even), .table-reverse tr:nth-child(even) {
 	background: <?php echo $colorPallet[0]; ?>;
 }
 
@@ -634,12 +634,64 @@ td.table-right, th.table-right {
 	color: #FFFFFF;
 }
 
+.plugins-table-list a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.plugins-table-list:hover tr {
+	background: <?php echo $colorPallet[1]; ?>;
+}
+
+.plugins-table-list table td:first-child, .settings-plugins-table-list table td:first-child {
+	vertical-align: top;
+	width: 30%;
+}
+
+.plugins-table-list table td:nth-child(2), .settings-plugins-table-list table td:nth-child(3) {
+	text-align: justify;
+}
+
+.plugins-table-list table td:first-child strong, .settings-plugins-table-list table td:first-child strong {
+	display: block;
+	font-size: 15px;
+}
+
+.plugins-table-list table td:first-child span, .settings-plugins-table-list table td:first-child span:nth-child(2) {
+	color: #BBBBBB;
+	font-size: 12px;
+}
+
+.settings-plugins-table-list table td:first-child {
+	width: 21%;
+}
+
+.settings-plugins-table-list table td:nth-child(2) {
+	width: 14%;
+}
+
+.settings-plugins-table-list table td:nth-child(2) a {
+	display: block;
+}
+
+.settings-plugins-table-list table td:nth-child(2) span {
+	display: inline-block;
+}
+
+.settings-plugins-table-list table td:nth-child(2) a:nth-child(2) {
+	margin: 2px auto;
+}
+
 .clear-both {
 	clear: both;
 }
 
 .text-center {
 	text-align: center;
+}
+
+.text-justify {
+	text-align: justify;
 }
 
 .padding-0, .box .padding-0 {
