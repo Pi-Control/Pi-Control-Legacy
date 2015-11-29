@@ -193,19 +193,21 @@ function writeConfig($configArray, $configFile)
 
 function _t()
 {
-	global $globalLanguage;
+	global $globalLanguage, $globalLanguageArray;
 	
 	$args = func_get_args();
-	//$lang = getConfig('other.language', 'de');
 	$lang = $globalLanguage;
 	$langFile = LANGUAGE_PATH.'/'.$lang.'.php';
 	
-	if (file_exists($langFile) === true && is_file($langFile) === true)
+	if (empty($globalLanguageArray) && file_exists($langFile) === true && is_file($langFile) === true)
+	{
 		include $langFile;
+		$globalLanguageArray = $langArray;
+	}
 	
 	$checksum = substr(md5($args[0]), 0, 8);
-	if (isset($langArray[$checksum]) && $lang != 'de')
-		$args[0] = $langArray[$checksum];
+	if (isset($globalLanguageArray[$checksum]) && $lang != 'de')
+		$args[0] = $globalLanguageArray[$checksum];
 	
 	return call_user_func_array('sprintf', $args);
 }
@@ -222,19 +224,21 @@ function _t()
 
 function _e()
 {
-	global $globalLanguage;
+	global $globalLanguage, $globalLanguageArray;
 	
 	$args = func_get_args();
-	//$lang = getConfig('other.language', 'de');
 	$lang = $globalLanguage;
 	$langFile = LANGUAGE_PATH.'/'.$lang.'.php';
 	
-	if (file_exists($langFile) === true && is_file($langFile) === true)
+	if (empty($globalLanguageArray) && file_exists($langFile) === true && is_file($langFile) === true)
+	{
 		include $langFile;
+		$globalLanguageArray = $langArray;
+	}
 	
 	$checksum = substr(md5($args[0]), 0, 8);
-	if (isset($langArray[$checksum]) && $lang != 'de')
-		$args[0] = $langArray[$checksum];
+	if (isset($globalLanguageArray[$checksum]) && $lang != 'de')
+		$args[0] = $globalLanguageArray[$checksum];
 	
 	echo call_user_func_array('sprintf', $args);
 	

@@ -40,6 +40,29 @@ function pluginConfig($pluginId)
 	return $pluginConfig;
 }
 
+function pluginLanguage($pluginId)
+{
+	global $globalLanguage, $globalLanguageArray;
+	
+	$pluginConfig = pluginConfig($pluginId);
+	
+	if (!is_array($pluginConfig))
+		return false;
+	
+	$lang = $globalLanguage;
+	$langFile = PLUGINS_PATH.'/'.$pluginConfig['id'].'/resources/languages/'.$lang.'.php';
+	
+	if (file_exists($langFile) === true && is_file($langFile) === true)
+	{
+		if ((include_once $langFile) === 1)
+			$globalLanguageArray = array_merge($globalLanguageArray, $langArray);
+		else
+			return false;
+	}
+	
+	return true;
+}
+
 function pluginList($listDisabled = true, $listConfig = true)
 {
 	if (!file_exists(PLUGINS_PATH) || !is_dir(PLUGINS_PATH))
@@ -63,8 +86,10 @@ function pluginList($listDisabled = true, $listConfig = true)
 		if ($listDisabled === false && $pluginConfig['disabled'] === true)
 			continue;
 		
+		pluginLanguage($pluginConfig['id']);
+		
 		if ($listConfig === true)
-			$pluginList[$plugin] = $pluginConfig;
+			$pluginList[$pluginConfig['id']] = $pluginConfig;
 		else
 			$pluginList[] = $plugin;
 	}

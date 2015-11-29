@@ -39,7 +39,7 @@
 					<div class="navi-dropdown-container">
 <?php if (is_array($data['navi_plugins'])) {
 	foreach ($data['navi_plugins'] as $plugin) { ?>
-						<a href="?s=plugins&amp;id=<?php echo $plugin['id']; ?>"><?php echo $plugin['name']; ?></a>
+						<a href="?s=plugins&amp;id=<?php echo $plugin['id']; ?>"><?php _e($plugin['name']); ?></a>
 <?php } } /*else { echo '<span style="margin: 20px; display: block; text-align: center;">'.$data['navi_plugins'].'</span>'; }*/ ?>
 					</div>
 				</div>

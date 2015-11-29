@@ -9,8 +9,8 @@
 			<a href="?s=plugins&amp;id=<?php echo $plugin['id']; ?>">
 				<table class="table table-borderless<?php echo ($i%2 != 0) ? ' table-reverse' : ''; ?>">
 					<tr>
-						<td><strong><?php echo $plugin['name']; ?></strong><span><?php _e('Version %s', $plugin['version']['name']); ?></span></td>
-						<td><?php echo $plugin['description']; ?></td>
+						<td><strong><?php _e($plugin['name']); ?></strong><span><?php _e('Version %s', $plugin['version']['name']); ?></span></td>
+						<td><?php _e($plugin['description']); ?></td>
 					</tr>
 				</table>
 			</a>
