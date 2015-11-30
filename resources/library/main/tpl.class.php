@@ -18,6 +18,7 @@ class PiTpl
 	private $tplConfigs = array('main', 'cron');
 	private $tplConfigSuffix = '.config.ini.php';
 	private $tplLanguagePath = 'resources/languages/';
+	private $tplFolderPathPlugin = '';
 	
 	// Laufzeit
 	private $runtimeStart = 0;
@@ -156,14 +157,33 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function setConfig($config, $value)
+	public function setConfig($config, $value, $customFile = NULL)
 	{
-		if (!strlen($config) > 0 || !is_string($config))
-			return false;
+		$configPath = CONFIG_PATH;
+		
+		if ($this->tplFolderPathPlugin != '')
+			$configPath = $this->tplFolderPathPlugin.'/resources/config/';
+		
+		if ($customFile !== NULL)
+			$configPath = $customFile;
 		
 		$file = explode(':', $config);
 		
 		if (count($file) != 2)
+			return false;
+		
+		$configFile = $configPath.$file[0].$this->tplConfigSuffix;
+		$md5 = substr(md5($configFile), 0, 6);
+		
+		if (!isset($this->tplConfigArray[$md5]))
+		{
+			if (file_exists($configFile) === true && is_file($configFile) === true)
+				$this->tplConfigArray[$md5] = parse_ini_file($configFile, true);
+			else
+				return false;
+		}
+		
+		if (!strlen($config) > 0 || !is_string($config))
 			return false;
 		
 		$var = explode('.', $file[1]);
@@ -171,17 +191,9 @@ class PiTpl
 		if (count($var) != 2)
 			return false;
 		
-		if (!isset($this->tplConfigArray[$file[0]]))
-		{
-			if (file_exists(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true && is_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true)
-				$this->tplConfigArray[$file[0]] = parse_ini_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix, true);
-			else
-				return false;
-		}
+		$this->tplConfigArray[$md5][$var[0]][$var[1]] = $value;
 		
-		$this->tplConfigArray[$file[0]][$var[0]][$var[1]] = $value;
-		
-		return writeConfig($this->tplConfigArray[$file[0]], CONFIG_PATH.$file[0].$this->tplConfigSuffix);
+		return writeConfig($this->tplConfigArray[$md5], $configFile);
 	}
 	
 	/**
@@ -194,33 +206,44 @@ class PiTpl
 	 * @return string|int Im Fehlerfall der Standardwert, ansonsten den Konfigwert.
 	 */
 	
-	public function getConfig($config, $default = NULL)
+	public function getConfig($config, $default = NULL, $customFile = NULL)
 	{
-		if (!strlen($config) > 0 || !is_string($config))
-			return $default;
+		$configPath = CONFIG_PATH;
 		
-		if (!count($this->tplConfigArray) > 0)
-			return $default;
+		if ($this->tplFolderPathPlugin != '')
+			$configPath = $this->tplFolderPathPlugin.'/resources/config/';
+		
+		if ($customFile !== NULL)
+			$configPath = $customFile;
 		
 		$file = explode(':', $config);
 		
 		if (count($file) != 2)
 			return $default;
 		
-		$var = explode('.', $file[1]);
+		$configFile = $configPath.$file[0].$this->tplConfigSuffix;
+		$md5 = substr(md5($configFile), 0, 6);
 		
-		if (!isset($this->tplConfigArray[$file[0]]))
+		if (!isset($this->tplConfigArray[$md5]))
 		{
-			if (file_exists(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true && is_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix) === true)
-				$this->tplConfigArray[$file[0]] = parse_ini_file(CONFIG_PATH.$file[0].$this->tplConfigSuffix, true);
+			if (file_exists($configFile) === true && is_file($configFile) === true)
+				$this->tplConfigArray[$md5] = parse_ini_file($configFile, true);
 			else
 				return false;
 		}
 		
-		if (count($var) == 1 && isset($this->tplConfigArray[$file[0]][$var[0]]))
-			return $this->tplConfigArray[$file[0]][$var[0]];
-		elseif (count($var) == 2 && isset($this->tplConfigArray[$file[0]][$var[0]][$var[1]]))
-			return $this->tplConfigArray[$file[0]][$var[0]][$var[1]];
+		if (!strlen($config) > 0 || !is_string($config))
+			return $default;
+		
+		if (!count($this->tplConfigArray) > 0)
+			return $default;
+		
+		$var = explode('.', $file[1]);
+		
+		if (count($var) == 1 && isset($this->tplConfigArray[$md5][$var[0]]))
+			return $this->tplConfigArray[$md5][$var[0]];
+		elseif (count($var) == 2 && isset($this->tplConfigArray[$md5][$var[0]][$var[1]]))
+			return $this->tplConfigArray[$md5][$var[0]][$var[1]];
 		else
 			return $default;
 	}
@@ -285,6 +308,28 @@ class PiTpl
 			return false;
 		
 		$this->tplFolderPath = $path;
+		
+		return true;
+	}
+	
+	/**
+	 * Setzt den Ordner mit den Template-Dateien für Plugins.
+	 *
+	 * <code>$tpl->setTplFolder('/var/www/resources/plugins/test/public_html/templates'); // Setzt den Pfad auf "/var/www/resources/plugins/test/public_html/templates".</code>
+	 *
+	 * @param string $path Pfad zum Ordner.
+	 * @return bool
+	 */
+	
+	public function setTplFolderPlugin($path)
+	{
+		if (!strlen($path) > 0 || !is_string($path))
+			return false;
+		
+		if (file_exists($path) !== true || is_dir($path) !== true)
+			return false;
+		
+		$this->tplFolderPathPlugin = $path;
 		
 		return true;
 	}
@@ -439,10 +484,14 @@ class PiTpl
 			return false;
 		
 		$this->tplDraw = true;
+		$folderPath = $this->tplFolderPath;
+		
+		if ($this->tplFolderPathPlugin != '')
+			$folderPath = $this->tplFolderPathPlugin.'/public_html/templates/';
 		
 		if (strlen($tplFileName) >= 1 && is_string($tplFileName))
 		{
-			if (file_exists($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true || is_file($this->tplFolderPath.$tplFileName.$this->tplFileSuffix) !== true)
+			if (file_exists($folderPath.$tplFileName.$this->tplFileSuffix) !== true || is_file($folderPath.$tplFileName.$this->tplFileSuffix) !== true)
 				return self::tplError(self::_t('Datei "%s" existiert nicht oder ist keine g&uuml;ltige Datei.', $tplFileName), __LINE__-1);
 		}
 		
@@ -451,7 +500,7 @@ class PiTpl
 		$data = $this->tplVariables;
 		
 		if (strlen($tplFileName) >= 1 && is_string($tplFileName))
-			(include_once $this->tplFolderPath.$tplFileName.$this->tplFileSuffix) or self::error(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $tplFileName), __LINE__);
+			(include_once $folderPath.$tplFileName.$this->tplFileSuffix) or self::error(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $tplFileName), __LINE__);
 		
 		// Optisch schöner
 		echo PHP_EOL;
@@ -593,14 +642,19 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function msg($type, $title = NULL, $msg, $cancelable = true)
+	public function msg($type, $title = NULL, $msg, $cancelable = true, $id = 0)
 	{
 		if (!strlen($type) > 0 || !is_string($type) ||
 			!strlen($msg) > 0 || !is_string($msg)
 		)
 			return false;
 		
-		$this->tplMsg[] = array($type, $title, $msg, $cancelable);
+		if ($id > 0)
+		{
+			$this->tplMsg[$id + 1000] = array($type, $title, $msg, $cancelable);
+		}
+		else
+			$this->tplMsg[] = array($type, $title, $msg, $cancelable);
 		
 		return true;
 	}
