@@ -11,7 +11,7 @@ if (isset($_GET['id']))
 		$plugin = $plugins[$_GET['id']];
 		
 		$pluginLoaded = true;
-		$tpl->setTplFolder('resources/plugins/'.$plugin['id'].'/public_html/templates/');
+		$tpl->setTplFolderPlugin('resources/plugins/'.$plugin['id']);
 		
 		if (isset($_GET['settings']))
 		{
@@ -23,7 +23,7 @@ if (isset($_GET['id']))
 		else
 			include PLUGINS_PATH.'/'.$plugin['id'].'/resources/content/index.php';
 		
-		$tpl->setTplFolder('public_html/templates/');
+		$tpl->setTplFolderPlugin('');
 	}
 	else
 		$tpl->msg('error', 'Plugin nicht gefunden', 'Das gesuchte Plugin kann aktuell nicht gefunden werden oder es existiert nicht.', true);
