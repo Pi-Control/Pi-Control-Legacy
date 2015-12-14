@@ -10,7 +10,7 @@ if (isset($_SESSION['TOKEN']))
 	$uniqid = $_SESSION['TOKEN'];
 	$tokenCreated = getConfig('login:token_'.$uniqid.'.created', 0);
 	
-	if ($tokenCreated == 0 || $tokenCreated < time()-43200)
+	if ($tokenCreated == 0 || $tokenCreated < time()-60*60*12)
 	{
 		removeConfig('login:token_'.$uniqid);
 		unset($_SESSION['TOKEN']);
@@ -22,6 +22,19 @@ if (!isset($_SESSION['TOKEN']))
 {
 	if (isset($authentificationMsg))
 		die($authentificationMsg);
+	elseif (isset($_COOKIE['PiControlKeepLoggedIn']) && $_COOKIE['PiControlKeepLoggedIn'] != '')
+	{
+		$tokenCreated = getConfig('login', 0);
+		
+		foreach ($tokenCreated as $token => $info)
+		{
+			if (md5($_SERVER['REMOTE_ADDR'].substr($token, 6).$info['username']) == $_COOKIE['PiControlKeepLoggedIn'])
+			{
+				$_SESSION['TOKEN'] = substr($token, 6);
+				setConfig('user:user_'.$info['username'].'.last_login', time());
+			}
+		}
+	}
 	else
 	{
 		$referer = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';

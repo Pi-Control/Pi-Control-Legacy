@@ -35,7 +35,7 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
 	if (isset($_POST['keepLoggedIn']) && $_POST['keepLoggedIn'] == 'checked')
 	{
 		$tpl->setConfig('login:token_'.$uniqid.'.keep_logged_in', 'true');
-		setcookie('PiControlKeepLoggedIn', md5($_SERVER['REMOTE_ADDR'].$uniqid.$pUsername), time()+3600);
+		setcookie('PiControlKeepLoggedIn', md5($_SERVER['REMOTE_ADDR'].$uniqid.$pUsername), time()+60*60*24*30);
 	}
 	
 	if (isset($_POST['referer']) && $_POST['referer'] != '')
@@ -60,7 +60,7 @@ if (isset($_GET['logout']))
 	session_destroy();
 }
 
-$tpl->assign('referer', isset($_REQUEST['referer']) ? urlencode($_REQUEST['referer']) : '');
+$tpl->assign('referer', isset($_GET['referer']) ? $_GET['referer'] : (isset($_POST['referer']) ? urlencode($_POST['referer']) : ''));
 
 $tpl->draw('login');
 ?>

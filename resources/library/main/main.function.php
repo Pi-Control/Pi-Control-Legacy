@@ -64,7 +64,7 @@ function getConfig($config, $default = NULL, $customFile = NULL)
 	
 	$file = explode(':', $config);
 	
-	if (count($file) != 2)
+	if (count($file) != 1 && count($file) != 2)
 		return $default;
 	
 	$configFile = $configPath.$file[0].$configFileSuffix;
@@ -79,15 +79,23 @@ function getConfig($config, $default = NULL, $customFile = NULL)
 	
 	if (!count($configArray) > 0)
 		return $default;
-		
-	$var = explode('.', $file[1]);
 	
-	if (count($var) == 1 && isset($configArray[$var[0]]))
-		return $configArray[$var[0]];
-	elseif (count($var) == 2 && isset($configArray[$var[0]][$var[1]]))
-		return $configArray[$var[0]][$var[1]];
+	if (isset($file[1]))
+	{
+		$var = explode('.', $file[1]);
+		
+		if (count($var) == 1 && isset($configArray[$var[0]]))
+			return $configArray[$var[0]];
+		elseif (count($var) == 2 && isset($configArray[$var[0]][$var[1]]))
+			return $configArray[$var[0]][$var[1]];
+	}
 	else
-		return $default;
+	{
+		if (isset($configArray))
+			return $configArray;
+	}
+	
+	return $default;
 }
 
 function removeConfig($config, $customFile = NULL)
