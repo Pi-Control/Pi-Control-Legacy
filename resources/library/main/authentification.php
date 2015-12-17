@@ -34,6 +34,12 @@ if (!isset($_SESSION['TOKEN']))
 				setConfig('user:user_'.$info['username'].'.last_login', time());
 			}
 		}
+		
+		if ($_SESSION['TOKEN'] == '')
+		{
+			header('Location: ?i=login'.$referer);
+			exit();
+		}
 	}
 	else
 	{

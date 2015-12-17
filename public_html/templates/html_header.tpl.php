@@ -22,7 +22,7 @@
 						<?php _e('Angemeldet als %s', 'Willy'); ?>
 					</div>
 					<div class="header-top-inner-cell header-top-inner-logout">
-						<a href="#"><?php _e('Abmelden'); ?></a>
+						<a href="?i=login&amp;logout"><?php _e('Abmelden'); ?></a>
 					</div>
 				</div>
 			</div>

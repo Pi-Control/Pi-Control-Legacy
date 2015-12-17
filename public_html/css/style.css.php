@@ -222,11 +222,11 @@ body {
 }
 
 #footer-table tr:nth-child(2) td:first-child {
-	padding-right: 50px;
+	padding-right: 70px;
 }
 
 #footer-table tr th:nth-child(2) {
-	padding-right: 54px;
+	padding-right: 74px;
 }
 
 #footer-table tr:nth-child(2) td a {

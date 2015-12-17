@@ -26,9 +26,10 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
 	
 	$uniqid = generateUniqId();
 	
-	if ($tpl->setConfig('login:token_'.$uniqid.'.created', time())		!== true) goto error;
-	if ($tpl->setConfig('login:token_'.$uniqid.'.username', $pUsername) !== true) goto error;
-	if ($tpl->setConfig('user:user_'.$pUsername.'.last_login', time())	!== true) goto error;
+	if ($tpl->setConfig('login:token_'.$uniqid.'.created', time())					!== true) goto error;
+	if ($tpl->setConfig('login:token_'.$uniqid.'.username', $pUsername) 			!== true) goto error;
+	if ($tpl->setConfig('login:token_'.$uniqid.'.address', $_SERVER['REMOTE_ADDR']) !== true) goto error;
+	if ($tpl->setConfig('user:user_'.$pUsername.'.last_login', time())				!== true) goto error;
 	
 	$_SESSION['TOKEN'] = $uniqid;
 	
@@ -56,6 +57,7 @@ if (isset($_GET['logout']))
 		$uniqid = $_SESSION['TOKEN'];
 		removeConfig('login:token_'.$uniqid);
 		unset($_SESSION['TOKEN']);
+		setcookie('PiControlKeepLoggedIn', '', time()-60);
 	}
 	session_destroy();
 }
