@@ -38,13 +38,20 @@ if (file_exists(PLUGINS_PATH) && is_dir(PLUGINS_PATH))
 else
 	$pluginHeaderNaviString = '<strong class="red">Pluginordner nicht gefunden!</strong>';
 
+$referer = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+
+if ($referer != '')
+	$referer = '&referer='.urlencode($referer);
+
 $tpl->assign('config_slim_header', $tpl->getConfig('main:other.slim_header', 'true'));
 $tpl->assign('javascript_time', time()+date('Z', time()));
 $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('navi_plugins', !empty($pluginHeaderNavi) ? array_sort($pluginHeaderNavi, 'name', SORT_ASC) : $pluginHeaderNaviString);
 $tpl->assign('navi_plugins_updates', isset($update_plugins) ? $update_plugins : '');
 $tpl->assign('update_picontrol', isset($picontrol_update) ? $picontrol_update : '');
-$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 1448999193)+140); // TODO Entfernen des Default-Wertes (0)
+$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 1451057894)+140); // TODO Entfernen des Default-Wertes (0)
+$tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.$_SESSION['TOKEN'].'.username', '').'.username', ''));
+$tpl->assign('referer', $referer);
 
 $tpl->draw('html_header');
 ?>

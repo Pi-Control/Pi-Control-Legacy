@@ -60,6 +60,13 @@ if (isset($_GET['logout']))
 		setcookie('PiControlKeepLoggedIn', '', time()-60);
 	}
 	session_destroy();
+	
+	if (isset($_GET['referer']) && $_GET['referer'] != '')
+		header('Location: ?i=login&referer='.urlencode($_GET['referer']));
+	else
+		header('Location: ?i=login');
+	
+	exit();
 }
 
 $tpl->assign('referer', isset($_GET['referer']) ? $_GET['referer'] : (isset($_POST['referer']) ? urlencode($_POST['referer']) : ''));

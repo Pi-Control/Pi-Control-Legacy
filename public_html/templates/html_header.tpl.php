@@ -19,10 +19,10 @@
 			<div id="header-top-inner">
 				<div id="header-top-inner-row">
 					<div class="header-top-inner-cell header-top-inner-username">
-						<?php _e('Angemeldet als %s', 'Willy'); ?>
+						<?php _e('Angemeldet als %s', $data['username']); ?>
 					</div>
 					<div class="header-top-inner-cell header-top-inner-logout">
-						<a href="?i=login&amp;logout"><?php _e('Abmelden'); ?></a>
+						<a href="?i=login&amp;logout<?php echo $data['referer']; ?>"><?php _e('Abmelden'); ?></a>
 					</div>
 				</div>
 			</div>
