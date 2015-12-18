@@ -682,6 +682,10 @@ td.table-right, th.table-right {
 	margin: 2px auto;
 }
 
+.settings-user-logged-in-users {
+	overflow: auto;
+}
+
 .clear-both {
 	clear: both;
 }
@@ -1160,7 +1164,7 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 	border-color: <?php echo $colors['blueGrey'][7]; ?>;
 }
 
-.button-small {
+.button-small, input.button-small {
 	padding: 2px 5px;
 }
 

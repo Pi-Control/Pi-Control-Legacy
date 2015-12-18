@@ -9,12 +9,18 @@ if (isset($_SESSION['TOKEN']))
 {
 	$uniqid = $_SESSION['TOKEN'];
 	$tokenCreated = getConfig('login:token_'.$uniqid.'.created', 0);
+	$tokenKeepLoggedIn = getConfig('login:token_'.$uniqid.'.keep_logged_in', 'false');
 	
-	if ($tokenCreated == 0 || $tokenCreated < time()-60*60*12)
+	if ($tokenCreated == 0 || ($tokenCreated < time()-60*60*12 && $tokenKeepLoggedIn != 'true'))
 	{
 		removeConfig('login:token_'.$uniqid);
 		unset($_SESSION['TOKEN']);
 		session_destroy();
+	}
+	elseif ($tokenCreated < time()-60*60)
+	{
+		$tokenUsername = getConfig('login:token_'.$uniqid.'.username', '');
+		setConfig('user:user_'.$tokenUsername.'.last_login', time());
 	}
 }
 
@@ -35,8 +41,13 @@ if (!isset($_SESSION['TOKEN']))
 			}
 		}
 		
-		if ($_SESSION['TOKEN'] == '')
+		if (!isset($_SESSION['TOKEN']) || $_SESSION['TOKEN'] == '')
 		{
+			$referer = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+			
+			if ($referer != '')
+				$referer = '&referer='.urlencode($referer);
+			
 			header('Location: ?i=login'.$referer);
 			exit();
 		}
