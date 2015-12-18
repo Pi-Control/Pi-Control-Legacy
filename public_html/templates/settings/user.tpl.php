@@ -39,11 +39,11 @@
 					</tr>
 <?php foreach ($data['loggedInUsers'] as $key => $user) { ?>
 					<tr>
-						<td><?php echo $user['username']; if (substr($key, 6) == $_SESSION['TOKEN']) echo ' [Aktuelle Sitzung]'; ?></td>
+						<td><?php echo $user['username']; if ($user['current_online']) { ?> <strong class="green">[<?php _e('Aktuelle Sitzung'); ?>] </strong><?php } ?></td>
 						<td class="table-center"><?php echo date('d.m.Y H:i', $user['created']); ?></td>
 						<td class="table-center"><?php echo $user['address']; ?></td>
 						<td class="table-center"><?php echo ($user['keep_logged_in'] === true) ? 'Ja' : 'Nein'; ?></td>
-						<td class="table-right"><input type="submit" name="logout_<?php echo substr($key, 6); ?>" value="Abmelden" class="button-small" /></td>
+						<td class="table-right"><button class="button-small" name="logout" value="<?php echo substr($key, 6); ?>">Abmelden</button></td>
 					</tr>
 <?php } ?>
 				</table>

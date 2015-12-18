@@ -43,6 +43,13 @@ function loggedInUsers(&$item, $key, $array)
 {
 	$item['username'] = (isset($array['user_'.$item['username']])) ? $array['user_'.$item['username']]['username'] : $item['username'];
 	$item['keep_logged_in'] = (isset($item['keep_logged_in']) && $item['keep_logged_in'] == 'true') ? true : false;
+	$item['current_online'] = (substr($key, 6) == $_COOKIE['_pi_control_login']) ? true : false;
+}
+
+if (isset($_POST['logout']) && $_POST['logout'] != '' && strlen($_POST['logout']) == 16)
+{
+	removeConfig('login:token_'.$_POST['logout']);
+	$tpl->msg('success', '', 'Der Benutzer wurde erfolgreich abgemeldet.');
 }
 
 $allUsers = getConfig('user');
@@ -54,22 +61,6 @@ $loggedInUsers = array_sort($loggedInUsers, 'created', SORT_DESC);
 
 $tpl->assign('allUsers', $allUsers);
 $tpl->assign('loggedInUsers', $loggedInUsers);
-
-if (isset($_GET['logout']) && $_GET['logout'] != '' && strlen($_GET['logout']) == 16)
-{
-	removeConfig('login:token_'.$_GET['logout']);
-	header('Location: ?s=settings&do=user&msg=0');
-}
-
-if (isset($_GET['msg']))
-{
-	switch ($_GET['msg'])
-	{
-		case 0:
-		$tpl->msg('success', '', 'Der Benutzer wurde erfolgreich abgemeldet.');
-			break;
-	}
-}
 
 $tpl->draw('settings/user');
 ?>
