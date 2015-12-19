@@ -9,15 +9,16 @@ if (isset($_COOKIE['_pi_control_login']))
 	$uniqid = $_COOKIE['_pi_control_login'];
 	$tokenCreated = getConfig('login:token_'.$uniqid.'.created', 0);
 	$tokenKeepLoggedIn = getConfig('login:token_'.$uniqid.'.keep_logged_in', 'false');
+	$tokenUsername = getConfig('login:token_'.$uniqid.'.username', '');
+	$tokenLastLogin = getConfig('user:user_'.$tokenUsername.'.last_login', 0);
 	
 	if ($tokenCreated == 0 || ($tokenCreated < time()-60*60*12 && $tokenKeepLoggedIn != 'true'))
 	{
 		removeConfig('login:token_'.$uniqid);
 		setcookie('_pi_control_login', '', time()-60);
 	}
-	elseif ($tokenCreated < time()-60*60)
+	elseif ($tokenLastLogin < time()-60*60)
 	{
-		$tokenUsername = getConfig('login:token_'.$uniqid.'.username', '');
 		setConfig('user:user_'.$tokenUsername.'.last_login', time());
 		$logout = false;
 	}

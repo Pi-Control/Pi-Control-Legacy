@@ -687,7 +687,7 @@ td.table-right, th.table-right {
 	margin: 2px auto;
 }
 
-.settings-user-logged-in-users {
+.overflow-auto {
 	overflow: auto;
 }
 

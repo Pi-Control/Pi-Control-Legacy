@@ -39,7 +39,7 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
 		setcookie('_pi_control_login', $uniqid, time()+60*60*24*30);
 	}
 	else
-		setcookie('_pi_control_login', $uniqid, time()+60);
+		setcookie('_pi_control_login', $uniqid, time()+60*60*12);
 	
 	if (isset($_POST['referer']) && $_POST['referer'] != '')
 		header('Location: ?'.urldecode($_POST['referer']));
