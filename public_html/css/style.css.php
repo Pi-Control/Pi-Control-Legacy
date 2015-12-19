@@ -493,8 +493,8 @@ td.table-right, th.table-right {
 }
 
 .error > div > span, .success > div > span, .info > div > span {
-	width: 16px;
-	height: 16px;
+	width: 15px;
+	height: 15px;
 	background: url('../img/cross-icon.svg') no-repeat center center;
 	background-size: 16px;
 	float: right;
@@ -513,6 +513,11 @@ td.table-right, th.table-right {
 	padding-top: 2px;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
+	line-height: 35px;
+}
+
+.success::before {
+	font-weight: normal;
 }
 
 .error::before {
@@ -522,7 +527,7 @@ td.table-right, th.table-right {
 }
 
 .success::before {
-	content: "\2713";
+	content: "\2714";
 	background: #009688;
 	color: #00796B;
 }
@@ -899,6 +904,8 @@ input[type="button"], button, input[type="submit"], .button {
 	color: <?php echo $colorPallet[8]; ?>;
 	cursor: pointer;
 	padding: 5px 10px 5px 10px;
+	font-size: 13px;
+	display: inline-block;
 	transition: all 100ms linear;
 }
 
@@ -906,6 +913,7 @@ input[type="button"]:hover, button:hover, input[type="submit"]:hover, .button:ho
 	background: <?php echo $colorPallet[8]; ?>;
 	border: 1px solid <?php echo $colorPallet[8]; ?>;
 	color: #FFFFFF;
+	text-decoration: none;
 }
 
 input[type="button"]:focus, button:focus, input[type="submit"]:focus, .button:focus {
