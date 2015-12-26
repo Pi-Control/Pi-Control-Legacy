@@ -15,7 +15,7 @@ if (isset($_POST['submit'], $_POST['command']) && $_POST['command'] != '')
 sleep(1);
 $lines = '';
 
-var_dump($stdio);
+//var_dump($stdio);
 /*while($line = fgets($stdio))
 {
 	flush();

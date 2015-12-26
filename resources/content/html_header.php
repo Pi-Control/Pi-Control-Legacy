@@ -49,8 +49,8 @@ $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('navi_plugins', !empty($pluginHeaderNavi) ? array_sort($pluginHeaderNavi, 'name', SORT_ASC) : $pluginHeaderNaviString);
 $tpl->assign('navi_plugins_updates', isset($update_plugins) ? $update_plugins : '');
 $tpl->assign('update_picontrol', isset($picontrol_update) ? $picontrol_update : '');
-$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 1451057894)+140); // TODO Entfernen des Default-Wertes (0)
-$tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.$_COOKIE['_pi_control_login'].'.username', '').'.username', ''));
+$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 0)+140);
+$tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.@$_COOKIE['_pi_control_login'].'.username', '').'.username', 'Willy'));
 $tpl->assign('referer', $referer);
 
 $tpl->draw('html_header');

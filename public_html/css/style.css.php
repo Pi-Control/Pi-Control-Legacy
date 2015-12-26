@@ -1,23 +1,32 @@
 <?php
+$doNotCheckForAuthentification = true;
+(include_once realpath(dirname(__FILE__)).'/../../resources/init.php') or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
+(include_once LIBRARY_PATH.'/main/main.function.php') or die($error_code['0x0001']);
+
 header('Content-type: text/css');
 
-function set_eTagHeaders($file, $timestamp) {
+function set_eTagHeaders($file, $timestamp)
+{
 	$gmt_mTime = gmdate('r', $timestamp);
  
 	header('Cache-Control: public');
-	header('ETag: "' . md5($timestamp . $file) . '"');
-	header('Last-Modified: ' . $gmt_mTime);
+	header('ETag: "'.md5($timestamp.$file).'"');
+	header('Last-Modified: '.$gmt_mTime);
  
-	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
-		if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $gmt_mtime || str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == md5($timestamp . $file)) {
+	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_NONE_MATCH']))
+	{
+		if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $gmt_mTime || str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == md5($timestamp.$file))
+		{
 			header('HTTP/1.1 304 Not Modified');
 			exit();
 		}
 	}
 }
-//"
 
-set_eTagHeaders(__FILE__, filemtime(__FILE__));
+$colorChanged = getConfig('main:theme.colorChanged', 0);
+$fileChanged = filemtime(__FILE__);
+
+set_eTagHeaders(__FILE__, ($colorChanged > $fileChanged) ? $colorChanged : $fileChanged);
 
 $colors['red'] =		array('#FFEBEE', '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#D32F2F', '#C62828', '#B71C1C');
 $colors['pink'] =		array('#FCE4EC', '#F8BBD0', '#F48FB1', '#F06292', '#EC407A', '#E91E63', '#D81B60', '#C2185B', '#AD1457', '#880E4F');
@@ -39,7 +48,8 @@ $colors['brown'] =		array('#EFEBE9', '#D7CCC8', '#BCAAA4', '#A1887F', '#8D6E63',
 $colors['grey'] =		array('#FAFAFA', '#F5F5F5', '#EEEEEE', '#E0E0E0', '#BDBDBD', '#9E9E9E', '#757575', '#616161', '#424242', '#212121');
 $colors['blueGrey'] =	array('#ECEFF1', '#CFD8DC', '#B0BEC5', '#90A4AE', '#78909C', '#607D8B', '#546E7A', '#455A64', '#37474F', '#263238');
 
-$colorPallet = $colors['blue'];
+$colorPallet = $colors[getConfig('main:theme.color', 'blue')];
+//"
 ?>
 @charset "utf-8";
 /* CSS Document */
@@ -921,6 +931,16 @@ input[type="button"]:focus, button:focus, input[type="submit"]:focus, .button:fo
 	border: 1px solid <?php echo $colorPallet[9]; ?>;
 	color: #FFFFFF;
 	outline: none;
+}
+
+input[type="button"]:disabled, button:disabled, input[type="submit"]:disabled, .button-disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+
+input[type="button"]:disabled:hover, button:disabled:hover, input[type="submit"]:disabled:hover, .button-disabled:hover {
+	background: none;
+	color: <?php echo $colorPallet[8]; ?>;
 }
 
 select {

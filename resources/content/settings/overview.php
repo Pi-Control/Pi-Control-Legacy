@@ -1,5 +1,5 @@
 <?php
-$tpl->setHeaderTitle(_t('Einstellungen - Pi Control'));
+$tpl->setHeaderTitle(_t('Einstellungen - &Uuml;bersicht'));
 
 if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 {
@@ -22,8 +22,7 @@ if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 	}
 }
 
-$tpl->assign('main-theme-color', getConfig('main:theme.color', 'blue'));
-$tpl->assign('main-external-access', getConfig('main:access.external', 'false'));
+$tpl->assign('main-show-devices', getConfig('main:overview.showDevices', 'true'));
 
-$tpl->draw('settings/pi_control');
+$tpl->draw('settings/overview');
 ?>

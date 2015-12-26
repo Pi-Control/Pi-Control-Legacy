@@ -22,7 +22,7 @@ if (!isset($config))
 	);
 }
 
-defined('PICONTROL_PATH')	or define('PICONTROL_PATH',	realpath(dirname(__FILE__).'/../'));
+defined('PICONTROL_PATH')	or define('PICONTROL_PATH',	realpath(dirname(__FILE__).'/../').'/');
 defined('RESOURCE_PATH')	or define('RESOURCE_PATH',	realpath(dirname(__FILE__)).'/');
 defined('LIBRARY_PATH')		or define('LIBRARY_PATH',	realpath(dirname(__FILE__).'/library/').'/');
 defined('CONTENT_PATH')		or define('CONTENT_PATH',	realpath(dirname(__FILE__).'/content/').'/');
