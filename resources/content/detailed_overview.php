@@ -5,6 +5,8 @@ $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
 $users = rpi_getAllUsers();
 
+$tpl->assign('time', date('d.m.Y H:i:s', time()));
+$tpl->assign('timezone', date('e (P)', time()));
 $tpl->assign('run_time', getDateFormat(rpi_getRuntime()));
 $tpl->assign('start_time', formatTime(time() - rpi_getRuntime()));
 $tpl->assign('serial', rpi_getRpiSerial());

@@ -29,6 +29,14 @@
 					<td><?php echo $data['serial']; ?></td>
 				</tr>
 				<tr>
+					<td><?php _e('Aktuelle Zeit'); ?></td>
+					<td><?php echo $data['time']; ?></td>
+				</tr>
+				<tr>
+					<td><?php _e('Aktuelle Zeitzone'); ?></td>
+					<td><?php echo $data['timezone']; ?></td>
+				</tr>
+				<tr>
 					<td><?php _e('Laufzeit'); ?></td>
 					<td><?php echo $data['run_time']; ?></td>
 				</tr>
