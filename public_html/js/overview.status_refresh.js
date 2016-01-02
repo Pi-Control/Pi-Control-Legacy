@@ -10,7 +10,7 @@ function overviewStatusRefreshEffect(element)
 
 function overviewStatusRefresh()
 {
-	$('.refresh-bar').animate({width: '100%'}, 30000, 'linear', function(e)
+	$('.refresh-bar').animate({width: '100%'}, reload_timeout, 'linear', function(e)
     {
 		var this_ =				$(this);
 		var run_time =			$('.flex-container > div:eq(2)');

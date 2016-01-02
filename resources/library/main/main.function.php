@@ -772,7 +772,7 @@ function getWeather($location)
 	{
 		$country = 'germany';
 		
-		switch (getConfigValue('config_weather_country'))
+		switch (getConfig('main:weather.country'))
 		{
 			case 'austria': $country = 'austria'; break;
 			case 'swiss': $country = 'swiss'; break;
