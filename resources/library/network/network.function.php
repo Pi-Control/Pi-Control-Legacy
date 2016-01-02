@@ -59,7 +59,7 @@ function getInterface($file, $interface, $return_rows = false)
 		if (substr($row, 0, 1) != '#' && $row != '')
 		{
 			if (substr($row, 0, 5) == 'iface')
-			{				
+			{
 				$iface = explode(' ', $row);
 				
 				if ($iface[1] == $interface)
@@ -68,7 +68,7 @@ function getInterface($file, $interface, $return_rows = false)
 					{
 						case 'dhcp':
 						if (substr($iface[1], 0, 4) == 'wlan')
-						{ 
+						{
 							$if_iface = $i;
 							$output = array($iface, array());
 						}
@@ -96,8 +96,8 @@ function getInterface($file, $interface, $return_rows = false)
 			{
 				switch (substr($row, 0, 7))
 				{
-					case 'address ':
-					$output[1]['address'] = substr($row, 7);
+					case 'address':
+					$output[1]['address'] = substr($row, 8);
 					$rows[] = $i;
 						break;
 					case 'netmask':
@@ -138,7 +138,7 @@ function getInterface($file, $interface, $return_rows = false)
 }
 
 function addInterface($file, $interface)
-{	
+{
 	return array_merge($file, $interface);
 }
 
