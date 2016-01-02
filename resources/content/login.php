@@ -10,7 +10,12 @@ $tpl->setTplFolder(TEMPLATES_PATH);
 $tpl->setDrawHeader(false);
 $tpl->setDrawFooter(false, $config, $errorHandler);
 
-if (isset($_POST['submit'], $_POST['username'], $_POST['password']))
+$externalAccess = (urlIsPublic($_SERVER['REMOTE_ADDR']) && getConfig('main:access.external', 'false') == 'false') ? false : true;
+
+if ($externalAccess === false)
+	$tpl->assign('errorMsg', 'Der Zugang steht nur im lokalem Netzwerk (LAN) zur Verf&uuml;gung!');
+	
+if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $externalAccess === true)
 {
 	$pUsername = strtolower(trim($_POST['username']));
 	$pPassword = $_POST['password'];
@@ -71,6 +76,7 @@ if (isset($_GET['logout']))
 }
 
 $tpl->assign('referer', isset($_GET['referer']) ? $_GET['referer'] : (isset($_POST['referer']) ? urlencode($_POST['referer']) : ''));
+$tpl->assign('externalAccess', $externalAccess);
 
 $tpl->draw('login');
 ?>

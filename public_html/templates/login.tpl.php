@@ -15,14 +15,9 @@
 		<div class="login-container">
 			<div class="login-container-inner">
 				<div class="login-logo"></div>
-<?php
-	if (isset($data['errorMsg']))
-	{
-?>
+<?php if (isset($data['errorMsg'])) { ?>
 				<div class="login-error"><?php _e($data['errorMsg']); ?></div>
-<?php
-	}
-?>
+<?php } ?>
 				<form action="?i=login" method="post">
 					<table class="login-table">
 						<tr>
@@ -33,7 +28,7 @@
 						</tr>
 						<tr>
 							<td><input type="checkbox" name="keepLoggedIn" value="checked" id="keepLoggedIn" /><label class="checkbox login-input-checkbox" for="keepLoggedIn" title="<?php _e('Cookies m&uuml;ssen f&uuml;r diese Funktion aktiviert sein.'); ?>"><?php _e('Angemeldet bleiben'); ?></label></td>
-							<td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="<?php _e('Anmelden'); ?>" /></td>
+							<td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="<?php _e('Anmelden'); ?>"<?php if ($data['externalAccess'] == false) echo 'disabled="disabled"'; ?> /></td>
 						</tr>
 					</table>
 					<input type="hidden" name="referer" value="<?php echo $data['referer']; ?>" />

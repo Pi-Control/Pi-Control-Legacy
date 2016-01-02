@@ -7,6 +7,7 @@ $doNotCheckForAuthentification = true;
 (include_once LIBRARY_PATH.'/main/rpi.function.php')	or die($error_code['0x0003']);
 (include_once LIBRARY_PATH.'/main/sites.php')			or die($error_code['0x0004']);
 (include_once LIBRARY_PATH.'/main/plugin.function.php')	or die($error_code['0x0005']);
+(include_once LIBRARY_PATH.'/main/cron.class.php')		or die($error_code['0x0006']);
 
 if (isset($_GET['i']) && isset($include[$_GET['i']]) && file_exists(PICONTROL_PATH.'/'.$include[$_GET['i']]))
 {
@@ -15,6 +16,27 @@ if (isset($_GET['i']) && isset($include[$_GET['i']]) && file_exists(PICONTROL_PA
 }
 
 (include LIBRARY_PATH.'main/authentification.php') or die($error_code['xxxxxx']);
+
+if (urlIsPublic($_SERVER['REMOTE_ADDR']) && getConfig('main:access.external', 'false') == 'false')
+{
+	echo '<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no" />
+	<title>Pi Control</title>
+	<style type="text/css">body{color:#333;background:#EEE;font-family:Arial,Helvetica,Verdana,sans-serif;font-size:13px;margin:10px;overflow:scroll;overflow-x:auto;padding:0}.box{background:#FFF;margin:0 auto;max-width:800px;border-radius:2px}.inner-header{display:inline-block;font-size:18px;font-weight:bold;padding:15px;color:#F44336}.inner{padding:0px 15px 15px 15px}</style>
+</head>
+<body>
+<div class="box">
+	<div class="inner-header">Zugriffsfehler</div>
+	<div class="inner">Der Zugang steht nur im lokalem Netzwerk (LAN) zur Verf&uuml;gung!</div>
+</div>
+</body>
+</html>';
+	exit();
+}
 
 $tpl = new PiTpl;
 $tpl->setTpl($tpl);
@@ -52,12 +74,12 @@ catch(Exception $e)
 <head>
 	<meta charset="utf-8">
 	<title>Pi Control</title>
-	<style type="text/css">body{color:#333;background:#f6f6f6;font-family:Arial,Helvetica,Verdana,sans-serif;font-size:13px;margin:10px;overflow:scroll;overflow-x:auto;padding:0}.box{background:#fcc;margin:0 auto 0;max-width:800px}.inner-header{border-bottom:1px solid #fc0517;font-size:20px;padding:20px}.inner-bottom{border-bottom:1px solid #fbb;padding:20px}.inner{padding:20px}</style>
+	<style type="text/css">body{color:#333;background:#EEE;font-family:Arial,Helvetica,Verdana,sans-serif;font-size:13px;margin:10px;overflow:scroll;overflow-x:auto;padding:0}.box{background:#FFF;margin:0 auto;max-width:800px;border-radius:2px}.inner-header{display:inline-block;font-size:18px;font-weight:bold;padding:15px;color:#F44336}.inner{padding:0px 15px 15px 15px}</style>
 </head>
 <body>
 <div class="box">
-	<div class="inner-header"><span>Fehler</span></div>
-	<div class="inner-bottom"><strong class="red">Leider ist beim Aufbau der Seite ein Fehler aufgetreten!</strong><br /><br />'.implode("<br />\n", $errorHandler).'</div>
+	<div class="inner-header">Fehler</div>
+	<div class="inner">Leider ist beim Aufbau der Seite ein Fehler aufgetreten!<br /><br />'.implode("<br />\n", $errorHandler).'</div>
 	<div class="inner">Bitte melde das Problem.</div>
 </div>
 </body>

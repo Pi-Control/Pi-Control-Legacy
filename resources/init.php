@@ -3,21 +3,21 @@ if (!isset($config))
 {
 	$config = array(
 		'ssh' => array(
-			'ssh_ip'				=> $_SERVER['SERVER_ADDR']
+			'ssh_ip'							=> $_SERVER['SERVER_ADDR']
 		),
-		'versions' => array(
-			'version'				=> '2.0',
-			'versioncode'			=> 17,
-			'android_comp_level'	=> 4
+		'version' => array(
+			'version'							=> '2.0',
+			'versioncode'						=> 17,
+			'android_comp_level'				=> 4
 		),
-		'urls' => array(
-			'baseUrl'				=> 'http://picontrol.willy-tech.de/web/1-0/',
-			'updateUrl'				=> 'http://picontrol.willy-tech.de/web/1-0/updates.xml',
-			'updateDownloadUrl'		=> 'http://picontrol.willy-tech.de/web/1-0/?s=update&file=',
-			'pluginUrl'				=> 'http://picontrol.willy-tech.de/web/1-0/plugins.xml',
-			'pluginDownloadUrl'		=> 'http://picontrol.willy-tech.de/web/1-0/plugins/',
-			'tempMonitoringUrl'		=> 'http://picontrol.willy-tech.de/web/1-0/?s=temp_mail_',
-			'helpUrl'				=> 'http://picontrol.willy-tech.de/web/1-0/?s=help'
+		'url' => array(
+			'base'								=> 'https://pi-control.de/web/1-0/',
+			'update'							=> 'https://pi-control.de/web/1-0/updates.xml',
+			'updateDownload'					=> 'https://pi-control.de/web/1-0/?s=update&file=',
+			'plugin'							=> 'https://pi-control.de/web/1-0/plugins.xml',
+			'pluginDownload'					=> 'https://pi-control.de/web/1-0/plugins/',
+			'temperatureMonitoring'				=> 'https://pi-control.de/service/v1/temperature_monitoring/',
+			'help'								=> 'https://pi-control.de/web/1-0/?s=help'
 		)
 	);
 }
@@ -30,7 +30,7 @@ defined('CONFIG_PATH')		or define('CONFIG_PATH',	realpath(dirname(__FILE__).'/co
 defined('PLUGINS_PATH')		or define('PLUGINS_PATH',	realpath(dirname(__FILE__).'/plugins/').'/');
 defined('UPDATE_PATH')		or define('UPDATE_PATH',	realpath(dirname(__FILE__).'/update/').'/');
 defined('TEMPLATES_PATH')	or define('TEMPLATES_PATH',	realpath(dirname(__FILE__).'/../public_html/templates/').'/');
-defined('TEMP_PATH')		or define('TEMP_PATH',		realpath(dirname(__FILE__).'/temp/').'/');
+defined('TEMPLATES2_PATH')	or define('TEMPLATES2_PATH',realpath(dirname(__FILE__).'/templates/').'/');
 defined('LOG_PATH')			or define('LOG_PATH',		realpath(dirname(__FILE__).'/log/').'/');
 defined('CRON_PATH')		or define('CRON_PATH',		realpath(dirname(__FILE__).'/cron/').'/');
 defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath(dirname(__FILE__).'/languages/').'/');

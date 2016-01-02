@@ -11,12 +11,12 @@
 				<tr>
 					<td rowspan="2"><a href="?s=settings"><?php _e('Einstellungen'); ?></a><br />
 						<a href="http://willy-tech.de/kontakt/" target="_blank"><?php _e('Feedback'); ?></a><br />
-						<a href="#" target="_blank"><?php _e('Hilfe'); ?></a><br />
+						<a href="<?php echo $data['helpLink']; ?>" target="_blank"><?php _e('Hilfe'); ?></a><br />
 						<a href="https://play.google.com/store/apps/details?id=de.willytech.picontrol" target="_blank" title="<?php _e('Öffne Play Store'); ?>"><?php _e('App im Play Store'); ?></a></td>
 					<td rowspan="2"><a href="http://willy-tech.de/" target="_blank"><?php _e('Mein Blog'); ?></a><br />
 						<a href="https://twitter.com/Willys_TechBlog" target="_blank"><?php _e('Twitter'); ?></a><br />
 						<a href="https://github.com/willfri" target="_blank"><?php _e('GitHub'); ?></a><br />
-						<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7PKQV4RWDS7E4" target="_blank"><?php _e('Spenden'); ?></a></td>
+						<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7PKQV4RWDS7E4" target="_blank"><?php _e('Spenden'); ?></a></td>
 					<td>2.0.0</td>
 				</tr>
 				<tr>
