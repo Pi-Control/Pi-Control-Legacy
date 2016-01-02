@@ -651,12 +651,20 @@ class PiTpl
 		
 		if ($id > 0)
 		{
-			$this->tplMsg[$id + 1000] = array($type, $title, $msg, $cancelable);
+			$this->tplMsg[$id + 100] = array($type, $title, $msg, $cancelable);
 		}
 		else
 			$this->tplMsg[] = array($type, $title, $msg, $cancelable);
 		
 		return true;
+	}
+	
+	public function msgExists($id)
+	{
+		if (isset($this->tplMsg[$id + 100]))
+			return true;
+		
+		return false;
 	}
 	
 	/**

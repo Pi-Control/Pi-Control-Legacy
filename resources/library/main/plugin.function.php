@@ -32,7 +32,7 @@ function pluginConfig($pluginId)
 	else
 		$pluginConfig['widget'] = false;
 	
-	if ($pluginConfig['version']['require'] >= $config['versions']['versioncode'])
+	if ($pluginConfig['version']['require'] >= $config['version']['versioncode'])
 		$pluginConfig['compatible'] = true;
 	else
 		$pluginConfig['compatible'] = false;

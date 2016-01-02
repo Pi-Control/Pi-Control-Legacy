@@ -326,7 +326,7 @@ function checkUpdate($what = '')
 			return 3; // Raspberry Pi is not connected to internet
 		else
 		{
-			if ($xml = simplexml_load_file($config['urls']['updateUrl']))
+			if ($xml = simplexml_load_file($config['url']['update']))
 			{
 				$output = '';
 				$check = '';
@@ -334,7 +334,7 @@ function checkUpdate($what = '')
 		
 				foreach($xml as $data)
 				{
-					if ($data->versioncode == $config['versions']['versioncode']+1)
+					if ($data->versioncode == $config['version']['versioncode']+1)
 					{
 						$check = 'update';
 						break;
