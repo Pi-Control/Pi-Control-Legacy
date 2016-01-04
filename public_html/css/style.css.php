@@ -315,6 +315,7 @@ body {
 .box .inner-single {
 	padding: 15px;
 	display: table-cell;
+	width: 100%;
 }
 
 .box .inner-margin-vertical {

@@ -1,24 +1,22 @@
 <?php
-function getCacheList($loadInfos = false)
+function getCacheList()
 {
-	$folder = realpath(CACHE_PATH);
-	$fileArray = array('usb_devices' => array(), 'users' => array(), 'weather' => array());
+	$fileSuffix = '.cache.php';
+	$cacheArray = array('usb_devices' => array(), 'users' => array(), 'weather' => array());
 	
-	foreach (@scandir($folder) as $file)
-		if ($file[0] != '.')
-			if (is_file($folder.'/'.$file) && substr($file, -10) == '.cache.php')
-			{
-				$name = substr($file, 0, -10);
-				$fileArray[$name] = array('filesize' => filesize($folder.'/'.$file), 'last_change' => filemtime($folder.'/'.$file));
-				
-				if ($loadInfos === true)
-				{
-					$fileArray[$name]['active'] = (getConfig('cache:activation.'.$name, 'false') == 'true') ? true : false;
-					$fileArray[$name]['lifetime'] = getConfig('cache:lifetime.'.$name, 0);
-				}
-			}
+	foreach ($cacheArray as $name => $info)
+	{
+		$cacheArray[$name]['active'] = (getConfig('cache:activation.'.$name, 'false') == 'true') ? true : false;
+		$cacheArray[$name]['lifetime'] = getConfig('cache:lifetime.'.$name, 0);
+		
+		if (file_exists(CACHE_PATH.$name.$fileSuffix) && is_file(CACHE_PATH.$name.$fileSuffix))
+		{
+			$cacheArray[$name]['filesize'] = filesize(CACHE_PATH.$name.$fileSuffix);
+			$cacheArray[$name]['modification'] = filemtime(CACHE_PATH.$name.$fileSuffix);
+		}
+	}
 	
-	return $fileArray;
+	return $cacheArray;
 }
 
 function getCacheName($file)

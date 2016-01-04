@@ -13,9 +13,7 @@ if (isset($_GET['clear']) && $_GET['clear'] != '')
 		$tpl->msg('error', '', 'Leider konnte der Cache nicht geleert werden!');
 	
 	if (isset($_GET['redirect']) && $_GET['redirect'] != '')
-	{
 		$tpl->redirect('?'.urldecode($_GET['redirect']));
-	}
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] != '')

@@ -5,6 +5,8 @@ $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
 $users = new Cache('users', 'rpi_getAllUsers');
 
+$users->load();
+
 $tpl->assign('time', date('d.m.Y H:i:s', time()));
 $tpl->assign('timezone', date('e (P)', time()));
 $tpl->assign('run_time', getDateFormat(rpi_getRuntime()));

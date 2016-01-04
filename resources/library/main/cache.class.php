@@ -1,40 +1,49 @@
 <?php
 class Cache
 {
-	private $name, $lifetime, $content, $type, $file, $loaded = 0, $efFunction, $efArgs, $filemtime = 0, $returnCode = true;
-	private $cacheFolder = CACHE_PATH;
-	private $filePrefix = '.cache.php';
+	const FILE = 0;
+	const EXECUTION = 1;
+	const EXECUTION_NOCACHE = 2;
+	
+	private $name, $lifetime, $content, $type, $stream, $loadType = self::FILE, $efFunction, $efArgs, $modificationTime = 0, $statusCode = 0;
+	private $cachePath = CACHE_PATH;
+	private $fileSuffix = '.cache.php';
 	
 	public function __construct()
 	{
 		if (!func_num_args() >= 3)
+		{
+			$this->statusCode = 1;
 			return;
+		}
 		
 		$args = func_get_args();
-		
-		$name = $args[0];
-		$lifetime = 0; //$args[1]
+		$this->name = $args[0];
 		$function = $args[1];
-		
-		if (($cLifetime = getConfig('cache:lifetime.'.$name, 0)) != 0)
-			$lifetime = $cLifetime * 60;
-		
-		$this->name = $name;
-		
-		if (file_exists($this->cacheFolder.$name.$this->filePrefix) && filemtime($this->cacheFolder.$name.$this->filePrefix) > time() - $lifetime)
-			return;
-		
-		unset($args[0], $args[1]); //, $args[2]
+		$lifetime = 0;
+		unset($args[0], $args[1]);
 		$this->efFunction = $function;
 		$this->efArgs = $args;
-		$this->loaded = 1;
+		
+		if (($cLifetime = getConfig('cache:activation.'.$this->name, 'false')) == 'false')
+		{
+			$this->loadType = self::EXECUTION_NOCACHE;
+			return;
+		}
+		
+		if (($cLifetime = getConfig('cache:lifetime.'.$this->name, 0)) != 0)
+			$lifetime = $cLifetime * 60;
+		
+		if (file_exists($this->cachePath.$this->name.$this->fileSuffix) && filemtime($this->cachePath.$this->name.$this->fileSuffix) > time() - $lifetime)
+			return;
+		
+		$this->loadType = self::EXECUTION;
 	}
 	
 	private function executeFunction()
 	{
 		$result = call_user_func_array($this->efFunction, $this->efArgs);
 		$this->setContent($result);
-		$this->loaded = 2;
 	}
 	
 	public function setName($name)
@@ -47,85 +56,91 @@ class Cache
 		$this->content = $content;
 		$this->type = gettype($content);
 		
-		$this->returnCode = $this->save();
+		if ($this->loadType == self::FILE || $this->loadType == self::EXECUTION)
+			$this->statusCode = $this->saveToFile();
 	}
 	
 	public function getContent()
 	{
-		if ($this->loaded == 0)
-			$this->returnCode = $this->load();
-		elseif ($this->loaded == 1)
-			$this->executeFunction();
-		
 		return $this->content;
 	}
 	
-	public function getReturnCode()
+	public function getStatusCode()
 	{
-		return $this->returnCode;
+		return $this->statusCode;
 	}
 	
-	private function save()
+	public function load()
 	{
-		if (($this->file = fopen($this->cacheFolder.$this->name.$this->filePrefix, 'w')) === false)
-			return 0;
+		if ($this->loadType == self::FILE)
+			$this->statusCode = $this->loadFromFile();
+		elseif ($this->loadType == self::EXECUTION || $this->loadType == self::EXECUTION_NOCACHE)
+			$this->statusCode = $this->executeFunction();
 		
-		if (flock($this->file, LOCK_EX) === false)
-			return 1;
-		
-		if (fwrite($this->file, $this->type, 16) === false)
+		return false;
+	}
+	
+	private function saveToFile()
+	{
+		if (($this->stream = fopen($this->cachePath.$this->name.$this->fileSuffix, 'w')) === false)
 			return 2;
 		
-		if (fseek($this->file, 16) === -1)
+		if (flock($this->stream, LOCK_EX) === false)
 			return 3;
 		
-		if (fwrite($this->file, $this->encodeType()) === false)
+		if (fwrite($this->stream, $this->type, 16) === false)
 			return 4;
 		
-		if (flock($this->file, LOCK_UN) === false)
+		if (fseek($this->stream, 16) === -1)
 			return 5;
 		
-		fclose($this->file);
-		
-		if (touch($this->cacheFolder.$this->name.$this->filePrefix) === false)
+		if (fwrite($this->stream, $this->encodeType()) === false)
 			return 6;
+		
+		if (flock($this->stream, LOCK_UN) === false)
+			return 7;
+		
+		fclose($this->stream);
+		
+		if (touch($this->cachePath.$this->name.$this->fileSuffix) === false)
+			return 8;
 		
 		return true;
 	}
 	
-	private function load()
+	private function loadFromFile()
 	{
-		if (!file_exists($this->cacheFolder.$this->name.$this->filePrefix) || !is_writable($this->cacheFolder.$this->name.$this->filePrefix))
-			return 0;
+		if (!file_exists($this->cachePath.$this->name.$this->fileSuffix) || !is_writable($this->cachePath.$this->name.$this->fileSuffix))
+			return 9;
 		
-		if (($this->file = fopen($this->cacheFolder.$this->name.$this->filePrefix, 'r')) === false)
-			return 1;
+		if (($this->stream = fopen($this->cachePath.$this->name.$this->fileSuffix, 'r')) === false)
+			return 10;
 		
-		if (flock($this->file, LOCK_SH) === false)
-			return 2;
+		if (flock($this->stream, LOCK_SH) === false)
+			return 11;
 		
-		if (($type = fread($this->file, 16)) === false)
-			return 3;
+		if (($type = fread($this->stream, 16)) === false)
+			return 12;
 		
 		$this->type = trim($type);
 		
-		if (fseek($this->file, 16) === false)
-			return 4;
+		if (fseek($this->stream, 16) === false)
+			return 13;
 		
 		$data = '';
 		
-		while (!feof($this->file))
-			$data .= fread($this->file, 512);
+		while (!feof($this->stream))
+			$data .= fread($this->stream, 512);
 		
-		if (flock($this->file, LOCK_UN) === false)
-			return 5;
+		if (flock($this->stream, LOCK_UN) === false)
+			return 14;
 		
 		$this->decodeType($data);
-		$this->filemtime = filemtime($this->cacheFolder.$this->name.$this->filePrefix);
+		$this->modificationTime = filemtime($this->cachePath.$this->name.$this->fileSuffix);
 		
-		fclose($this->file);
+		fclose($this->stream);
 		
-		return true;
+		return 0;
 	}
 	
 	private function encodeType()
@@ -170,15 +185,15 @@ class Cache
 	
 	public function displayHint()
 	{
-		if ($this->loaded != 0)
+		if ($this->statusCode != 0 || $this->loadType == self::EXECUTION || $this->loadType == self::EXECUTION_NOCACHE)
 			return NULL;
 		
-		return '<div><span class="cached" title="Stand: '.formatTime($this->filemtime).'"><span>Cached</span><a href="?s=settings&amp;do=cache&amp;clear='.$this->name.'&amp;redirect='.urlencode($_SERVER['QUERY_STRING']).'">Aktualisieren</a></span></div>';
+		return '<div><span class="cached" title="Stand: '.formatTime($this->modificationTime).'"><span>Cached</span><a href="?s=settings&amp;do=cache&amp;clear='.$this->name.'&amp;redirect='.urlencode($_SERVER['QUERY_STRING']).'">Aktualisieren</a></span></div>';
 	}
 	
 	public function clear()
 	{
-		return unlink($this->cacheFolder.$this->name.$this->filePrefix);
+		return unlink($this->cachePath.$this->name.$this->fileSuffix);
 	}
 }
 ?>
