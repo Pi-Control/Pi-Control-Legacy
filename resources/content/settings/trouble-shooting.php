@@ -1,5 +1,5 @@
 <?php
-(include_once LIBRARY_PATH.'/trouble-shooting/trouble-shooting.function.php') or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'trouble-shooting/trouble-shooting.function.php') or die($error_code['0x0006']);
 $tpl->setHeaderTitle(_t('Problembehandlung'));
 
 $cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" # By Pi Control';

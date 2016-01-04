@@ -1,5 +1,5 @@
 <?php
-(include_once LIBRARY_PATH.'/pi-control/pi-control.function.php') or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'pi-control/pi-control.function.php') or die($error_code['0x0006']);
 $tpl->setHeaderTitle(_t('Einstellungen - Pi Control'));
 
 if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')

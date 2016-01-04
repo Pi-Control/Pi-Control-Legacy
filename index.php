@@ -2,17 +2,14 @@
 $doNotCheckForAuthentification = true;
 (include_once realpath(dirname(__FILE__)).'/resources/init.php') or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
 
-(include_once LIBRARY_PATH.'/main/tpl.class.php')		or die($error_code['0x0001']);
-(include_once LIBRARY_PATH.'/main/main.function.php')	or die($error_code['0x0002']);
-(include_once LIBRARY_PATH.'/main/rpi.function.php')	or die($error_code['0x0003']);
-(include_once LIBRARY_PATH.'/main/sites.php')			or die($error_code['0x0004']);
-(include_once LIBRARY_PATH.'/main/plugin.function.php')	or die($error_code['0x0005']);
-(include_once LIBRARY_PATH.'/main/cron.class.php')		or die($error_code['0x0006']);
-(include_once LIBRARY_PATH.'/main/cache.class.php')		or die($error_code['0x0007']);
+(include_once LIBRARY_PATH.'main/tpl.class.php')			or die($error_code['0x0001']);
+(include_once LIBRARY_PATH.'main/main.function.php')		or die($error_code['0x0002']);
+(include_once LIBRARY_PATH.'main/sites.php')				or die($error_code['0x0004']);
+(include_once LIBRARY_PATH.'plugin/plugin.function.php')	or die($error_code['0x0005']);
 
-if (isset($_GET['i']) && isset($include[$_GET['i']]) && file_exists(PICONTROL_PATH.'/'.$include[$_GET['i']]))
+if (isset($_GET['i']) && isset($include[$_GET['i']]) && file_exists(PICONTROL_PATH.$include[$_GET['i']]))
 {
-	include_once PICONTROL_PATH.'/'.$include[$_GET['i']];
+	include_once PICONTROL_PATH.$include[$_GET['i']];
 	exit();
 }
 
@@ -48,19 +45,17 @@ $tpl->setDrawFooter(true, $config, $errorHandler);
 try
 {
 	// Lade Content
-	if (isset($_GET['s']) && !isset($_GET['i']) && isset($site[$_GET['s']]) && file_exists(CONTENT_PATH.'/'.$site[$_GET['s']]))
-	{
-		include_once CONTENT_PATH.'/'.$site[$_GET['s']];
-	}
+	if (isset($_GET['s']) && !isset($_GET['i']) && isset($site[$_GET['s']]) && file_exists(CONTENT_PATH.$site[$_GET['s']]))
+		include_once CONTENT_PATH.$site[$_GET['s']];
 	else
 	{
-		if (isset($_GET['s']) && (!isset($site[$_GET['s']]) || file_exists(CONTENT_PATH.'/'.$site[$_GET['s']]) === false))
+		if (isset($_GET['s']) && (!isset($site[$_GET['s']]) || file_exists(CONTENT_PATH.$site[$_GET['s']]) === false))
 		{
 			$tpl->setHeaderTitle(_t('Fehler'));
 			$tpl->error(_t('Fehler'), _t('Leider existiert die angeforderte Seite nicht.'));
 		}
 		else
-			include_once CONTENT_PATH.'/overview.php';
+			include_once CONTENT_PATH.'overview.php';
 	}
 	
 	if ($tpl->tplDraw === false)
