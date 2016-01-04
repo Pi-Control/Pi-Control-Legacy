@@ -41,7 +41,7 @@
 								<option value="austria"<?php if ($data['weather-country'] == 'austria') echo ' selected="selected"'; ?>>Österreich</option>
 								<option value="swiss"<?php if ($data['weather-country'] == 'swiss') echo ' selected="selected"'; ?>>Schweiz</option>
 								<option value="uk"<?php if ($data['weather-country'] == 'uk') echo ' selected="selected"'; ?>>United Kingdom</option>
-							</select></td>
+							</select> <?php if (is_array($data['weather-info'])) echo $data['weather-info']['city'].', '.$data['weather-info']['country']; elseif ($data['weather-info'] == 1) echo '<strong class="red">Server nicht erreichbar!</strong>'; ?></td>
 					</tr>
 					<tr>
 						<td></td>

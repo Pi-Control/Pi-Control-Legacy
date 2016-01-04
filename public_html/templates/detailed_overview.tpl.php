@@ -134,7 +134,7 @@
 		<div class="inner">
 			<span class="subtitle"><?php _e('Gesamtspeicher'); ?></span>
 		</div>
-		<div class="inner-table">
+		<div class="inner-table overflow-auto">
 			<table class="table table-borderless">
 				<tr>
 					<th style="width: 20%;"><?php _e('Partition'); ?></th>
@@ -171,6 +171,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Alle Benutzer'); ?></span>
+			<?php if ($data['users_cache_hint'] != NULL) echo $data['users_cache_hint']; ?>
 		</div>
 		<div class="inner-table">
 			<table class="table table-borderless">

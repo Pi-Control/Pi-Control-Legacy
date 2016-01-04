@@ -20,6 +20,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Wetter'); ?></span>
+			<?php if ($data['weather_cache_hint'] != NULL) echo $data['weather_cache_hint']; ?>
 		</div>
 		<div class="inner">
 	<?php if ($data['weather'] === 0) { ?>
@@ -29,19 +30,20 @@
 	<?php } elseif ($data['weather'] === 2) { ?>
 			<strong class="red"><? _e('Wetter wurde noch nicht konfiguriert. <a href="%s">Zu den Einstellungen.</a>', '?s=settings&do=overview'); ?></strong>
 	<?php } else { ?>
-			<strong>{$weather.city}</strong><br /><br />
+			<strong><?php echo $data['weather']['city']; ?></strong><br /><br />
 			<table style="margin: 0px auto 0px;">
 				<tr>
 					<td style="width: 100px; text-align: center;">
-						<img src="public_html/img/weather/{$weather.icon}.png" title="{$weather.description}" alt="<? _e('Wetter'); ?>" /><br />
-						<span style="font-size: 11px;" title="<? _e('Windst&auml;rke | Luftfeuchtigkeit'); ?>">{$weather.wind} km/h | {$weather.humidity} %</span>
+						<img src="public_html/img/weather/<?php echo $data['weather']['icon']; ?>.svg" title="<?php echo $data['weather']['description']; ?>" alt="<?php _e('Wetter'); ?>" style="width: 64px;" /><br />
+						<span style="font-size: 11px;" title="<? _e('Windst&auml;rke | Luftfeuchtigkeit'); ?>"><?php echo $data['weather']['wind']; ?> km/h | <?php echo $data['weather']['humidity']; ?> %</span>
 					</td>
 					<td style="width: 100px; text-align: center;"><span style="font-size: 30px;">
-						{$weather.temp} &deg;C</span><br />
-						<span style="font-size: 13px;">{$weather.temp_min} &deg;C | {$weather.temp_max} &deg;C</span>
+						<?php echo $data['weather']['temp']; ?> &deg;C</span><br />
+						<span style="font-size: 13px;"><?php echo $data['weather']['temp_min']; ?> &deg;C | <?php echo $data['weather']['temp_max']; ?> &deg;C</span>
 					</td>
 				</tr>
 			</table>
+			<a href="https://www.yahoo.com/?ilc=401" target="_blank" style="float: right; margin-right: -12px;"><img src="public_html/img/weather/yahoo.png" width="80px" /></a>
 	<?php } ?>
 		</div>
 	</div>
@@ -77,6 +79,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Angeschlossene Ger&auml;te'); ?></span>
+			<?php if ($data['usb_devices_cache_hint'] != NULL) echo $data['usb_devices_cache_hint']; ?>
 		</div>
 		<div class="inner-table">
 			<table class="table table-borderless">

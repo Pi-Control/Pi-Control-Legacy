@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Version'); ?></span>
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 </div>
-<div class="container-600">
+<div class="container-600 order-1">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Update'); ?></span>

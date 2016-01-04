@@ -287,14 +287,25 @@ body {
 }
 
 .box .inner-header {
+	display: table;
+	width: 100%;
+	padding-right: 15px;
+	box-sizing: border-box;
 }
 
-.box .inner-header span {
+.box .inner-header > span:first-child {
 	color: <?php echo $colorPallet[7]; ?>;
 	display: inline-block;
 	font-size: 18px;
 	font-weight: bold;
 	padding: 15px 15px 15px 15px;
+	display: table-cell;
+}
+
+.box .inner-header div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: right;
 }
 
 .box .inner, .box .inner-end {
@@ -649,6 +660,33 @@ td.table-right, th.table-right {
 	color: #FFFFFF;
 }
 
+.cached {
+	background: <?php echo $colorPallet[3]; ?>;
+	color: #FFFFFF;
+	padding: 2px 4px;
+	border-radius: 2px;
+	font-size: 11px;
+	transition: 100ms linear;
+}
+
+.cached a {
+	display: none;
+}
+
+.cached:hover {
+	background: <?php echo $colorPallet[5]; ?>;
+}
+
+.cached:hover span {
+	display: none;
+}
+
+.cached:hover a {
+	display: inline;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
 .plugins-table-list a {
 	text-decoration: none;
 	color: inherit;
@@ -784,24 +822,26 @@ img {
 
 .settings-shortcut-icon {
 	text-decoration: none;
-	float: right;
-	margin: 15px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .settings-shortcut-icon img {
 	width: 16px;
 	height: 16px;
+	display: block;
 }
 
 .go-back-icon {
 	text-decoration: none;
-	float: right;
-	margin: 15px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .go-back-icon img {
 	width: 16px;
 	height: 16px;
+	display: block;
 }
 
 .svg-small {

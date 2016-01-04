@@ -34,6 +34,7 @@ defined('TEMPLATES2_PATH')	or define('TEMPLATES2_PATH',realpath(dirname(__FILE__
 defined('LOG_PATH')			or define('LOG_PATH',		realpath(dirname(__FILE__).'/log/').'/');
 defined('CRON_PATH')		or define('CRON_PATH',		realpath(dirname(__FILE__).'/cron/').'/');
 defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath(dirname(__FILE__).'/languages/').'/');
+defined('CACHE_PATH')		or define('CACHE_PATH',		realpath(dirname(__FILE__).'/cache/').'/');
 
 $globalLanguage				= 'de';
 $globalLanguageArray		= array();

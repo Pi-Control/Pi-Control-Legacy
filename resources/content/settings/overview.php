@@ -66,6 +66,7 @@ $tpl->assign('weather-country', getConfig('main:weather.country', 'germany'));
 $tpl->assign('weather-type', getConfig('main:weather.type', 'postcode'));
 $tpl->assign('weather-city', getConfig('main:weather.city', ''));
 $tpl->assign('weather-postcode', getConfig('main:weather.postcode', ''));
+$tpl->assign('weather-info', getWeather());
 
 $tpl->draw('settings/overview');
 ?>

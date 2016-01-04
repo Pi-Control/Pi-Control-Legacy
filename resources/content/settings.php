@@ -27,6 +27,9 @@ switch ((isset($_GET['do']) ? $_GET['do'] : ''))
 	case 'user':
 		include_once CONTENT_PATH.'/settings/user.php';
 			break;
+	case 'cache':
+		include_once CONTENT_PATH.'/settings/cache.php';
+			break;
 	default:
 		$tpl->draw('settings');
 }

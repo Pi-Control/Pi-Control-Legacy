@@ -8,6 +8,7 @@ $doNotCheckForAuthentification = true;
 (include_once LIBRARY_PATH.'/main/sites.php')			or die($error_code['0x0004']);
 (include_once LIBRARY_PATH.'/main/plugin.function.php')	or die($error_code['0x0005']);
 (include_once LIBRARY_PATH.'/main/cron.class.php')		or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'/main/cache.class.php')		or die($error_code['0x0007']);
 
 if (isset($_GET['i']) && isset($include[$_GET['i']]) && file_exists(PICONTROL_PATH.'/'.$include[$_GET['i']]))
 {
