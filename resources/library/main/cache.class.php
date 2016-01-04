@@ -67,7 +67,7 @@ class Cache
 	
 	private function save()
 	{
-		if ($this->file = fopen($this->cacheFolder.$this->name.$this->filePrefix, 'w') === false)
+		if (($this->file = fopen($this->cacheFolder.$this->name.$this->filePrefix, 'w')) === false)
 			return 0;
 		
 		if (flock($this->file, LOCK_EX) === false)
@@ -98,7 +98,7 @@ class Cache
 		if (!file_exists($this->cacheFolder.$this->name.$this->filePrefix) || !is_writable($this->cacheFolder.$this->name.$this->filePrefix))
 			return 0;
 		
-		if ($this->file = fopen($this->cacheFolder.$this->name.$this->filePrefix, 'r') === false)
+		if (($this->file = fopen($this->cacheFolder.$this->name.$this->filePrefix, 'r')) === false)
 			return 1;
 		
 		if (flock($this->file, LOCK_SH) === false)
