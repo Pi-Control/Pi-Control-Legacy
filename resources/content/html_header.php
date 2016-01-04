@@ -49,7 +49,7 @@ $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('navi_plugins', !empty($pluginHeaderNavi) ? array_sort($pluginHeaderNavi, 'name', SORT_ASC) : $pluginHeaderNaviString);
 $tpl->assign('navi_plugins_updates', isset($update_plugins) ? $update_plugins : '');
 $tpl->assign('update_picontrol', isset($picontrol_update) ? $picontrol_update : '');
-$tpl->assign('last_cron_execution', $tpl->getConfig('cron:execution.cron', 0)+140);
+$tpl->assign('cron_execution_fault', ($tpl->getConfig('cron:execution.cron', 0)+140 < time()) ? true : false);
 $tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.$_COOKIE['_pi_control_login'].'.username', '').'.username', ''));
 $tpl->assign('referer', $referer);
 

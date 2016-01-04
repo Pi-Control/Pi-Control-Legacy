@@ -314,6 +314,7 @@ body {
 
 .box .inner-single {
 	padding: 15px;
+	display: table-cell;
 }
 
 .box .inner-margin-vertical {
@@ -513,15 +514,14 @@ td.table-right, th.table-right {
 	border-radius: 2px;
 }
 
-.error > div > span, .success > div > span, .info > div > span {
-	width: 15px;
-	height: 15px;
+.error > div span.cancel, .success > div span.cancel, .info > div span.cancel {
+	width: 16px;
+	height: 16px;
 	background: url('../img/cross-icon.svg') no-repeat center center;
 	background-size: 16px;
-	float: right;
-	margin: 15px;
-	display: block;
+	display: inline-block;
 	cursor: pointer;
+	vertical-align: middle;
 }
 
 .error::before, .success::before, .info::before {
@@ -564,16 +564,21 @@ td.table-right, th.table-right {
 	vertical-align: middle;
 }
 
-.error .inner-header span {
+.error .inner-header span:first-child {
 	color: #F44336;
 }
 
-.success .inner-header span {
+.success .inner-header span:first-child {
 	color: #009688;
 }
 
-.info .inner-header span {
+.info .inner-header span:first-child {
 	color: #FFC107;
+}
+
+.inner-single ~ div {
+	display: table-cell;
+	padding-right: 15px;
 }
 
 .small-info {
@@ -663,14 +668,21 @@ td.table-right, th.table-right {
 .cached {
 	background: <?php echo $colorPallet[3]; ?>;
 	color: #FFFFFF;
-	padding: 2px 4px;
 	border-radius: 2px;
 	font-size: 11px;
 	transition: 100ms linear;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.cached span {
+	padding: 2px 4px;
+	display: block;
 }
 
 .cached a {
 	display: none;
+	padding: 2px 4px;
 }
 
 .cached:hover {
@@ -682,7 +694,7 @@ td.table-right, th.table-right {
 }
 
 .cached:hover a {
-	display: inline;
+	display: block;
 	color: #FFFFFF;
 	text-decoration: none;
 }

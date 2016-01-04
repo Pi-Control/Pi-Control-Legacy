@@ -74,15 +74,15 @@
 			</div>
 		</div>
 <?php } ?>
-<?php if ($data['last_cron_execution'] < time()) { ?>
+<?php if ($data['cron_execution_fault'] === true) { ?>
 <!-- Cron -->
 		<div class="box error">
 			<div>
-				<span></span>
 				<div class="inner-header">
 					<span>Fehler mit dem Cron</span>
+					<div><span class="cancel"></span></div>
 				</div>
-				<div class="inner">
+				<div class="inner-single">
 					<?php _e('Es gibt anscheinend ein Problem mit dem Cron für das Pi Control. Dieser wurde seit mehr als 2 Minuten nicht mehr ausgeführt. Sollte diese Meldung in ca. 5 Minuten immer noch erscheinen, führe eine <a href="?s=settings&amp;do=trouble-shooting">Problembehandlung</a> durch.'); ?>
 				</div>
 			</div>

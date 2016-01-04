@@ -1,5 +1,5 @@
-$(document).on('click', '.error > div > span, .success > div > span, .info > div > span', function(e) {
-	$(this).parent().parent().css("position", "relative").css("z-index", "-500").animate({marginTop: -$(this).parent().parent().height()-20, opacity: 0}, 300, function(e)
+$(document).on('click', '.error > div span.cancel, .success > div span.cancel, .info > div span.cancel', function(e) {
+	$(this).parents('.box').css("position", "relative").css("z-index", "-500").animate({marginTop: -$(this).parents('.box').height()-20, opacity: 0}, 300, function(e)
 	{
 		$(this).hide();
 	});
