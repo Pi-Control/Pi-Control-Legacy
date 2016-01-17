@@ -9,7 +9,7 @@ class Cache
 	private $cachePath = CACHE_PATH;
 	private $fileSuffix = '.cache.php';
 	
-	public function __construct()
+	public function Cache()
 	{
 		if (!func_num_args() >= 3)
 		{
@@ -53,8 +53,7 @@ class Cache
 	
 	public function setContent($content)
 	{
-		$this->content = $content;
-		$this->type = gettype($content);
+		$this->content = serialize($content);
 		
 		if ($this->loadType == self::FILE || $this->loadType == self::EXECUTION)
 			$this->statusCode = $this->saveToFile();
@@ -62,7 +61,7 @@ class Cache
 	
 	public function getContent()
 	{
-		return $this->content;
+		return unserialize($this->content);
 	}
 	
 	public function getStatusCode()
@@ -83,49 +82,35 @@ class Cache
 	private function saveToFile()
 	{
 		if (($this->stream = fopen($this->cachePath.$this->name.$this->fileSuffix, 'w')) === false)
-			return 2;
+			return 1;
 		
 		if (flock($this->stream, LOCK_EX) === false)
+			return 2;
+		
+		if (fwrite($this->stream, $this->content) === false)
 			return 3;
 		
-		if (fwrite($this->stream, $this->type, 16) === false)
-			return 4;
-		
-		if (fseek($this->stream, 16) === -1)
-			return 5;
-		
-		if (fwrite($this->stream, $this->encodeType()) === false)
-			return 6;
-		
 		if (flock($this->stream, LOCK_UN) === false)
-			return 7;
+			return 4;
 		
 		fclose($this->stream);
 		
 		if (touch($this->cachePath.$this->name.$this->fileSuffix) === false)
-			return 8;
+			return 5;
 		
-		return true;
+		return 0;
 	}
 	
 	private function loadFromFile()
 	{
 		if (!file_exists($this->cachePath.$this->name.$this->fileSuffix) || !is_writable($this->cachePath.$this->name.$this->fileSuffix))
-			return 9;
+			return 6;
 		
 		if (($this->stream = fopen($this->cachePath.$this->name.$this->fileSuffix, 'r')) === false)
-			return 10;
+			return 7;
 		
 		if (flock($this->stream, LOCK_SH) === false)
-			return 11;
-		
-		if (($type = fread($this->stream, 16)) === false)
-			return 12;
-		
-		$this->type = trim($type);
-		
-		if (fseek($this->stream, 16) === false)
-			return 13;
+			return 8;
 		
 		$data = '';
 		
@@ -133,54 +118,14 @@ class Cache
 			$data .= fread($this->stream, 512);
 		
 		if (flock($this->stream, LOCK_UN) === false)
-			return 14;
-		
-		$this->decodeType($data);
-		$this->modificationTime = filemtime($this->cachePath.$this->name.$this->fileSuffix);
+			return 9;
 		
 		fclose($this->stream);
 		
+		$this->content = $data;
+		$this->modificationTime = filemtime($this->cachePath.$this->name.$this->fileSuffix);
+		
 		return 0;
-	}
-	
-	private function encodeType()
-	{
-		switch ($this->type)
-		{
-			case 'string':
-			case 'integer':
-			case 'double':
-			case 'float':
-				return $this->content;
-			case 'boolean':
-				return settype($this->content, 'string');
-			case 'array':
-				return json_encode($this->content);
-			default:
-				return $this->content;
-		}
-	}
-	
-	private function decodeType($content)
-	{
-		switch ($this->type)
-		{
-			case 'string':
-			case 'integer':
-			case 'double':
-			case 'float':
-				$this->content = $content;
-				break;
-			case 'boolean':
-				$this->content = settype($content, 'boolean');
-				break;
-			case 'array':
-				$this->content = json_decode($content, true);
-				break;
-			default:
-				$this->content = $content;
-				break;
-		}
 	}
 	
 	public function displayHint()

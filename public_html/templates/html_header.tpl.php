@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 	<meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no" />
+	<meta name="theme-color" content="#1565C0" />
 	<link type="text/css" rel="stylesheet" href="public_html/css/style.css.php" />
 	<link rel="shortcut icon" href="public_html/img/favicon.png" type="image/png" />
 	<script type="text/javascript" src="public_html/js/jquery.min.js"></script>
