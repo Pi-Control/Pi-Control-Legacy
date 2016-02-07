@@ -316,72 +316,33 @@ function formatTime($time, $type = 'd.m.Y H:i')
 	return date($type, $time);
 }
 
-function checkUpdate($what = '')
+function checkUpdate()
 {
 	global $config;
 	
-	if (function_exists('fsockopen') && ini_get('allow_url_fopen') !== false)
+	if (!class_exists('cURL'))
+		(include LIBRARY_PATH.'curl/curl.class.php');
+	
+	$curl = new cURL($config['url']['update']);
+	$curl->execute();
+	
+	if ($curl->getStatusCode() != '200')
+		return $curl->getStatusCode();
+	
+	if ($curl->getResult($data) != JSON_ERROR_NONE)
+		return 1;
+	
+	if (!isset($data['versions'], $data['latest']))
+		return 1;
+	
+	if ($data['latest']['versioncode'] > $config['version']['versioncode'])
 	{
-		if (!$sock = @fsockopen('www.google.com', 80, $num, $error, 5))
-			return 3; // Raspberry Pi is not connected to internet
-		else
-		{
-			if ($xml = simplexml_load_file($config['url']['update']))
-			{
-				$output = '';
-				$check = '';
-				$i = 0;
+		$currentUpdateKey = array_search($config['version']['versioncode']+1, array_column($data['versions'], 'versioncode'));
 		
-				foreach($xml as $data)
-				{
-					if ($data->versioncode == $config['version']['versioncode']+1)
-					{
-						$check = 'update';
-						break;
-					}
-					else
-						$check = 'no update';
-					
-					$i++;
-				}
-				
-				if ($check == 'update')
-				{
-					$output = '';
-					if ($what == 'log')
-						$output = (string) nl2br($xml->update[$i]->log);
-					elseif ($what == 'filename')
-						$output = (string) $xml->update[$i]->filename;
-					elseif ($what == 'filesize')
-						$output = (string) $xml->update[$i]->filesize;
-					elseif ($what == 'checksum')
-						$output = (string) $xml->update[$i]->checksum;
-					elseif ($what == 'version')
-						$output = (string) $xml->update[$i]->version;
-					elseif ($what == 'versioncode')
-						$output = (string) $xml->update[$i]->versioncode;
-					else
-						$output = array('version' => (string) $xml->update[$i]->version,
-										'versioncode' => (string) $xml->update[$i]->versioncode,
-										'filename' => (string) $xml->update[$i]->filename,
-										'filesize' => (string) $xml->update[$i]->filesize,
-										'checksum' => (string) $xml->update[$i]->checksum,
-										'log' => (string) nl2br($xml->update[$i]->log),
-										'date' => (string) $xml->update[$i]->date);
-					
-					return $output;
-				}
-				elseif ($check == 'no update')
-					return 0;
-				else
-					return 1;
-			}
-			else
-				return 2;
-		}
+		return $data['versions'][$currentUpdateKey];
 	}
 	else
-		return 4; // Function is not enabled
+		return 0;
 }
 
 function getDateFormat($time)

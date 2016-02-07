@@ -28,8 +28,9 @@ if (file_exists(PLUGINS_PATH) && is_dir(PLUGINS_PATH))
 	
 	if (($tpl->getConfig('cron:updateCheck.picontrol', 0)+86400) < time() || (isset($_GET['s'], $_GET['do']) && $_GET['s'] == 'settings' && $_GET['do'] == 'update'))
 	{
-		$picontrol_update = checkUpdate();
-		if (!is_array($picontrol_update))
+		$picontrolUpdate = checkUpdate();
+		
+		if (!is_array($picontrolUpdate))
 			$tpl->setConfig('cron:updateCheck.picontrol', time());
 		else
 			$tpl->setConfig('cron:updateCheck.picontrol', time()-86400);
@@ -48,7 +49,7 @@ $tpl->assign('javascript_time', time()+date('Z', time()));
 $tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('navi_plugins', !empty($pluginHeaderNavi) ? array_sort($pluginHeaderNavi, 'name', SORT_ASC) : $pluginHeaderNaviString);
 $tpl->assign('navi_plugins_updates', isset($update_plugins) ? $update_plugins : '');
-$tpl->assign('update_picontrol', isset($picontrol_update) ? $picontrol_update : '');
+$tpl->assign('updatePicontrol', isset($picontrolUpdate) ? $picontrolUpdate : '');
 $tpl->assign('cron_execution_fault', ($tpl->getConfig('cron:execution.cron', 0)+140 < time()) ? true : false);
 $tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.$_COOKIE['_pi_control_login'].'.username', '').'.username', ''));
 $tpl->assign('referer', $referer);

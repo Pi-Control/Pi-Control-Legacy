@@ -4,26 +4,7 @@ $tpl->setHeaderTitle(_t('Problembehandlung'));
 
 $cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" # By Pi Control';
 
-$filesFolders = getFilesWithFullPath(PICONTROL_PATH, true);
-
-$compare = array(
-					'index.php' => array(),
-					'resources/init.php' => array(),
-					'resources/config/cron.config.ini.php' => array(),
-					'resources/config/login.config.ini.php' => array(),
-					'resources/config/main.config.ini.php' => array(),
-					'resources/config/user.config.ini.php' => array(),
-					'resources/cron/init.php' => array(),
-					'resources/cron/' => array(),
-					'resources/log/' => array(),
-					'resources/plugins/' => array(),
-					PICONTROL_PATH => array()
-				);
-
-$filesFolders += $compare;
-array_walk($filesFolders, 'getFileFolderStatus');
-$filesFolders = array_filter($filesFolders, 'filterFilesFolders', ARRAY_FILTER_USE_BOTH);
-ksort($filesFolders);
+$filesFolders = fileFolderPermission();
 
 $lastExecutionLog = array(
 						filemtime(LOG_PATH.'statistic/coretemp.csv'),

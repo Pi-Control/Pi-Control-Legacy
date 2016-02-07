@@ -215,6 +215,7 @@ body {
 #footer-table {
 	margin: 20px auto;
 	border-spacing: 0px;
+	font-size: 12px;
 }
 
 #footer-table tr td, #footer-table tr th {
@@ -388,6 +389,7 @@ body {
 .table {
 	border-spacing: 0px;
 	width: 100%;
+	font-size: inherit;
 }
 
 .table th {
@@ -557,6 +559,13 @@ td.table-right, th.table-right {
 .info::before {
 	content: "!?";
 	background: #FFC107;
+	color: #FFA000;
+}
+
+.info-update::before {
+	content: "";
+	background: url('../img/update-loader.svg') no-repeat center center #FFC107;
+	background-size: 70% auto;
 	color: #FFA000;
 }
 
@@ -1249,6 +1258,48 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 	padding: 2px 5px;
 }
 
+@keyframes rotate {
+	0% { transform: scale(1) rotate(0deg); }
+	100% { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes rotate {
+    0% { -webkit-transform: scale(1) rotate(0deg); }
+    100% { -webkit-transform: scale(1) rotate(360deg); }
+}
+
+@-moz-keyframes rotate {
+    0% { -moz-transform: scale(1) rotate(0deg); }
+    100% { -moz-transform: scale(1) rotate(360deg); }
+}
+
+.rotate-icon {
+	animation: rotate 1.4s linear infinite;
+    -moz-animation: rotate 1.4s linear infinite;
+    -webkit-animation: rotate 1.4s linear infinite;
+}
+
+@keyframes pulse-border {
+	0% { box-shadow: 0 0 0 #FFFFFF; }
+	100% { box-shadow: 0 0 15px #CCCCCC; }
+}
+
+@-webkit-keyframes pulse-border {
+	0% { box-shadow: 0 0 0 #FFFFFF; }
+	100% { box-shadow: 0 0 15px #CCCCCC; }
+}
+
+@-moz-keyframes pulse-border {
+	0% { box-shadow: 0 0 0 #FFFFFF; }
+	100% { box-shadow: 0 0 15px #CCCCCC; }
+}
+
+.pulse-update {
+	animation: pulse-border 2s alternate infinite;
+    -moz-animation: pulse-border 2s alternate infinite;
+    -webkit-animation: pulse-border 2s alternate infinite;
+}
+
 @media screen and (max-width: 899px) {
 	
 	#content {
@@ -1355,38 +1406,38 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 /* Netzwerk */
 .svg-network-signal-0, .svg-network-signal-25, .svg-network-signal-50, .svg-network-signal-75, .svg-network-signal-100, .svg-network-signal-disabled, .svg-network-signal-wire {
 	background: url('../img/network-signal-icons.svg') no-repeat;
-	background-size: auto 100%;
+	background-size: cover;
 	display: block;
 	height: 16px;
 	width: 16px;
 }
 
 .svg-network-signal-0 {
-	background-position: 0px;
+	background-position: 0%;
 }
 
 .svg-network-signal-25 {
-	background-position: -16px;
+	background-position: 16.66px;
 }
 
 .svg-network-signal-50 {
-	background-position: -32px;
+	background-position: 33.33%;
 }
 
 .svg-network-signal-75 {
-	background-position: -48px;
+	background-position: 50%;
 }
 
 .svg-network-signal-100 {
-	background-position: -64px;
+	background-position: 66.66%;
 }
 
 .svg-network-signal-disabled {
-	background-position: -80px;
+	background-position: 83.33%;
 }
 
 .svg-network-signal-wire {
-	background-position: -96px;
+	background-position: 100%;
 }
 
 @media screen and (max-width: 410px) {

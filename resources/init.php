@@ -12,8 +12,9 @@ if (!isset($config))
 		),
 		'url' => array(
 			'base'								=> 'https://pi-control.de/web/1-0/',
-			'update'							=> 'https://pi-control.de/web/1-0/updates.xml',
-			'updateDownload'					=> 'https://pi-control.de/web/1-0/?s=update&file=',
+			'update'							=> 'https://pi-control.de/service/v1/update/',
+			'updateDownload'					=> 'https://pi-control.de/?service=update',
+			'updateNotification'				=> 'https://pi-control.de/?service=update_notification',
 			'plugin'							=> 'https://pi-control.de/web/1-0/plugins.xml',
 			'pluginDownload'					=> 'https://pi-control.de/web/1-0/plugins/',
 			'temperatureMonitoring'				=> 'https://pi-control.de/service/v1/temperature_monitoring/',

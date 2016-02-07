@@ -31,7 +31,19 @@ function getFileFolderStatus(&$item, $key)
 
 function filterFilesFolders($item, $key)
 {
-	global $compare;
+	$compare = array(
+						'index.php' => array(),
+						'resources/init.php' => array(),
+						'resources/config/cron.config.ini.php' => array(),
+						'resources/config/login.config.ini.php' => array(),
+						'resources/config/main.config.ini.php' => array(),
+						'resources/config/user.config.ini.php' => array(),
+						'resources/cron/init.php' => array(),
+						'resources/cron/' => array(),
+						'resources/log/' => array(),
+						'resources/plugins/' => array(),
+						PICONTROL_PATH => array()
+					);
 	
 	if ($item['error'] == false && isset($compare[$key]) !== true)
 		return false;
@@ -39,7 +51,7 @@ function filterFilesFolders($item, $key)
 	return true;
 }
 
-function getFilesWithFullPath($folder, $first = false)
+function getFilesWithRelativePath($folder, $first = false)
 {
 	$folderArray = array();
 	$fileArray = array();
@@ -58,7 +70,7 @@ function getFilesWithFullPath($folder, $first = false)
 	{
 		foreach ($folderArray as $row)
 		{
-			$fileReturn = getFilesWithFullPath($folder.'/'.$row);
+			$fileReturn = getFilesWithRelativePath($folder.'/'.$row);
 			
 			$files[str_replace(PICONTROL_PATH, '', $folder.'/'.$row.'/')] = array();
 			$files += $fileReturn;
@@ -80,5 +92,31 @@ function getFilesWithFullPath($folder, $first = false)
 	}
 	
 	return $files;
+}
+
+function fileFolderPermission()
+{
+	$filesFolders = getFilesWithRelativePath(PICONTROL_PATH, true);
+	
+	$compare = array(
+						'index.php' => array(),
+						'resources/init.php' => array(),
+						'resources/config/cron.config.ini.php' => array(),
+						'resources/config/login.config.ini.php' => array(),
+						'resources/config/main.config.ini.php' => array(),
+						'resources/config/user.config.ini.php' => array(),
+						'resources/cron/init.php' => array(),
+						'resources/cron/' => array(),
+						'resources/log/' => array(),
+						'resources/plugins/' => array(),
+						PICONTROL_PATH => array()
+					);
+	
+	$filesFolders += $compare;
+	array_walk($filesFolders, 'getFileFolderStatus');
+	$filesFolders = array_filter($filesFolders, 'filterFilesFolders', ARRAY_FILTER_USE_BOTH);
+	ksort($filesFolders);
+	
+	return $filesFolders;
 }
 ?>

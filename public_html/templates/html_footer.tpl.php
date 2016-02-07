@@ -17,7 +17,7 @@
 						<a href="https://twitter.com/Willys_TechBlog" target="_blank"><?php _e('Twitter'); ?></a><br />
 						<a href="https://github.com/willfri" target="_blank"><?php _e('GitHub'); ?></a><br />
 						<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7PKQV4RWDS7E4" target="_blank"><?php _e('Spenden'); ?></a></td>
-					<td>2.0.0</td>
+					<td><?php echo $data['version']; ?></td>
 				</tr>
 				<tr>
 					<td><strong><?php _e('LIZENZ'); ?></strong><span><?php _e('Raspberry Pi ist ein Markenzeichen<br />der %s.', '<a href="http://www.raspberrypi.org/" target="_blank">Raspberry Pi Foundation</a>'); ?></span></td>

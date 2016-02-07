@@ -14,6 +14,7 @@ $site = array(
 );
 
 $include = array(
-	'login' => 'resources/content/login.php'
+	'login' => 'resources/content/login.php',
+	'update' => 'resources/update/update_picontrol.php'
 );
 ?>

@@ -8,7 +8,7 @@
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=overview"><?php _e('&Uuml;bersicht'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=statistic"><?php _e('Statistik'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=plugins"><?php _e('Plugins'); ?></a>
-			<a class="settings-overview-flex-box" href="?s=settings&amp;do=update"><?php _e('Update'); ?></a>
+			<a class="settings-overview-flex-box" href="?s=settings&amp;do=update"><?php _e('Aktualisierung'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=trouble-shooting"><?php _e('Problembehandlung'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=notification"><?php _e('Benachrichtigung'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=user"><?php _e('Benutzer'); ?></a>

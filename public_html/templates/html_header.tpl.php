@@ -61,16 +61,15 @@
 			</div>
 		</div>
 		<![endif]-->
-<?php if (is_array($data['update_picontrol'])) { ?>
+<?php if (is_array($data['updatePicontrol'])) { ?>
 <!-- Update -->
-		<div>
-			<div class="box pulse_background">
-				<div class="inner-header info_yellow">
-					<span>Pi Control {$update_picontrol.version} ist verfügbar</span>
-					<img src="public_html/img/update_animation.gif" style="float: right; height: 46px; margin: -10px; opacity: 0.5;" />
+		<div class="box info info-update pulse-update">
+			<div>
+				<div class="inner-header">
+					<span>Pi Control <?php echo $data['updatePicontrol']['version']; ?> ist verf&uuml;gbar</span>
 				</div>
 				<div class="inner">
-					<a href="?s=settings&amp;do=update" style="text-decoration: none;"><input type="button" value="Zur Update-Übersicht" /></a>
+					Zur <a href="?s=settings&amp;do=update">Aktualisierung</a>, um diese anzusehen und zu starten.
 				</div>
 			</div>
 		</div>
