@@ -301,19 +301,21 @@ function rpi_getAllUsers()
 			$split = preg_split('/\s+/i', $userLastLoginInformation);
 			
 			$usersAll[] = array('username' => $row,
-							 'port' => $split[1],
-							 'lastLoginAddress' => $split[2],
-							 'lastLogin' => strtotime($split[4].' '.$split[5].' '.$split[6]),
-							 'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false,
-							 'loggedIn' => isset($usersLoggedIn[$row]) ? $usersLoggedIn[$row] : array());
+								'userId' => exec('id -u '.escapeshellarg($row)),
+								'port' => $split[1],
+								'lastLoginAddress' => $split[2],
+								'lastLogin' => strtotime($split[4].' '.$split[5].' '.$split[6]),
+								'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false,
+								'loggedIn' => isset($usersLoggedIn[$row]) ? $usersLoggedIn[$row] : array());
 		}
 		else
 		{
 			$usersAll[] = array('username' => $row,
-							 'port' => '-',
-							 'lastLoginAddress' => '-',
-							 'lastLogin' => 'Nie',
-							 'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false);
+								'userId' => exec('id -u '.escapeshellarg($row)),
+								'port' => '-',
+								'lastLoginAddress' => '-',
+								'lastLogin' => 'Nie',
+								'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false);
 		}
 	}
 	
