@@ -36,6 +36,13 @@
 						<td><input type="text" name="pi-control-label"<?php echo ' value="'.$data['main-pi-control-label'].'"'; ?> maxlength="32" /> <span class="small-info">Bennene dein Pi Control, um es in Benachrichtigungen besser identifizieren zu können.</span></td>
 					</tr>
 					<tr>
+						<td>Sprache</td>
+						<td><select name="pi-control-language">
+								<option value="de"<?php if ($data['main-pi-control-language'] == 'de') echo ' selected="selected"'; ?>>Deutsch</option>
+								<option value="en"<?php if ($data['main-pi-control-language'] == 'en') echo ' selected="selected"'; ?>>Englisch</option>
+							</select></td>
+					</tr>
+					<tr>
 						<td>Externer Zugriff</td>
 						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info">Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.</span></td>
 					</tr>

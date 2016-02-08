@@ -39,9 +39,9 @@ function setConfig($config, $value, $customFile = NULL)
 	$var = explode('.', $file[1]);
 	
 	if (count($var) != 2)
-		return false;
-	
-	$configArray[$var[0]][$var[1]] = $value;
+		$configArray[$var[0]] = $value;
+	else
+		$configArray[$var[0]][$var[1]] = $value;
 	
 	return writeConfig($configArray, $configFile);
 }

@@ -1,6 +1,8 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
+$initConfig = parse_ini_file('config/init.config.ini.php');
+
 if (!isset($config))
 {
 	$config = array(
@@ -39,7 +41,7 @@ defined('CRON_PATH')		or define('CRON_PATH',		realpath(dirname(__FILE__).'/cron/
 defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath(dirname(__FILE__).'/languages/').'/');
 defined('CACHE_PATH')		or define('CACHE_PATH',		realpath(dirname(__FILE__).'/cache/').'/');
 
-$globalLanguage				= 'de';
+$globalLanguage				= isset($initConfig['language']) ? $initConfig['language'] : 'de';
 $globalLanguageArray		= array();
 
 if (isset($_GET['debug']))

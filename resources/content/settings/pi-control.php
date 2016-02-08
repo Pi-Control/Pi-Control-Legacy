@@ -13,6 +13,12 @@ if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
 	}
 	
+	if (isset($_POST['pi-control-language']) && in_array($_POST['pi-control-language'], array('de', 'en')) === true)
+	{
+		setConfig('init:language', $_POST['pi-control-language']);
+		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
+	}
+	
 	if (isset($_POST['external-access']) && $_POST['external-access'] == 'checked')
 	{
 		$tpl->setConfig('main:access.external', 'true');
@@ -200,6 +206,7 @@ $cron->setName('coretemp_monitoring');
 
 $tpl->assign('main-theme-color', getConfig('main:theme.color', 'blue'));
 $tpl->assign('main-pi-control-label', getConfig('main:main.label', 'Raspberry Pi'));
+$tpl->assign('main-pi-control-language', getConfig('init:language', 'de'));
 $tpl->assign('main-external-access', getConfig('main:access.external', 'false'));
 $tpl->assign('temperature-activation', $cron->isExists());
 $tpl->assign('temperature-maximum', getConfig('main:monitoringCpuTemp.maximum', 60));
