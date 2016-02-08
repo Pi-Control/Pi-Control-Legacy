@@ -27,7 +27,7 @@
 							<td colspan="2"><input type="password" name="password" class="login-input-text" placeholder="<?php _e('Passwort'); ?>" /></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="keepLoggedIn" value="checked" id="keepLoggedIn" /><label class="checkbox login-input-checkbox" for="keepLoggedIn" title="<?php _e('Cookies m&uuml;ssen f&uuml;r diese Funktion aktiviert sein.'); ?>"><?php _e('Angemeldet bleiben'); ?></label></td>
+							<td><input type="checkbox" name="rememberMe" value="checked" id="rememberMe" /><label class="checkbox login-input-checkbox" for="rememberMe" title="<?php _e('Cookies m&uuml;ssen f&uuml;r diese Funktion aktiviert sein.'); ?>"><?php _e('Angemeldet bleiben'); ?></label></td>
 							<td style="text-align: right;"><input type="submit" name="submit" class="login-input-button" value="<?php _e('Anmelden'); ?>"<?php if ($data['externalAccess'] == false) echo 'disabled="disabled"'; ?> /></td>
 						</tr>
 					</table>

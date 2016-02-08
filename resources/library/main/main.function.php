@@ -871,7 +871,7 @@ function array_sort($array, $on, $order = SORT_ASC)
 	return $new_array;
 }
 
-function generateUniqId($length = 16)
+function generateUniqId($length = 16, $upper = true)
 {
 	$random1 = rand(1, 1000);
 	$random2 = rand(1, 1000);
@@ -883,10 +883,10 @@ function generateUniqId($length = 16)
 	
 	$random = md5($$random11 - $$random12 + $$random13);
 	$microtime = md5(microtime(true));
-
-	$uniqid = strtoupper(substr(md5($random.$microtime.uniqid()), 0, $length));
 	
-	return $uniqid;
+	$uniqid = substr(md5($random.$microtime.uniqid()), 0, $length);
+	
+	return ($upper !== true) ? $uniqid : strtoupper($uniqid);
 }
 
 function arraySort($array, $on, $order = SORT_ASC)

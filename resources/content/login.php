@@ -29,22 +29,20 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $external
 	if (strtolower($userinfo['username']) != $pUsername || $userinfo['password'] != md5($pPassword))
 		goto error;
 	
-	$uniqid = generateUniqId();
+	$uniqid = generateUniqId(32, false);
 	
 	if ($tpl->setConfig('login:token_'.$uniqid.'.created', time())					!== true) goto error;
 	if ($tpl->setConfig('login:token_'.$uniqid.'.username', $pUsername) 			!== true) goto error;
 	if ($tpl->setConfig('login:token_'.$uniqid.'.address', $_SERVER['REMOTE_ADDR']) !== true) goto error;
 	if ($tpl->setConfig('user:user_'.$pUsername.'.last_login', time())				!== true) goto error;
 	
-	//$_SESSION['TOKEN'] = $uniqid;
-	
-	if (isset($_POST['keepLoggedIn']) && $_POST['keepLoggedIn'] == 'checked')
+	if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 'checked')
 	{
-		$tpl->setConfig('login:token_'.$uniqid.'.keep_logged_in', 'true');
-		setcookie('_pi_control_login', $uniqid, time()+60*60*24*30);
+		$tpl->setConfig('login:token_'.$uniqid.'.remember_me', 'true');
+		setcookie('_pi-control_login', $uniqid, time()+60*60*24*30);
 	}
 	else
-		setcookie('_pi_control_login', $uniqid, time()+60*60*12);
+		setcookie('_pi-control_login', $uniqid, time()+60*60*12);
 	
 	if (isset($_POST['referer']) && $_POST['referer'] != '')
 		header('Location: ?'.urldecode($_POST['referer']));
@@ -59,11 +57,11 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $external
 
 if (isset($_GET['logout']))
 {
-	if (isset($_COOKIE['_pi_control_login']))
+	if (isset($_COOKIE['_pi-control_login']))
 	{
-		$uniqid = $_COOKIE['_pi_control_login'];
+		$uniqid = $_COOKIE['_pi-control_login'];
 		removeConfig('login:token_'.$uniqid);
-		setcookie('_pi_control_login', '', time()-60);
+		setcookie('_pi-control_login', '', time()-60);
 	}
 	session_destroy();
 	
