@@ -74,8 +74,14 @@
 				</tr>
 			</table>
 		</div>
+<?php if ($data['cronError'] === 1) { ?>
 		<div class="inner-end">
 			<form action="?s=settings&amp;do=trouble-shooting" method="post"><input type="submit" name="cronSubmit" value="Problem beheben" /></form>
 		</div>
+<?php } elseif ($data['cronError'] === 2) { ?>
+		<div class="inner-end">
+			<a href="#" target="_blank" class="button">Anleitung zur Problembehebung</a>
+		</div>
+<?php } ?>
 	</div>
 </div>

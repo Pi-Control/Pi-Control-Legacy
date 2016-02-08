@@ -39,16 +39,16 @@ $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);
 $tpl->assign('cronEntry', $cronEntry);
 $tpl->assign('cronMatch', $cronMatch);
-$tpl->assign('cronCrontab', $filesFolders['resources/cron/init.php']['userGroup']);
-$tpl->assign('cronPHPCLI', (trim(exec('dpkg -s php5-cli | grep Status: ')) != '') ? true : false);
+$tpl->assign('cronPHPCLI', ($cronPHPCLI = (trim(exec('dpkg -s php5-cli | grep Status: ')) != '') ? true : false));
 $tpl->assign('cronLastExecution', formatTime(getConfig('cron:execution.cron', 0)));
-$tpl->assign('cronLastExecutionBool', (getConfig('cron:execution.cron', 0) > time()-150) ? true : false);
+$tpl->assign('cronLastExecutionBool', ($cronLastExecutionBool = (getConfig('cron:execution.cron', 0) > time()-150) ? true : false));
 $tpl->assign('cronLastExecutionLog', formatTime($lastExecutionLog[0]));
-$tpl->assign('cronLastExecutionLogBool', ($lastExecutionLog[0] > time()-330) ? true : false);
+$tpl->assign('cronLastExecutionLogBool', ($cronLastExecutionLogBool = ($lastExecutionLog[0] > time()-330) ? true : false));
 $tpl->assign('cronPermission', $filesFolders['resources/cron/init.php']['permission']);
-$tpl->assign('cronPermissionBool', $filesFolders['resources/cron/init.php']['permissionBool']);
+$tpl->assign('cronPermissionBool',($cronPermissionBool =  $filesFolders['resources/cron/init.php']['permissionBool']));
 $tpl->assign('cronUserGroup', $filesFolders['resources/cron/init.php']['userGroup']);
-$tpl->assign('cronUserGroupBool', $filesFolders['resources/cron/init.php']['userGroupBool']);
+$tpl->assign('cronUserGroupBool', ($cronUserGroupBool = $filesFolders['resources/cron/init.php']['userGroupBool']));
+$tpl->assign('cronError', ($cronMatch !== 1) ? 1 : (($cronPHPCLI !== true || $cronLastExecutionBool !== true || $cronLastExecutionLogBool !== true || $cronPermissionBool !== true || $cronUserGroupBool !== true) ? 2 : 0));
 
 $tpl->draw('settings/trouble-shooting');
 ?>
