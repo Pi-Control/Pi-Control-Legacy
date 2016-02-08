@@ -302,6 +302,7 @@ function rpi_getAllUsers()
 			
 			$usersAll[] = array('username' => $row,
 								'userId' => exec('id -u '.escapeshellarg($row)),
+								'groupId' => exec('id -g '.escapeshellarg($row)),
 								'port' => $split[1],
 								'lastLoginAddress' => $split[2],
 								'lastLogin' => strtotime($split[4].' '.$split[5].' '.$split[6]),
@@ -312,6 +313,7 @@ function rpi_getAllUsers()
 		{
 			$usersAll[] = array('username' => $row,
 								'userId' => exec('id -u '.escapeshellarg($row)),
+								'groupId' => exec('id -g '.escapeshellarg($row)),
 								'port' => '-',
 								'lastLoginAddress' => '-',
 								'lastLogin' => 'Nie',
