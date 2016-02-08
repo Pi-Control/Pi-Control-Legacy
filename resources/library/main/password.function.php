@@ -8,7 +8,9 @@
  */
 
 namespace {
-
+	
+	if (!defined('PICONTROL')) exit(); // Ausnahme, da namespace
+	
     if (!defined('PASSWORD_BCRYPT')) {
         /**
          * PHPUnit Process isolation caches constants, but not function declarations.

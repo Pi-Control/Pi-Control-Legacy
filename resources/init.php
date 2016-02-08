@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 if (!isset($config))
 {
 	$config = array(

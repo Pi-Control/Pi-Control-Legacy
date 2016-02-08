@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <!DOCTYPE HTML>
 <html style="height: 100%;">
 <head>

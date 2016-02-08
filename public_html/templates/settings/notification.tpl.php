@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <?php if (is_array($data['me']) && is_array($data['devices'])) { ?>
 <div class="sidebar">
     <div class="box">

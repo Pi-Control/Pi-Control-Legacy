@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 (include_once LIBRARY_PATH.'cache/cache.function.php') or die($error_code['0x0006']);
 $tpl->setHeaderTitle(_t('Cache'));
 

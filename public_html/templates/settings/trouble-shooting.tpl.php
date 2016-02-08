@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <script type="text/javascript" src="public_html/js/settings.trouble-shooting.cron_selection.js"></script>
 <div>
 	<div class="box">

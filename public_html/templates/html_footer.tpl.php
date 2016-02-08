@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 </div>
 <!-- Footer -->
 	<div id="footer">

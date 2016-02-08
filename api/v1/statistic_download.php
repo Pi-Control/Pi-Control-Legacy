@@ -1,4 +1,6 @@
 <?php
+define('PICONTROL', true);
+
 $fileName = 'statistik';
 
 if (isset($_GET['label']))

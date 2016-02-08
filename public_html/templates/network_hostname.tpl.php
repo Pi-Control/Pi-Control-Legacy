@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <!-- Content -->
 <div>
 	<div class="box">

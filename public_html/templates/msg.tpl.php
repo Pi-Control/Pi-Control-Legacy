@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <!-- Msg -->
 <div id="message_box_<?php echo $data['id']; ?>">
 	<div class="box <?php echo $data['type']; ?>">

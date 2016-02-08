@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $tpl->setHeaderTitle(_t('Plugins'));
 
 $plugins = pluginList();

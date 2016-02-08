@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $tpl = new PiTpl;
 $tpl->assign('type', $data['type']);
 $tpl->assign('title', $data['title']);

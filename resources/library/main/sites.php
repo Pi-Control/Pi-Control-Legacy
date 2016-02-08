@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $site = array(
 	'overview' => 'overview.php',
 	'detailed_overview' => 'detailed_overview.php',

@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $tpl->setHeaderTitle(_t('Einstellungen - &Uuml;bersicht'));
 
 if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')

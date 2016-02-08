@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <script type="text/javascript">
 	jQuery(document).on('change', '.method', function()
 	{

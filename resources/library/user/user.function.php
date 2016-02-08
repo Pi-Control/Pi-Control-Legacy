@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 function loggedInUsers(&$item, $key, $array)
 {
 	$item['username'] = (isset($array['user_'.$item['username']])) ? $array['user_'.$item['username']]['username'] : $item['username'];

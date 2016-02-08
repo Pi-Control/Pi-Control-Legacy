@@ -1,8 +1,9 @@
 <?php
+if (!defined('PICONTROL')) exit();
 
-	/**
-	 * Beschreibung. Mehr unter: http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_tags.pkg.html
-	 */
+/**
+ * Beschreibung. Mehr unter: http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_tags.pkg.html
+ */
 
 class FileException extends Exception { }
 

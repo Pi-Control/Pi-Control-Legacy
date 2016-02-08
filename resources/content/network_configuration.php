@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $interfaces_config_error = false;
 
 if (!($interface_file = file('/etc/network/interfaces')))

@@ -1,4 +1,6 @@
 <?php
+define('PICONTROL', true);
+
 (include_once realpath(dirname(__FILE__)).'/../init.php');
 (include_once LIBRARY_PATH.'main/tpl.class.php') or die('Fehler beim Laden!');
 (include_once LIBRARY_PATH.'main/main.function.php') or die('Fehler beim Laden!');

@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 class Cron
 {
 	private $cronFile, $cronPath = CRON_PATH, $interval, $allFiles = array(), $sourceFileFile = '';

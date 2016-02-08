@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $tpl = new PiTpl;
 
 $tpl->assign('errorHandler', implode('~', $tplErrorHandler));

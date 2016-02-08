@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $tpl->setHeaderTitle('Terminal');
 
 if (is_array($SSHReturn = $tpl->executeSSH('ls -l', true, 2)))

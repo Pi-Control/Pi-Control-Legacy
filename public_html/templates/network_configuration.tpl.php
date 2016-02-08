@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <script type="text/javascript"><?php echo $data['js_variables']; ?></script>
 <script type="text/javascript" src="public_html/js/network_interface_refresh.js"></script>
 <!-- Sidebar -->

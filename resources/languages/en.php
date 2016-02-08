@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 // English
 $langArray = array(
 	'417b5de9' => 'Overview',

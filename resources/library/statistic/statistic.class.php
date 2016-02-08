@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 class LogStatistic
 {
 	private $file, $stream, $limit = -1, $length = 100;

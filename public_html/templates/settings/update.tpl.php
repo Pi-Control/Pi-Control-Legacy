@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <div class="sidebar order-2">
 	<div class="box">
 		<div class="inner-header">

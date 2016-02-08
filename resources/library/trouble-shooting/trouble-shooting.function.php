@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 function getFileFolderStatus(&$item, $key)
 {
 	$item['existsBool'] = $item['exists'] = (file_exists($key) && (is_file($key) || is_dir($key))) ? true : false;

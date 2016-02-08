@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 defined('HTTP_GET')		or define('HTTP_GET', 'GET');
 defined('HTTP_POST')	or define('HTTP_POST', 'POST');
 defined('HTTP_PUT')		or define('HTTP_PUT', 'PUT');

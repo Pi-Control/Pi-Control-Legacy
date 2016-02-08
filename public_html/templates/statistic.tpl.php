@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <noscript>
 <div>
 	<div class="info_red box">

@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 (include_once realpath(dirname(__FILE__)).'/../../init.php')	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
 (include_once LIBRARY_PATH.'/main/main.function.php')			or die('Fehler beim Laden!');
 

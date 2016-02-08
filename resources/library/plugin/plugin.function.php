@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 function pluginDisabled($pluginId)
 {
 	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/plugin_disabled.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/plugin_disabled.php'))

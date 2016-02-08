@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 function minNotNull($values)
 {
 	return min(array_diff(array_map('intval', $values), array(0)));

@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 function getCacheList()
 {
 	$fileSuffix = '.cache.php';
