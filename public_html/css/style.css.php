@@ -464,12 +464,6 @@ td.table-right, th.table-right {
 	text-align: right;
 }
 
-.rotate-icon {
-	animation: rotate 0.9s linear infinite;
-	-moz-animation: rotate 0.9s linear infinite;
-	-webkit-animation: rotate 0.9s linear infinite;
-}
-
 .progressbar {
 	background: #DDDDDD;
 	border-radius: 2px;
@@ -1260,17 +1254,17 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 
 @keyframes rotate {
 	0% { transform: scale(1) rotate(0deg); }
-	100% { transform: scale(1) rotate(360deg); }
+	100% { transform: scale(1) rotate(-360deg); }
 }
 
 @-webkit-keyframes rotate {
     0% { -webkit-transform: scale(1) rotate(0deg); }
-    100% { -webkit-transform: scale(1) rotate(360deg); }
+    100% { -webkit-transform: scale(1) rotate(-360deg); }
 }
 
 @-moz-keyframes rotate {
     0% { -moz-transform: scale(1) rotate(0deg); }
-    100% { -moz-transform: scale(1) rotate(360deg); }
+    100% { -moz-transform: scale(1) rotate(-360deg); }
 }
 
 .rotate-icon {
