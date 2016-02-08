@@ -2,9 +2,24 @@
 (include_once LIBRARY_PATH.'trouble-shooting/trouble-shooting.function.php') or die($error_code['0x0006']);
 $tpl->setHeaderTitle(_t('Problembehandlung'));
 
+// Dateien und Ordner
+$filesFolders = fileFolderPermission();
+$filesFoldersError = false;
+
+foreach ($filesFolders as $file => $info)
+{
+	if ($info['error'] === true)
+	{
+		$filesFoldersError = true;
+		break;
+	}
+}
+
+// Cron
 $cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" # By Pi Control';
 
-$filesFolders = fileFolderPermission();
+exec('cat /etc/crontab', $crontab);
+$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode("\n", $crontab));
 
 $lastExecutionLog = array(
 						filemtime(LOG_PATH.'statistic/coretemp.csv'),
@@ -15,8 +30,15 @@ $lastExecutionLog = array(
 
 rsort($lastExecutionLog);
 
+if (isset($_POST['cronSubmit']) && $_POST['cronSubmit'] != '')
+{
+	addCronToCrontab($cronEntry, $ssh); // TODO
+}
+
 $tpl->assign('filesFolders', $filesFolders);
+$tpl->assign('filesFoldersError', $filesFoldersError);
 $tpl->assign('cronEntry', $cronEntry);
+$tpl->assign('cronMatch', $cronMatch);
 $tpl->assign('cronCrontab', $filesFolders['resources/cron/init.php']['userGroup']);
 $tpl->assign('cronPHPCLI', (trim(exec('dpkg -s php5-cli | grep Status: ')) != '') ? true : false);
 $tpl->assign('cronLastExecution', formatTime(getConfig('cron:execution.cron', 0)));

@@ -32,6 +32,11 @@
 <?php } ?>
 			</table>
 		</div>
+<?php if ($data['filesFoldersError'] === true) { ?>
+		<div class="inner-end">
+			<a href="#" target="_blank" class="button">Anleitung zur Problembehebung</a>
+		</div>
+<?php } ?>
 	</div>
 	<div class="box">
 		<div class="inner-header">
@@ -45,7 +50,7 @@
 			<table class="table table-borderless table-form">
 				<tr>
 					<td>In Crontab eingetragen</td>
-					<td class="green">&#10004;</td>
+					<td class="<?php echo ($data['cronMatch'] === 1) ? 'green' : 'red'; ?>"><?php echo ($data['cronMatch'] === 1) ? '&#10004;' : '&#10006;'; ?></td>
 				</tr>
 				<tr>
 					<td>PHP5-CLI installiert</td>
@@ -68,6 +73,9 @@
 					<td class="<?php echo ($data['cronUserGroupBool']) ? 'green' : 'red'; ?>"><?php echo $data['cronUserGroup']; ?></td>
 				</tr>
 			</table>
+		</div>
+		<div class="inner-end">
+			<form action="?s=settings&amp;do=trouble-shooting" method="post"><input type="submit" name="cronSubmit" value="Problem beheben" /></form>
 		</div>
 	</div>
 </div>

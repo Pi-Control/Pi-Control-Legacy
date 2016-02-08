@@ -650,71 +650,72 @@ function showHelper($url, $extern = false)
 	return '<a href="'.$url.'" title="Klicke für Hilfe" target="_blank" class="helper">&nbsp;</a>';
 }
 
-function addCronToCrontab($cron_entry, $ssh)
+function addCronToCrontab($cronEntry, $ssh)
 {
 	exec('cat /etc/crontab', $lines);
-	$new_file = '';
-	$line_count = 0;
-	$last_line = count($lines)-1;
-	$second_last_line = count($lines)-2;
-	$hashtag = 0;
-	$hashtag_line = 0;
 	
-	if (!in_array($cron_entry, $lines))
+	$newFile = '';
+	$lineCount = 0;
+	$lastLine = count($lines)-1;
+	$secondLastLine = count($lines)-2;
+	$hashtag = 0;
+	$hashtagLine = 0;
+	
+	if (!in_array($cronEntry, $lines))
 	{
-		if (substr(trim($lines[$last_line]), 0, 1) == '')
+		if (substr(trim($lines[$lastLine]), 0, 1) == '')
 		{
-			if (substr(trim($lines[$second_last_line]), 0, 1) == '#')
+			if (substr(trim($lines[$secondLastLine]), 0, 1) == '#')
 			{
 				$hashtag = 1;
-				$hashtag_line = $second_last_line;
+				$hashtagLine = $secondLastLine;
 			}
 			else
 			{
 				$hashtag = 0;
-				$hashtag_line = $last_line;
+				$hashtagLine = $lastLine;
 			}
 		}
 		
-		if (substr(trim($lines[$last_line]), 0, 1) == '#')
+		if (substr(trim($lines[$lastLine]), 0, 1) == '#')
 		{
 			$hashtag = 2;
-			$hashtag_line = $last_line;
+			$hashtagLine = $lastLine;
 		}
 		
 		foreach ($lines as $line)
 		{
-			if ($line_count == $hashtag_line)
+			if ($lineCount == $hashtagLine)
 			{
 				if ($hashtag == 0)
 				{
-					$new_file .= $cron_entry."\n";
-					$new_file .= '#';
+					$newFile .= $cronEntry."\n";
+					$newFile .= '#';
 				}
 				elseif ($hashtag == 1)
-					$new_file .= $cron_entry."\n";
+					$newFile .= $cronEntry."\n";
 				elseif ($hashtag == 2)
-					$new_file .= $cron_entry."\n";
+					$newFile .= $cronEntry."\n";
 			}
 			
-			$new_file .= $lines[$line_count]."\n";
-			$line_count += 1;
+			$newFile .= $lines[$lineCount]."\n";
+			$lineCount += 1;
 		}
 		
-		if (file_exists(TEMP_PATH.'/crontab.tmp.php') && is_file(TEMP_PATH.'/crontab.tmp.php'))
-			unlink(TEMP_PATH.'/crontab.tmp.php');
+		if (file_exists(TEMP_PATH.'crontab.tmp.php') && is_file(TEMP_PATH.'crontab.tmp.php'))
+			unlink(TEMP_PATH.'crontab.tmp.php');
 		
-		if (($file = fopen(TEMP_PATH.'/crontab.tmp.php', 'w+')))
+		if (($file = fopen(TEMP_PATH.'crontab.tmp.php', 'w+')))
 		{
-			if (!fwrite($file, $new_file))
+			if (!fwrite($file, $newFile))
 				return 4;
 		}
 		else
 			return 3;
 		
-		if (($stream = ssh2_scp_send($ssh, TEMP_PATH.'/crontab.tmp.php', '/etc/crontab')))
+		if (($stream = ssh2_scp_send($ssh, TEMP_PATH.'crontab.tmp.php', '/etc/crontab')))
 		{
-			unlink(TEMP_PATH.'/crontab.tmp.php');
+			unlink(TEMP_PATH.'crontab.tmp.php');
 			return 0;
 		}
 		else
