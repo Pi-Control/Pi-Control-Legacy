@@ -21,7 +21,7 @@ if (isset($_GET['add']) && $_GET['add'] == '')
 						{
 							$tpl->setConfig('user:user_'.$lowerUsername.'.username', $pUsername);
 							$tpl->setConfig('user:user_'.$lowerUsername.'.created', time());
-							$tpl->setConfig('user:user_'.$lowerUsername.'.password', md5($pPassword));
+							$tpl->setConfig('user:user_'.$lowerUsername.'.password', password_hash($pPassword, PASSWORD_BCRYPT));
 							$tpl->setConfig('user:user_'.$lowerUsername.'.last_login', 0);
 							$tpl->msg('success', '', 'Der Benutzer "'.$pUsername.'" wurder erfolgreich angelegt.');
 						}
@@ -59,7 +59,7 @@ elseif (isset($_GET['delete']) && $_GET['delete'] != '')
 			{
 				$password = $tpl->getConfig('user:user_'.$lowerUsername.'.password', '');
 				
-				if ($password == md5($pPassword))
+				if (password_verify($pPassword, $password) === true)
 				{
 					removeConfig('user:user_'.$lowerUsername);
 					$loggedInUsers = getConfig('login');
@@ -107,11 +107,11 @@ elseif (isset($_GET['edit']) && $_GET['edit'] != '')
 				{
 					$passwordOld = $tpl->getConfig('user:user_'.$lowerUsername.'.password', '');
 					
-					if ($passwordOld == md5($pPasswordOld))
+					if (password_verify($pPasswordOld, $passwordOld) === true)
 					{
 						if ($pPasswordNew == $pPasswordNew2)
 						{
-							$tpl->setConfig('user:user_'.$lowerUsername.'.password', md5($pPasswordNew));
+							$tpl->setConfig('user:user_'.$lowerUsername.'.password', password_hash($pPasswordNew, PASSWORD_BCRYPT));
 							$tpl->msg('success', '', 'Der Benutzer "'.$username.'" wurde erfolgreich bearbeitet und gespeichert.');
 						}
 						else
