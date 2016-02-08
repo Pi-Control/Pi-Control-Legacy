@@ -208,5 +208,5 @@ $tpl->assign('temperature-action-shell', (getConfig('main:monitoringCpuTemp.shel
 $tpl->assign('temperature-action-shell-text', getConfig('main:monitoringCpuTemp.shell', ''));
 $tpl->assign('temperature-action-shutdown', getConfig('main:monitoringCpuTemp.shutdown', 'false'));
 
-$tpl->draw('settings/pi_control');
+$tpl->draw('settings/pi-control');
 ?>

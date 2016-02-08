@@ -1,11 +1,11 @@
-<script type="text/javascript" src="public_html/js/settings.pi_control.theme.js"></script>
+<script type="text/javascript" src="public_html/js/settings.pi-control.theme.js"></script>
 <div>
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Einstellungen zum Pi Control'); ?></span>
 			<?php showGoBackIcon('?s=settings'); ?>
 		</div>
-		<form action="?s=settings&amp;do=pi_control" method="post">
+		<form action="?s=settings&amp;do=pi-control" method="post">
 			<div class="inner-table">
 				<table class="table table-borderless table-form">
 					<tr>
@@ -52,7 +52,7 @@
 		<div class="inner">
 			Aktiviere diese Option, um von deinem Raspberry Pi, beim &Uuml;berschreiten einer bestimmten Temperatur benachrichtigt zu werden. F&uuml;r diesen Fall lassen sich auch spezifische Verhalten festlegen.
 		</div>
-		<form action="?s=settings&amp;do=pi_control" method="post">
+		<form action="?s=settings&amp;do=pi-control" method="post">
 			<div class="inner-table overflow-auto">
 				<table class="table table-borderless table-form">
 					<tr>
@@ -79,7 +79,7 @@
 						<td>Aktion</td>
 						<td style="width: 130px;"><input type="checkbox" name="temperature-action-email" id="cb-temperature-email" value="checked"<?php if ($data['temperature-action-email'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-email" class="checkbox">E-Mail senden</label></td>
 						<td><input type="text" name="temperature-action-email-text"<?php echo ' value="'.$data['temperature-action-email-text'].'"'; ?> />
-							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi_control" method="post"><input type="submit" name="submit-temperature-confirmation" value="Best&auml;tigen" /></form> <a href="?s=settings&amp;do=pi_control&amp;mail_check" class="button">&Uuml;berpr&uuml;fen</a>' : '<strong class="green">Bestätigt</strong>'; } ?></td>
+							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="Best&auml;tigen" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">&Uuml;berpr&uuml;fen</a>' : '<strong class="green">Bestätigt</strong>'; } ?></td>
 					</tr>
 					<tr>
 						<td></td>
