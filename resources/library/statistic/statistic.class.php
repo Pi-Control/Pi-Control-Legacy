@@ -7,7 +7,8 @@ class LogStatistic
 	
 	function __destruct()
 	{
-		fclose($this->stream);
+		if (is_resource($this->stream))
+			fclose($this->stream);
 	}
 	
 	public function setFile($pFile = '')
@@ -100,7 +101,7 @@ class LogStatistic
 	{
 		if (is_file($this->file))
 		{
-			if (unlink($this->file) or exit('Konnte Log-Datei nicht löschen: '.$this->file))
+			if (unlink($this->file) or exit('Konnte Log-Datei nicht l&ouml;schen: '.$this->file))
 				return true;
 		}
 		else
@@ -123,7 +124,7 @@ class LogStatistic
 	
 	private function open()
 	{
-		$this->stream = fopen($this->file, 'r+') or exit('Konnte Log-Datei nicht öffnen: '.$this->file);
+		$this->stream = fopen($this->file, 'r+') or exit('Konnte Log-Datei nicht &ouml;ffnen: '.$this->file);
 	}
 }
 ?>
