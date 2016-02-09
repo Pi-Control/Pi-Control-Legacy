@@ -18,7 +18,7 @@ header("Expires: 0");
 (include_once LIBRARY_PATH.'/statistic/statistic.function.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
 
 $log = new LogStatistic();
-$log->setFile(LOG_PATH.'/statistic/'.$_GET['log'].'.csv');
+$log->setFile(LOG_PATH.'statistic/'.$_GET['log'].'.csv');
 
 function convertTimestampToISO(&$value, $key)
 {

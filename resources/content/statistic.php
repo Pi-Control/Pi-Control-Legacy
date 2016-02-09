@@ -3,7 +3,7 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle(_t('Statistik'));
 
-$folder = LOG_PATH.'/statistic';
+$folder = LOG_PATH.'statistic';
 $fileArray = array();
 $logArray = array();
 $hiddenStatistics = array_filter(explode('~', $tpl->getConfig('main:statistic.hidden', '')));
