@@ -38,6 +38,27 @@ else
 	
 	$networkConnections = getAllNetworkConnections();
 	
+	$networkCountsJson = getConfig('main:network.overflowCount', '{}');
+	$networkCounts = json_decode($networkCountsJson, true);
+	$counter = 0;
+	
+	foreach ($networkConnections as $network)
+	{
+		$countSent = 0;
+		$countReceive = 0;
+		
+		if (isset($networkCounts[$network['interface']]['sent']))
+			$countSent = $networkCounts[$network['interface']]['sent'];
+			
+		if (isset($networkCounts[$network['interface']]['receive']))
+			$countReceive = $networkCounts[$network['interface']]['receive'];
+		
+		$networkConnections[$counter]['sent'] = (4294967295 * $countSent) + $network['sent'];
+		$networkConnections[$counter]['receive'] = (4294967295 * $countReceive) + $network['receive'];
+		
+		$counter += 1;
+	}
+	
 	$tpl->assign('network_connections', $networkConnections);
 	$tpl->assign('hostname', rpi_getHostname());
 	$tpl->assign('wlan', scanAccessPoints($networkConnections, isset($ssh) ? $ssh : ''));
