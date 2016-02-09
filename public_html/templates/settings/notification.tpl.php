@@ -39,7 +39,7 @@
 				<table class="table table-borderless table-form">
 					<tr>
 						<td>Aktivieren</td>
-						<td><input type="checkbox" name="activation" value="checked" id="cb-activation"<?php if ($data['activation'] === true) echo ' checked="checked"'; ?> /><label for="cb-activation" class="checkbox only-checkbox">&nbsp;</label></td>
+						<td><input type="checkbox" name="activation" value="checked" id="cb-activation"<?php if ($data['activation'] == true) echo ' checked="checked"'; ?> /><label for="cb-activation" class="checkbox only-checkbox">&nbsp;</label></td>
 					</tr>
 					<tr>
 						<td>Zugangstoken</td>

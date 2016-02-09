@@ -3,6 +3,9 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle(_t('Benachrichtigung'));
 
+$cron = new Cron;
+$cron->setName('notification');
+
 if (isset($_POST['submit']) && $_POST['submit'] != '')
 {
 	if (isset($_POST['token']) && ($token = trim($_POST['token'])) != '' && ((isset($_POST['event-pi-control-version']) && $_POST['event-pi-control-version'] == 'checked') || (isset($_POST['event-cpu-temperature'], $_POST['event-cpu-temperature-maximum']) && $_POST['event-cpu-temperature'] == 'checked') || (isset($_POST['event-memory-used'], $_POST['event-memory-used-text']) && $_POST['event-memory-used'] == 'checked')))
@@ -33,6 +36,38 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		
 		if ($tpl->msgExists(12) === false)
 			setConfig('main:notificationPB.memoryUsedEnabled', (isset($_POST['event-memory-used'])) ? 'true' : 'false');
+		
+		if (isset($_POST['activation']) && $_POST['activation'] == 'checked' && (getConfig('main:notificationPB.picontrolVersionEnabled', false) == true || getConfig('main:notificationPB.cpuTemperatureEnabled', false) == true || getConfig('main:notificationPB.memoryUsedEnabled', false) == true))
+        {
+            if ($cron->isExists() === false)
+            {
+                $cron->setInterval(1);
+                $cron->setSource(TEMPLATES2_PATH.'notification.tmp.php');
+				
+                if ($cron->save() === true)
+				{
+                    $tpl->msg('success', '', 'Die Benachrichtigung wurde aktiviert.');
+					setConfig('main:notificationPB.enabled', 'true');
+				}
+                else
+                    $tpl->msg('error', '', 'Konnte die Benachrichtigung nicht aktivieren!');
+            }
+        }
+        else
+        {
+            if ($cron->isExists() === true)
+            {
+                $cron->getInterval();
+				
+                if ($cron->delete() === true)
+				{
+                    $tpl->msg('success', '', 'Die Benachrichtigung wurde deaktiviert.');
+					setConfig('main:notificationPB.enabled', 'false');
+				}
+                else
+                    $tpl->msg('error', '', 'Konnte die Benachrichtigung nicht deaktivieren!');
+            }
+        }
 		
 		if ($tpl->msgExists(10) === false && $tpl->msgExists(11) === false && $tpl->msgExists(12) === false)
 			$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.');
@@ -93,7 +128,7 @@ if ($token != '')
 		$tpl->msg('error', 'Verbindungsfehler', 'Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: '.$curl->getStatusCode());
 }
 
-$tpl->assign('activation', false);
+$tpl->assign('activation', (getConfig('main:notificationPB.enabled', 'false') == 'true') ? true : false);
 $tpl->assign('token', $token);
 $tpl->assign('me', (isset($dataMe)) ? $dataMe : '');
 $tpl->assign('devices', (isset($dataDevices)) ? $dataDevices : '');

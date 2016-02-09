@@ -15,15 +15,6 @@ class Cron
 		$this->cronPath = realpath($path).'/';
 	}
 	
-	/*public function readFile()
-	{
-		if (empty($this->allFiles))
-			$this->allFiles();
-		
-		if (!empty($this->cronFile) && array_key_exists($this->cronFile, $this->allFiles))
-			$this->interval = $this->allFiles[$this->cronFile];
-	}*/
-	
 	public function isExists()
 	{
 		if (empty($this->allFiles))
@@ -58,7 +49,7 @@ class Cron
 	{
 		if ($this->sourceFile != '' && $this->interval != '' && $this->cronFile != '')
 		{
-			if (copy($this->sourceFile, $this->cronPath.$this->interval.'-'.$this->cronFile.'.php'))
+			if (symlink($this->sourceFile, $this->cronPath.$this->interval.'-'.$this->cronFile.'.php'))
 			{
 				$this->allFiles = '';
 				return true;
