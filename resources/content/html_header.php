@@ -53,7 +53,7 @@ $tpl->assign('navi_plugins', !empty($pluginHeaderNavi) ? array_sort($pluginHeade
 $tpl->assign('navi_plugins_updates', isset($update_plugins) ? $update_plugins : '');
 $tpl->assign('updatePicontrol', isset($picontrolUpdate) ? $picontrolUpdate : '');
 $tpl->assign('cron_execution_fault', ($tpl->getConfig('cron:execution.cron', 0)+140 < time()) ? true : false);
-$tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.$_COOKIE['_pi_control_login'].'.username', '').'.username', ''));
+$tpl->assign('username', $tpl->getConfig('user:user_'.$tpl->getConfig('login:token_'.$_COOKIE['_pi-control_login'].'.username', '').'.username', ''));
 $tpl->assign('referer', $referer);
 
 $tpl->draw('html_header');
