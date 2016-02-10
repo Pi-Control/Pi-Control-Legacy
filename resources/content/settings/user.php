@@ -141,22 +141,23 @@ elseif (isset($_GET['edit']) && $_GET['edit'] != '')
 
 if ($showOverview === true)
 {
-	if (isset($_POST['logout']) && $_POST['logout'] != '' && strlen($_POST['logout']) == 16)
+	if (isset($_POST['logout']) && $_POST['logout'] != '' && strlen($_POST['logout']) == 32)
 	{
 		removeConfig('login:token_'.$_POST['logout']);
 		$tpl->msg('success', '', 'Der Benutzer wurde erfolgreich abgemeldet.');
 	}
-
+	
 	$allUsers = getConfig('user');
 	$loggedInUsers = getConfig('login');
-
+	unset($loggedInUsers['login']);
+	
 	array_walk($loggedInUsers, 'loggedInUsers', $allUsers);
-
+	
 	$loggedInUsers = array_sort($loggedInUsers, 'created', SORT_DESC);
-
+	
 	$tpl->assign('allUsers', $allUsers);
 	$tpl->assign('loggedInUsers', $loggedInUsers);
-
+	
 	$tpl->draw('settings/user');
 }
 ?>
