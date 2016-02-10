@@ -8,7 +8,7 @@ $doNotCheckForAuthentification = true;
 (include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0003');
 
 $networkConnections = getAllNetworkConnections();
-$networkCountsJson = getConfig('main:network.overflowCount', '{}');
+$networkCountsJson = htmlspecialchars_decode(getConfig('main:network.overflowCount', '{}'));
 
 $networkCounts = json_decode($networkCountsJson, true);
 
@@ -49,5 +49,5 @@ foreach ($networkConnections as $network)
 	$log->add(array(time(), ($last[1] + (4294967295 * $countSent - $last[1]) + $network['sent']), ($last[2] + (4294967295 * $countReceive - $last[2]) + $network['receive'])));
 	$log->close();
 }
-setConfig('main:network.overflowCount', json_encode($networkCounts));
+setConfig('main:network.overflowCount', htmlspecialchars(json_encode($networkCounts)));
 ?>

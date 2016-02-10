@@ -9,9 +9,9 @@ $doNotCheckForAuthentification = true;
 
 if (getConfig('main:notificationPB.enabled', false))
 {
-    $token = getConfig('main:notificationPB.token');
-    $lastPush = json_decode(getConfig('main:notificationPB.lastPush', '{}'), true);
-	
+    $token = getConfig('main:notificationPB.token', '');
+    $lastPush = json_decode(htmlspecialchars_decode(getConfig('main:notificationPB.lastPush', '{}')), true);
+		
     if (getConfig('main:notificationPB.picontrolVersionEnabled', 'false') == 'true' && (getConfig('cron:updateCheck.picontrol', 0)+21600) < time())
     {
         $picontrolUpdate = checkUpdate();
@@ -104,6 +104,6 @@ if (getConfig('main:notificationPB.enabled', false))
             $lastPush['memory']['value'] = 0;
     }
     
-    setConfig('main:notificationPB.lastPush', json_encode($lastPush));
+    setConfig('main:notificationPB.lastPush', htmlspecialchars(json_encode($lastPush)));
 }
 ?>

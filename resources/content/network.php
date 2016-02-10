@@ -38,7 +38,7 @@ else
 	
 	$networkConnections = getAllNetworkConnections();
 	
-	$networkCountsJson = getConfig('main:network.overflowCount', '{}');
+	$networkCountsJson = htmlspecialchars_decode(getConfig('main:network.overflowCount', '{}'));
 	$networkCounts = json_decode($networkCountsJson, true);
 	$counter = 0;
 	
