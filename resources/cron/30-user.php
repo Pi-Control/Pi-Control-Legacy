@@ -11,7 +11,7 @@ unset($loggedInUsers['login']);
 
 foreach ($loggedInUsers as $token => $user)
 {
-	if ($user['created'] < time()-60*60*12 && !(isset($user['remember_me']) && $user['remember_me'] != 'true'))
+	if ($user['created'] < time()-60*60*12 && !(isset($user['remember_me']) && $user['remember_me'] == 'true'))
 		removeConfig('login:'.$token);
 }
 ?>
