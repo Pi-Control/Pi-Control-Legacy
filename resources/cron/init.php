@@ -1,4 +1,5 @@
 <?php
+if (PHP_SAPI != 'cli') exit();
 DEFINE('PICONTROL', true);
 
 $doNotCheckForAuthentification = true;
@@ -24,7 +25,7 @@ foreach ($fileArray as $file)
 	
 	if (is_numeric($rest) && $rest == 0)
 	{
-		var_dump(exec('php -f "'.CRON_PATH.$file.'"'));
+		var_dump(exec('/usr/bin/php -f "'.CRON_PATH.$file.'"'));
 		set_time_limit(30);
 	}
 }

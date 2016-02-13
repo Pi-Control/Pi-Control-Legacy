@@ -1,4 +1,5 @@
 <?php
+if (PHP_SAPI != 'cli') exit();
 define('PICONTROL', true);
 
 $doNotCheckForAuthentification = true;
