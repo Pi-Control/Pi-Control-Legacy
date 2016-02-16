@@ -3,7 +3,7 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle('Terminal');
 
-if (is_array($SSHReturn = $tpl->executeSSH('ls -l', true, 2)))
+/*if (is_array($SSHReturn = $tpl->executeSSH('ls -l', true, 2)))
 	list ($SSHError, $SSHOutput) = $SSHReturn;
 
 $stdio = ssh2_shell($tpl->getSSHResource(), 'vt102', NULL, 80, 40, SSH2_TERM_UNIT_CHARS);
@@ -23,7 +23,7 @@ $lines = '';
 	flush();
 	$lines .= str_replace(array(' ', '<', '>'), array('&nbsp;', '&lt;', '&gt;'), $line).'<br />';
 }
-fclose($stdio);*/
+fclose($stdio);*//*
 
 // collect returning data from command
 stream_set_blocking($stdio, false);
@@ -32,7 +32,7 @@ while ($buf = fread($stdio, 4096))
 	$lines .= $buf;
 }
 fclose($stdio);
-$tpl->assign('test', $lines);
+$tpl->assign('test', $lines);*/
 
 $tpl->draw('terminal');
 ?>
