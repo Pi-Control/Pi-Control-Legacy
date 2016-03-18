@@ -19,7 +19,7 @@
 					<th>Datei / Ordner</th>
 					<th class="table-center">Existiert</th>
 					<th class="table-center">Berechtigung</th>
-					<th class="table-center">Benutzer / Gruppe</th>
+					<th class="table-center">Benutzer:Gruppe</th>
 					<th class="table-center">Gr&ouml;ße</th>
 				</tr>
 <?php foreach ($data['filesFolders'] as $name => $fileFolder) { ?>
