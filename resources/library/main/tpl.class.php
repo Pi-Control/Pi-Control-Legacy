@@ -708,31 +708,52 @@ class PiTpl
 	
 	private function loadSSH()
 	{
-		$ssh = NULL;
+		set_include_path(LIBRARY_PATH.'terminal');
 		
-		(include CONFIG_PATH.'/config_ssh.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_ssh.php'), __LINE__);
-		(include CONFIG_PATH.'/config_uniqid.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_uniqid.php'), __LINE__);
-		
-		if (isset($config_ssh_port, $config_ssh_username, $config_ssh_password) && $config_ssh_port != '' && $config_ssh_username != '' && $config_ssh_password != '')
+		if (!class_exists('Net_SSH2'))
 		{
-			$index_ssh_port = $config_ssh_port;
-			$index_ssh_username = $config_ssh_username;
-			$index_ssh_pasword = $config_ssh_password;
+			include(LIBRARY_PATH.'terminal/Net/SSH2.php');
+			include(LIBRARY_PATH.'terminal/File/ANSI.php');
+			include(LIBRARY_PATH.'terminal/Crypt/RSA.php');
 		}
 		
-		if (isset($config_uniqid) && $config_uniqid != '')
-			$index_uniqid = $config_uniqid;
+		$ssh = NULL;
 		
-		if (isset($index_ssh_port, $index_ssh_username, $index_ssh_pasword))
+		if (!(isset($_COOKIE['_pi-control_ssh']) && $_COOKIE['_pi-control_ssh'] != ''))
+			return false;
+		
+		$token = $_COOKIE['_pi-control_ssh'];
+		$token2 = $_COOKIE['_pi-control_ssh_'.$token];
+		
+		$sshType = getConfig('ssh:token_'.$token.'.type', 'password');
+		$sshPort = getConfig('ssh:token_'.$token.'.port', 22);
+		$sshUsername = getConfig('ssh:token_'.$token.'.username', 'root');
+		$sshPassword = getConfig('ssh:token_'.$token.'.password', '');
+		$sshPrivateKey = base64_decode(getConfig('ssh:token_'.$token.'.privateKey', ''));
+		
+		$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND);
+		$sshPassword = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $token2, base64_decode($sshPassword), MCRYPT_MODE_ECB, $iv);
+		$sshPassword = rtrim($sshPassword, "\0");
+		
+		$ssh = new Net_SSH2('127.0.0.1', $sshPort);
+		
+		if ($sshType == 'password')
 		{
-			$ssh = ssh2_connect('127.0.0.1', $index_ssh_port);
+			if (!$ssh->login($sshUsername, $sshPassword))
+			    return false;
+		}
+		
+		if ($sshType == 'publickey')
+		{
+			$sshKey = new Crypt_RSA();
 			
-			if (isset($index_uniqid) && $index_uniqid !== NULL)
-				$ssh_auth = ssh2_auth_password($ssh, $index_ssh_username, trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $index_uniqid, base64_decode($index_ssh_pasword), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
-			elseif (isset($_SESSION['ssh']))
-				$ssh_auth = ssh2_auth_password($ssh, $index_ssh_username, trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $_SESSION['ssh'], base64_decode($index_ssh_pasword), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
-			else
-				return false;
+			if ($sshPassword != '')
+				$sshKey->setPassword($sshPassword);
+			
+			$sshKey->loadKey($sshPrivateKey);
+			
+			if (!$ssh->login($sshUsername, $sshKey))
+			    return false;
 		}
 		
 		if ($ssh === NULL)
@@ -762,7 +783,7 @@ class PiTpl
 		if ($this->tplSSH === NULL)
 			if (self::loadSSH() !== true)
 				if ($cancelIfError !== 0)
-					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'), ($cancelIfError === 1) ? false : true);
+					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'), ($cancelIfError === 1) ? true : false);
 		
 		if ($this->tplSSH === NULL || ($stream = ssh2_exec($this->tplSSH, $command)) === false)
 			return false;
@@ -789,11 +810,16 @@ class PiTpl
 	 * @return bool|resource
 	 */
 	
-	public function getSSHResource()
+	public function getSSHResource($cancelIfError = 0)
 	{
 		if ($this->tplSSH === NULL)
 			if (self::loadSSH() !== true)
-					return false;
+			{
+				if ($cancelIfError !== 0)
+					self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'), ($cancelIfError === 1) ? true : false);
+				
+				return false;
+			}
 		
 		return $this->tplSSH;
 	}
@@ -808,30 +834,20 @@ class PiTpl
 	
 	public function getSSHInfo()
 	{
-		(include CONFIG_PATH.'/config_ssh.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_ssh.php'), __LINE__);
-		(include CONFIG_PATH.'/config_uniqid.php') or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', CONFIG_PATH.'/config_uniqid.php'), __LINE__);
+		$sshType = getConfig('ssh:latest.type', 'password');
+		$sshPort = getConfig('ssh:latest.port', 22);
+		$sshUsername = getConfig('ssh:latest.username', '');
 		
-		if (isset($config_ssh_port, $config_ssh_username, $config_ssh_password) && $config_ssh_port != '' && $config_ssh_username != '' && $config_ssh_password != '')
+		if (isset($_COOKIE['_pi-control_ssh']) && $_COOKIE['_pi-control_ssh'] != '')
 		{
-			$index_ssh_port = $config_ssh_port;
-			$index_ssh_username = $config_ssh_username;
-			$index_ssh_pasword = $config_ssh_password;
+			$token = $_COOKIE['_pi-control_ssh'];
+			
+			$sshType = getConfig('ssh:token_'.$token.'.type', $sshType);
+			$sshPort = getConfig('ssh:token_'.$token.'.port', $sshPort);
+			$sshUsername = getConfig('ssh:token_'.$token.'.username', $sshUsername);
 		}
 		
-		if (isset($config_uniqid) && $config_uniqid != '')
-			$index_uniqid = $config_uniqid;
-		
-		if (isset($index_ssh_port, $index_ssh_username, $index_ssh_pasword))
-		{
-			if (isset($_SESSION['ssh']))
-				return array('type' => 'session', 'port' => $index_ssh_port, 'username' => $index_ssh_username);
-			elseif (isset($index_uniqid) && $index_uniqid !== NULL)
-				return array('type' => 'file', 'port' => $index_ssh_port, 'username' => $index_ssh_username);
-			else
-				return array('type' => '', 'port' => $index_ssh_port, 'username' => $index_ssh_username);
-		}
-		
-		return false;
+		return array('type' => $sshType, 'port' => $sshPort, 'username' => $sshUsername);
 	}
 	
 	/**
@@ -846,10 +862,13 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function setSSHInfo($port, $username, $password, $saveInFile = false)
+	public function setSSHInfo($type, $port, $username, $password, $privateKey)
 	{
 		if (!is_array($SSHInfo = self::getSSHInfo()))
 			return false;
+		
+		if ($type != '' && is_string($type))
+			$SSHInfo['type'] = $type;
 		
 		if ($port != '' && is_numeric($port))
 			$SSHInfo['port'] = $port;
@@ -857,36 +876,38 @@ class PiTpl
 		if ($username != '' && is_string($username))
 			$SSHInfo['username'] = $username;
 		
+		if ($privateKey != '' && is_string($privateKey))
+			$SSHInfo['privateKey'] = $privateKey;
+		
 		if ($password != '')
 		{
-			$uniqid = md5(uniqid(rand(), true));
-			$salt_pw = trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $uniqid, $password, MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
+			if (isset($_COOKIE['_pi-control_ssh']) && $_COOKIE['_pi-control_ssh'] != '')
+				$this->logoutSSH();
 			
-			$SSHInfo['password'] = $salt_pw;
+			$uniqid = generateUniqId(16, false);
+			$uniqid2 = generateUniqId(32, false);
 			
-			if ($saveInFile === false)
-				$_SESSION['ssh'] = $uniqid;
-			else
-			{
-				if (($file = fopen(CONFIG_PATH.'/config_uniqid.php', 'w+')) === false)
-					return false;
-				
-				if (fwrite($file, '<?php'."\n".'$config_uniqid = \''.$uniqid.'\';'."\n".'?>') === false)
-					return false;
-				
-				fclose($file);
-			}
+			$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND);
+			$SSHInfo['password'] = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $uniqid2, $password, MCRYPT_MODE_ECB, $iv));
+			
+			$SSHInfo['privateKey'] = $privateKey;
+			
+			if (setConfig('ssh:token_'.$uniqid.'.created', time())										!== true) return false;
+			if (setConfig('ssh:token_'.$uniqid.'.type', $SSHInfo['type'])								!== true) return false;
+			if (setConfig('ssh:token_'.$uniqid.'.port', $SSHInfo['port'])								!== true) return false;
+			if (setConfig('ssh:token_'.$uniqid.'.username', $SSHInfo['username'])						!== true) return false;
+			if (setConfig('ssh:token_'.$uniqid.'.password', $SSHInfo['password'])						!== true) return false;
+			if (setConfig('ssh:token_'.$uniqid.'.privateKey', base64_encode($SSHInfo['privateKey']))	!== true) return false;
+			
+			setConfig('ssh:latest.type', $SSHInfo['type']);
+			setConfig('ssh:latest.port', $SSHInfo['port']);
+			setConfig('ssh:latest.username', $SSHInfo['username']);
+			
+			setcookie('_pi-control_ssh', $uniqid, time()+60*60*12);
+			setcookie('_pi-control_ssh_'.$uniqid, $uniqid2, time()+60*60*12);
+			$_COOKIE['_pi-control_ssh'] = $uniqid;
+			$_COOKIE['_pi-control_ssh_'.$uniqid] = $uniqid2;
 		}
-		
-		if (($file = fopen(CONFIG_PATH.'/config_ssh.php', 'w+')) === false)
-			return false;
-		
-		if (fwrite($file, '<?php'."\n".'$config_ssh_port = '.$SSHInfo['port'].';'."\n".
-										'$config_ssh_username = \''.$SSHInfo['username'].'\';'."\n".
-										'$config_ssh_password = \''.$SSHInfo['password'].'\';'."\n".'?>') === false)
-			return false;
-		
-		fclose($file);
 		
 		return true;
 	}
@@ -901,15 +922,16 @@ class PiTpl
 	
 	public function logoutSSH()
 	{
-		unset($_SESSION['ssh']);
-		
-		if (($file = fopen('resources/config/config_uniqid.php', 'w+')) === false)
-			return false;
-		
-		if (fwrite($file, '<?php'."\n".'$config_uniqid = NULL;'."\n".'?>') === false)
-			return false;
-		
-		fclose($file);
+		if (isset($_COOKIE['_pi-control_ssh']) && $_COOKIE['_pi-control_ssh'] != '')
+		{
+			$token = $_COOKIE['_pi-control_ssh'];
+			
+			removeConfig('ssh:token_'.$token);
+			setcookie('_pi-control_ssh', '', time()-60);
+			setcookie('_pi-control_ssh_'.$token, '', time()-60);
+			$_COOKIE['_pi-control_ssh'] = '';
+			$_COOKIE['_pi-control_ssh_'.$token] = '';
+		}
 		
 		return true;
 	}

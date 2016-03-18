@@ -1,10 +1,16 @@
 <?php
+define('PICONTROL', true);
+
+(include_once realpath(dirname(__FILE__)).'/../../init.php') or die('Fehler beim Laden!');
+(include_once LIBRARY_PATH.'main/tpl.class.php') or die('Fehler beim Laden!');
+(include_once LIBRARY_PATH.'main/main.function.php') or die('Fehler beim Laden!');
+
+$tpl = new PiTpl;
+$tpl->setTpl($tpl);
+
 $host = '127.0.0.1';
 $port = '9001';
 $null = NULL;
-
-include('Net/SSH2.php');
-include('File/ANSI.php');
 
 set_time_limit(0);
 
@@ -55,6 +61,7 @@ while (true)
 			
 			//notify all users about disconnected connection
 			echo $ip.' disconnected'.PHP_EOL;
+			
 			//$response = mask(json_encode(array('type'=>'system', 'message'=> $ip.' disconnected')));
 			//send_message($response);
 		}
@@ -82,12 +89,8 @@ while (true)
 	{
 		echo 'Start SSH connection'.PHP_EOL;
 		
-		$ssh = new Net_SSH2('127.0.0.1');
-		
-		if (!$ssh->login('pi', 'raspberry'))
-		{
-		    exit('Login Failed');
-		}
+		if (($ssh = $tpl->getSSHResource()) === false)
+			exit('Login Failed');
 		
 		$ssh->setTimeout(1);
 		stream_set_timeout($ssh->fsock, 999999);
@@ -111,7 +114,7 @@ while (true)
 	}
 }
 
-socket_close($sock);
+socket_close($socket);
 
 function send_message($msg)
 {

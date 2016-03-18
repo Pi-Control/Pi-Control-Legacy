@@ -10,7 +10,7 @@
 			<div class="inner">
 				<strong class="red"><?php _e('Du bist noch nicht angemeldet. Dadurch kannst du einige Funktionen nicht nutzen.'); ?></strong>
 			</div>
-			<input type="radio" id="ssh-login-passwd" name="ssh-login" checked="checked" />
+			<input type="radio" id="ssh-login-passwd" name="ssh-login" value="password" checked="checked" />
 			<label for="ssh-login-passwd">
 				<div class="inner-table">
 					<div class="ssh-login-table-clickable-area"></div>
@@ -40,7 +40,7 @@
 			<div class="inner">
 				<div class="divider"><div></div><div><?php _e('ODER'); ?></div></div>
 			</div>
-			<input type="radio" id="ssh-login-pubkey" name="ssh-login" />
+			<input type="radio" id="ssh-login-pubkey" name="ssh-login" value="publickey" />
 			<label for="ssh-login-pubkey">
 				<div class="inner-table">
 					<div class="ssh-login-table-clickable-area"></div>
@@ -57,15 +57,11 @@
 								<td><input type="text" name="username_" style="width: 40%;" value="<?php echo $data['ssh_info']['username']; ?>" /></td>
 							</tr>
 							<tr>
-								<td><strong><?php _e('SSH-Publickey'); ?></strong></td>
-								<td><input type="password" name="password_" style="width: 40%;" /></td>
-							</tr>
-							<tr>
 								<td><strong><?php _e('SSH-Privatekey'); ?></strong></td>
-								<td><input type="password" name="password_" style="width: 40%;" /></td>
+								<td><textarea name="privatekey_" style="width: 80%; height: 100px;"></textarea></td>
 							</tr>
 							<tr>
-								<td><strong><?php _e('SSH-Passwort'); ?></strong></td>
+								<td><strong><?php _e('SSH-Passwort (falls n&ouml;tig)'); ?></strong></td>
 								<td><input type="password" name="password_" style="width: 40%;" /></td>
 							</tr>
 							<tr>
