@@ -5,6 +5,7 @@ if (!defined('PICONTROL')) exit();
 (include_once LIBRARY_PATH.'cache/cache.class.php') or die($error_code['0x0007']);
 $tpl->setHeaderTitle(_t('Detaillierte &Uuml;bersicht'));
 
+$cpu = rpi_getCPULoad(true, true);
 $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
 $users = new Cache('users', 'rpi_getAllUsers');
@@ -24,7 +25,8 @@ $tpl->assign('php', PHP_VERSION);
 $tpl->assign('whoami', exec('whoami'));
 $tpl->assign('cpu_clock', rpi_getCpuClock().' MHz');
 $tpl->assign('cpu_max_clock', rpi_getCpuMaxClock().' MHz');
-$tpl->assign('cpu_load', rpi_getCPULoad().'%');
+$tpl->assign('cpu_load', $cpu['cpu']);
+$tpl->assign('cpu_loads', (count($cpu) == 1) ? array() : array_slice($cpu, 1));
 $tpl->assign('cpu_type', rpi_getCPUType());
 $tpl->assign('cpu_model', rpi_getCpuModel());
 $tpl->assign('cpu_temp', numberFormat(rpi_getCoreTemprature()).' &deg;C');

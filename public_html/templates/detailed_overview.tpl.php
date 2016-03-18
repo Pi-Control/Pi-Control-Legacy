@@ -98,9 +98,15 @@
 					<td><?php echo $data['cpu_max_clock']; ?></td>
 				</tr>
 				<tr>
-					<td><?php _e('Auslastung'); ?></td>
-					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $data['cpu_load']; ?>;"><?php echo $data['cpu_load']; ?></div></div></td>
+					<td><?php _e('Gesamtauslastung'); ?></td>
+					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $data['cpu_load']; ?>%;"><?php echo $data['cpu_load']; ?>%</div></div></td>
 				</tr>
+<?php foreach ($data['cpu_loads'] as $name => $value) { ?>
+				<tr>
+					<td><?php _e('Auslastung %s', $name); ?></td>
+					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $value; ?>%;"><?php echo $value; ?>%</div></div></td>
+				</tr>
+<?php } ?>
 				<tr>
 					<td><?php _e('Typ'); ?></td>
 					<td><?php echo $data['cpu_type']; ?></td>

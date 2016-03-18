@@ -82,19 +82,54 @@ function rpi_getCpuModel()
 	return $model;
 }
 
-function rpi_getCPULoad($accurate = false)
+function rpi_getCPULoad($accurate = false, $mulitcore = false)
 {
+	$return = NULL;
+	
 	if ($accurate === true)
-		$file = shell_exec('top -bn2 -d 2 | grep ^%Cpu | tail -n1');
+		$file = shell_exec('cat /proc/stat; sleep 2; echo "##--##"; cat /proc/stat');
 	else
-		$file = shell_exec('top -bn1 | grep ^%Cpu | tail -n1');
+		$file = shell_exec('cat /proc/stat; sleep 0.5; echo "##--##"; cat /proc/stat');
 	
-	preg_match('#([\d\.,]+) id#i', $file, $match);
+	$file = explode('##--##', $file);
 	
-	if (isset($match[1]))
-		return round(100-trim($match[1]), 0);
+	if (!isset($file[0], $file[1]))
+		return NULL;
 	
-	return NULL;
+	preg_match_all('/^cpu[0-9]?(.*)$/im', $file[0], $prevCPUStrings);
+	preg_match_all('/^cpu[0-9]?(.*)$/im', $file[1], $curCPUStrings);
+	
+	for ($i = 0; $i < count($prevCPUStrings[0]); $i++)
+	{
+		$prevCPU = preg_split('/\s+/', $prevCPUStrings[0][$i]);
+		$curCPU = preg_split('/\s+/', $curCPUStrings[0][$i]);
+		
+		if ($prevCPU[0] != 'cpu' && $mulitcore == false)
+			break;
+		
+		
+		if (!isset($prevCPU[0], $curCPU[1]) || count($prevCPU) != 11 || count($curCPU) != 11)
+			return NULL;
+		
+		$prevIdle = $prevCPU[4] + $prevCPU[5];
+		$curIdle = $curCPU[4] + $curCPU[5];
+		
+		$prevNonIdle = $prevCPU[1] + $prevCPU[2] + $prevCPU[3] + $prevCPU[6] + $prevCPU[7] + $prevCPU[8];
+		$curNonIdle = $curCPU[1] + $curCPU[2] + $curCPU[3] + $curCPU[6] + $curCPU[7] + $curCPU[8];
+		
+		$prevTotal = $prevIdle + $prevNonIdle;
+		$curTotal = $curIdle + $curNonIdle;
+		
+		$total = $curTotal - $prevTotal;
+		$idle = $curIdle - $prevIdle;
+		
+		if ($mulitcore == true)
+			$return[$prevCPU[0]] = round(($total - $idle) / $total * 100, 0);
+		else
+			$return = round(($total - $idle) / $total * 100, 0);
+	}
+	
+	return $return;
 }
 
 function rpi_getDistribution()
@@ -126,8 +161,9 @@ function rpi_getRpiRevision()
 	$revision[16] = array('revision' => '0010', 'model' => 'B+', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
 	$revision[17] = array('revision' => '0011', 'model' => 'Compute Module', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
 	$revision[18] = array('revision' => '0012', 'model' => 'A+', 'pcb' => 1, 'memory' => 256, 'manufacturer' => 'Sony');
+	$revision[19] = array('revision' => '0013', 'model' => 'B+', 'pcb' => 1.2, 'memory' => 512, 'manufacturer' => 'Unbekannt');
 	
-	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module');
+	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module', 7 => 'Zero', 8 => 'Pi 3 B');
 	$revision_memory = array(0 => 256, 1 => 512, 2 => 1024);
 	$revision_manufacturer = array(0 => 'Sony', 1 => 'Egoman', 2 => 'Embest', 3 => 'Unbekannt', 4 => 'Embest');
 	
@@ -141,15 +177,23 @@ function rpi_getRpiRevision()
 		
 		if (strlen($match[1]) == 4)
 			return $revision[hexdec($match[1])];
-		elseif (strlen($match[1]) == 6 && $match[1][0] != 'a')
+		elseif (strlen($match[1]) == 6 && $match[1][0] != 'a' && $match[1] != '900092')
 			return $revision[hexdec(substr($match[1], -4))];
+		elseif ($match[1] == '900092')
+		{
+			return array('revision' => $match[1],
+						 'model' => $revision_model[7],
+						 'pcb' => '1.2',
+						 'memory' => $revision_memory[1],
+						 'manufacturer' => $revision_manufacturer[0]);
+		}
 		elseif (strlen($match[1]) == 6)
 		{
 			return array('revision' => $match[1],
-						 'model' => $revision_model[hexdec(substr($match[1], 3, 2))],
-						 'pcb' => hexdec(substr($match[1], 5)),
-						 'memory' => $revision_memory[bindec(substr(decbin(hexdec(substr($match[1], 0, 1))), 1))],
-						 'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
+					'model' => $revision_model[hexdec(substr($match[1], 3, 2))],
+					'pcb' => '1.'.hexdec(substr($match[1], 5)),
+					'memory' => $revision_memory[bindec(substr(decbin(hexdec(substr($match[1], 0, 1))), 1))],
+					'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
 		}
 	}
 	
@@ -216,6 +260,15 @@ function rpi_getSwapUsage()
 	return array('percent' => $usage, 'total' => $total, 'free' => $free, 'used' => $used);
 }
 
+function multiArraySearch($array, $key, $value)
+{
+	foreach ($array as $item)
+		if (isset($item[$key]) && $item[$key] == $value)
+			return true;
+	
+	return false;
+}
+
 function rpi_getMemoryInfo()
 {
 	exec('df -lT | grep -vE "tmpfs|rootfs|Filesystem|Dateisystem"', $data);
@@ -223,22 +276,32 @@ function rpi_getMemoryInfo()
 	$devices = array();
 	$totalSize = 0;
 	$usedSize = 0;
+	
 	foreach ($data as $row)
 	{
 		list($device, $type, $blocks, $use, $available, $used, $mountpoint) = preg_split('#[^\dA-Z/]+#i', $row);
 		
-		$totalSize += $blocks * 1024;
-		$usedSize  += $use * 1024;
+		if (multiArraySearch($devices, 'device', $device) === false)
+		{
+			$totalSize += $blocks * 1024;
+			$usedSize  += $use * 1024;
+		}
+		
 		$devices[] = array(
-						'device'	 => $device,
-						'type'	   => $type,
-						'total'	  => $blocks * 1024,
-						'used'	   => $use * 1024,
-						'free'	   => $available * 1024,
-						'percent'	=> round(($use * 100 / $blocks), 0),
-						'mountpoint' => $mountpoint
+						'device'		=> $device,
+						'type'			=> $type,
+						'total'			=> $blocks * 1024,
+						'used'			=> $use * 1024,
+						'free'			=> $available * 1024,
+						'percent'		=> round(($use * 100 / $blocks), 0),
+						'mountpoint'	=> $mountpoint
 						);
 	}
+	
+	usort($devices, function($a, $b)
+	{
+    	return strcasecmp($a['device'], $b['device']);
+	});
 	
 	$devices[] = array('total' => $totalSize, 'used' => $usedSize, 'free' => $totalSize - $usedSize, 'percent' => round(($usedSize * 100 / $totalSize), 0));
 	
