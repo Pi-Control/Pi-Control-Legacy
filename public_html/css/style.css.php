@@ -188,6 +188,7 @@ body {
 }
 
 #header-mobile ~ #inner-header > label::before {
+	content: '\2630';
 	display: none;
 }
 
@@ -477,6 +478,7 @@ td.table-right, th.table-right {
 	background: <?php echo $colorPallet[5]; ?>;
 	border-radius: 2px;
 	color: #FFFFFF;
+	text-shadow: 0 0 1px #333333;
 	font-size: 11px;
 	line-height: 17px;
 	text-align: center;
@@ -1346,6 +1348,14 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 		margin: 0px;
 		vertical-align: top;
 		padding: 0px 20px;
+	}
+	
+	#header-mobile ~ #inner-header > label::before {
+		display: block;
+	}
+	
+	#header-mobile:checked ~ #inner-header > label::before {
+		content: '\2715';
 	}
 	
 	#header-mobile:checked ~ #inner-header {
