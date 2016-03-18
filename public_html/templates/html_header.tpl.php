@@ -31,7 +31,7 @@
 		</div>
 		<input type="checkbox" id="header-mobile" />
 		<div id="inner-header">
-			<label for="header-mobile">&#9776;</label>
+			<label for="header-mobile"></label>
 			<div id="header-navi">
 				<a href="?s=overview"><?php _e('&Uuml;bersicht'); ?></a>
 				<a href="?s=network"><?php _e('Netzwerk'); ?></a>
