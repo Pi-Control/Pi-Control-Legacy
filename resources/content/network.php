@@ -16,16 +16,15 @@ if (isset($_GET['hostname']))
 				(include_once LIBRARY_PATH.'network/network.function.php');
 				
 				if (($hostname_status = editHostname($ssh, $_POST['hostname'])) === 0)
-					$tpl->msg('green', '', 'Damit die Änderung wirksam wird, muss dein Raspberry Pi neu gestartet werden. <a href="http://raspberrypi/rpi/?action=system_restart">Jetzt neustarten.</a>');
+					$tpl->msg('success', '', 'Damit die Änderung wirksam wird, muss dein Raspberry Pi neu gestartet werden. <a href="?action=system_restart">Jetzt neustarten.</a>');
 				else
-					$tpl->msg('red', '', $error_code['0x0039'].$hostname_status);
+					$tpl->msg('error', '', $error_code['0x0039'].$hostname_status);
 			}
 			else
-				$tpl->msg('red', '', $error_code['2x0011']);
+				$tpl->msg('error', '', $error_code['2x0011']);
 		}
 	}
 	$tpl->assign('hostname', rpi_getHostname());
-	
 	
 	$tpl->draw('network_hostname');
 }
