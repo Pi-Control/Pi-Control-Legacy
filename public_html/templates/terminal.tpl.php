@@ -6,120 +6,26 @@
 pre { margin: 0; }
 </style>
 <script language="javascript" type="text/javascript">
-$(document).ready(function(){
-	//create a new WebSocket object.
-	var wsUri = "ws://<?php echo $_SERVER["SERVER_NAME"]; ?>:9001";
-	websocket = new WebSocket(wsUri);
-	
-	websocket.onopen = function(ev) { // connection is open
-		//$('#terminal').append("<div class=\"system_msg\">Connected!</div>"); //notify user
-		$('#status').text('Verbindung herstellen...');
-	}
-
-	$('#submit').click(function(){ //use clicks message send button
-		var mymessage = $('#command').val(); //get message text
-		
-		if(mymessage == ""){ //emtpy message?
-			alert("Enter Some message Please!");
-			return;
-		}
-		
-		//prepare json data
-		var msg = {
-			message: mymessage
-		};
-		//convert and send data to server
-		websocket.send(JSON.stringify(msg));
-		
-		$('#command').val('');
-	});
-	
-	$('#close').click(function(){ //use clicks message send button
-		var mymessage = '^PI';
-		
-		var msg = {
-		message: mymessage
-		};
-		
-		websocket.send(JSON.stringify(msg));
-	});
-	
-	$('#cancel').click(function(){ //use clicks message send button
-		var mymessage = '^C';
-		
-		var msg = {
-		message: mymessage
-		};
-		
-		websocket.send(JSON.stringify(msg));
-	});
-	
-	//#### Message received from server?
-	websocket.onmessage = function(ev) {
-		var msg = JSON.parse(ev.data); //PHP sends Json data
-		var type = msg.type; //message type
-		var umsg = msg.message; //message text
-		
-		if(type == 'console')
-		{
-			$('#terminal').append("<span class=\"console\">"+umsg+"</span>");
-			$('#terminal').animate({scrollTop: $('#terminal')[0].scrollHeight}, 'fast');
-		}
-		
-		if(type == 'system')
-		{
-			//$('#terminal').append("<div class=\"system_msg\">"+umsg+"</div>");
-			$('#status').text(umsg);
-			$('#command').removeAttr('disabled');
-		}
-		
-		//$('#command').val(''); //reset text
-	};
-	
-	//websocket.onerror = function(ev){$('#terminal').append("<div class=\"system_error\">Error Occurred - "+ev.data+"</div>");};
-	//websocket.onclose = function(ev){$('#terminal').append("<div class=\"system_msg\">Connection Closed</div>");};
-	
-	websocket.onerror = function(ev)
-	{
-		$('#status').text("Error Occurred - "+ev.data);
-		$('#command').attr('disabled', 'disabled');
-	};
-	
-	websocket.onclose = function(ev)
-	{
-		$('#status').text("Verbindung getrennt");
-		$('#command').attr('disabled', 'disabled');
-	};
-	
-	window.onbeforeunload = function(e)
-	{
-		var mymessage = '^PI';
-		
-		var msg = {
-		message: mymessage
-		};
-		
-		websocket.send(JSON.stringify(msg));
-	};
-	
-	$(document).on('ready', function(e)
-	{
-		//document.getElementById("frame").src = "resources/library/terminal/terminal.php";
-		$("#frame").load("resources/library/terminal/terminal.php");
-	});
-});
+var ip = '<?php echo $_SERVER["SERVER_NAME"]; ?>';
+var port = <?php echo $data['port']; ?>;
 </script>
+<script language="javascript" type="text/javascript" src="public_html/js/terminal.websocket.js"></script>
 <div class="sidebar">
 	<div class="box">
 		<div class="inner-header">
 			<span>Status</span>
 		</div>
 		<div class="inner">
-			<strong id="status">Lade...</strong>
+			<strong id="status">Lade...</strong><br /><br />
+			<select name="terminal">
+<?php foreach ($data['ports'] as $index => $port) { ?>
+				<option style="background: <?php echo ($port['active'] === true) ? '#73CA3C' : '#E9492E'; ?>;" value="<?php echo $port['port']; ?>"<?php if ($data['port'] == $port['port']) echo ' selected="selected"'; ?>>Terminal <?php echo $index+1; ?> (<?php echo ($port['active'] === true) ? 'Online' : 'Offline'; ?>)</option>
+<?php } ?>
+			</select>
 			<div id="frame"></div>
 		</div>
 		<div class="inner-end">
-			<input type="button" id="close" value="Verbindung trennen" />
+			<input type="button" name="close" value="Verbindung trennen" />
 		</div>
 	</div>
 </div>

@@ -5,12 +5,19 @@ define('PICONTROL', true);
 (include_once LIBRARY_PATH.'main/tpl.class.php') or die('Fehler beim Laden!');
 (include_once LIBRARY_PATH.'main/main.function.php') or die('Fehler beim Laden!');
 
+$host = '127.0.0.1';
+$port = (isset($_GET['port'])) ? $_GET['port'] : 0;
+$null = NULL;
+
 $tpl = new PiTpl;
 $tpl->setTpl($tpl);
 
-$host = '127.0.0.1';
-$port = '9001';
-$null = NULL;
+$termial = getConfig('terminal:port_'.$port, array());
+
+if (is_array($termial) && $port > 9000 && $port < 9006 && ((empty($termial) || $termial['pid'] == getmypid())))
+	setConfig('terminal:port_'.$port.'.pid', getmypid());
+else
+	exit();
 
 set_time_limit(0);
 
@@ -18,7 +25,6 @@ $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_set_option($socket, SOL_SOCKET, SO_REUSEADDR, 1);
 socket_bind($socket, 0, $port);
 socket_listen($socket);
-echo 'Listen to '.$host.':'.$port.' at '.$socket.PHP_EOL;
 
 $clients = array($socket);
 $ssh = NULL;
@@ -33,49 +39,53 @@ while (true)
 	
 	if (in_array($socket, $changed))
 	{
-		$socket_new = socket_accept($socket); //accpet new socket
-		$clients[] = $socket_new; //add socket to client array
+		foreach ($clients as $client)
+			@socket_write($client, 'ping', strlen('ping'));
 		
-		$header = socket_read($socket_new, 1024); //read data sent by the socket
-		perform_handshaking($header, $socket_new, $host, $port); //perform websocket handshake
+		$socket_new = socket_accept($socket);
+		$clients[] = $socket_new;
 		
-		socket_getpeername($socket_new, $ip); //get ip address of connected socket
-		echo $ip.' connected'.PHP_EOL;
-		//$response = mask(json_encode(array('type' => 'system', 'message' => $ip.' verbunden'))); //prepare json data
-		//send_message($response); //notify all users about new connection
+		$header = socket_read($socket_new, 1024);
+		perform_handshaking($header, $socket_new, $host, $port);
 		
-		//make room for new socket
+		socket_getpeername($socket_new, $ip);
+		
 		$found_socket = array_search($socket, $changed);
 		unset($changed[$found_socket]);
+		
+		$response = mask(json_encode(array('type'=>'system', 'message'=> 'Verbunden')));
+		send_message($response);
+		$response_text = mask(json_encode(array('type' => 'console', 'message' => $lastLine)));
+		send_message($response_text);
 	}
 	
-	//loop through all connected sockets
 	foreach ($changed as $changed_socket)
 	{
-		//check for any incomming data
 		if (@socket_recv($changed_socket, $buf, 1024, 0) === 0)
 		{
 			$found_socket = array_search($changed_socket, $clients);
 			socket_getpeername($changed_socket, $ip);
 			unset($clients[$found_socket]);
-			
-			//notify all users about disconnected connection
-			echo $ip.' disconnected'.PHP_EOL;
-			
-			//$response = mask(json_encode(array('type'=>'system', 'message'=> $ip.' disconnected')));
-			//send_message($response);
 		}
 		else
 		{
-			$received_text = unmask($buf); //unmask data
-			$tst_msg = json_decode($received_text); //json decode
+			$received_text = unmask($buf);
+			$tst_msg = json_decode($received_text);
 			
 			if (isset($tst_msg->message))
 			{
-				$user_message = $tst_msg->message; //message text
+				$user_message = $tst_msg->message;
 				
 				if ($user_message == '^PI')
+				{
+					setConfig('terminal:'.getmypid().'.time', date('d.m.Y H:i:s'));
+					setConfig('terminal:'.getmypid().'.ip', $ip);
+					setConfig('terminal:'.getmypid().'.reason', 'Kommando');
+					removeConfig('terminal:port_'.$port);
+					socket_close($socket);
+					exec('kill -9 '.getmypid());
 					break 2;
+				}
 				
 				if ($user_message != '^C')
 					$ssh->write($user_message."\n");
@@ -85,16 +95,13 @@ while (true)
 		}
 	}
 	
-	if (count($clients) > 1 && $ssh === NULL)
+	if (count($clients) == 2 && $ssh === NULL)
 	{
-		echo 'Start SSH connection'.PHP_EOL;
-		
 		if (($ssh = $tpl->getSSHResource()) === false)
 			exit('Login Failed');
 		
 		$ssh->setTimeout(1);
 		stream_set_timeout($ssh->fsock, 999999);
-		echo 'Started SSH connection'.PHP_EOL;
 	}
 	
 	if ($ssh !== NULL)
@@ -102,9 +109,9 @@ while (true)
 		if ($output = $ssh->read())
 		{
 			$ansi = new File_ANSI();
-			
 			$ansi->appendString($output);
 			
+			$lastLine = $ansi->getScreen();
 			$response_text = mask(json_encode(array('type' => 'console', 'message' => $ansi->getScreen())));
 			send_message($response_text);
 			
@@ -120,7 +127,7 @@ function send_message($msg)
 {
 	global $clients;
 	
-	foreach($clients as $client)
+	foreach ($clients as $client)
 		@socket_write($client, $msg, strlen($msg));
 	
 	return true;
@@ -147,29 +154,25 @@ function unmask($text)
 	
 	$text = "";
 	for ($i = 0; $i < strlen($data); ++$i)
-	{
 		$text .= $data[$i] ^ $masks[$i%4];
-	}
 	
 	return $text;
 }
 
-//Encode message for transfer to client.
 function mask($text)
 {
 	$b1 = 0x80 | (0x1 & 0x0f);
 	$length = strlen($text);
 	
-	if($length <= 125)
+	if ($length <= 125)
 		$header = pack('CC', $b1, $length);
-	elseif($length > 125 && $length < 65536)
+	elseif ($length > 125 && $length < 65536)
 		$header = pack('CCn', $b1, 126, $length);
-	elseif($length >= 65536)
+	elseif ($length >= 65536)
 		$header = pack('CCNN', $b1, 127, $length);
 	return $header.$text;
 }
 
-//handshake new client.
 function perform_handshaking($receved_header, $client_conn, $host, $port)
 {
 	$headers = array();
@@ -177,15 +180,12 @@ function perform_handshaking($receved_header, $client_conn, $host, $port)
 	foreach($lines as $line)
 	{
 		$line = chop($line);
-		if(preg_match('/\A(\S+): (.*)\z/', $line, $matches))
-		{
+		if (preg_match('/\A(\S+): (.*)\z/', $line, $matches))
 			$headers[$matches[1]] = $matches[2];
-		}
 	}
 	
 	$secKey = $headers['Sec-WebSocket-Key'];
 	$secAccept = base64_encode(pack('H*', sha1($secKey . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
-	//hand shaking header
 	$upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
 	"Upgrade: websocket\r\n" .
 	"Connection: Upgrade\r\n" .
@@ -194,4 +194,6 @@ function perform_handshaking($receved_header, $client_conn, $host, $port)
 	"Sec-WebSocket-Accept:$secAccept\r\n\r\n";
 	socket_write($client_conn,$upgrade,strlen($upgrade));
 }
+
+exit();
 ?>
