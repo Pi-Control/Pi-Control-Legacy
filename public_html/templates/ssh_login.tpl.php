@@ -20,7 +20,7 @@
 						</tr>
 						<tr>
 							<td style="width: 30%;"><strong><?php _e('SSH-Port'); ?></strong></td>
-							<td><input type="text" name="port" style="width: 50px;" value="<?php echo $data['ssh_info']['port']; ?>" maxlength="5" /> <span class="small_info"><?php _e('Standard: %d', 22); ?></span></td>
+							<td><input type="text" name="port" style="width: 50px;" value="<?php echo $data['ssh_info']['port']; ?>" maxlength="5" /> <span class="small-info"><?php _e('Standard: %d', 22); ?></span></td>
 						</tr>
 						<tr>
 							<td><strong><?php _e('SSH-Benutzername'); ?></strong></td>
@@ -50,7 +50,7 @@
 						</tr>
 						<tr>
 								<td style="width: 30%;"><strong><?php _e('SSH-Port'); ?></strong></td>
-								<td><input type="text" name="port_" style="width: 50px;" value="<?php echo $data['ssh_info']['port']; ?>" maxlength="5" /> <span class="small_info"><?php _e('Standard: 22'); ?></span></td>
+								<td><input type="text" name="port_" style="width: 50px;" value="<?php echo $data['ssh_info']['port']; ?>" maxlength="5" /> <span class="small-info"><?php _e('Standard: 22'); ?></span></td>
 							</tr>
 							<tr>
 								<td><strong><?php _e('SSH-Benutzername'); ?></strong></td>

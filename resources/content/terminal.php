@@ -3,7 +3,8 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle('Terminal');
 
-$selectedPort = (isset($_GET['port'])) ? $_GET['port'] : 9001; //0
+$selectedPort = (isset($_GET['port'])) ? $_GET['port'] : 9001;
+$ports = array();
 
 if ($tpl->getSSHResource(1) !== false)
 {
@@ -19,18 +20,9 @@ if ($tpl->getSSHResource(1) !== false)
 	
 	foreach ($ports as $index => $port)
 	{
-		/*if (!isset($termials['port_'.$port['port']]) && $selectedPort == 0)
-			$selectedPort = $port['port'];*/
-		/*else*/if (isset($termials['port_'.$port['port']]))
+		if (isset($termials['port_'.$port['port']]))
 			$ports[$index]['active'] = true;
 	}
-	
-	/*if ($selectedPort == 0)
-		$tpl->msg('error', 'Kein Port verf&uuml;gbar', 'Leider sind momentan alle f&uuml;nf verf&uuml;gbaren Ports belegt. Es kann somit kein neues Terminal erstellt werden.');
-	else
-	{
-		
-	}*/
 }
 
 $tpl->assign('port', $selectedPort);
