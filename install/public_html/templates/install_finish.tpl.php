@@ -27,15 +27,15 @@
 			<span><?php _e('5. Schritt'); ?></span>
 		</div>
 		<div class="inner">
-			<?php _e('Juhu, nun bist du fast mit der Installation des Pi Control fertig. Im letzten Schritt wird alles fertig konfiguriert und erstellt, das kann ein paar Sekunden dauern. Danach wirst du zum Pi Control weitergeleitet.<br /><br />Viel Spaß!'); ?>
+			<?php _e('Juhu, nun bist du fast mit der Installation des Pi Control fertig. Im letzten Schritt wird alles fertig konfiguriert und erstellt. Anschließend wirst du zum Pi Control weitergeleitet.<br /><br />Viel Spaß!'); ?>
 		</div>
 	</div>
 	<div class="box">
 		<div class="inner-header">
-			<span>E-Mailbenachrichtigung</span>
+			<span><?php _e('Aktualisierungsbenachrichtigung'); ?></span>
 		</div>
 		<div class="inner">
-			
+			<?php _e('Wenn du zuk&uuml;nftig eine E-Mail bei einer neuen Version des Pi Control erhalten m&ouml;chtest, dann kannst du dich <a href="%s" target="_blank">hier in die Liste eintragen</a>.', $data['configUpdateNotification']); ?>
 		</div>
 		<div class="inner-end">
 			<form action="?s=install_finish" method="post">

@@ -478,6 +478,7 @@ td.table-right, th.table-right {
 	background: <?php echo $colorPallet[5]; ?>;
 	border-radius: 2px;
 	color: #FFFFFF;
+	text-shadow: 0 0 1px #333333;
 	font-size: 11px;
 	line-height: 17px;
 	text-align: center;
@@ -949,7 +950,7 @@ a img {
 
 /* *********************************************** */
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], textarea {
 	border: 1px solid #DDDDDD;
 	border-radius: 2px;
 	padding: 5px;
@@ -957,11 +958,11 @@ input[type="text"], input[type="password"] {
 	transition: all 100ms linear;
 }
 
-input[type="text"]:hover, input[type="password"]:hover  {
+input[type="text"]:hover, input[type="password"]:hover, textarea:hover  {
 	border: 1px solid #CCCCCC;
 }
 
-input[type="text"]:focus, input[type="password"]:focus  {
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus  {
 	border: 1px solid <?php echo $colorPallet[8]; ?>;
 	outline: none;
 }

@@ -241,10 +241,10 @@ function setCronToCrontab($type, $port, $username, $password, $privateKey)
 	
 	if ($type == 'publickey')
 	{
-		$sshKey = new Crypt_RSA();
+		$sshPrivateKey = new Crypt_RSA();
 		
 		if ($password != '')
-			$sshKey->setPassword($password);
+			$sshPrivateKey->setPassword($password);
 		
 		$sshPrivateKey->loadKey($privateKey);
 		

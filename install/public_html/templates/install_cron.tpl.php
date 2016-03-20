@@ -28,12 +28,17 @@
 			<span><?php _e('4. Schritt'); ?></span>
 		</div>
 		<div class="inner">
-			<?php _e('Um das Pi Control zu automatisieren und regelm&auml;ßig Aufgaben im Hintergrund ausf&uuml;hren zu k&ouml;nnen, wird ein Cron ben&ouml;tigt. Nachfolgend kann dieser automatisch erstellt werden oder aber du &uuml;berspringst diesen Schritt und legst den Cron von Hand ein.'); ?>
+			<?php _e('Um das Pi Control zu automatisieren und regelm&auml;ßig Aufgaben im Hintergrund ausf&uuml;hren zu k&ouml;nnen, wird ein Cron ben&ouml;tigt. Nachfolgend kann dieser automatisch erstellt werden oder aber du <a href="%s">&uuml;berspringst diesen Schritt</a> und legst den Cron sp&auml;ter von Hand ein.', '?s=install_finish'); ?>
 		</div>
 	</div>
+</div>
+<div>
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('SSH-Login'); ?></span>
+		</div>
+		<div class="inner-info">
+			<div><?php _e('Deine Daten werden f&uuml;r diese Funtkion nicht gespeichert und nur zum einmaligen Eintragen eines Crons in /etc/crontab ben&ouml;tigt.'); ?></div>
 		</div>
 		<form action="?s=install_cron" method="post">
 			<input type="radio" id="ssh-login-passwd" name="ssh-login" value="password" checked="checked" />
@@ -45,8 +50,8 @@
 							<th colspan="2"><strong><?php _e('Anmeldung &uuml;ber ein Passwort'); ?></strong><span> [<?php _e('Klicken zum aktivieren'); ?>]</span></th>
 						</tr>
 						<tr>
-							<td style="width: 35%;"><strong><?php _e('SSH-Port'); ?></strong></td>
-							<td><input type="text" name="port" style="width: 50px;" value="<?php echo $data['port']; ?>" maxlength="5" /> <span class="small_info"><?php _e('Standard: %d', 22); ?></span></td>
+							<td style="width: 30%;"><strong><?php _e('SSH-Port'); ?></strong></td>
+							<td><input type="text" name="port" style="width: 50px;" value="<?php echo $data['port']; ?>" maxlength="5" /> <span class="small-info"><?php _e('Standard: %d', 22); ?></span></td>
 						</tr>
 						<tr>
 							<td><strong><?php _e('SSH-Benutzername'); ?></strong></td>
@@ -71,8 +76,8 @@
 							<th colspan="2"><strong><?php _e('Anmeldung &uuml;ber einen Publickey'); ?></strong><span> [<?php _e('Klicken zum aktivieren'); ?>]</span></th>
 						</tr>
 						<tr>
-								<td style="width: 35%;"><strong><?php _e('SSH-Port'); ?></strong></td>
-								<td><input type="text" name="port_" style="width: 50px;" value="<?php echo $data['port']; ?>" maxlength="5" /> <span class="small_info"><?php _e('Standard: 22'); ?></span></td>
+								<td style="width: 30%;"><strong><?php _e('SSH-Port'); ?></strong></td>
+								<td><input type="text" name="port_" style="width: 50px;" value="<?php echo $data['port']; ?>" maxlength="5" /> <span class="small-info"><?php _e('Standard: 22'); ?></span></td>
 							</tr>
 							<tr>
 								<td><strong><?php _e('SSH-Benutzername'); ?></strong></td>
@@ -90,7 +95,7 @@
 				</div>
 			</label>
 			<div class="inner-end">
-				<input type="submit" name="submit" value="<?php _e('Cron anlegen'); ?>" />
+				<input type="submit" name="submit" value="<?php _e('Anmelden und Cron anlegen'); ?>" />
 			</div>
 		</form>
 	</div>

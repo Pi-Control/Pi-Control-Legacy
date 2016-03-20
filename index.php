@@ -10,6 +10,12 @@ $doNotCheckForAuthentification = true;
 (include_once LIBRARY_PATH.'plugin/plugin.function.php')	or die($error_code['0x0005']);
 (include_once LIBRARY_PATH.'main/password.function.php')	or die($error_code['0x0006']);
 
+if (file_exists(INSTALL_PATH) && is_dir(INSTALL_PATH))
+{
+	header('Location: install/');
+	exit();
+}
+
 if (isset($_GET['i']) && isset($include[$_GET['i']]) && file_exists(PICONTROL_PATH.$include[$_GET['i']]))
 {
 	include_once PICONTROL_PATH.$include[$_GET['i']];

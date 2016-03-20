@@ -3,6 +3,8 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle(_t('Cron'));
 
+$showInfo = false;
+
 if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in_array($_POST['ssh-login'], array('password', 'publickey')))
 {
 	$pType = $_POST['ssh-login'];
@@ -14,7 +16,7 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 			if (is_numeric($pPort) && $pPort >= 0 && $pPort <= 65535)
 			{
 				if (setCronToCrontab($pType, $pPort, $pUsername, $pPassword, NULL) === true)
-					$tpl->msg('success', '', _t('Verbindung zum Raspberry Pi wurde hergestellt.'));
+					$showInfo = true; //$tpl->redirect('?s=install_finish');
 				else
 					$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte &uuml;berpr&uuml;fe die eingegebenen Daten. Schl&auml;gt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie m&ouml;glich weiterhelfen.'));
 			}
@@ -37,7 +39,7 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 			if (is_numeric($pPort) && $pPort >= 0 && $pPort <= 65535)
 			{
 				if (setCronToCrontab($pType, $pPort, $pUsername, $pPassword, $pPrivateKey) === true)
-					$tpl->msg('success', '', _t('Verbindung zum Raspberry Pi wurde hergestellt.'));
+					$showInfo = true; //$tpl->redirect('?s=install_finish');
 				else
 					$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte &uuml;berpr&uuml;fe die eingegebenen Daten. Schl&auml;gt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie m&ouml;glich weiterhelfen.'));
 			}
@@ -49,8 +51,13 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 	}
 }
 
-$tpl->assign('port', (isset($_POST['port'])) ? $_POST['port'] : 22);
-$tpl->assign('username', (isset($_POST['username'])) ? $_POST['username'] : '');
+if ($showInfo === true)
+	$tpl->draw('install_cron_info');
+else
+{
+	$tpl->assign('port', (isset($_POST['port'])) ? $_POST['port'] : 22);
+	$tpl->assign('username', (isset($_POST['username'])) ? $_POST['username'] : '');
 
-$tpl->draw('install_cron');
+	$tpl->draw('install_cron');
+}
 ?>
