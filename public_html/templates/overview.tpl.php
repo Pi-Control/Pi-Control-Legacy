@@ -10,9 +10,9 @@
 		<div class="inner">
 			<table class="table-overview-system">
 				<tr>
-					<td><a href="?action=system_restart" onClick="return ((confirm('<?php _e('M&ouml;chtest du deinen Raspberry Pi wirklich neu starten?'); ?>') == false) ? false : true);"><button><?php _e('Neu starten'); ?></button></a></td>
+					<td><a href="?s=shutdown&amp;restart" onClick="return ((confirm('<?php _e('M&ouml;chtest du deinen Raspberry Pi wirklich neu starten?'); ?>') == false) ? false : true);"><button><?php _e('Neu starten'); ?></button></a></td>
 					<td></td>
-					<td><a href="?action=system_shutdown" onClick="return ((confirm('<?php _e('M&ouml;chtest du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></a></td>
+					<td><a href="?s=shutdown" onClick="return ((confirm('<?php _e('M&ouml;chtest du deinen Raspberry Pi wirklich herunterfahren?'); ?>') == false) ? false : true);"><button class="system_shutdown"><?php _e('Herunterfahren'); ?></button></a></td>
 				</tr>
 			</table>
 		</div>

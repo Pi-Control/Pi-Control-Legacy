@@ -12,7 +12,8 @@ $site = array(
 	'plugin_search' => 'plugin_search.php',
 	'settings' => 'settings.php',
 	'ssh_login' => 'ssh_login.php',
-	'terminal' => 'terminal.php'
+	'terminal' => 'terminal.php',
+	'shutdown' => 'shutdown.php'
 );
 
 $include = array(

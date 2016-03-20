@@ -5,31 +5,6 @@ if (!defined('PICONTROL')) exit();
 (include_once LIBRARY_PATH.'cache/cache.class.php') or die($error_code['0x0007']);
 $tpl->setHeaderTitle(_t('&Uuml;bersicht'));
 
-if (isset($_GET['action']) && !empty($_GET['action']))
-{
-	switch ($_GET['action'])
-	{
-		case 'system_shutdown':
-			if (is_array($SSHReturn = $tpl->executeSSH('sudo /sbin/shutdown -h now', true, 1)))
-				list ($SSHError, $SSHOutput) = $SSHReturn;
-			
-			if (empty($SSHError))
-				$tpl->redirect('resources/content/overview_action.php?shutdown');
-			else
-				$tpl->msg('red', $tpl->_t('Herunterfahren nicht möglich'), nl2br($SSHError));
-				break;
-		case 'system_restart':
-			if (is_array($SSHReturn = $tpl->executeSSH('sudo /sbin/shutdown -r now', true, 1)))
-				list ($SSHError, $SSHOutput) = $SSHReturn;
-			
-			if (empty($SSHError))
-				$tpl->redirect('resources/content/overview_action.php?restart');
-			else
-				$tpl->msg('red', $tpl->_t('Neustarten nicht möglich'), nl2br($SSHError));
-				break;
-	}
-}
-
 $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
 

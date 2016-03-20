@@ -1,4 +1,4 @@
-$(document).ready(function()
+$(document).on('ready', function(e)
 {
 	var wsUri = 'ws://' + ip + ':' + port;
 	websocket = new WebSocket(wsUri);
@@ -79,11 +79,6 @@ $(document).ready(function()
 		$('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
 	};
 	
-	$(document).on('ready', function(e)
-	{
-		$("#frame").load('resources/library/terminal/terminal.php?port=' + port);
-	});
-	
 	$(document).on('change', 'select[name=terminal]', function(e)
 	{
 		window.document.location.href = '?s=terminal&port=' + this.value;
@@ -93,4 +88,6 @@ $(document).ready(function()
 	{
 		window.document.location.href = '?s=terminal&port=' + port;
 	});
+	
+	$("#frame").load('resources/library/terminal/terminal.php?port=' + port);
 });

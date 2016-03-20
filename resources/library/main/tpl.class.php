@@ -785,21 +785,10 @@ class PiTpl
 				if ($cancelIfError !== 0)
 					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'), ($cancelIfError === 1) ? true : false);
 		
-		if ($this->tplSSH === NULL || ($stream = ssh2_exec($this->tplSSH, $command)) === false)
+		if ($this->tplSSH === NULL || ($output = $this->tplSSH->exec($command)) === false)
 			return false;
 		
-		$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
-		
-		if ($blockStream === true)
-		{
-			stream_set_blocking($errorStream, true);
-			stream_set_blocking($stream, true);
-		}
-		
-		$error = stream_get_contents($errorStream);
-		$output = stream_get_contents($stream);
-		
-		return array($error, $output);
+		return $output;
 	}
 	
 	/**
