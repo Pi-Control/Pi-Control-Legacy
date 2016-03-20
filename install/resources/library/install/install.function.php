@@ -217,4 +217,62 @@ function _t2()
 	
 	return $output;
 }
+
+function setCronToCrontab($type, $port, $username, $password, $privateKey)
+{
+	set_include_path(LIBRARY_PATH.'terminal');
+	
+	if (!class_exists('Net_SSH2'))
+	{
+		include(LIBRARY_PATH.'terminal/Net/SSH2.php');
+		include(LIBRARY_PATH.'terminal/File/ANSI.php');
+		include(LIBRARY_PATH.'terminal/Crypt/RSA.php');
+	}
+	
+	$ssh = NULL;
+	
+	$ssh = new Net_SSH2('127.0.0.1', $port);
+	
+	if ($type == 'password')
+	{
+		if (!$ssh->login($username, $password))
+			return false;
+	}
+	
+	if ($type == 'publickey')
+	{
+		$sshKey = new Crypt_RSA();
+		
+		if ($password != '')
+			$sshKey->setPassword($password);
+		
+		$sshPrivateKey->loadKey($privateKey);
+		
+		if (!$ssh->login($username, $sshPrivateKey))
+			return false;
+	}
+	
+	$cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
+	exec('cat /etc/crontab', $crontab);
+	$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"(.*)/im', implode(PHP_EOL, $crontab));
+	
+	if ($cronMatch === 0)
+	{
+		if ($crontab[count($crontab)-2] == '#')
+			$crontab = array_merge(array_slice($crontab, 0, -2), array($cronEntry), array_slice($crontab, -2));
+		elseif ($crontab[count($crontab)-1] == '#')
+			$crontab = array_merge(array_slice($crontab, 0, -1), array($cronEntry), array_slice($crontab, -1));
+		else
+			$crontab = array_merge($crontab, array($cronEntry, '#'));
+	}
+	elseif ($cronMatch === 1)
+		return true;
+	
+	$status = $ssh->exec('echo -e '.escapeshellarg(implode('\n', $crontab)).' | sudo /bin/su -c "cat > /etc/crontab"');
+	
+	if ($status == '')
+		return true;
+	
+	return false;
+}
 ?>

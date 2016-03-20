@@ -6,7 +6,7 @@
        width: 0%;
     }
     30% {
-       width: 25%;
+       width: 20%;
     }
 }
 </style>
@@ -16,10 +16,10 @@
 			<span><?php _e('Fortschritt'); ?></span>
 		</div>
 		<div class="inner">
-			<div class="progressbar"><div style="width: 25%; -webkit-animation: move 1.5s linear forwards;">&nbsp;</div></div>
+			<div class="progressbar"><div style="width: 20%; -webkit-animation: move 1.5s linear forwards;">&nbsp;</div></div>
 		</div>
 		<div class="inner text-center">
-			<strong>25%</strong>
+			<strong>20%</strong>
 		</div>
 	</div>
 </div>

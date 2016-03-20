@@ -1,7 +1,7 @@
 <style>
 @-webkit-keyframes move {
     0% {
-       width: 75%;
+       width: 80%;
     }
     30% {
        width: 95%;
@@ -24,7 +24,7 @@
 <div class="container-600">
 	<div class="box">
 		<div class="inner-header">
-			<span><?php _e('4. Schritt'); ?></span>
+			<span><?php _e('5. Schritt'); ?></span>
 		</div>
 		<div class="inner">
 			<?php _e('Juhu, nun bist du fast mit der Installation des Pi Control fertig. Im letzten Schritt wird alles fertig konfiguriert und erstellt, das kann ein paar Sekunden dauern. Danach wirst du zum Pi Control weitergeleitet.<br /><br />Viel Spaß!'); ?>

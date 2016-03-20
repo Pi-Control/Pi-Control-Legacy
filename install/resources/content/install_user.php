@@ -8,7 +8,7 @@ $dataUser = json_decode(readFromFile('user'), true);
 
 if (isset($dataUser['username'], $dataUser['password']) && $dataUser['username'] != '' && $dataUser['password'] != '')
 {
-	$tpl->msg('info', _t('Benutzer bereits erstellt'), _t('Es wurde bereits ein Benutzer f&uuml;r das Pi Control erstellt. Du kannst diesen <a href="%s">Schritt &uuml;berspringen</a> oder einfach den aktuellen Benutzer &uuml;berschreiben, indem du hier einen neuen Benutzer erstellst.', '?s=install_finish'), false);
+	$tpl->msg('info', _t('Benutzer bereits erstellt'), _t('Es wurde bereits ein Benutzer f&uuml;r das Pi Control erstellt. Du kannst diesen <a href="%s">Schritt &uuml;berspringen</a> oder einfach den aktuellen Benutzer &uuml;berschreiben, indem du hier einen neuen Benutzer erstellst.', '?s=install_cron'), false);
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] != '')
@@ -22,8 +22,8 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 			{
 				if ($pPassword == $pPassword2)
 				{
-					if (($return = writeToFile('user', json_encode(array('username' => $pUsername, 'password' => password_hash($pPassword, PASSWORD_BCRYPT))))) !== 0)
-						$tpl->redirect('?s=install_finish');
+					if (($return = writeToFile('user', json_encode(array('username' => $pUsername, 'password' => password_hash($pPassword, PASSWORD_BCRYPT))))) === 0)
+						$tpl->redirect('?s=install_cron');
 					else
 						$tpl->msg('error', '', _t('Es gab ein Fehler w&auml;hrend der Dateioperation! Fehlercode: %s', $return));
 				}

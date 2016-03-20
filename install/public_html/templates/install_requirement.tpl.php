@@ -1,10 +1,10 @@
 <style>
 @-webkit-keyframes move {
     0% {
-       width: 25%;
+       width: 20%;
     }
     30% {
-       width: 50%;
+       width: 40%;
     }
 }
 </style>
@@ -14,10 +14,10 @@
 			<span><?php _e('Fortschritt'); ?></span>
 		</div>
 		<div class="inner">
-			<div class="progressbar"><div style="width: 50%; -webkit-animation: move 1.5s linear forwards;">&nbsp;</div></div>
+			<div class="progressbar"><div style="width: 40%; -webkit-animation: move 1.5s linear forwards;">&nbsp;</div></div>
 		</div>
 		<div class="inner text-center">
-			<strong>50%</strong>
+			<strong>40%</strong>
 		</div>
 	</div>
 </div>

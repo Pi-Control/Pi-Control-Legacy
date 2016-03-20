@@ -30,6 +30,7 @@ defined('CONFIG_PATH')		or define('CONFIG_PATH',	realpath(dirname(__FILE__).'/co
 defined('TEMPLATES_PATH')	or define('TEMPLATES_PATH',	realpath(dirname(__FILE__).'/../public_html/templates/').'/');
 defined('TEMPLATES2_PATH')	or define('TEMPLATES2_PATH',realpath(dirname(__FILE__).'/templates/').'/');
 defined('LOG_PATH')			or define('LOG_PATH',		realpath(dirname(__FILE__).'/log/').'/');
+defined('CRON_PATH')		or define('CRON_PATH',		realpath(PICONTROL_PATH.'/resources/cron/').'/');
 defined('LANGUAGE_PATH')	or define('LANGUAGE_PATH',	realpath(dirname(__FILE__).'/languages/').'/');
 defined('CACHE_PATH')		or define('CACHE_PATH',		realpath(dirname(__FILE__).'/cache/').'/');
 
