@@ -796,11 +796,17 @@ function getWeatherIcon($icon)
 
 function getWeather()
 {
+	if (!class_exists('cURL'))
+		(include LIBRARY_PATH.'curl/curl.class.php');
+	
 	$country = getConfig('main:weather.country', 'germany');
 	$type = getConfig('main:weather.type', 'postcode');
 	$postcode = getConfig('main:weather.postcode', '');
 	$city = getConfig('main:weather.city', '');
 	
+	if ($postcode == '' && $city == '')
+		return 2;
+		
 	if (($type == 'postcode' && $postcode == '') || ($type == 'city' && $city == ''))
 		return 0;
 	
@@ -813,26 +819,32 @@ function getWeather()
 	$yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
 	$yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
 	
-	if ($json = file_get_contents($yqlQueryUrl))
-	{
-		$obj = json_decode($json, true);
-		$obj = $obj['query']['results']['channel'];
-		
-		$data = array();
-		$data['city'] = $obj['location']['city'];
-		$data['country'] = $obj['location']['country'];
-		$data['temp'] = str_replace('.', ',' , round($obj['item']['condition']['temp']));
-		$data['temp_min'] = str_replace('.', ',' , round($obj['item']['forecast']['low']));
-		$data['temp_max'] = str_replace('.', ',' , round($obj['item']['forecast']['high']));
-		$data['humidity'] = $obj['atmosphere']['humidity'];
-		$data['wind'] = str_replace('.', ',' , round($obj['wind']['speed']));
-		$data['icon'] = getWeatherIcon($obj['item']['condition']['code']);
-		$data['description'] = $obj['item']['condition']['text'];
-		
-		return $data;
-	}
-	else
+	$curl = new cURL($yqlQueryUrl);
+	$curl->execute();
+	
+	if ($curl->getStatusCode() != '200')
+		return $curl->getStatusCode();
+	
+	if ($curl->getResult($data) != JSON_ERROR_NONE)
 		return 1;
+	
+	if (!isset($data['query']['results']['channel']))
+		return 1;
+	
+	$data = $data['query']['results']['channel'];
+	
+	$output = array();
+	$output['city'] = $data['location']['city'];
+	$output['country'] = $data['location']['country'];
+	$output['temp'] = str_replace('.', ',' , round($data['item']['condition']['temp']));
+	$output['temp_min'] = str_replace('.', ',' , round($data['item']['forecast']['low']));
+	$output['temp_max'] = str_replace('.', ',' , round($data['item']['forecast']['high']));
+	$output['humidity'] = $data['atmosphere']['humidity'];
+	$output['wind'] = str_replace('.', ',' , round($data['wind']['speed']));
+	$output['icon'] = getWeatherIcon($data['item']['condition']['code']);
+	$output['description'] = $data['item']['condition']['text'];
+		
+	return $output;
 }
 
 function array_sort($array, $on, $order = SORT_ASC)

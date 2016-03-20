@@ -25,11 +25,11 @@
 		</div>
 		<div class="inner">
 	<?php if ($data['weather'] === 0) { ?>
-			<strong class="red"><? _e('Die aktuelle Postleitzahl ist ungültig.'); ?></strong>
-	<?php } elseif ($data['weather'] === 1) { ?>
-			<strong class="red"><? _e('Das Wetter kann aktuell nicht abgerufen werden.'); ?></strong>
+			<strong class="red"><?php _e('Die aktuelle Postleitzahl ist ung&uuml;ltig.'); ?></strong>
 	<?php } elseif ($data['weather'] === 2) { ?>
-			<strong class="red"><? _e('Wetter wurde noch nicht konfiguriert. <a href="%s">Zu den Einstellungen.</a>', '?s=settings&do=overview'); ?></strong>
+			<strong class="red"><?php _e('Wetter wurde noch nicht konfiguriert. <a href="%s">Zu den Einstellungen.</a>', '?s=settings&do=overview'); ?></strong>
+	<?php } elseif ($data['weather'] === 1 || !is_array($data['weather'])) { ?>
+			<strong class="red"><?php _e('Das Wetter kann aktuell nicht abgerufen werden.'); ?></strong>
 	<?php } else { ?>
 			<strong><?php echo $data['weather']['city']; ?></strong><br /><br />
 			<table style="margin: 0px auto 0px;">
