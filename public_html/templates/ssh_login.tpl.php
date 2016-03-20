@@ -67,6 +67,7 @@
 							<tr>
 								<td><strong><?php _e('SSH-Login speichern?'); ?></strong></td>
 								<td><input type="checkbox" name="save_passwd_" value="checked" id="ssh-login-pubkey-checkbox" /><label for="ssh-login-pubkey-checkbox" class="checkbox only-checkbox">&nbsp;</label> <span class="small_info"><?php _e('Speichert das Passwort, damit nicht nach jeder Session neu angemeldet werden muss.'); ?></span></td>
+							</tr>
 					</table>
 				</div>
 			</label>

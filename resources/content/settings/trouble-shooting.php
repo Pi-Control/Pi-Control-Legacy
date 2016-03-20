@@ -21,7 +21,7 @@ foreach ($filesFolders as $file => $info)
 $cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" # By Pi Control';
 
 exec('cat /etc/crontab', $crontab);
-$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode("\n", $crontab));
+$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode(PHP_EOL, $crontab));
 
 $lastExecutionLog = array(
 						filemtime(LOG_PATH.'statistic/coretemp.csv'),
