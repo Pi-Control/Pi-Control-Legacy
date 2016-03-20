@@ -16,7 +16,7 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 			if (is_numeric($pPort) && $pPort >= 0 && $pPort <= 65535)
 			{
 				if (setCronToCrontab($pType, $pPort, $pUsername, $pPassword, NULL) === true)
-					$showInfo = true; //$tpl->redirect('?s=install_finish');
+					$showInfo = true;
 				else
 					$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte &uuml;berpr&uuml;fe die eingegebenen Daten. Schl&auml;gt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie m&ouml;glich weiterhelfen.'));
 			}
@@ -24,7 +24,7 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 				$tpl->msg('error', '', _t('Ung&uuml;ltiger Port. Der Port muss zwischen 0 und 65535 liegen.'));
 		}
 		else
-			$tpl->msg('error', '', _t('Bitte alle Felder ausf&uuml;llen.'));
+			$tpl->msg('error', '', _t('Bitte alle Felder ausf&uuml;llen!'));
 	}
 	elseif ($pType == 'publickey')
 	{
@@ -39,7 +39,7 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 			if (is_numeric($pPort) && $pPort >= 0 && $pPort <= 65535)
 			{
 				if (setCronToCrontab($pType, $pPort, $pUsername, $pPassword, $pPrivateKey) === true)
-					$showInfo = true; //$tpl->redirect('?s=install_finish');
+					$showInfo = true;
 				else
 					$tpl->msg('error', '', _t('Verbindung zum Raspberry Pi war nicht erfolgreich!<br /><br />Bitte &uuml;berpr&uuml;fe die eingegebenen Daten. Schl&auml;gt ein erneuter Versuch mit korrekten Daten fehl, wende dich bitte unten unter "Feedback" an mich, ich werde dir so schnell wie m&ouml;glich weiterhelfen.'));
 			}
@@ -47,7 +47,7 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 				$tpl->msg('error', '', _t('Ung&uuml;ltiger Port. Der Port muss zwischen 0 und 65535 liegen.'));
 		}
 		else
-			$tpl->msg('error', '', _t('Bitte alle Felder ausf&uuml;llen.'));
+			$tpl->msg('error', '', _t('Bitte alle Felder ausf&uuml;llen!'));
 	}
 }
 

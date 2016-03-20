@@ -32,6 +32,7 @@
 		</div>
 	</div>
 </div>
+<div class="clear-both"></div>
 <div>
 	<div class="box">
 		<div class="inner-header">
