@@ -1388,7 +1388,7 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 		margin: 20px 10px;
 	}
 	
-	input[type=text], input[type=password] {
+	input[type=text], input[type=password], textarea {
 		width: auto !important;
 	}
 	
