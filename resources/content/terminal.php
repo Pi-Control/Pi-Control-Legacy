@@ -6,10 +6,7 @@ $tpl->setHeaderTitle('Terminal');
 $selectedPort = (isset($_GET['port'])) ? $_GET['port'] : 9001;
 $ports = array();
 
-$ipAddresses = json_decode(htmlspecialchars_decode(getConfig('terminal:filter.addresses', '{}')), true);
-$ipAddressCheckEnabled = (getConfig('terminal:filter.enabled', 'false') == 'true') ? true : false;
-
-if ($tpl->getSSHResource(1) !== false && ($ipAddressCheckEnabled == false || ($ipAddressCheckEnabled == true && ipInRange($_SERVER['REMOTE_ADDR'], $ipAddresses) == false)))
+if ($tpl->getSSHResource(1) !== false)
 {
 	$termials = getConfig('terminal', array());
 	
@@ -36,8 +33,6 @@ if ($tpl->getSSHResource(1) !== false && ($ipAddressCheckEnabled == false || ($i
 			$ports[$index]['active'] = true;
 	}
 }
-elseif ($ipAddressCheckEnabled == true && ipInRange($_SERVER['REMOTE_ADDR'], $ipAddresses) == false)
-	$tpl->error('Keine Berechtigung', '', true);
 
 $tpl->assign('port', $selectedPort);
 $tpl->assign('ports', $ports);
