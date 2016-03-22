@@ -45,7 +45,7 @@ class NetworkInterface
 		return $return;
 	}
 	
-	public function addInterface($interface, $interfaceSettings)
+	public function addInterface($interface, $interfaceSettings, $writeToFile = true)
 	{
 		if (empty($interface) || empty($interfaceSettings))
 			return 0;
@@ -55,10 +55,13 @@ class NetworkInterface
 		
 		$this->interfaces[$interface] = $interfaceSettings;
 		
-		return $this->writeNetworkInterface();
+		if ($writeToFile === true)
+			return $this->writeNetworkInterface();
+		else
+			return true;
 	}
 	
-	public function editInterface($interface, $interfaceSettings, $newInterfaceName = NULL)
+	public function editInterface($interface, $interfaceSettings, $newInterfaceName = NULL, $writeToFile = true)
 	{
 		if (empty($interface) || empty($interfaceSettings))
 			return 0;
@@ -72,17 +75,23 @@ class NetworkInterface
 			unset($this->interfaces[$interface]);
 		}
 		
-		return $this->writeNetworkInterface();
+		if ($writeToFile === true)
+			return $this->writeNetworkInterface();
+		else
+			return true;
 	}
 	
-	public function deleteInterface($interface)
+	public function deleteInterface($interface, $writeToFile = true)
 	{
 		if (empty($interface))
 			return false;
 		
 		unset($this->interfaces[$interface]);
 		
-		return $this->writeNetworkInterface();
+		if ($writeToFile === true)
+			return $this->writeNetworkInterface();
+		else
+			return true;
 	}
 	
 	public function existsInterface($interface, $removeEmpty = true)

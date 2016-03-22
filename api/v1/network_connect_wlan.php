@@ -20,6 +20,7 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'set':
 		if (isset($_POST['interface'], $_POST['ssid'], $_POST['psk']) && ($pInterface = trim($_POST['interface'])) != '' && ($pSsid = trim($_POST['ssid'])) != '')
 		{
+			$networkInterface = new NetworkInterface($tpl);
 			$pPsk = $_POST['psk'];
 			
 			list ($passphrase, $error) = $tpl->executeSSH('sudo wpa_passphrase '.escapeshellarg($pSsid).' '.escapeshellarg($pPsk).' | grep "psk=[[:alnum:]]"', true);
@@ -29,39 +30,16 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 			
 			if (($status = addNetworkWPASupplicant($network)) === true)
 			{
-				$interface = array('wlan0' => array('auto' => true, 'protocol' => 'inet', 'method' => 'dhcp', 'iface' => array('wpa-conf' => '/etc/wpa_supplicant/wpa_supplicant.conf')));
+				$newInterface = array('auto' => true, 'protocol' => 'inet', 'method' => 'dhcp', 'iface' => array('wpa-conf' => '/etc/wpa_supplicant/wpa_supplicant.conf'));
+				$networkInterface->deleteInterface($pInterface, false);
 				
-				if (($status2 = addNetworkInterface($interface)) === true)
+				if (($status2 = $networkInterface->addInterface($pInterface, $newInterface)) === true)
 					$api->addData('success', 'true');
 				else
 					$api->setError('error', 'Errorcode: '.$status2);
 			}
 			else
 				$api->setError('error', 'Errorcode: '.$status);
-			
-			/*if (!($interfaceFile = file('/etc/network/interfaces')))
-			{
-				$api->setError('error', 'Error while reading interfaces.');
-				$api->display();
-				exit();
-			}
-			
-			$interface_file = deleteInterface($interfaceFile, $pInterface);
-			
-			$wpaSettings = array();
-			$wpaSettings[] = 'allow-hotplug '.$pInterface;
-			$wpaSettings[] = 'iface '.$pInterface.' inet dhcp';
-			$wpaSettings[] = "\t".'wpa-ap-scan 1';
-			$wpaSettings[] = "\t".'wpa-scan-ssid 1';
-			$wpaSettings[] = "\t".'wpa-ssid "'.$pSsid.'"';
-			$wpaSettings[] = "\t".'wpa-psk '.$passphrase;
-			
-			$newInterface = addInterface($interfaceFile, array('auto '.$pInterface.PHP_EOL, implode(PHP_EOL, $wpaSettings)));
-			
-			if (($interfaceStatus = writeToInterface($newInterface)) !== true)
-				$api->setError('error', 'Errorcode: '.$interfaceStatus);
-			else
-				$api->addData('success', 'true');*/
 		}
 		else
 			$api->setError('error', 'No interface, ssid or psk set.');
