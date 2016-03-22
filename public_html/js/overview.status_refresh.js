@@ -8,8 +8,19 @@ function overviewStatusRefreshEffect(element)
 	}, 800);
 }
 
+function showError()
+{
+	$('.error-msg-refresh-bar').remove();
+	$('.flex-box-refresh div:eq(0)').after('<div class="red error-msg-refresh-bar" style="vertical-align: bottom; font-weight: bold;">Fehler!</div>');
+	$('.refresh-bar').stop(false, true).css('width', 0);
+	$('a[href=#refresh] img').removeClass('rotate-icon');
+	
+	setTimeout('overviewStatusRefresh()', 3000);
+}
+
 function overviewStatusRefresh()
 {
+	$('.error-msg-refresh-bar').remove();
 	$('.refresh-bar').animate({width: '100%'}, reload_timeout, 'linear', function(e)
     {
 		var this_ =				$(this);
@@ -102,14 +113,14 @@ function overviewStatusRefresh()
 										});
                                         
 										overviewStatusRefresh();
-									});
-								});
-							});
-						});
-					});
-				});
-			});
-		});
+									}).fail(function(e)	{ showError(); });
+								}).fail(function(e)	{ showError(); });
+							}).fail(function(e)	{ showError(); });
+						}).fail(function(e)	{ showError(); });
+					}).fail(function(e)	{ showError(); });
+				}).fail(function(e)	{ showError(); });
+			}).fail(function(e)	{ showError(); });
+		}).fail(function(e)	{ showError(); });
 	});
 }
 

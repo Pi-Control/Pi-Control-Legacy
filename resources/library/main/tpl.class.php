@@ -778,17 +778,26 @@ class PiTpl
 	 * @return bool|array
 	 */
 	
-	public function executeSSH($command, $blockStream = true, $cancelIfError = 1)
+	public function executeSSH($command, $timeout = NULL, $cancelIfError = 1)
 	{
 		if ($this->tplSSH === NULL)
 			if (self::loadSSH() !== true)
 				if ($cancelIfError !== 0)
 					return self::error(_t('SSH-Zugriffsfehler'), _t('Kein SSH-Zugriff, bitte anmelden! <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'), ($cancelIfError === 1) ? true : false);
 		
+		if ($timeout != NULL)
+			$this->tplSSH->setTimeout($timeout);
+		else
+			$this->tplSSH->setTimeout(10);
+		
+		$this->tplSSH->enableQuietMode();
+		
 		if ($this->tplSSH === NULL || ($output = $this->tplSSH->exec($command)) === false)
 			return false;
 		
-		return $output;
+		$error = $this->tplSSH->getStdError();
+		
+		return array($output, $error);
 	}
 	
 	/**

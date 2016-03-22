@@ -6,24 +6,24 @@ $tpl->setHeaderTitle(_t('Netzwerk'));
 
 if (isset($_GET['hostname']))
 {
-	if ($_GET['hostname'] == 'save')
+	if (isset($_POST['submit']) && $_POST['submit'] != '')
 	{
-		if (isset($_POST['hostname'], $_POST['submit']) && trim($_POST['hostname']) != '')
+		if (isset($_POST['hostname']) && trim($pHostname = trim($_POST['hostname'])) != '')
 		{
-			if (preg_match('/^([A-Za-z0-9]?[\-]?[A-Za-z0-9]?){1,63}$/', $_POST['hostname']))
+			if (preg_match('/^([a-z][a-z0-9\-\.]*[^\-]){1,24}$/im', $pHostname))
 			{
-				$ssh = $tpl->getSSHResource();
 				(include_once LIBRARY_PATH.'network/network.function.php');
 				
-				if (($hostname_status = editHostname($ssh, $_POST['hostname'])) === 0)
-					$tpl->msg('success', '', 'Damit die Änderung wirksam wird, muss dein Raspberry Pi neu gestartet werden. <a href="?action=system_restart">Jetzt neustarten.</a>');
+				if (($status = editHostname($pHostname)) === true)
+					$tpl->msg('success', '', 'Damit die &Auml;nderung wirksam wird, muss dein Raspberry Pi neu gestartet werden. <a href="?s=shutdown&restart">Jetzt neu starten.</a>');
 				else
-					$tpl->msg('error', '', $error_code['0x0039'].$hostname_status);
+					$tpl->msg('error', '', 'Fehler beim &Auml;ndern des Hostname! Fehlercode: '.$status);
 			}
 			else
-				$tpl->msg('error', '', $error_code['2x0011']);
+				$tpl->msg('error', '', 'Der Hostname ist ung&uuml;ltig! Er muss aus mindestens 1 bis 24 Zeichen bestehen und darf nur folgende Zeichen enthalten: A-Z a-z 0-9 -<br />Der Hostname darf nicht mit einem Bindestrich Anfangen oder Enden.');
 		}
 	}
+	
 	$tpl->assign('hostname', rpi_getHostname());
 	
 	$tpl->draw('network_hostname');
@@ -60,7 +60,7 @@ else
 	
 	$tpl->assign('network_connections', $networkConnections);
 	$tpl->assign('hostname', rpi_getHostname());
-	$tpl->assign('wlan', scanAccessPoints($networkConnections, isset($ssh) ? $ssh : ''));
+	$tpl->assign('wlan', scanAccessPoints($networkConnections, (isset($_GET['refresh_wlan'])) ? true : false));
 	
 	$tpl->draw('network');
 }

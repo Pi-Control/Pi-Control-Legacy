@@ -1,226 +1,320 @@
 <?php
-function getInterfaceLoopback($file)
+function getNetworkInterfaces($removeOther = true)
 {
-	$loopback = 0;
+	$file = shell_exec('cat /etc/network/interfaces');
+	$lines = explode(PHP_EOL, $file);
+	$interfaces = array();
+	$isInterface = NULL;
 	
-	foreach ($file as $row)
+	foreach ($lines as $index => $line)
 	{
-		$row = trim($row);
-		
-		if (substr($row, 0, 1) != '#' && $row != '')
+		if (isset($line[0]) && trim($line)[0] != '#')
 		{
-			if ($row == 'auto lo' || $row == 'iface lo inet loopback')
-				$loopback += 1;
+			if (substr($line, 0, 4) == 'auto')
+			{
+				$isInterface = NULL;
+				$interfaces[trim(substr($line, 5))]['auto'] = true;
+				continue;
+			}
+			
+			if (substr($line, 0, 10) == 'allow-auto')
+			{
+				$isInterface = NULL;
+				$interfaces[trim(substr($line, 10))]['allow-auto'] = true;
+				$interfaces[trim(substr($line, 10))]['allow-auto'][] = $index+1;
+				continue;
+			}
+			
+			if (substr($line, 0, 13) == 'allow-hotplug')
+			{
+				$isInterface = NULL;
+				$interfaces[trim(substr($line, 13))]['allow-hotplug'] = true;
+				$interfaces[trim(substr($line, 13))]['allow-hotplug'][] = $index+1;
+				continue;
+			}
+			
+			if (substr($line, 0, 5) == 'iface')
+			{
+				$interface = explode(' ', $line);
+				$isInterface = trim($interface[1]);
+				$interfaces[$isInterface]['protocol'] = $interface[2];
+				$interfaces[$isInterface]['method'] = $interface[3];
+				continue;
+			}
+			
+			if ($isInterface != NULL)
+			{
+				preg_match('/^[\s]*([\w\d\-]*)[\s]+(.*)$/im', $line, $match);
+				$interfaces[$isInterface]['iface'][$match[1]] = $match[2];
+			}
+		}
+		elseif (isset($line[0]) && trim($line)[0] == '#')
+			$interfaces['#comments#'][] = $line;
+		elseif (trim($line) != '')
+			$interfaces['#other#'][] = $line;
+	}
+	
+	if ($removeOther === true)
+	{
+		unset($interfaces['#comments#'], $interfaces['#other#']);
+		
+		foreach ($interfaces as $interface => $value)
+		{
+			if (!isset($value['protocol']) || !isset($value['method']))
+				unset($interfaces[$interface]);
 		}
 	}
 	
-	return $loopback;
+	return $interfaces;
 }
 
-function getInterfaces($file)
+function writeNetworkInterface($lines)
 {
-	$array = array();
-	$i = 0;
+	global $tpl;
 	
-	foreach ($file as $row)
+	if (empty($lines))
+		return false;
+	
+	$fileLines = '';
+	
+	if (isset($lines['#comments#']))
 	{
-		$i += 1;
-		$row = trim($row);
-		
-		if (substr($row, 0, 1) != '#' && $row != '')
+		$comments = $lines['#comments#'];
+		unset($lines['#comments#']);
+	}
+	
+	if (isset($lines['#other#']))
+	{
+		$others = $lines['#other#'];
+		unset($lines['#other#']);
+	}
+	
+	foreach ($lines as $interface => $line)
+	{
+		if (is_array($line))
 		{
-			if (substr($row, 0, 5) == 'iface')
+			if (isset($line['auto']) && $line['auto'] == true)
+				$fileLines .= 'auto '.$interface.PHP_EOL;
+			
+			if (isset($line['allow-auto']) && $line['allow-auto'] == true)
+				$fileLines .= 'allow-auto '.$interface.PHP_EOL;
+			
+			if (isset($line['allow-hotplug ']) && $line['allow-hotplug '] == true)
+				$fileLines .= 'allow-hotplug  '.$interface.PHP_EOL;
+			
+			if (isset($line['protocol'], $line['method']) && $line['protocol'] != '' && $line['method'] != '')
 			{
-				if ($row == 'auto lo' || $row == 'iface lo inet loopback')
-					continue;
+				$fileLines .= 'iface '.$interface.' '.$line['protocol'].' '.$line['method'].PHP_EOL;
 				
-				$iface = explode(' ', $row);
-				
-				$array[$i] = array($iface);
+				if (isset($line['iface']))
+				{
+					foreach ($line['iface'] as $key => $value)
+						$fileLines .= '    '.$key.' '.$value.PHP_EOL;
+				}
 			}
+			
+			$fileLines .= PHP_EOL;
 		}
 	}
 	
-	return $array;
-}
-
-function getInterface($file, $interface, $return_rows = false)
-{
-	$output = '';
-	$rows = array();
-	$i = 0;
-	$if_iface = 0;
-	
-	foreach ($file as $row)
+	if (isset($others))
 	{
-		$i += 1;
-		$row = trim($row);
-		
-		if (substr($row, 0, 1) != '#' && $row != '')
-		{
-			if (substr($row, 0, 5) == 'iface')
-			{
-				$iface = explode(' ', $row);
-				
-				if ($iface[1] == $interface)
-				{
-					switch ($iface[3])
-					{
-						case 'dhcp':
-						if (substr($iface[1], 0, 4) == 'wlan')
-						{
-							$if_iface = $i;
-							$output = array($iface, array());
-						}
-						else
-						{
-							$if_iface = 0;
-							$output = array($iface);
-						}
-						$rows[] = $i;
-							break;
-						case 'static':
-						$if_iface = $i;
-						$output = array($iface, array());
-						$rows[] = $i;
-							break;
-						case 'manual':
-						$if_iface = 0;
-						$output = array($iface);
-						$rows[] = $i;
-							break;
-					}
-				}
-			}
-			elseif ($if_iface != 0)
-			{
-				switch (substr($row, 0, 7))
-				{
-					case 'address':
-					$output[1]['address'] = substr($row, 8);
-					$rows[] = $i;
-						break;
-					case 'netmask':
-					$output[1]['netmask'] = substr($row, 8);
-					$rows[] = $i;
-						break;
-					case 'gateway':
-					$output[1]['gateway'] = substr($row, 8);
-					$rows[] = $i;
-						break;
-				}
-				
-				if (substr($row, 0, 4) == 'wpa-')
-				{
-					switch (substr($row, 4, 4))
-					{
-						case 'ssid':
-						$output[1]['wpa-ssid'] = substr($row, 9);
-						$rows[] = $i;
-							break;
-						case 'psk ':
-						$output[1]['wpa-psk'] = substr($row, 8);
-						$rows[] = $i;
-							break;
-						default:
-						$rows[] = $i;
-							break;
-					}
-				}
-			}
-		}
+		foreach ($others as $other)
+			$fileLines .= trim($other).PHP_EOL;
 	}
 	
-	if ($return_rows === false)
-		return $output;
-	else
-		return $rows;
-}
-
-function addInterface($file, $interface)
-{
-	return array_merge($file, $interface);
-}
-
-function deleteInterface($file, $interface)
-{
-	$interface_rows = getInterface($file, $interface, true);
-	
-	foreach ($interface_rows as $row)
-		unset($file[$row-1]);
-	
-	return array_values($file);
-}
-
-function writeToInterface($ssh, $file)
-{
-	if (!file_exists(TEMP_PATH) || !is_dir(TEMP_PATH))
-		return 4;
-	
-	if (($f_file = fopen(TEMP_PATH.'/interfaces.tmp.php', 'w')))
+	if (isset($comments))
 	{
-		if (fwrite($f_file, implode($file)))
+		foreach ($comments as $comment)
+			$fileLines .= trim($comment).PHP_EOL;
+	}
+	
+	list ($status, $error) = $tpl->executeSSH('echo -e '.escapeshellarg($fileLines).' | sudo /bin/su -c "cat > /etc/network/interfaces"');
+	
+	if ($status == '')
+		return true;
+	
+	return $error;
+}
+
+function addNetworkInterface($interface)
+{
+	if (empty($interface))
+		return false;
+	
+	$interfaces = getNetworkInterfaces(false);
+	$interfaces[key($interface)] = current($interface);
+	
+	return writeNetworkInterface($interfaces);
+}
+
+function deleteNetworkInterface($interface)
+{
+	if (empty($interface))
+		return false;
+	
+	$interfaces = getNetworkInterfaces(false);
+	unset($interfaces[$interface]);
+	
+	return writeNetworkInterface($interfaces);
+}
+
+function writeNetworkWPASupplicant($lines)
+{
+	global $tpl;
+	
+	if (empty($lines))
+		return false;
+	
+	$fileLines = '';
+	
+	foreach ($lines as $line)
+	{
+		if (is_array($line))
 		{
-			fclose($f_file);
-			if (($stream = ssh2_scp_send($ssh, TEMP_PATH.'/interfaces.tmp.php', '/etc/network/interfaces')))
-			{
-				unlink(TEMP_PATH.'/interfaces.tmp.php');
-				return 0;
-			}
-			else
-				return 3;
+			$fileLines .= 'network={'.PHP_EOL;
+			
+			foreach ($line as $key => $value)
+				$fileLines .= '    '.$key.'='.$value.PHP_EOL;
+			
+			$fileLines .= '}'.PHP_EOL;
 		}
 		else
+			$fileLines .= $line.PHP_EOL;
+	}
+	
+	list ($status, $error) = $tpl->executeSSH('echo -e '.escapeshellarg($fileLines).' | sudo /bin/su -c "cat > /etc/wpa_supplicant/wpa_supplicant.conf"');
+	
+	if ($status == '')
+		return true;
+	
+	return $error;
+}
+
+function getAllNetworkWPASupplicant()
+{
+	/*global $tpl;
+	
+	list ($status, $error) = $tpl->executeSSH('sudo cat /etc/wpa_supplicant/wpa_supplicant.conf');
+	
+	$splits = preg_split('/^network=/smi', $status);
+	$wpas = array();
+	$i = 0;
+	
+	foreach ($splits as $split)
+	{
+		if ($split[0] != '{')
+			continue;
+		
+		$settings = explode(PHP_EOL, $split);
+		foreach ($settings as $setting)
 		{
-			fclose($f_file);
-			return 1;
+			preg_match_all('/^(.*)=(.*)$/', trim($setting), $matches);
+			
+			if (count($matches) == 3 && isset($matches[1][0]) && $matches[1][0] != '')
+				$wpas[$i][$matches[1][0]] = trim($matches[2][0], '"');
+		}
+		
+		$i += 1;
+	}
+	
+	return $wpas;*/
+	
+	global $tpl;
+	
+	list ($status, $error) = $tpl->executeSSH('sudo cat /etc/wpa_supplicant/wpa_supplicant.conf');
+	
+	$splits = explode(PHP_EOL, $status);
+	$lines = array();
+	$isNetwork = false;
+	$network = array();
+	
+	foreach ($splits as $index => $split)
+	{
+		if (count($split) == 0 || (isset($split[0]) && trim($split)[0] == '#'))
+		{
+			$lines[] = $split;
+			continue;
+		}
+		
+		if (substr($split, 0, 8) == 'network=' && $isNetwork == false)
+		{
+			$network = array();
+			$isNetwork = true;
+			continue;
+		}
+		
+		if (isset($split[0]) && $split[0] == '}' && $isNetwork == true)
+		{
+			$lines[] = $network;
+			$isNetwork = false;
+			continue;
+		}
+		
+		if ($isNetwork == true)
+		{
+			preg_match_all('/^(.*)=(.*)$/', trim($split), $matches);
+			
+			if (count($matches) == 3 && isset($matches[1][0]) && $matches[1][0] != '')
+				$network[$matches[1][0]] = $matches[2][0];
+			
+			continue;
+		}
+		
+		$lines[] = $split;
+	}
+	
+	return $lines;
+}
+
+function addNetworkWPASupplicant($network)
+{
+	global $tpl;
+	
+	$lines = getAllNetworkWPASupplicant();
+	$isAdded = false;
+	
+	foreach ($lines as $index => $line)
+	{
+		if (!is_array($line))
+			continue;
+		
+		if (!isset($line['id_str']) && $line['ssid'] == $network['ssid'])
+		{
+			$lines[$index] = $network;
+			$isAdded = true;
+			break;
 		}
 	}
-	else
-		return 2;
+	
+	if ($isAdded == false)
+		$lines[] = $network;
+	
+	return writeNetworkWPASupplicant($lines);
 }
 
-function getInterfaceChecksum($file)
+function editHostname($hostname)
 {
-	return md5(implode($file));
-}
-
-function editHostname($ssh, $hostname)
-{
-	if (!file_exists(TEMP_PATH) || !is_dir(TEMP_PATH))
-		return 4;
+	global $tpl;
 	
 	$hosts = shell_exec('cat /etc/hosts');
+	
 	if (empty($hosts))
 		return 5;
 	
-	$new = preg_replace('/^(127\.0\.1\.1)(\s)+(.+)/mi', '$1$2'.$hostname, $hosts);
+	$new = preg_replace('/^(127\.0\.1\.1[\s]+)(.+)$/im', '$1'.$hostname, $hosts);
 	
-	if (($f_file = fopen(TEMP_PATH.'/hosts.tmp.php', 'w')))
-	{
-		if (fwrite($f_file, $new))
-		{
-			fclose($f_file);
-			if (($stream = ssh2_scp_send($ssh, TEMP_PATH.'/hosts.tmp.php', '/etc/hosts')))
-			{
-				unlink(TEMP_PATH.'/hosts.tmp.php');
-				
-				if (!($stream = ssh2_exec($ssh, 'echo "'.$hostname.'" > /etc/hostname')))
-					return 6;
-					
-				return 0;
-			}
-			else
-				return 3;
-		}
-		else
-		{
-			fclose($f_file);
-			return 1;
-		}
-	}
+	list ($status, $error) = $tpl->executeSSH('echo -e '.escapeshellarg($new).' | sudo /bin/su -c "cat > /etc/hosts"');
+	
+	if ($status == '')
+		list ($status2, $error2) = $tpl->executeSSH('echo -e '.escapeshellarg($hostname).' | sudo /bin/su -c "cat > /etc/hostname"');
 	else
-		return 2;
+		return $status;
+	
+	if ($status2 == '')
+		return true;
+	
+	return $status2;
 }
 
 function formatInterfaceProtocol($string)

@@ -82,20 +82,20 @@
 					<th style="width: 1%;"></th>
 					<th style="width: 52%;"><?php _e('Netzwerkname'); ?></th>
 					<th style="width: 25%;"><?php _e('MAC-Adresse'); ?></th>
-					<th style="width: 17%;"><?php _e('Sicherheit'); ?></th>
-					<th style="width: 5%;"><?php _e('Kanal'); ?></th>
+					<th style="width: 17%;" class="table-center"><?php _e('Sicherheit'); ?></th>
+					<th style="width: 5%;" class="table-center"><?php _e('Kanal'); ?></th>
 				</tr>
 	<?php foreach ($value as $value2) { ?>
 				<tr>
 					<td title="<?php echo $value2['signal']; ?>%"><?php echo getImageFromSignal($value2['signal']); ?></td>
-					<td><a href="?s=network_connect&amp;interface=<?php echo $key; ?>&amp;ssid=<?php echo $value2['ssid']; ?>&amp;encryption=<?php echo (($value['encryption'] == '-') ? '2' : '1' ) ?>"><?php echo $value2['ssid']; ?></a></td>
+					<td><a href="?s=network_connect&amp;interface=<?php echo urlencode($key); ?>&amp;ssid=<?php echo urlencode($value2['ssid']); ?>&amp;encryption=<?php echo ($value2['encryption'] == '-') ? 2 : 1; ?>"><?php echo htmlentities($value2['ssid']); ?></a></td>
 					<td><?php echo $value2['mac']; ?></td>
-					<td><?php echo $value2['encryption']; ?></td>
-					<td class="text-align-center"><?php echo $value2['channel']; ?></td>
+					<td class="table-center"><?php echo $value2['encryption']; ?></td>
+					<td class="table-center"><?php echo $value2['channel']; ?></td>
 				</tr>
 	<?php } if (count($value) == 0) { ?>
 				<tr>
-					<td colspan="5"><strong class="red"><?php _e('Keine WLAN-Netzwerke gefunden. <a href="?s=network&amp;refresh_wlan=%s">Erneut suchen.</a>', $key); ?></strong></td>
+					<td colspan="5"><strong class="red"><?php _e('Keine WLAN-Netzwerke gefunden. <a href="?s=network&amp;refresh_wlan">Erneut suchen.</a>'); ?></strong></td>
 				</tr>
 	<?php } ?>
 			</table>

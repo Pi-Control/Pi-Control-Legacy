@@ -435,8 +435,10 @@ function getAllNetworkConnections()
 	return $output;
 }
 
-function scanAccessPoints($networkConnections, $ssh = NULL)
+function scanAccessPoints($networkConnections, $ssh = false)
 {
+	global $tpl;
+	
 	$wlan = array();
 	
 	foreach ($networkConnections as $interface)
@@ -446,16 +448,10 @@ function scanAccessPoints($networkConnections, $ssh = NULL)
 			
 		$wlan[$interface['interface']] = array();
 		
-		if (empty($ssh))
-			$streamWlan = shell_exec('/sbin/iwlist '.$interface['interface'].' scan');
+		if ($ssh == true)
+			$streamWlan = $tpl->executeSSH('sudo /sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
 		else
-		{
-			if ($stream = ssh2_exec($ssh, '/sbin/iwlist '.$interface['interface'].' scan'))
-			{
-				stream_set_blocking($stream, true);
-				$streamWlan = stream_get_contents($stream);
-			}
-		}
+			$streamWlan = shell_exec('/sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
 		
 		for ($i = 1; $i <= substr_count($streamWlan, 'ESSID:"'); $i += 1)
 		{

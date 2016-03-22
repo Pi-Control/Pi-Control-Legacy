@@ -6,7 +6,10 @@
 			<span>Hostname</span>
 			<?php echo showGoBackIcon('?s=network'); ?>
 		</div>
-		<form action="?s=network&amp;hostname=save" method="post">
+		<div class="inner-info">
+			<div>Bei einer &Auml;nderung des Hostname ist der neue Name erst nach einem Neustart sichtbar.</div>
+		</div>
+		<form action="?s=network&amp;hostname" method="post">
 			<div class="inner-table">
 				<table class="table table-borderless table-form">
 					<tr>

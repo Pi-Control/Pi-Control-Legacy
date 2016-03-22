@@ -1,6 +1,6 @@
 <?php if (!defined('PICONTROL')) exit(); ?>
-<script type="text/javascript">{$js_variables}</script>
-<script type="text/javascript" src="public_html/js/network_connect.js"></script>
+<script type="text/javascript"><?php echo $data['jsVariables']; ?></script>
+<script type="text/javascript" src="public_html/js/network_connect.wlan.js"></script>
 <noscript>
 <div>
 	<div class="info_red box">
@@ -17,38 +17,37 @@
 			<div class="inner-header">
 				<span>WLAN-Verbindung herstellen</span>
 			</div>
-			<div class="inner-bottom">
-				<table class="table_simple">
+			<div class="inner-table">
+				<table class="table table-borderless table-form">
 					<tr>
-						<td width="180"><strong>Interface:</strong></td>
-						<td><input type="hidden" name="interface" value="{$interface}" />{$interface}</td>
+						<td>Interface</td>
+						<td><input type="hidden" name="interface" value="<?php echo $data['interface']; ?>" /><?php echo $data['interface']; ?></td>
 					</tr>
 					<tr>
-						<td><strong>Netzwerkname:</strong></td>
-						<td><input type="hidden" name="ssid" value="{$ssid}" />{$ssid}</td>
+						<td>Netzwerkname</td>
+						<td><input type="hidden" name="ssid" value="<?php echo $data['ssid']; ?>" /><?php echo $data['ssid']; ?></td>
 					</tr>
-{if="isset($_GET['encryption']) && $_GET['encryption'] == '1'"}
+<?php if (isset($data['encryption']) && $data['encryption'] == 1) { ?>
 					<tr>
-						<td><strong>Passwort:</strong></td>
+						<td>Passwort</td>
 						<td><input type="password" name="password" maxlength="64" /></td>
 					</tr>
-{elseif="isset($_GET['encryption']) && $_GET['encryption'] == '2'"}
+<?php } elseif (isset($data['encryption']) && $data['encryption'] == 2) { ?>
 					<tr>
-						<td><strong>Passwort (falls nötig):</strong></td>
-						<td><input type="password" name="password" maxlength="64" /></td>
+						<td>Passwort (falls n&ouml;tig)</td>
+						<td><input type="password" name="password" data="opt" maxlength="64" /></td>
 					</tr>
-{/if}
+<?php } ?>
 				</table>
 			</div>
-			<div class="inner">
+			<div class="inner-end dummy-1">
 				<input type="submit" name="submit" value="Verbindung herstellen" />
-				<strong class="red display-none">Passwort muss mindestens 8 Zeichen lang sein!</strong>
 			</div>
-			<div class="inner display-none">
-				 <img src="public_html/img/nm_signal_load.gif" style="vertical-align: middle; padding-bottom: 3px;" /> <strong>Verbindung mit "{$ssid}" wird hergestellt...</strong>
+			<div class="inner dummy-2 display-none">
+				 <span class="svg-network-signal-animate display-inline-block" style="vertical-align: bottom;"></span> <strong>Verbindung mit "<?php echo $data['ssid']; ?>" wird hergestellt...</strong>
 			</div>
-			<div class="inner display-none">
-				 <img src="public_html/img/nm_signal_disable.png" style="vertical-align: middle; padding-bottom: 3px;" /> <strong>Verbindung mit "{$ssid}" war nicht erfolgreich! <a href="#try_again">Erneut versuchen.</a><br /><br /><span class="red"></span></strong>
+			<div class="inner dummy-3 display-none">
+				<span class="svg-network-signal-disabled display-inline-block" style="vertical-align: bottom;"></span> <strong>Verbindung mit "<?php echo $data['ssid']; ?>" war nicht erfolgreich! <a href="#try_again">Erneut versuchen.</a><br /><br /><span class="red"></span></strong>
 			</div>
 		</form>
 	</div>

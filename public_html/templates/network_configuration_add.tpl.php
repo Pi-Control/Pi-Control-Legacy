@@ -3,10 +3,10 @@
 <div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Netzwerkkonfiguration - Interface bearbeiten</span>
+			<span>Netzwerkkonfiguration - Interface hinzuf&uuml;gen</span>
 			<?php showGoBackIcon('?s=network_configuration'); ?>
 		</div>
-		<form action="?s=network_configuration&amp;edit=<?php echo urlencode($data['interfaceName']); ?>" method="post">
+		<form action="?s=network_configuration&amp;add" method="post">
 			<div class="inner-table">
 				<table class="table table-borderless table-form">
 					<tr>
