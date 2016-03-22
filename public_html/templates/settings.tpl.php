@@ -8,6 +8,7 @@
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=pi-control">Pi Control</a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=overview"><?php _e('&Uuml;bersicht'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=statistic"><?php _e('Statistik'); ?></a>
+			<a class="settings-overview-flex-box" href="?s=settings&amp;do=terminal"><?php _e('Terminal'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=plugins"><?php _e('Plugins'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=update"><?php _e('Aktualisierung'); ?></a>
 			<a class="settings-overview-flex-box" href="?s=settings&amp;do=trouble-shooting"><?php _e('Problembehandlung'); ?></a>

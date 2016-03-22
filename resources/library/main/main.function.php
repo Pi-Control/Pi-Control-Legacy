@@ -936,4 +936,62 @@ function arraySort($array, $on, $order = SORT_ASC)
 
     return $new_array;
 }
+
+function ipInRange($ip, $ranges)
+{
+	if (!is_array($ranges))
+		$ranges[] = $ranges;
+	
+	foreach ($ranges as $range)
+	{
+		$return = false;
+		
+		if (strpos($range, '/') !== false)
+		{
+			list($range, $netmask) = explode('/', $range, 2);
+			
+			$blocks = explode('.', $range);
+			for ($i = count($blocks); $i < 4; $i++)
+			$blocks[] = '0';
+			
+			$rangeLong = ip2long(implode('.', $blocks));
+			$ipLong = ip2long($ip);
+			
+			$wildcardLong = pow(2, (32 - $netmask)) - 1;
+			$netmaskLong = ~ $wildcardLong;
+			
+			$return = (($ipLong & $netmaskLong) == ($rangeLong & $netmaskLong));
+		}
+		else
+		{
+			if (strpos($range, '*') !== false)
+			{
+				$lower = str_replace('*', '0', $range);
+				$upper = str_replace('*', '255', $range);
+				$range = $lower.'-'.$upper;
+			}
+			
+			if (strpos($range, '-') !== false)
+			{
+				list ($lower, $upper) = explode('-', $range, 2);
+				$lowerLong = (float) sprintf('%u', ip2long($lower));
+				$upperLong = (float) sprintf('%u', ip2long($upper));
+				$ipLong = (float) sprintf('%u', ip2long($ip));
+				$return =  (($ipLong >= $lowerLong) && ($ipLong <= $upperLong));
+			}
+			
+			if (filter_var($range, FILTER_VALIDATE_IP))
+			{
+				$rangeLong = ip2long($range);
+				$ipLong = ip2long($ip);
+				$return =  ($ipLong == $rangeLong);
+			}
+		}
+		
+		if ($return == true)
+			return true;
+	}
+	
+	return false;
+}
 ?>

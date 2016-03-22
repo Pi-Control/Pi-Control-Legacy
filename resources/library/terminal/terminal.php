@@ -119,6 +119,21 @@ while (true)
 			send_message($response);
 		}
 	}
+	
+	$i += 1;
+	if ($i == 60)
+	{
+		$termial = getConfig('terminal:port_'.$port, array());
+		
+		if (!is_array($termial) || empty($termial) || $termial['pid'] != getmypid())
+		{
+			socket_close($socket);
+			exec('kill -9 '.getmypid());
+			break 2;
+		}
+		
+		$i = 0;
+	}
 }
 
 socket_close($socket);

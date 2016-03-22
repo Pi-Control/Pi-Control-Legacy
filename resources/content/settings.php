@@ -35,6 +35,9 @@ switch ((isset($_GET['do']) ? $_GET['do'] : ''))
 	case 'cache':
 		include_once CONTENT_PATH.'/settings/cache.php';
 			break;
+	case 'terminal':
+		include_once CONTENT_PATH.'/settings/terminal.php';
+			break;
 	default:
 		$tpl->draw('settings');
 }
