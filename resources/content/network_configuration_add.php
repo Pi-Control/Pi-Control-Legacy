@@ -43,8 +43,6 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		$tpl->msg('error', '', 'Bitte vergebe eine Interfacebezeichnung, ein Protokoll und eine Methode!');
 }
 
-$interfaces = getNetworkInterfaces();
-
 $tpl->assign('checksum', $networkInterface->getInterfaceHash());
 $tpl->assign('interfaceName', isset($_POST['interface']) ? $_POST['interface'] : '');
 $tpl->assign('interfaceProtocol', isset($_POST['protocol']) ? $_POST['protocol'] : '');

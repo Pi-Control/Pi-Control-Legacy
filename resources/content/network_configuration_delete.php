@@ -17,8 +17,6 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 	}
 }
 
-$interfaces = getNetworkInterfaces();
-
 $tpl->assign('checksum', $networkInterface->getInterfaceHash());
 $tpl->assign('interfaceName', $interfaceName);
 
