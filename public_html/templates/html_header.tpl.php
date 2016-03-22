@@ -83,7 +83,7 @@
 					<span>Fehler mit dem Cron</span>
 					<div><span class="cancel"></span></div>
 				</div>
-				<div class="inner-single">
+				<div class="inner">
 					<?php _e('Es gibt anscheinend ein Problem mit dem Cron für das Pi Control. Dieser wurde seit mehr als 2 Minuten nicht mehr ausgeführt. Sollte diese Meldung in ca. 5 Minuten immer noch erscheinen, führe eine <a href="?s=settings&amp;do=trouble-shooting">Problembehandlung</a> durch.'); ?>
 				</div>
 			</div>

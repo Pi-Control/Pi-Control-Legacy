@@ -928,6 +928,14 @@ a img {
 	font-size: 16px;
 }
 
+.svg-refresh {
+	background: url('../img/refresh-icon.svg') no-repeat;
+	background-size: auto 100%;
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
 .svg-control-pen, .svg-control-cross, .svg-control-plus {
 	background: url('../img/control-icons.svg') no-repeat;
 	background-size: auto 100%;
@@ -937,15 +945,15 @@ a img {
 }
 
 .svg-control-pen {
-	background-position: 0px;
+	background-position: 0%;
 }
 
 .svg-control-cross {
-	background-position: -16px;
+	background-position: 50%;
 }
 
 .svg-control-plus {
-	background-position: -32px;
+	background-position: 100%;
 }
 
 /* *********************************************** */
@@ -1410,7 +1418,7 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 }
 
 /* Netzwerk */
-.svg-network-signal-0, .svg-network-signal-25, .svg-network-signal-50, .svg-network-signal-75, .svg-network-signal-100, .svg-network-signal-disabled, .svg-network-signal-wire {
+.svg-network-signal-00, .svg-network-signal-25, .svg-network-signal-50, .svg-network-signal-75, .svg-network-signal-100, .svg-network-signal-disabled, .svg-network-signal-wire, .svg-network-signal-animate {
 	background: url('../img/network-signal-icons.svg') no-repeat;
 	background-size: cover;
 	display: block;
@@ -1418,12 +1426,12 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 	width: 16px;
 }
 
-.svg-network-signal-0 {
+.svg-network-signal-00 {
 	background-position: 0%;
 }
 
 .svg-network-signal-25 {
-	background-position: 16.66px;
+	background-position: 16.66%;
 }
 
 .svg-network-signal-50 {
@@ -1444,6 +1452,24 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 
 .svg-network-signal-wire {
 	background-position: 100%;
+}
+
+@keyframes svg-network-signal-animate {
+    100% { background-position: 84%; }
+}
+
+@-moz-keyframes svg-network-signal-animate {
+    100% { background-position: 84%; }
+}
+
+@-webkit-keyframes svg-network-signal-animate {
+    100% { background-position: 84%; }
+}
+
+.svg-network-signal-animate {
+	animation: svg-network-signal-animate 1s steps(5) infinite;
+    -moz-animation: svg-network-signal-animate 1s steps(5) infinite;
+    -webkit-animation: svg-network-signal-animate 1s steps(5) infinite;
 }
 
 @media screen and (max-width: 410px) {
@@ -1520,6 +1546,14 @@ input[name=ssh-login]:checked + label .inner-table .ssh-login-table-clickable-ar
 	margin-left: -30px;
 	width: 60px;
 	text-align: center;
+}
+
+.display-none {
+	display: none;
+}
+
+.display-inline-block {
+	display: inline-block;
 }
 
 /* LOGIN */
