@@ -35,6 +35,14 @@
 						<td colspan="2"><input type="checkbox" name="weather-activation" id="cb-weather" value="checked"<?php if ($data['weather-activation'] === true) echo ' checked="checked"'; ?> /><label for="cb-weather" class="checkbox only-checkbox">&nbsp;</label></td>
 					</tr>
 					<tr>
+						<td>Dienst</td>
+						<td><select name="weather-service">
+								<option value="openweathermap"<?php if ($data['weather-service'] == 'openweathermap') echo ' selected="selected"'; ?>>OpenWeatherMap</option>
+								<option value="yahoo"<?php if ($data['weather-service'] == 'yahoo') echo ' selected="selected"'; ?>>Yahoo Weather</option>
+							</select></td>
+						<td><input type="text" name="weather-service-token" value="<?php echo $data['weather-service-token']; ?>" placeholder="API-Key" maxlength="32" /></td>
+					</tr>
+					<tr>
 						<td>Standort</td>
 						<td style="width: 100px; padding-left: 32px;">Land</td>
 						<td><select name="weather-location-country">

@@ -723,7 +723,7 @@ function addCronToCrontab($cronEntry, $ssh)
 		return 2;
 }
 
-function getWeatherIcon($icon)
+function getWeatherIconYahoo($icon)
 {
 	switch ($icon)
 	{
@@ -790,15 +790,59 @@ function getWeatherIcon($icon)
 	}
 }
 
+function getWeatherIconOpenWeatherMap($icon)
+{
+	switch ($icon)
+	{
+		case '01d':
+			return '01d';
+		case '01n':
+			return '01n';
+		case '02d':
+			return '02d';
+		case '02n':
+			return '02n';
+		case '03d':
+		case '03n':
+			return '03';
+		case '04d':
+		case '04n':
+			return '04';
+		case '09d':
+		case '09n':
+			return '09';
+		case '10d':
+			return '10d';
+		case '10n':
+			return '10n';
+		case '11d':
+		case '11n':
+			return '11';
+		case '13d':
+		case '13n':
+			return '13';
+		case '50d':
+		case '50n':
+			return '50';
+		default:
+			return '01d';
+	}
+}
+
 function getWeather()
 {
 	if (!class_exists('cURL'))
 		(include LIBRARY_PATH.'curl/curl.class.php');
 	
+	$service = getConfig('main:weather.service', 'openweathermap');
+	$serviceToken = getConfig('main:weather.serviceToken', '');
 	$country = getConfig('main:weather.country', 'germany');
 	$type = getConfig('main:weather.type', 'postcode');
 	$postcode = getConfig('main:weather.postcode', '');
 	$city = getConfig('main:weather.city', '');
+	
+	if ($serviceToken == '')
+		return 3;
 	
 	if ($postcode == '' && $city == '')
 		return 2;
@@ -811,34 +855,82 @@ function getWeather()
 	else
 		$location = $city;
 	
-	$yahooApiUrl = 'http://query.yahooapis.com/v1/public/yql';
-	$yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
-	$yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
-	
-	$curl = new cURL($yqlQueryUrl);
-	$curl->execute();
-	
-	if ($curl->getStatusCode() != '200')
-		return $curl->getStatusCode();
-	
-	if ($curl->getResult($data) != JSON_ERROR_NONE)
-		return 1;
-	
-	if (!isset($data['query']['results']['channel']))
-		return 1;
-	
-	$data = $data['query']['results']['channel'];
-	
 	$output = array();
-	$output['city'] = $data['location']['city'];
-	$output['country'] = $data['location']['country'];
-	$output['temp'] = str_replace('.', ',' , round($data['item']['condition']['temp']));
-	$output['temp_min'] = str_replace('.', ',' , round($data['item']['forecast']['low']));
-	$output['temp_max'] = str_replace('.', ',' , round($data['item']['forecast']['high']));
-	$output['humidity'] = $data['atmosphere']['humidity'];
-	$output['wind'] = str_replace('.', ',' , round($data['wind']['speed']));
-	$output['icon'] = getWeatherIcon($data['item']['condition']['code']);
-	$output['description'] = $data['item']['condition']['text'];
+	
+	if ($service == 'openweathermap')
+	{
+		$curl = new cURL('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country.'&units=metric&lang=de&appid='.$serviceToken);
+		$curl->execute();
+		
+		if ($curl->getStatusCode() != '200')
+			return $curl->getStatusCode();
+		
+		if ($curl->getResult($data) != JSON_ERROR_NONE)
+			return 1;
+		
+		if (!isset($data['name']) || !isset($data['weather']))
+			return 1;
+		
+		$output['service'] = 'openweathermap';
+		$output['city'] = $data['name'];
+		$output['country'] = $data['sys']['country'];
+		$output['temp'] = str_replace('.', ',' , round($data['main']['temp']));
+		$output['temp_min'] = str_replace('.', ',' , round($data['main']['temp_min']));
+		$output['temp_max'] = str_replace('.', ',' , round($data['main']['temp_max']));
+		$output['humidity'] = $data['main']['humidity'];
+		$output['wind'] = str_replace('.', ',' , round($data['wind']['speed']));
+		$output['icon'] = getWeatherIconOpenWeatherMap($data['weather'][0]['icon']);
+		$output['description'] = $data['weather'][0]['description'];
+		
+		if (empty($data['name']))
+		{
+			$curl = new cURL('http://api.openweathermap.org/data/2.5/weather?q='.$location.','.$country.'&appid='.$serviceToken);
+			$curl->execute();
+			
+			if ($curl->getStatusCode() != '200')
+				return $curl->getStatusCode();
+			
+			if ($curl->getResult($data) != JSON_ERROR_NONE)
+				return 1;
+			
+			if (!isset($data['name']) || !isset($data['weather']))
+				return 1;
+			
+			$output['city'] = $data['name'];
+			$output['country'] = $data['sys']['country'];
+		}
+	}
+	else
+	{
+		$yahooApiUrl = 'http://query.yahooapis.com/v1/public/yql';
+		$yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
+		$yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
+		
+		$curl = new cURL($yqlQueryUrl);
+		$curl->execute();
+		
+		if ($curl->getStatusCode() != '200')
+			return $curl->getStatusCode();
+		
+		if ($curl->getResult($data) != JSON_ERROR_NONE)
+			return 1;
+		
+		if (!isset($data['query']['results']['channel']))
+			return 1;
+		
+		$data = $data['query']['results']['channel'];
+		
+		$output['service'] = 'yahoo';
+		$output['city'] = $data['location']['city'];
+		$output['country'] = $data['location']['country'];
+		$output['temp'] = str_replace('.', ',' , round($data['item']['condition']['temp']));
+		$output['temp_min'] = str_replace('.', ',' , round($data['item']['forecast']['low']));
+		$output['temp_max'] = str_replace('.', ',' , round($data['item']['forecast']['high']));
+		$output['humidity'] = $data['atmosphere']['humidity'];
+		$output['wind'] = str_replace('.', ',' , round($data['wind']['speed']));
+		$output['icon'] = getWeatherIconYahoo($data['item']['condition']['code']);
+		$output['description'] = $data['item']['condition']['text'];
+	}
 		
 	return $output;
 }

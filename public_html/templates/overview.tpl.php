@@ -44,7 +44,7 @@
 					</td>
 				</tr>
 			</table>
-			<a href="https://www.yahoo.com/?ilc=401" target="_blank" style="float: right; margin-right: -12px;"><img src="public_html/img/weather/yahoo.png" width="80px" /></a>
+	<?php if ($data['weather']['service'] == 'yahoo') { ?><a href="https://www.yahoo.com/?ilc=401" target="_blank" style="float: right; margin-right: -12px;"><img src="public_html/img/weather/yahoo.png" width="80px" /></a><?php } ?>
 	<?php } ?>
 		</div>
 	</div>
