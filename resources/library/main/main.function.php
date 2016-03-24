@@ -607,7 +607,7 @@ function getAllFiles($folder_)
 	return array($file, $errorArray);
 }
 
-function delete($folder)
+function deleteFolder($folder)
 {
 	chmod($folder, 0777);
 	
@@ -616,7 +616,7 @@ function delete($folder)
 		$handle = opendir($folder);
 		while ($filename = readdir($handle))
 			if ($filename != '.' && $filename != '..')
-				delete($folder.'/'.$filename);
+				deleteFolder($folder.'/'.$filename);
 		
 		closedir($handle);
 		rmdir($folder);
@@ -990,6 +990,20 @@ function ipInRange($ip, $ranges)
 		
 		if ($return == true)
 			return true;
+	}
+	
+	return false;
+}
+
+function getLanguageFromIso($isoCode)
+{
+	if (empty($isoCode))
+		return false;
+	
+	switch ($isoCode)
+	{
+		case 'de': return _t('Deutsch');
+		case 'en': return _t('Englisch');
 	}
 	
 	return false;

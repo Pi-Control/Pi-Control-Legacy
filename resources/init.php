@@ -19,8 +19,8 @@ if (!isset($config))
 			'update'							=> 'https://pi-control.de/service/v1/update/',
 			'updateDownload'					=> 'https://pi-control.de/?service=update',
 			'updateNotification'				=> 'https://pi-control.de/?service=update_notification',
-			'plugin'							=> 'https://pi-control.de/web/1-0/plugins.xml',
-			'pluginDownload'					=> 'https://pi-control.de/web/1-0/plugins/',
+			'plugin'							=> 'https://pi-control.de/service/v1/plugin/',
+			'pluginDownload'					=> 'https://pi-control.de/?service=plugin',
 			'temperatureMonitoring'				=> 'https://pi-control.de/service/v1/temperature_monitoring/',
 			'help'								=> 'https://pi-control.de/web/1-0/?s=help'
 		)

@@ -9,7 +9,7 @@
 	<link type="text/css" rel="stylesheet" href="public_html/css/style.css.php" />
 	<link rel="shortcut icon" href="public_html/img/favicon.png" type="image/png" />
 	<script type="text/javascript" src="public_html/js/jquery.min.js"></script>
-	<script type="text/javascript">var req_url = '{<?php echo $data['javascript_req_url']; ?>}';</script>
+	<script type="text/javascript">var req_url = '{<?php echo $data['javascriptReqUrl']; ?>}';</script>
 	<script type="text/javascript" src="public_html/js/main.js"></script>
 	<script type="text/javascript" src="public_html/js/feedback.js"></script>
 	<title><?php echo $data['title']; ?></title>
@@ -37,12 +37,13 @@
 				<a href="?s=network"><?php _e('Netzwerk'); ?></a>
 				<a href="?s=statistic"><?php _e('Statistik'); ?></a>
 				<a href="?s=terminal"><?php _e('Terminal'); ?></a>
-				<div class="navi-dropdown"><a href="?s=plugins"><?php _e('Plugins'); ?></a>
+				<div class="navi-dropdown"><a href="?s=plugins"><?php _e('Plugins'); if (is_array($data['naviPluginsUpdates'])) echo '<span class="update-bull">&bull;</span>'; ?></a>
 					<div class="navi-dropdown-container">
-<?php if (is_array($data['navi_plugins'])) {
-	foreach ($data['navi_plugins'] as $plugin) { ?>
-						<a href="?s=plugins&amp;id=<?php echo $plugin['id']; ?>"><?php _e($plugin['name']); ?></a>
-<?php } } /*else { echo '<span style="margin: 20px; display: block; text-align: center;">'.$data['navi_plugins'].'</span>'; }*/ ?>
+<?php if (isset($data['naviPluginsUpdates'])) { ?>
+						<a href="?s=discover_plugins" class="navi-dropdown-update">UPDATE</a>
+<?php } if (is_array($data['naviPlugins'])) {	foreach ($data['naviPlugins'] as $plugin) { ?>
+						<a href="?s=plugins&amp;id=<?php echo $plugin['id']; ?>"><?php _e($plugin['name']); if (isset($data['naviPluginsUpdates'][$plugin['id']])) echo '<span class="update-bull">&bull;</span>'; ?></a>
+<?php } } ?>
 					</div>
 				</div>
 			</div>
@@ -75,7 +76,7 @@
 			</div>
 		</div>
 <?php } ?>
-<?php if ($data['cron_execution_fault'] === true) { ?>
+<?php if ($data['cronExecutionFault'] === true) { ?>
 <!-- Cron -->
 		<div class="box error">
 			<div>

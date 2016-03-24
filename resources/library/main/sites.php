@@ -9,7 +9,7 @@ $site = array(
 	'network_configuration' => 'network_configuration.php',
 	'statistic' => 'statistic.php',
 	'plugins' => 'plugins.php',
-	'plugin_search' => 'plugin_search.php',
+	'discover_plugins' => 'discover_plugins.php',
 	'settings' => 'settings.php',
 	'ssh_login' => 'ssh_login.php',
 	'terminal' => 'terminal.php',
@@ -18,6 +18,9 @@ $site = array(
 
 $include = array(
 	'login' => 'resources/content/login.php',
-	'update' => 'resources/update/update_picontrol.php'
+	'update' => 'resources/update/update_picontrol.php',
+	'download_plugin' => 'resources/plugins/download_plugin.php',
+	'update_plugin' => 'resources/plugins/update_plugin.php',
+	'feedback' => LIBRARY_PATH.'feedback/feedback.php'
 );
 ?>

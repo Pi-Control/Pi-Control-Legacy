@@ -18,7 +18,7 @@
 		</div>
 <?php } ?>
 		<div class="inner-end">
-			<a href="#"><button>Plugins entdecken</button></a>
+			<a href="?s=discover_plugins"><button>Plugins entdecken</button></a>
 		</div>
 	</div>
 </div>
