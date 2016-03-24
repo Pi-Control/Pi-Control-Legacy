@@ -1,43 +1,58 @@
-// JavaScript Document
-jQuery(document).on('mousedown', 'a[href="http://willy-tech.de/kontakt/"]', function(e)
+var ajaxFeedback;
+
+function showFeedbackError()
+{
+	$('.feedback div.box .inner:eq(0)').html('Leider ist ein unerwarteter Fehler aufgetreten. Bitte schließe das Feedback-Fenster und versuche es erneut. Andernfalls, schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>.');
+	$('.feedback div.box img').remove();
+	$('.feedback div.box .inner:eq(1)').html('<strong class="red">:(</strong>');
+	
+	return false;
+}
+
+$(document).on('mousedown', 'a[href="https://willy-tech.de/kontakt/"]', function(e)
 {
 	if (e.which == 3)
 		return false;
 	
 	window.scrollTo(0, 0);
 	
-	if (jQuery('#feedback').length == 0)
+	if ($('.feedback').length == 0)
 	{
-		jQuery('body').append('<div id="feedback_background" title="Ausblenden"></div>');
-		jQuery('body').append('<div id="feedback" class="box"><div class="inner-header"><span>Feedback</span><a href="#" title="Ausblenden">Ausblenden</a></div><div class="inner padding-0" style="background: url(public_html/img/ajaxloader.gif) center no-repeat; min-height: 200px;"></div></div>');
+		$('body').append('<div class="feedback"><a href="#close">Schließen</a><span class="feedback-inner"><div class="box"><div class="inner-header"><span>Feedback</span></div><div class="inner text-justify">F&uuml;r das Feedback m&uuml;ssen noch einige Daten gesammelt werden. Ist dies erledigt, wirst du automatisch auf eine neue Seite weitergeleitet. Dort kannst du mir anschließend eine Nachricht hinterlassen.</div><div class="inner"><img src="public_html/img/loader.svg" /></div><div class="inner-end"><a href="#close" class="button">Schließen</a></div></div></span></div>');
 		
-		jQuery.get('resources/library/etc/feedback_stats.php', {url: req_url}, function(data)
+		ajaxFeedback = $.ajax({
+			url: 'api/v1/feedback.php',
+			method: 'POST',
+			data: { url: window.location.href },
+			dataType: 'text',
+			async: false
+		}).done(function(data)
 		{
-			var url_param = '';
+			if (data == '')
+				return showFeedbackError();
 			
-			if (data != '')
-				url_param = data;
-			else
-				alert('Fehler beim Auslesen der Systeminformationen.');
-				
-			jQuery('#feedback .inner').append('<iframe style="display: none;" name="iframe_feedback" src="http://picontrol.willy-tech.de/web/1-0/?s=feedback">Dein Browser unterstützt keine eingebetteten Frames. Folge einfach diesem Link: <a href="http://willy-tech.de/kontakt/" target="_blank">Kontakt</a></iframe>');
-			
-			var form = jQuery('<form action="http://picontrol.willy-tech.de/web/1-0/?s=feedback" target="iframe_feedback" method="post"><input type="hidden" name="stats" value="'+url_param+'" /><input type="hidden" name="errorHandler" value="'+errorHandler+'" /></form>');
-			jQuery('#feedback .inner').append(form);
+			var form = $('<form action="https://pi-control.de/?service=feedback" method="post" target="_blank"><input type="hidden" name="data" value="'+data+'" /><input type="hidden" name="error-handler" value="'+errorHandler+'" /></form>');
 			form.submit();
 			
-			jQuery('#feedback .inner iframe').fadeIn('fast');
+			$('.feedback div.box .inner:eq(0)').html('Alle erforderlichen Daten wurden gesammelt. Es wurde ein neuer Tab mit einem Formular ge&ouml;ffnet. Bitte f&uuml;hre dein Feedback dort fort.');
+			$('.feedback div.box img').remove();
+			$('.feedback div.box .inner:eq(1)').html('<strong class="green">&#10004;</strong>');
+		}).fail(function()
+		{
+			return showFeedbackError();
 		});
 	}
 	
-	jQuery('#feedback_background, #feedback').fadeIn('fast');
+	$('.feedback').fadeIn('fast');
 
 	return false;
 });
 
-jQuery(document).on('click', 'a[title="Ausblenden"], #feedback_background', function(e)
+$(document).on('click', 'a[href="#close"], .feedback', function(e)
 {
-	jQuery('#feedback_background, #feedback').fadeOut('fast');
-	
-	return false;
+	if ($(event.target).has('.box').length || $(event.target).is('a[href="#close"]'))
+	{
+		ajaxFeedback.abort();
+		$('.feedback').fadeOut('fast');
+    }
 });
