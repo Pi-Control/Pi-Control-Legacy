@@ -48,6 +48,8 @@ if (isset($_GET['id']))
 
 if ($pluginLoaded === false)
 {
+	$plugins = array_filter($plugins, function($plugin) { if ($plugin['disabled'] == true) return false; return true; });
+	
 	$tpl->assign('plugins', $plugins);
 	$tpl->draw('plugins');
 }
