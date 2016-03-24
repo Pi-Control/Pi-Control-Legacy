@@ -1,6 +1,8 @@
 $(document).on('ready', function(e)
 {
-	var wsUri = 'ws://' + ip + ':' + port;
+	var msgBuffer = '';
+	
+	var wsUri = 'ws://' + ip + ':' + port+ '/?' + cookie;
 	websocket = new WebSocket(wsUri);
 	
 	websocket.onopen = function(ev)
@@ -54,6 +56,7 @@ $(document).on('ready', function(e)
 		{
 			$('#status').text(umsg);
 			$('#command').removeAttr('disabled');
+			msgBuffer = umsg;
 			
 			$('select[name=terminal] option[value=' + port + ']').text($('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Online)');
 			$('select[name=terminal] option[value=' + port + ']').css('background-color', '#73CA3C');
@@ -70,12 +73,18 @@ $(document).on('ready', function(e)
 	
 	websocket.onclose = function(ev)
 	{
-		$('#status').text('Verbindung getrennt');
+		if (msgBuffer == 'newSession')
+			$('#status').html('Verbindung getrennt<br />(Anmeldung an anderem Fenster)');
+		else if (msgBuffer == 'denied')
+			$('#status').html('Verbindung getrennt<br />(Keine Berechtigung)');
+		else
+		{
+			$('#status').text('Verbindung getrennt');
+			$('select[name=terminal] option[value=' + port + ']').text($('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Offline)');
+			$('select[name=terminal] option[value=' + port + ']').css('background-color', '#E9492E');
+		}
+		
 		$('#command').attr('disabled', 'disabled');
-		
-		$('select[name=terminal] option[value=' + port + ']').text($('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Offline)');
-		$('select[name=terminal] option[value=' + port + ']').css('background-color', '#E9492E');
-		
 		$('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
 	};
 	

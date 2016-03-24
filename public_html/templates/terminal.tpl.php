@@ -6,8 +6,9 @@
 pre { margin: 0; }
 </style>
 <script language="javascript" type="text/javascript">
-var ip = '<?php echo $_SERVER["SERVER_NAME"]; ?>';
+var ip = '<?php echo $_SERVER['SERVER_NAME']; ?>';
 var port = <?php echo $data['port']; ?>;
+var cookie = '<?php echo $data['cookie']; ?>';
 </script>
 <script language="javascript" type="text/javascript" src="public_html/js/terminal.websocket.js"></script>
 <div class="sidebar">
@@ -22,7 +23,7 @@ var port = <?php echo $data['port']; ?>;
 				<option style="background: <?php echo ($port['active'] === true) ? '#73CA3C' : '#E9492E'; ?>;" value="<?php echo $port['port']; ?>"<?php if ($data['port'] == $port['port']) echo ' selected="selected"'; ?>>Terminal <?php echo $index+1; ?> (<?php echo ($port['active'] === true) ? 'Online' : 'Offline'; ?>)</option>
 <?php } ?>
 			</select>
-			<div id="frame"></div>
+			<div id="frame display-none"></div>
 		</div>
 		<div class="inner-end">
 			<input type="button" name="close" value="Verbindung trennen" />

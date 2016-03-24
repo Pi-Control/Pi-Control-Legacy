@@ -30,6 +30,7 @@ $clients = array($socket);
 $ssh = NULL;
 $stdio = NULL;
 $lastLine = '';
+$i = 0;
 
 while (true)
 {
@@ -39,32 +40,48 @@ while (true)
 	
 	if (in_array($socket, $changed))
 	{
-		foreach ($clients as $client)
-			@socket_write($client, 'ping', strlen('ping'));
+		$newSocket = socket_accept($socket);
+		$header = socket_read($newSocket, 1024);
+		perform_handshaking($header, $newSocket, $host, $port);
 		
-		$socket_new = socket_accept($socket);
-		$clients[] = $socket_new;
-		
-		$header = socket_read($socket_new, 1024);
-		perform_handshaking($header, $socket_new, $host, $port);
-		
-		socket_getpeername($socket_new, $ip);
-		
-		$found_socket = array_search($socket, $changed);
-		unset($changed[$found_socket]);
-		
-		$response = mask(json_encode(array('type'=>'system', 'message'=> 'Verbunden')));
-		send_message($response);
-		$response_text = mask(json_encode(array('type' => 'console', 'message' => $lastLine)));
-		send_message($response_text);
+		if (substr($header, 6, 32) == $_COOKIE['_pi-control_login'])
+		{
+			$clients[] = $newSocket;
+			
+			$diff = array_diff($clients, array($socket, $newSocket));
+			
+			foreach ($diff as $client)
+			{
+				$response = mask(json_encode(array('type'=>'system', 'message'=> 'newSession')));
+				@socket_write($client, $response, strlen($response));
+				@socket_write($client, 'ping', strlen('ping'));
+			}
+			
+			$clients = array($socket, $newSocket);
+			
+			socket_getpeername($newSocket, $ip);
+			
+			$found_socket = array_search($socket, $changed);
+			unset($changed[$found_socket]);
+			
+			$response = mask(json_encode(array('type'=>'system', 'message'=> 'Verbunden')));
+			send_message($response);
+			$response_text = mask(json_encode(array('type' => 'console', 'message' => $lastLine)));
+			send_message($response_text);
+		}
+		else
+		{
+			$response = mask(json_encode(array('type'=>'system', 'message'=> 'denied')));
+			@socket_write($newSocket, $response, strlen($response));
+		}
 	}
 	
-	foreach ($changed as $changed_socket)
+	foreach ($changed as $changedSocket)
 	{
-		if (@socket_recv($changed_socket, $buf, 1024, 0) === 0)
+		if (@socket_recv($changedSocket, $buf, 1024, 0) === 0)
 		{
-			$found_socket = array_search($changed_socket, $clients);
-			socket_getpeername($changed_socket, $ip);
+			$found_socket = array_search($changedSocket, $clients);
+			socket_getpeername($changedSocket, $ip);
 			unset($clients[$found_socket]);
 		}
 		else
@@ -78,9 +95,6 @@ while (true)
 				
 				if ($user_message == '^PI')
 				{
-					setConfig('terminal:'.getmypid().'.time', date('d.m.Y H:i:s'));
-					setConfig('terminal:'.getmypid().'.ip', $ip);
-					setConfig('terminal:'.getmypid().'.reason', 'Kommando');
 					removeConfig('terminal:port_'.$port);
 					socket_close($socket);
 					exec('kill -9 '.getmypid());

@@ -29,13 +29,14 @@ if ($tpl->getSSHResource(1) !== false)
 			}
 		}
 		
-		if (isset($termials['port_'.$port['port']]))
+		if (isset($termials['port_'.$port['port']]) && shell_exec('netstat -atn | grep :'.$port['port']) != '')
 			$ports[$index]['active'] = true;
 	}
 }
 
 $tpl->assign('port', $selectedPort);
 $tpl->assign('ports', $ports);
+$tpl->assign('cookie', $_COOKIE['_pi-control_login']);
 
 $tpl->draw('terminal');
 ?>
