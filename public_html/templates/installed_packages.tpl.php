@@ -9,7 +9,7 @@
 			<strong>Anzahl an installierten Paketen: <?php echo $data['installedPackagesCount']; ?></strong>
 			</table>
 		</div>
-		<div class="inner-table">
+		<div class="inner-table overflow-auto">
 			<table class="table table-borderless">
 				<tr>
 					<th>Paketname</th>
