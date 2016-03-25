@@ -144,6 +144,26 @@ function rpi_getKernelVersion()
 	return $kernel;
 }
 
+function rpi_getCountRunningTasks()
+{
+	$tasks = trim(@shell_exec('ps -auxeaf| wc -l'));
+	return $tasks;
+}
+
+function rpi_getCountInstalledPackages()
+{
+	$packages = trim(@shell_exec('dpkg --get-selections | grep -v deinstall | wc -l'));
+	return $packages;
+}
+
+function rpi_getInstalledPackages()
+{
+	@exec('dpkg -l | grep ^ii', $packages);
+	
+	$packages = array_map(function($package) { return preg_split('/[\s]+/', $package, 5); }, $packages);
+	return $packages;
+}
+
 function rpi_getRpiRevision()
 {
 	$revision = array();

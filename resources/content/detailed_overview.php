@@ -35,6 +35,8 @@ $tpl->assign('memory', $memory);
 $tpl->assign('memory_count', count($memory));
 $tpl->assign('all_users', $users->getContent());
 $tpl->assign('users_cache_hint', $users->displayHint());
+$tpl->assign('runningTasksCount', rpi_getCountRunningTasks());
+$tpl->assign('installedPackagesCount', rpi_getCountInstalledPackages());
 
 $tpl->draw('detailed_overview');
 ?>

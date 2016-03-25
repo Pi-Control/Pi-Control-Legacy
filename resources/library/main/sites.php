@@ -4,6 +4,7 @@ if (!defined('PICONTROL')) exit();
 $site = array(
 	'overview' => 'overview.php',
 	'detailed_overview' => 'detailed_overview.php',
+	'installed_packages' => 'installed_packages.php',
 	'network' => 'network.php',
 	'network_connect' => 'network_connect.php',
 	'network_configuration' => 'network_configuration.php',

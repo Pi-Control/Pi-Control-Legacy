@@ -65,6 +65,22 @@
 			<br />
 		</div>
 		<div class="inner">
+			<span class="subtitle"><?php _e('System'); ?></span>
+		</div>
+		<div class="inner-table">
+			<table class="table table-borderless table-form responsive-detailed-overview-table">
+				<tr>
+					<td><?php _e('Laufende Prozesse'); ?></td>
+					<td><?php echo $data['runningTasksCount']; ?></td>
+				</tr>
+				<tr>
+					<td><?php _e('Installierte Pakete'); ?></td>
+					<td><?php echo $data['installedPackagesCount']; ?> <a href="?s=installed_packages">(Pakete auflisten)</a></td>
+				</tr>
+			</table>
+			<br />
+		</div>
+		<div class="inner">
 			<span class="subtitle"><?php _e('Webserver'); ?></span>
 		</div>
 		<div class="inner-table">
@@ -98,7 +114,7 @@
 					<td><?php echo $data['cpu_max_clock']; ?></td>
 				</tr>
 				<tr>
-					<td><?php _e('Gesamtauslastung'); ?></td>
+					<td><?php _e('Auslastung Gesamt'); ?></td>
 					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $data['cpu_load']; ?>%;"><?php echo $data['cpu_load']; ?>%</div></div></td>
 				</tr>
 <?php foreach ($data['cpu_loads'] as $name => $value) { ?>
