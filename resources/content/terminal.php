@@ -36,7 +36,7 @@ if ($tpl->getSSHResource(1) !== false)
 
 $tpl->assign('port', $selectedPort);
 $tpl->assign('ports', $ports);
-$tpl->assign('cookie', $_COOKIE['_pi-control_login']);
+$tpl->assign('cookie', substr($_COOKIE['_pi-control_login'], 0, 16));
 
 $tpl->draw('terminal');
 ?>

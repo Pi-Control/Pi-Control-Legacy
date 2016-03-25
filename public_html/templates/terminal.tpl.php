@@ -23,7 +23,7 @@ var cookie = '<?php echo $data['cookie']; ?>';
 				<option style="background: <?php echo ($port['active'] === true) ? '#73CA3C' : '#E9492E'; ?>;" value="<?php echo $port['port']; ?>"<?php if ($data['port'] == $port['port']) echo ' selected="selected"'; ?>>Terminal <?php echo $index+1; ?> (<?php echo ($port['active'] === true) ? 'Online' : 'Offline'; ?>)</option>
 <?php } ?>
 			</select>
-			<div id="frame display-none"></div>
+			<div id="frame"></div>
 		</div>
 		<div class="inner-end">
 			<input type="button" name="close" value="Verbindung trennen" />

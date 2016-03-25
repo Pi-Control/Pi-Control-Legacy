@@ -44,7 +44,7 @@ while (true)
 		$header = socket_read($newSocket, 1024);
 		perform_handshaking($header, $newSocket, $host, $port);
 		
-		if (substr($header, 6, 32) == $_COOKIE['_pi-control_login'])
+		if (substr($header, 6, 16) == substr($_COOKIE['_pi-control_login'], 0, 16))
 		{
 			$clients[] = $newSocket;
 			
@@ -64,14 +64,14 @@ while (true)
 			$found_socket = array_search($socket, $changed);
 			unset($changed[$found_socket]);
 			
-			$response = mask(json_encode(array('type'=>'system', 'message'=> 'Verbunden')));
+			$response = mask(json_encode(array('type'=> 'system', 'message' => 'Verbunden')));
 			send_message($response);
 			$response_text = mask(json_encode(array('type' => 'console', 'message' => $lastLine)));
 			send_message($response_text);
 		}
 		else
 		{
-			$response = mask(json_encode(array('type'=>'system', 'message'=> 'denied')));
+			$response = mask(json_encode(array('type'=> 'system', 'message' => 'denied')));
 			@socket_write($newSocket, $response, strlen($response));
 		}
 	}
@@ -129,7 +129,7 @@ while (true)
 			$response_text = mask(json_encode(array('type' => 'console', 'message' => $ansi->getScreen())));
 			send_message($response_text);
 			
-			$response = mask(json_encode(array('type'=>'system', 'message'=> 'Verbunden')));
+			$response = mask(json_encode(array('type' => 'system', 'message' => 'Verbunden')));
 			send_message($response);
 		}
 	}
