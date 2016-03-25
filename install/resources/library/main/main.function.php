@@ -318,6 +318,14 @@ function formatTime($time, $type = 'd.m.Y H:i')
 	return date($type, $time);
 }
 
+if (!function_exists('array_column'))
+{
+	function array_column($array, $columnName)
+	{
+		return array_map(function($element) use($columnName) { return $element[$columnName]; }, $array);
+	}
+}
+
 function checkUpdate()
 {
 	global $config;

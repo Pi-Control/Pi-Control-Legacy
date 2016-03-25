@@ -1,7 +1,6 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'cache/cache.function.php') or die($error_code['0x0007']);
 $tpl->setHeaderTitle(_t('Sprachauswahl'));
 
 $dataLanguage = json_decode(readFromFile('language'), true);

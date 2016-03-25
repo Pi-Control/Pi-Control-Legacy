@@ -1,7 +1,6 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'cache/cache.function.php') or die('');
 $tpl->setHeaderTitle(_t('Abschließen'));
 
 if (isset($_POST['submit']) && $_POST['submit'] != '')
@@ -10,7 +9,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 	
 	if (isset($dataUser['username'], $dataUser['password']) && $dataUser['username'] != '' && $dataUser['password'] != '')
 	{
-		if (getConfig('user:user_'.strtolower($dataUser['username']).'.username', '', PICONTROL_PATH.'resources/config/') != '')
+		if (getConfig('user:user_'.strtolower($dataUser['username']).'.username', '', PICONTROL_PATH.'resources/config/') == '')
 		{
 			setConfig('user:user_'.strtolower($dataUser['username']).'.username', $dataUser['username'], PICONTROL_PATH.'resources/config/');
 			setConfig('user:user_'.strtolower($dataUser['username']).'.created', time(), PICONTROL_PATH.'resources/config/');
@@ -26,7 +25,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 			$tpl->msg('error', '', _t('Leider ist ein Fehler beim Auslesen des Pi Control Benutzers aufgetreten. Bitte wiederhole die Installation.'));
 	}
 	else
-		$tpl->msg('error', '', _t('Leider ist ein Fehler beim Auslesen des Pi Control Benutzers aufgetreten. Bitte wiederhole die Installation.'));
+		$tpl->msg('error', '', _t('Leider ist ein Fehler beim Auslesen des Pi Control Benutzers aufgetreten! Bitte wiederhole die Installation.'));
 }
 
 $tpl->assign('configUpdateNotification', $config['url']['updateNotification']);

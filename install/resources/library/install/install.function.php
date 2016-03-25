@@ -76,12 +76,12 @@ function getFileFolderStatus(&$item, $key)
 	$item['permission'] = $per;
 	$item['userGroupBool'] = ($uid['name'] == 'www-data') ? true : false;
 	$item['userGroup'] = $uid['name'].':'.$gid['name'];
-	$item['filesizeBool'] = ($siz != 0 || substr($key, strlen(PICONTROL_PATH), 14) == 'resources/log/' || substr($key, strlen(PICONTROL_PATH), 24) == 'install/resources/cache/') ? true : false;
+	$item['filesizeBool'] = ($siz != 0 || substr($key, strlen(PICONTROL_PATH), 14) == 'resources/log/' || substr($key, strlen(PICONTROL_PATH), 24) == 'install/resources/cache/' || substr($key, strlen(PICONTROL_PATH), 16) == 'resources/cache/') ? true : false;
 	$item['filesize'] = $siz;
     $item['error'] = ($item['permissionBool'] === false || $item['userGroupBool'] === false || $item['filesizeBool'] === false) ? true : false;
 }
 
-function filterFilesFolders($item, $key)
+function filterFilesFolders($item)
 {
 	if ($item['error'] == false)
 		return false;
@@ -156,7 +156,7 @@ function fileFolderPermission()
 	
 	$filesFolders += $compare;
 	array_walk($filesFolders, 'getFileFolderStatus');
-	$filesFolders = array_filter($filesFolders, 'filterFilesFolders', ARRAY_FILTER_USE_BOTH);
+	$filesFolders = array_filter($filesFolders, 'filterFilesFolders');
 	ksort($filesFolders);
 	
 	return $filesFolders;
