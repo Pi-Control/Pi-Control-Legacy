@@ -84,7 +84,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 $token = getConfig('main:notificationPB.token', '');
 if ($token != '')
 {
-	if (isset($_GET['test_notification']))
+	if (isset($_POST['submit-test-notification']) && $_POST['submit-test-notification'] != '')
     {
 		$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 		$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
