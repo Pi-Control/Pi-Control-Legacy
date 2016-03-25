@@ -48,12 +48,11 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 	$cron = new Cron;
 	$cron->setName('coretemp_monitoring');
 	
-	if (isset($_POST['temperature-maximum']) && $_POST['temperature-maximum'] >= 40 && $_POST['temperature-maximum'] <= 90 && ((isset($_POST['temperature-action-email']) && $_POST['temperature-action-email'] == 'checked') || (isset($_POST['temperature-action-shell']) && $_POST['temperature-action-shell'] == 'checked') || (isset($_POST['temperature-action-shutdown']) && $_POST['temperature-action-shutdown'] == 'checked')))
+	if (isset($_POST['temperature-maximum']) && $_POST['temperature-maximum'] >= 40 && $_POST['temperature-maximum'] <= 90 && ((isset($_POST['temperature-action-email']) && $_POST['temperature-action-email'] == 'checked') || (isset($_POST['temperature-action-shell']) && $_POST['temperature-action-shell'] == 'checked')))
 	{
 		setConfig('main:monitoringCpuTemp.maximum', $_POST['temperature-maximum']);
 		setConfig('main:monitoringCpuTemp.emailEnabled', isset($_POST['temperature-action-email']) ? 'true' : 'false');
 		setConfig('main:monitoringCpuTemp.shellEnabled', isset($_POST['temperature-action-shell']) ? 'true' : 'false');
-		setConfig('main:monitoringCpuTemp.shutdown', isset($_POST['temperature-action-shutdown']) ? 'true' : 'false');
 		
 		$pActionEmail = trim($_POST['temperature-action-email-text']);
 		$pActionShell = trim($_POST['temperature-action-shell-text']);
@@ -74,7 +73,7 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 		}
 		
 		if ($tpl->msgExists(11) === false)
-			setConfig('main:monitoringCpuTemp.shell', $pActionShell);
+			setConfig('main:monitoringCpuTemp.shell', base64_encode($pActionShell));
 		
 		if (getConfig('main:monitoringCpuTemp.id', '') == '')
 		{
@@ -130,7 +129,7 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 		$tpl->msg('error', '', 'Leider ist ein Fehler aufgetrteten. Bitte wiederhole die Vergabe der Bezeichnung und der E-Mailadresse.');
 	else
 	{
-		$fields = array('id' => $id, 'email' => $email, 'label' => $label, 'referer' => $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+		$fields = array('type' => 'add', 'id' => $id, 'email' => $email, 'label' => $label, 'referer' => $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 		
 		$data = NULL;
 		$curl = curl_init();
@@ -214,8 +213,9 @@ $tpl->assign('temperature-action-email', (getConfig('main:monitoringCpuTemp.emai
 $tpl->assign('temperature-action-email-text', getConfig('main:monitoringCpuTemp.email', ''));
 $tpl->assign('temperature-action-email-status', (getConfig('main:monitoringCpuTemp.code', '') == '') ? 0 : 1);
 $tpl->assign('temperature-action-shell', (getConfig('main:monitoringCpuTemp.shellEnabled', 'false') == 'true') ? true : false);
-$tpl->assign('temperature-action-shell-text', getConfig('main:monitoringCpuTemp.shell', ''));
-$tpl->assign('temperature-action-shutdown', getConfig('main:monitoringCpuTemp.shutdown', 'false'));
+$tpl->assign('temperature-action-shell-text', htmlentities(base64_decode(getConfig('main:monitoringCpuTemp.shell', ''))));
+$tpl->assign('temperature-last-execution', (getConfig('cron:execution.monitoringCpuTemp', 0)-time()+3600 > 0) ? getDateFormat(getConfig('cron:execution.monitoringCpuTemp', 0)-time()+3600) : '');
+$tpl->assign('whoami', exec('whoami'));
 
 $tpl->draw('settings/pi-control');
 ?>

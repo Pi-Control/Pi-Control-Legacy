@@ -65,7 +65,7 @@
 				<table class="table table-borderless table-form">
 					<tr>
 						<td>Aktivieren</td>
-						<td colspan="2"><input type="checkbox" name="temperature-activation" id="cb-temperature" value="checked"<?php if ($data['temperature-activation'] === true) echo ' checked="checked"'; ?> /><label for="cb-temperature" class="checkbox only-checkbox">&nbsp;</label></td>
+						<td colspan="2"><input type="checkbox" name="temperature-activation" id="cb-temperature" value="checked"<?php if ($data['temperature-activation'] === true) echo ' checked="checked"'; ?> /><label for="cb-temperature" class="checkbox only-checkbox">&nbsp;</label><?php if (!empty($data['temperature-last-execution'])) { ?><strong class="red">Pausiert f&uuml;r <?php echo $data['temperature-last-execution']; ?></strong><?php } ?></td>
 					</tr>
 					<tr>
 						<td>H&ouml;chsttemperatur</td>
@@ -92,11 +92,7 @@
 					<tr>
 						<td></td>
 						<td><input type="checkbox" name="temperature-action-shell" id="cb-temperature-shell" value="checked"<?php if ($data['temperature-action-shell'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-shell" class="checkbox">Shell Befehl</label></td>
-						<td><input type="text" name="temperature-action-shell-text"<?php echo ' value="'.$data['temperature-action-shell-text'].'"'; ?> /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2"><input type="checkbox" name="temperature-action-shutdown" id="cb-temperature-shutdown" value="checked"<?php if ($data['temperature-action-shutdown'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-temperature-shutdown" class="checkbox">Herunterfahren</label></td>
+						<td><input type="text" name="temperature-action-shell-text"<?php echo ' value="'.$data['temperature-action-shell-text'].'"'; ?> /> <span class="small-info">Wird als <?php echo $data['whoami']; ?> ausgef&uuml;hrt.</span></td>
 					</tr>
 				</table>
 			</div>
