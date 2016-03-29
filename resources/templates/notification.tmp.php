@@ -30,7 +30,7 @@ if (getConfig('main:notificationPB.enabled', false))
                 
 				$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 				$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-				$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | Aktualisierung verfügbar', 'body' => 'Pi Control Version '.$picontrolUpdate['version'].' steht ab sofort zum herunterladen bereit.')));
+				$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | Aktualisierung verfügbar', 'body' => 'Pi Control Version '.$picontrolUpdate['version'].' steht ab sofort zum herunterladen bereit.', 'lang' => $globalLanguage)));
 				$curl->execute();
                 
                 // Reduziere Traffic, da selbst bei Fehler erst wieder nach 21600 Sek. geprüft wird

@@ -12,7 +12,7 @@ $doNotCheckForAuthentification = true;
 $cron = new Cron;
 $cron->setName('coretemp_monitoring');
 
-$coreTemp = rpi_getCoreTemprature()+5;
+$coreTemp = rpi_getCoreTemprature();
 
 if ($cron->isExists() === true && $coreTemp > getConfig('main:monitoringCpuTemp.maximum', 60))
 {
@@ -30,6 +30,7 @@ if ($cron->isExists() === true && $coreTemp > getConfig('main:monitoringCpuTemp.
 			$curl->addParameter(array('label' => getConfig('main:main.label', 'Raspberry Pi')));
 			$curl->addParameter(array('maximum' => getConfig('main:monitoringCpuTemp.maximum', 60)));
 			$curl->addParameter(array('coretemp' => $coreTemp));
+			$curl->addParameter(array('lang' => $globalLanguage));
 			$curl->execute();
 			
 			if ($curl->getStatusCode() == 200)
