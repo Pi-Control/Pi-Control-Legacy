@@ -14,7 +14,7 @@ $usbDevices = new Cache('usb_devices', 'rpi_getUsbDevices');
 $weather->load();
 $usbDevices->load();
 
-$tpl->assign('js_variables', 'var reload_timeout = '.($tpl->getConfig('main:overview.interval', 30)*1000).'; var overview_path = \'api/v1/overview.php\'');
+$tpl->assign('js_variables', 'var reload_timeout = '.($tpl->getConfig('main:overview.interval', 30)*1000).';');
 $tpl->assign('show_weather', (getConfig('main:weather.activation', 'false') == 'true') ? true : false);
 $tpl->assign('weather', (getConfig('main:weather.activation', 'false') == 'true') ? $weather->getContent() : '');
 $tpl->assign('weather_cache_hint', $weather->displayHint());

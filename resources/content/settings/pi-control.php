@@ -82,9 +82,7 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 		}
 		
 		if (isset($_POST['temperature-action-email']) && $tpl->msgExists(10) === false)
-		{
 			checkTemperatureMonitoringEmailStatus();
-		}
 	}
 	else
 		$tpl->msg('error', '', 'Bitte w&auml;hle mindestens eine Aktion.', true, 10);
@@ -129,7 +127,7 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 		$tpl->msg('error', '', 'Leider ist ein Fehler aufgetrteten. Bitte wiederhole die Vergabe der Bezeichnung und der E-Mailadresse.');
 	else
 	{
-		$fields = array('type' => 'add', 'id' => $id, 'email' => $email, 'label' => $label, 'referer' => $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+		$fields = array('type' => 'add', 'id' => $id, 'email' => $email, 'label' => $label, 'referer' => $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 'lang' => $globalLanguage);
 		
 		$data = NULL;
 		$curl = curl_init();

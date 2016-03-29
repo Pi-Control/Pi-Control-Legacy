@@ -39,6 +39,7 @@ if (isset($_POST['cronSubmit']) && $_POST['cronSubmit'] != '')
 
 $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);
+$tpl->assign('configHelp', $config['url']['help']);
 $tpl->assign('cronEntry', $cronEntry);
 $tpl->assign('cronMatch', $cronMatch);
 $tpl->assign('cronPHPCLI', ($cronPHPCLI = (trim(exec('dpkg -s php5-cli | grep Status: ')) != '') ? true : false));
