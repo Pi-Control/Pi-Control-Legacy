@@ -1,4 +1,5 @@
 var ajaxFeedback;
+var formFeedback;
 
 function showFeedbackError()
 {
@@ -31,12 +32,12 @@ $(document).on('mousedown', 'a[href="https://willy-tech.de/kontakt/"]', function
 			if (data == '')
 				return showFeedbackError();
 			
-			var form = $('<form action="https://pi-control.de/?service=feedback" method="post" target="_blank"><input type="hidden" name="data" value="'+data+'" /><input type="hidden" name="error-handler" value="'+errorHandler+'" /></form>');
-			form.submit();
+			formFeedback = $('<form action="https://pi-control.de/?service=feedback" method="post" target="_blank"><input type="hidden" name="data" value="'+data+'" /><input type="hidden" name="error-handler" value="'+errorHandler+'" /></form>');
+			formFeedback.submit();
 			
-			$('.feedback div.box .inner:eq(0)').html('Alle erforderlichen Daten wurden gesammelt. Es wurde ein neuer Tab mit einem Formular ge&ouml;ffnet. Bitte f&uuml;hre dein Feedback dort fort.');
+			$('.feedback div.box .inner:eq(0)').html('Alle erforderlichen Daten wurden gesammelt. Es wurde ein neuer Tab mit einem Formular ge&ouml;ffnet. Wurde der Tab nicht ge&ouml;ffnet, klicke auf den folgenden Button.');
 			$('.feedback div.box img').remove();
-			$('.feedback div.box .inner:eq(1)').html('<strong class="green">&#10004;</strong>');
+			$('.feedback div.box .inner:eq(1)').addClass('text-align-center').html('<a href="#open" class="button">Feedback &ouml;ffnen</a>');
 		}).fail(function()
 		{
 			return showFeedbackError();
@@ -55,4 +56,9 @@ $(document).on('click', 'a[href="#close"], .feedback', function(e)
 		ajaxFeedback.abort();
 		$('.feedback').fadeOut('fast');
     }
+});
+
+$(document).on('click', 'a[href="#open"]', function(e)
+{
+	formFeedback.submit();
 });
