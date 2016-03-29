@@ -98,11 +98,16 @@ function getFilesWithRelativePath($folder, $first = false)
 	$folder = realpath($folder);
 	
 	foreach (@scandir($folder) as $file)
+	{
+		if (!(($first == true && in_array($file, array('api', 'install', 'public_html', 'resources', 'index.php', 'license.txt'))) || $first == false))
+			continue;
+		
 		if ($file[0] != '.')
 			if (is_dir($folder.'/'.$file))
 				$folderArray[] = $file;
 			else
 				$fileArray[] = $file;
+	}
 	
 	if (isset($folderArray))
 	{
@@ -134,11 +139,7 @@ function getFilesWithRelativePath($folder, $first = false)
 
 function fileFolderPermission()
 {
-	$filesFolders = getFilesWithRelativePath(PICONTROL_PATH.'api/');
-	$filesFolders += getFilesWithRelativePath(PICONTROL_PATH.'install/');
-	$filesFolders += getFilesWithRelativePath(PICONTROL_PATH.'public_html/');
-	$filesFolders += getFilesWithRelativePath(PICONTROL_PATH.'resources/');
-	$filesFolders['license.txt'] = array();
+	$filesFolders = getFilesWithRelativePath(PICONTROL_PATH, true);
 	
 	$compare = array(
 						'index.php' => array(),

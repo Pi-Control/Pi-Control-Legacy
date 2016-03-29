@@ -31,7 +31,7 @@ function getFileFolderStatus(&$item, $key)
     $item['error'] = ($item['permissionBool'] === false || $item['userGroupBool'] === false || $item['filesizeBool'] === false) ? true : false;
 }
 
-function filterFilesFolders($item, $key)
+function filterFilesFolders($key, $item)
 {
 	$compare = array(
 						'index.php' => array(),
@@ -62,11 +62,16 @@ function getFilesWithRelativePath($folder, $first = false)
 	$folder = realpath($folder);
 	
 	foreach (@scandir($folder) as $file)
+	{
+		if (!(($first == true && in_array($file, array('api', 'install', 'public_html', 'resources', 'index.php', 'license.txt'))) || $first == false))
+			continue;
+		
 		if ($file[0] != '.')
 			if (is_dir($folder.'/'.$file))
 				$folderArray[] = $file;
 			else
 				$fileArray[] = $file;
+	}
 	
 	if (isset($folderArray))
 	{
