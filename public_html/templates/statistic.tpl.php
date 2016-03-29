@@ -39,7 +39,7 @@
 		</div>
 <?php } elseif (empty($data['logArray'])) { ?>
 		<div class="inner-info">
-			<div><?php _e('Es sind noch keine Statistiken verfügbar. Werte werden alle 5 Minuten eingetragen.'); ?></div>
+			<div><?php _e('Es sind noch keine Statistiken verf&uuml;gbar. Werte werden alle 5 Minuten eingetragen.'); ?></div>
 		</div>
 <?php } ?>
 	</div>
@@ -68,14 +68,27 @@
 	{
 <?php foreach ($data['logArray'] as $value) { ?>
 		var jsonData = $.ajax({
-			url: "api/v1/statistic_chart.php?type=<?php echo $value['type']; ?>&log=<?php echo $value['log']; ?>",
-			dataType:"json",
+			url: 'api/v1/statistic.php',
+			method: 'POST',
+			data: { data: '<?php echo $value['log']; ?>', type: '<?php echo $value['type']; ?>' },
+			dataType: 'json',
+			
 			async: true
 		}).done(function(data)
 		{
-			period_<?php echo $value['log']; ?> = data.periods;
+			if (data.error != null)
+			{
+				if (data.error.message == 'Empty data.')
+					$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es sind noch keine Werte verf&uuml;gbar. Werte werden alle 5 Minuten eingetragen.'); ?></strong>');
+				else
+					$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehler: %s', '\'+data.error.message+\''); ?></strong>');
+				
+				return;
+			}
 			
-			var myData = new google.visualization.DataTable(data);
+			period_<?php echo $value['log']; ?> = data.data.statistic.periods;
+			
+			var myData = new google.visualization.DataTable(data.data.statistic);
 			
 			$('#chart_log_<?php echo $value['log']; ?>').html('');
 			var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_log_<?php echo $value['log']; ?>'));
@@ -97,7 +110,7 @@
 				'chartType' : 'AreaChart',
 				'containerId' : 'chart_log_<?php echo $value['log']; ?>',
 				'options': {
-					vAxis: { viewWindow: { max: data.max, min: data.min }, textPosition: 'in', textStyle: { fontSize: 11, color: '#AAAAAA' }, gridlines: { color: '#fff' } },
+					vAxis: { viewWindow: { max: data.data.statistic.max, min: data.data.statistic.min }, textPosition: 'in', textStyle: { fontSize: 11, color: '#AAAAAA' }, gridlines: { color: '#fff' } },
 					dateFormat: 'dd.MM.yy HH:mm',
 					hAxis: { format: 'dd.MM. HH:mm', textPosition: 'out', gridlines: { color: '#fff' } , textStyle: { fontSize: 11, color: '#AAAAAA' }},
 					focusTarget: 'category',
@@ -117,10 +130,7 @@
 			myDashboard.draw(myData);
 		}).fail(function(xhr, textStatus)
 		{
-			if (xhr.status == 412)
-				$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es sind noch keine Werte verfügbar. Werte werden alle 5 Minuten eingetragen.'); ?></strong>');
-			else
-				$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehlercode: %s', '\'+xhr.status+\''); ?></strong>');
+			$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehlercode: %s', '\'+xhr.status+\''); ?></strong>');
 		});
 <?php } ?>
 	}
