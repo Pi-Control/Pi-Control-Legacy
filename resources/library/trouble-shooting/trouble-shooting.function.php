@@ -116,7 +116,13 @@ function fileFolderPermission()
 	
 	$filesFolders += $compare;
 	array_walk($filesFolders, 'getFileFolderStatus');
-	$filesFolders = array_filter($filesFolders, 'filterFilesFolders', ARRAY_FILTER_USE_BOTH);
+	
+	foreach ($filesFolders as $key => $value)
+	{
+		if (filterFilesFolders($key, $value) == false)
+			unset($filesFolders[$key]);
+	}
+	
 	ksort($filesFolders);
 	
 	return $filesFolders;

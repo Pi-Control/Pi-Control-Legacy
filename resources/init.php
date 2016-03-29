@@ -15,7 +15,6 @@ if (!isset($config))
 			'android_comp_level'				=> 4
 		),
 		'url' => array(
-			'base'								=> 'https://pi-control.de/web/1-0/',
 			'update'							=> 'https://pi-control.de/service/v1/update/',
 			'updateDownload'					=> 'https://pi-control.de/?service=update',
 			'updateNotification'				=> 'https://pi-control.de/?service=update_notification',

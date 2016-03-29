@@ -651,9 +651,9 @@ function showHelper($url, $extern = false)
 	global $config;
 	
 	if ($extern === false)
-		$url = $config['urls']['helpUrl'].'#'.$url;
+		$url = $config['url']['help'].'#'.$url;
 	
-	return '<a href="'.$url.'" title="Klicke für Hilfe" target="_blank" class="helper">&nbsp;</a>';
+	return '<a href="'.$url.'" title="Klicke f&uuml;r Hilfe" target="_blank" class="helper">&nbsp;</a>';
 }
 
 function addCronToCrontab($cronEntry, $ssh)

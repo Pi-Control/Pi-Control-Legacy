@@ -982,6 +982,15 @@ img {
 	display: block;
 }
 
+a.helper {
+	background: url('../img/help-icon.svg') no-repeat;
+	background-size: auto 100%;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	text-decoration: none;
+}
+
 .svg-small {
 	width: 16px;
 	height: 16px;
