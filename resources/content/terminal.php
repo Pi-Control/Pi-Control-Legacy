@@ -6,6 +6,15 @@ $tpl->setHeaderTitle('Terminal');
 $selectedPort = (isset($_GET['port'])) ? $_GET['port'] : 9001;
 $ports = array();
 
+if (isset($_GET['kill']) && $_GET['kill'])
+{
+	if (($terminal = getConfig('terminal:port_'.$_GET['kill'], '')) != '')
+	{
+		removeConfig('terminal:port_'.$_GET['kill']);
+		exec('kill -9 '.$terminal['pid']);
+	}
+}
+
 if ($tpl->getSSHResource(1) !== false)
 {
 	$termials = getConfig('terminal', array());
