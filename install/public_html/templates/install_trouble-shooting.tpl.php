@@ -26,7 +26,7 @@
 		</div>
 <?php if ($data['filesFoldersError'] === true) { ?>
 		<div class="inner-end">
-			<a href="#" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
+			<a href="<?php echo $data['configHelp']; ?>#wie-behebe-ich-probleme-mit-fehlenden-oder-fehlerhaften-dateien-und-ordnern" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
 		</div>
 <?php } ?>
 	</div>

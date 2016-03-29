@@ -18,6 +18,7 @@ foreach ($filesFolders as $file => $info)
 
 $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);
+$tpl->assign('configHelp', $config['url']['help']);
 
 $tpl->draw('install_trouble-shooting');
 ?>
