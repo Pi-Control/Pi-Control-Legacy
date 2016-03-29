@@ -22,105 +22,105 @@ function overviewStatusRefresh()
 {
 	$('.error-msg-refresh-bar').remove();
 	$('.refresh-bar').animate({width: '100%'}, reload_timeout, 'linear', function(e)
-    {
-		var this_ =				$(this);
-		var run_time =			$('.flex-container > div:eq(2)');
-		var cpu_clock =			$('.flex-container > div:eq(3)');
-		var cpu_load =			$('.flex-container > div:eq(4)');
-		var cpu_temp =			$('.flex-container > div:eq(5)');
-		var ram_percentage =	$('.flex-container > div:eq(6)');
-		var memory_used =		$('.flex-container > div:eq(7)');
-		var memory_free =		$('.flex-container > div:eq(8)');
-		var memory_total =		$('.flex-container > div:eq(9)');
-        
-        $('a[href=#refresh] img').addClass('rotate-icon');
-        
+	{
+		var this_ =			$(this);
+		var runtime =		$('.flex-container > div:eq(2)');
+		var cpuClock =		$('.flex-container > div:eq(3)');
+		var cpuLoad =		$('.flex-container > div:eq(4)');
+		var cpuTemp =		$('.flex-container > div:eq(5)');
+		var ramPercentage =	$('.flex-container > div:eq(6)');
+		var memoryUsed =	$('.flex-container > div:eq(7)');
+		var memoryFree =	$('.flex-container > div:eq(8)');
+		var memoryTotal =	$('.flex-container > div:eq(9)');
+		
+		$('a[href=#refresh] img').addClass('rotate-icon');
+		
 		this_.animate({width: '88.8%'}, 300, 'linear');
-        $.get(overview_path, {data: 'run_time'}, function(data)
+		$.post('api/v1/overview.php', { data: 'runtime' }, function(data)
 		{
-            if (run_time.find('span').html() != data)
-            {
-		        overviewStatusRefreshEffect(run_time);
-				run_time.find('span').html(data);
-            }
+			if (runtime.find('span').html() != data.data.runtime)
+			{
+				overviewStatusRefreshEffect(runtime);
+				runtime.find('span').html(data.data.runtime);
+			}
 			
 			this_.animate({width: '77.7%'}, 300, 'linear');
-            $.get(overview_path, {data: 'cpu_clock'}, function(data)
-    		{
-                if (cpu_clock.find('span').html() != data+' MHz')
-                {
-    		        overviewStatusRefreshEffect(cpu_clock);
-					cpu_clock.find('span').html(data+' MHz');
-                }
+			$.post('api/v1/overview.php', { data: 'cpuClock' }, function(data)
+			{
+				if (cpuClock.find('span').html() != data.data.cpuClock+' MHz')
+				{
+					overviewStatusRefreshEffect(cpuClock);
+					cpuClock.find('span').html(data.data.cpuClock+' MHz');
+				}
 				
 				this_.animate({width: '66.6%'}, 300, 'linear');
-                $.get(overview_path, {data: 'cpu_load'}, function(data)
-        		{
-                    if (cpu_load.find('.progressbar div').html() != data+'%')
-                    {
-        		        overviewStatusRefreshEffect(cpu_load);
-						cpu_load.find('.progressbar div').html(data+'%').css('width', data+'%');
-                    }
+				$.post('api/v1/overview.php', { data: 'cpuLoad' }, function(data)
+				{
+					if (cpuLoad.find('.progressbar div').html() != data.data.cpuLoad+'%')
+					{
+						overviewStatusRefreshEffect(cpuLoad);
+						cpuLoad.find('.progressbar div').html(data.data.cpuLoad+'%').css('width', data.data.cpuLoad+'%');
+					}
 					
 					this_.animate({width: '55.5%'}, 300, 'linear');
-                    $.get(overview_path, {data: 'cpu_temp'}, function(data)
-            		{
-                        if (cpu_temp.find('span').html() != data+' °C')
-                        {
-            		        overviewStatusRefreshEffect(cpu_temp);
-							cpu_temp.find('span').html(data+' &deg;C');
-                        }
+					$.post('api/v1/overview.php', { data: 'cpuTemp' }, function(data)
+					{
+						if (cpuTemp.find('span').html() != data.data.cpuTemp+' °C')
+						{
+							overviewStatusRefreshEffect(cpuTemp);
+							cpuTemp.find('span').html(data.data.cpuTemp+' &deg;C');
+						}
 						
 						this_.animate({width: '44.4%'}, 300, 'linear');
-                        $.get(overview_path, {data: 'ram_percentage'}, function(data)
-                		{
-                            if (ram_percentage.find('.progressbar div').html() != data+'%')
-                            {
-                		        overviewStatusRefreshEffect(ram_percentage);
-								ram_percentage.find('.progressbar div').html(data+'%').css('width', data+'%');
-                            }
+						$.post('api/v1/overview.php', { data: 'ramPercentage' }, function(data)
+						{
+							if (ramPercentage.find('.progressbar div').html() != data.data.ramPercentage+'%')
+							{
+								overviewStatusRefreshEffect(ramPercentage);
+								ramPercentage.find('.progressbar div').html(data.data.ramPercentage+'%').css('width', data.data.ramPercentage+'%');
+							}
 							
 							this_.animate({width: '33.3%'}, 300, 'linear');
-                            $.get(overview_path, {data: 'memory_used'}, function(data)
-                    		{
-                                if (memory_used.find('span').html() != data)
-                                {
-                    		        overviewStatusRefreshEffect(memory_used);
-									memory_used.find('span').html(data);
-                                }
+							$.post('api/v1/overview.php', { data: 'memoryUsed' }, function(data)
+							{
+								if (memoryUsed.find('span').html() != data.data.memoryUsed)
+								{
+									overviewStatusRefreshEffect(memoryUsed);
+									memoryUsed.find('span').html(data.data.memoryUsed);
+								}
 								
 								this_.animate({width: '22.2%'}, 300, 'linear');
-                                $.get(overview_path, {data: 'memory_free'}, function(data)
-                        		{
-                                    if (memory_free.find('span').html() != data)
-                                    {
-                        		        overviewStatusRefreshEffect(memory_free);
-										memory_free.find('span').html(data);
-                                    }
+								$.post('api/v1/overview.php', { data: 'memoryFree' }, function(data)
+								{
+									if (memoryFree.find('span').html() != data.data.memoryFree)
+									{
+										overviewStatusRefreshEffect(memoryFree);
+										memoryFree.find('span').html(data.data.memoryFree);
+									}
 									
 									this_.animate({width: '11.1%'}, 300, 'linear');
-                                    $.get(overview_path, {data: 'memory_total'}, function(data)
-                            		{
-                                        if (memory_total.find('span').html() != data)
-                                        {
-                            		        overviewStatusRefreshEffect(memory_total);
-											memory_total.find('span').html(data);
-                                        }
+									$.post('api/v1/overview.php', { data: 'memoryTotal' }, function(data)
+									{
+										if (memoryTotal.find('span').html() != data.data.memoryTotal)
+										{
+											overviewStatusRefreshEffect(memoryTotal);
+											memoryTotal.find('span').html(data.data.memoryTotal);
+										}
 										
 										this_.animate({width: '0%'}, 300, 'linear', function(e) {
 											is_loding = false;
 											$('a[href=#refresh] img').removeClass('rotate-icon');
 										});
-                                        
+										
 										overviewStatusRefresh();
-									}).fail(function(e)	{ showError(); });
-								}).fail(function(e)	{ showError(); });
-							}).fail(function(e)	{ showError(); });
-						}).fail(function(e)	{ showError(); });
-					}).fail(function(e)	{ showError(); });
-				}).fail(function(e)	{ showError(); });
-			}).fail(function(e)	{ showError(); });
-		}).fail(function(e)	{ showError(); });
+									}).fail(function(e) { showError(); });
+								}).fail(function(e) { showError(); });
+							}).fail(function(e) { showError(); });
+						}).fail(function(e) { showError(); });
+					}).fail(function(e) { showError(); });
+				}).fail(function(e) { showError(); });
+			}).fail(function(e) { showError(); });
+		}).fail(function(e) { showError(); });
 	});
 }
 
@@ -132,4 +132,7 @@ $(document).on('click', 'a[href=#refresh]', function(e)
 	return false;
 });
 
-setTimeout('overviewStatusRefresh()', 1);
+$(document).ready(function(e)
+{
+	overviewStatusRefresh();
+});
