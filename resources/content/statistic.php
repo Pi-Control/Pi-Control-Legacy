@@ -6,7 +6,7 @@ $tpl->setHeaderTitle(_t('Statistik'));
 $folder = LOG_PATH.'statistic';
 $fileArray = array();
 $logArray = array();
-$hiddenStatistics = array_filter(explode('~', $tpl->getConfig('main:statistic.hidden', '')));
+$hiddenStatistics = unserialize(htmlspecialchars_decode(getConfig('main:statistic.hidden', 'a:0:{}')));
 
 foreach (@scandir($folder) as $file)
 {
@@ -25,7 +25,7 @@ foreach ($fileArray as $file_)
 							'label' => 'CPU-Temperatur',
 							'type' => 'coretemp',
 							'title' => 'Grad Celsius',
-							'unit' => '  °C',
+							'unit' => ' °C',
 							'columns' => array(1));
 	}
 	if (substr($file_ , 0, -4) == 'cpuload' && array_search('cpuload', $hiddenStatistics) === false)
@@ -34,7 +34,7 @@ foreach ($fileArray as $file_)
 							'label' => 'CPU-Auslastung',
 							'type' => 'cpuload',
 							'title' => 'Auslastung %',
-							'unit' => '  %',
+							'unit' => ' %',
 							'columns' => array(1));
 	}
 	if (substr($file_ , 0, -4) == 'ram' && array_search('ram', $hiddenStatistics) === false)
@@ -43,7 +43,7 @@ foreach ($fileArray as $file_)
 							'label' => 'RAM-Auslastung',
 							'type' => 'ram',
 							'title' => 'Auslastung %',
-							'unit' => '  %',
+							'unit' => ' %',
 							'columns' => array(1));
 	}
 	elseif (substr($file_ , 0, 8) == 'network_' && array_search(substr($file_ , 0, -4), $hiddenStatistics) === false)

@@ -7,7 +7,7 @@ $folder = LOG_PATH.'/statistic/';
 $fileArray = array();
 $logArray = array();
 $statistics = array();
-$hiddenStatistics = array_filter(explode('~', $tpl->getConfig('main:statistic.hidden', '')));
+$hiddenStatistics = unserialize(htmlspecialchars_decode(getConfig('main:statistic.hidden', 'a:0:{}')));
 
 foreach (@scandir($folder) as $file)
 {
@@ -36,7 +36,7 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 	{
 		$hiddenStatistics = array_diff($statistics, (isset($_POST['check'])) ? $_POST['check'] : array());
 		
-		if ($tpl->setConfig('main:statistic.hidden', implode('~', $hiddenStatistics)) !== false)
+		if (setConfig('main:statistic.hidden', htmlspecialchars(serialize($hiddenStatistics))) !== false)
 			$tpl->msg('success', '', _t('Die Einstellungen wurden erfolgreich gespeichert.'));
 		else
 			$tpl->msg('error', '', $error_code['0x0043']);
