@@ -860,7 +860,7 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function setSSHInfo($type, $port, $username, $password, $privateKey)
+	public function setSSHInfo($type, $port, $username, $password, $privateKey, $rememberMe = false)
 	{
 		if (!is_array($SSHInfo = self::getSSHInfo()))
 			return false;
@@ -901,8 +901,17 @@ class PiTpl
 			setConfig('ssh:latest.port', $SSHInfo['port']);
 			setConfig('ssh:latest.username', $SSHInfo['username']);
 			
-			setcookie('_pi-control_ssh', $uniqid, time()+60*60*12);
-			setcookie('_pi-control_ssh_'.$uniqid, $uniqid2, time()+60*60*12);
+			if ($rememberMe == false)
+			{
+				setcookie('_pi-control_ssh', $uniqid, time()+60*60*12);
+				setcookie('_pi-control_ssh_'.$uniqid, $uniqid2, time()+60*60*12);
+			}
+			else
+			{
+				setcookie('_pi-control_ssh', $uniqid, time()+60*60*24*30);
+				setcookie('_pi-control_ssh_'.$uniqid, $uniqid2, time()+60*60*24*30);
+			}
+			
 			$_COOKIE['_pi-control_ssh'] = $uniqid;
 			$_COOKIE['_pi-control_ssh_'.$uniqid] = $uniqid2;
 		}

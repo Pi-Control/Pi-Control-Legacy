@@ -12,9 +12,11 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 	{
 		if (isset($_POST['port'], $_POST['username'], $_POST['password']) && ($pPort = intval(trim($_POST['port']))) != '' && ($pUsername = trim($_POST['username'])) != '' && ($pPassword = $_POST['password']) != '')
 		{
+			$pRememberMe = (isset($_POST['remember-me']) && $_POST['remember-me'] == 'checked') ? true : false;
+			
 			if (is_numeric($pPort) && $pPort >= 0 && $pPort <= 65535)
 			{
-				if ($tpl->setSSHInfo($pType, $pPort, $pUsername, $pPassword, NULL) === true)
+				if ($tpl->setSSHInfo($pType, $pPort, $pUsername, $pPassword, NULL, $pRememberMe) === true)
 				{
 					if ($tpl->getSSHResource() !== false)
 						$tpl->msg('success', '', _t('Verbindung zum Raspberry Pi wurde hergestellt.'));
@@ -34,15 +36,12 @@ if (isset($_POST['submit'], $_POST['ssh-login']) && $_POST['submit'] != '' && in
 	{
 		if (isset($_POST['port_'], $_POST['username_'], $_POST['privatekey_']) && ($pPort = intval(trim($_POST['port_']))) != '' && ($pUsername = trim($_POST['username_'])) != '' && ($pPrivateKey = $_POST['privatekey_']) != '')
 		{
-			$pPassword = '';
-			
-			if (isset($_POST['password_']) && ($pPassword = $_POST['password_']) != '')
-			{
-			}
+			$pPassword = isset($_POST['password_']) ? $_POST['password_'] : '';
+			$pRememberMe = (isset($_POST['remember-me_']) && $_POST['remember-me_'] == 'checked') ? true : false;
 			
 			if (is_numeric($pPort) && $pPort >= 0 && $pPort <= 65535)
 			{
-				if ($tpl->setSSHInfo($pType, $pPort, $pUsername, $pPassword, $pPrivateKey) === true)
+				if ($tpl->setSSHInfo($pType, $pPort, $pUsername, $pPassword, $pPrivateKey, $pRememberMe) === true)
 				{
 					if ($tpl->getSSHResource() !== false)
 						$tpl->msg('success', '', _t('Verbindung zum Raspberry Pi wurde hergestellt.'));
