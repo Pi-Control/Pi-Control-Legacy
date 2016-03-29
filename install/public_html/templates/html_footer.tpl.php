@@ -23,7 +23,7 @@
 					<td><strong><?php _e('LIZENZ'); ?></strong><span><?php _e('Raspberry Pi ist ein Markenzeichen<br />der %s.', '<a href="http://www.raspberrypi.org/" target="_blank">Raspberry Pi Foundation</a>'); ?></span></td>
 				</tr>
 			</table>
-			<div id="footer-copyright"><?php _e('Mit %s entwickelt von %s.', '<span style="color: #F44336;">&#10084;</span>', '<a href="http://willy-tech.de/" target="_blank">Willy Fritzsche</a>'); ?> 2013-2016</div>
+			<div id="footer-copyright"><?php _e('Mit %s entwickelt von %s.', '<span style="color: #F44336;">&#10084;</span>', '<a href="https://willy-tech.de/" target="_blank">Willy Fritzsche</a>'); ?> 2013-2016</div>
 		</div>
 	</div>
 	<script type="text/javascript">var errorHandler = '<?php echo $data['errorHandler']; ?>';</script>
