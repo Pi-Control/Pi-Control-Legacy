@@ -16,6 +16,8 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 			setConfig('user:user_'.strtolower($dataUser['username']).'.password', $dataUser['password'], PICONTROL_PATH.'resources/config/');
 			setConfig('user:user_'.strtolower($dataUser['username']).'.last_login', 0, PICONTROL_PATH.'resources/config/');
 			
+			unlink(CACHE_PATH.'user.cache.php');
+			
 			if (rename(PICONTROL_PATH.'install', PICONTROL_PATH.'install_'.generateUniqId(32, false)) !== false)
 				$tpl->redirect('../');
 			else
