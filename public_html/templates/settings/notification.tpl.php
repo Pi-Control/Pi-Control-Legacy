@@ -55,7 +55,7 @@
 			</div>
 			<div class="inner">
 				<br /><br />
-				<strong>Benachrichtige mich, wenn...</strong>
+				<strong>Benachrichtige mich, wenn...</strong> <?php echo showHelper('in-welchen-abstaenden-sendet-das-pi-control-benachrichtigungen'); ?>
 			</div>
 			<div class="inner-table">
 				<table class="table table-borderless table-form">

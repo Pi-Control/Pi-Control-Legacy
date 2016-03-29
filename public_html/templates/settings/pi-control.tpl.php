@@ -44,7 +44,7 @@
 					</tr>
 					<tr>
 						<td>Externer Zugriff</td>
-						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info">Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.</span></td>
+						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info">Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.</span> <?php echo showHelper('welcher-adressbereich-zaehlt-zum-lokalen-netzwerk'); ?></td>
 					</tr>
 				</table>
 			</div>
@@ -87,7 +87,7 @@
 						<td>Aktion</td>
 						<td style="width: 130px;"><input type="checkbox" name="temperature-action-email" id="cb-temperature-email" value="checked"<?php if ($data['temperature-action-email'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-email" class="checkbox">E-Mail senden</label></td>
 						<td><input type="text" name="temperature-action-email-text"<?php echo ' value="'.$data['temperature-action-email-text'].'"'; ?> />
-							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="Best&auml;tigen" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">&Uuml;berpr&uuml;fen</a>' : '<strong class="green">Bestätigt</strong>'; } ?></td>
+							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="Best&auml;tigen" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">&Uuml;berpr&uuml;fen</a> '.showHelper('wie-bestaetige-ich-meine-e-mail', true) : '<strong class="green">Bestätigt</strong>'; } ?></td>
 					</tr>
 					<tr>
 						<td></td>
