@@ -2,7 +2,7 @@
 <div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Installierte Packete</span>
+			<span>Installierte Pakete</span>
 			<?php showGoBackIcon('?s=detailed_overview'); ?>
 		</div>
 		<div class="inner">
