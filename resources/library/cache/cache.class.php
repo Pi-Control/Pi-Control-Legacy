@@ -130,12 +130,15 @@ class Cache
 		return 0;
 	}
 	
-	public function displayHint()
+	public function displayHint($boolean = false)
 	{
 		if ($this->statusCode != 0 || $this->loadType == self::EXECUTION || $this->loadType == self::EXECUTION_NOCACHE)
 			return NULL;
 		
-		return '<div><span class="cached" title="Stand: '.formatTime($this->modificationTime).'"><span>Cached</span><a href="?s=settings&amp;do=cache&amp;clear='.$this->name.'&amp;redirect='.urlencode($_SERVER['QUERY_STRING']).'">Aktualisieren</a></span></div>';
+		if ($boolean == false)
+			return '<div><span class="cached" title="Stand: '.formatTime($this->modificationTime).'"><span>Cached</span><a href="?s=settings&amp;do=cache&amp;clear='.$this->name.'&amp;redirect='.urlencode($_SERVER['QUERY_STRING']).'">Aktualisieren</a></span></div>';
+		else
+			return array('name' => $this->name, 'modificationTime' => $this->modificationTime);
 	}
 	
 	public function clear()
