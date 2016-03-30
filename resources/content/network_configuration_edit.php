@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $interfaceName = urldecode($_GET['edit']);
 $interface = $networkInterface->getInterface($interfaceName);
 

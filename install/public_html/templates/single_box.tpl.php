@@ -27,7 +27,7 @@
 <!-- Footer -->
 	<div id="footer" style="background: none; border: none; min-height: auto;">
 		<div id="footer-inner">
-			<div id="footer-copyright">Mit <span style="color: #F44336;">&#10084;</span> entwickelt von <a href="http://willy-tech.de/" target="_blank">Willy Fritzsche</a>. 2013-2016</div>
+			<div id="footer-copyright">Mit <span style="color: #F44336;">&#10084;</span> entwickelt von <a href="https://willy-tech.de/" target="_blank">Willy Fritzsche</a>. 2013-2016</div>
 		</div>
 	</div>
 </body>

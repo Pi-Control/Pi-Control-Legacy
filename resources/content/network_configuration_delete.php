@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 $interfaceName = urldecode($_GET['delete']);
 
 if (isset($_POST['submit']) && $_POST['submit'] != '')

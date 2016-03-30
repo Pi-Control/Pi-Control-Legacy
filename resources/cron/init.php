@@ -1,6 +1,6 @@
 <?php
 if (PHP_SAPI != 'cli') exit();
-DEFINE('PICONTROL', true);
+define('PICONTROL', true);
 
 $doNotCheckForAuthentification = true;
 (include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');

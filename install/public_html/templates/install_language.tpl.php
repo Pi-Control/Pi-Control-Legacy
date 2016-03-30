@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <script type="text/javascript">var languageArray = <?php echo $data['languageArray']; ?></script>
 <script type="text/javascript" src="public_html/js/install.language.js"></script>
 <style>

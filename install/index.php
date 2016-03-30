@@ -1,5 +1,5 @@
 <?php
-DEFINE('PICONTROL', true);
+define('PICONTROL', true);
 
 (include_once realpath(dirname(__FILE__)).'/resources/init.php') or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
 

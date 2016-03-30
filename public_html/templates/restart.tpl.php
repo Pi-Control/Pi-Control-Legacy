@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <script type="text/javascript" src="public_html/js/shutdown.restart.js"></script>
 <div>
 	<div class="box">

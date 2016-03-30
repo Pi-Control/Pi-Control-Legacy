@@ -1,4 +1,6 @@
 <?php
+if (!defined('PICONTROL')) exit();
+
 class NetworkInterface
 {
 	private $tpl;

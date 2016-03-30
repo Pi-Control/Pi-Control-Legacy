@@ -1,3 +1,4 @@
+<?php if (!defined('PICONTROL')) exit(); ?>
 <style>
 @-webkit-keyframes move {
     0% {
