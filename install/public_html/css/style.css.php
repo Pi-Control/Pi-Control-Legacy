@@ -779,6 +779,48 @@ img {
 	/*display: block;*/
 }
 
+.feedback {
+	background: rgba(0, 0, 0, 0.7);
+	position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: table;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.feedback > a {
+	display: table-row;
+    color: #FFFFFF;
+    text-decoration: none;
+    height: 1%;
+    text-align: right;
+    font-weight: bold;
+}
+
+.feedback .feedback-inner {
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.feedback div.box {
+	text-align: left;
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.feedback div.box img, .feedback div.box strong {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 30px;
+}
+
 .flex-container {
 	padding: 0;
 	margin: 0;
