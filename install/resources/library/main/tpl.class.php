@@ -50,7 +50,6 @@ class PiTpl
 	
 	// Footer
 	private $tplFooterConfig = array();
-	private $tplFooterErrorHandler = array();
 	
 	// SSH
 	private $tplSSH = NULL;
@@ -430,11 +429,10 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function setDrawFooter($draw = true, $mainConfig = NULL, $errorHandler = NULL)
+	public function setDrawFooter($draw = true, $mainConfig = NULL)
 	{
 		$this->tplLoadFooter = $draw;
 		$this->tplFooterConfig = $mainConfig;
-		$this->tplFooterErrorHandler = $errorHandler;
 		
 		return true;
 	}
@@ -449,6 +447,8 @@ class PiTpl
 	
 	private function drawFooter()
 	{
+		global $errorHandler;
+		
 		if ($this->tplLoadFooter !== true)
 			return false;
 		
@@ -461,7 +461,7 @@ class PiTpl
 		
 		$tplMain = $this->tpl;
 		$tplConfig = $this->tplFooterConfig;
-		$tplErrorHandler = $this->tplFooterErrorHandler;
+		$tplErrorHandler = $errorHandler;
 		
 		(include_once $fileName) or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $fileName), __LINE__);
 		

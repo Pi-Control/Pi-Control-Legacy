@@ -15,7 +15,7 @@ $tpl = new PiTpl;
 $tpl->setTpl($tpl);
 $tpl->setTplFolder(TEMPLATES_PATH);
 $tpl->setDrawHeader(true);
-$tpl->setDrawFooter(true, $config, $errorHandler);
+$tpl->setDrawFooter(true, $config);
 
 try
 {

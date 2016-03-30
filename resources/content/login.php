@@ -10,7 +10,7 @@ $tpl = new PiTpl;
 $tpl->setTpl($tpl);
 $tpl->setTplFolder(TEMPLATES_PATH);
 $tpl->setDrawHeader(false);
-$tpl->setDrawFooter(false, $config, $errorHandler);
+$tpl->setDrawFooter(false, $config);
 
 $externalAccess = (urlIsPublic($_SERVER['REMOTE_ADDR']) && getConfig('main:access.external', 'false') == 'false') ? false : true;
 $nextTry = getConfig('login:login.nextTry');
