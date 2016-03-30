@@ -210,6 +210,10 @@ function _t2()
 		}
 		
 		$checksum = substr(md5($args[0]), 0, 8);
+		
+		if (is_numeric($checksum))
+			$checksum[7] = 'z';
+		
 		if (isset($globalLanguageArray[$checksum]) && $lang != 'de')
 			$args[0] = $globalLanguageArray[$checksum];
 		
