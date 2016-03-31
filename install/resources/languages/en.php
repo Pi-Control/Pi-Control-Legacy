@@ -96,6 +96,7 @@ $langArray = array(
 	'ab72181c' => 'The user for the Pi Control was created successfully.',
 	'3797658z' => 'The cron for the Pi Control was created successfully.',
 	'ccd2cb88' => 'Unfortunately an error has occurred while reading the Pi Control user! Please repeat the installation.',
-	'744e8e56' => 'Couldn\'t find the selected language! Please try again.'
+	'744e8e56' => 'Couldn\'t find the selected language! Please try again.',
+	'52e5304c' => 'Fault'
 );
 ?>

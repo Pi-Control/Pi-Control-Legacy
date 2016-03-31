@@ -56,7 +56,18 @@ class PiTpl
 	
 	function __construct()
 	{
+		global $globalLanguage, $globalLanguageArray;
+		
 		$this->runtimeStart = microtime(true);
+		
+		$lang = $globalLanguage;
+		$langFile = LANGUAGE_PATH.$lang.'.php';
+		
+		if (empty($globalLanguageArray) && file_exists($langFile) === true && is_file($langFile) === true)
+		{
+			include $langFile;
+			$globalLanguageArray = $langArray;
+		}
 		
 		foreach ($this->tplConfigs as $configFile)
 		{

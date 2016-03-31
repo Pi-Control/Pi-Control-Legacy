@@ -33,7 +33,7 @@ foreach ($fileArray as $file_)
 		$logArray[] = array('log' => 'cpuload',
 							'label' => _t('CPU-Auslastung'),
 							'type' => 'cpuload',
-							'title' => _t('Auslastung %'),
+							'title' => _t('Auslastung %%'),
 							'unit' => ' %',
 							'columns' => array(1));
 	}
@@ -42,7 +42,7 @@ foreach ($fileArray as $file_)
 		$logArray[] = array('log' => 'ram',
 							'label' => _t('RAM-Auslastung'),
 							'type' => 'ram',
-							'title' => _t('Auslastung %'),
+							'title' => _t('Auslastung %%'),
 							'unit' => ' %',
 							'columns' => array(1));
 	}

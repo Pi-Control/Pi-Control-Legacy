@@ -207,7 +207,7 @@ function _t()
 	
 	$args = func_get_args();
 	$lang = $globalLanguage;
-	$langFile = LANGUAGE_PATH.'/'.$lang.'.php';
+	$langFile = LANGUAGE_PATH.$lang.'.php';
 	
 	if (empty($globalLanguageArray) && file_exists($langFile) === true && is_file($langFile) === true)
 	{
@@ -242,7 +242,7 @@ function _e()
 	
 	$args = func_get_args();
 	$lang = $globalLanguage;
-	$langFile = LANGUAGE_PATH.'/'.$lang.'.php';
+	$langFile = LANGUAGE_PATH.$lang.'.php';
 	
 	if (empty($globalLanguageArray) && file_exists($langFile) === true && is_file($langFile) === true)
 	{
@@ -336,7 +336,9 @@ if (!function_exists('array_column'))
 
 function checkUpdate()
 {
-	global $config;
+	global $config, $globalLanguage;
+	
+	$lang = $globalLanguage;
 	
 	if (!class_exists('cURL'))
 		(include LIBRARY_PATH.'curl/curl.class.php');
@@ -356,6 +358,11 @@ function checkUpdate()
 	if ($data['latest']['versioncode'] > $config['version']['versioncode'])
 	{
 		$currentUpdateKey = array_search($config['version']['versioncode']+1, array_column($data['versions'], 'versioncode'));
+		
+		if (isset($data['versions'][$currentUpdateKey]['changelog'][$lang]))
+			$data['versions'][$currentUpdateKey]['changelog'] = $data['versions'][$currentUpdateKey]['changelog'][$lang];
+		else
+			$data['versions'][$currentUpdateKey]['changelog'] = current($data['versions'][$currentUpdateKey]['changelog']);
 		
 		return $data['versions'][$currentUpdateKey];
 	}

@@ -30,7 +30,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		$tpl->msg('error', _t('Fehler'), _t('Leider ist ein Fehler beim Auslesen des Pi Control Benutzers aufgetreten! Bitte wiederhole die Installation.'));
 }
 
-$tpl->assign('configUpdateNotification', $config['url']['updateNotification']);
+$tpl->assign('configUpdateNotification', $config['url']['updateNotification'].'&amp;lang='.$globalLanguage);
 
 $tpl->draw('install_finish');
 ?>
