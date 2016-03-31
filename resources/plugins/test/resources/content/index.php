@@ -1,3 +1,0 @@
-<?php
-$tpl->draw('index');
-?>
