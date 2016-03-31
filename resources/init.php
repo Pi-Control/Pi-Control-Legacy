@@ -7,12 +7,12 @@ if (!isset($config))
 {
 	$config = array(
 		'ssh' => array(
-			'ssh_ip'							=> $_SERVER['SERVER_ADDR']
+			'ssh_ip'							=> '127.0.0.1'
 		),
 		'version' => array(
-			'version'							=> '2.0',
+			'version'							=> '2.0.0 Beta',
 			'versioncode'						=> 17,
-			'android_comp_level'				=> 4
+			'android_comp_level'				=> 5
 		),
 		'url' => array(
 			'update'							=> 'https://pi-control.de/service/v1/update/',
