@@ -13,7 +13,6 @@ if ($referer != '')
 	$referer = '&referer='.urlencode($referer);
 
 $tpl->assign('updatePicontrol', isset($picontrolUpdate) ? $picontrolUpdate : '');
-$tpl->assign('javascript_req_url', urlencode($_SERVER['REQUEST_URI']));
 $tpl->assign('referer', $referer);
 $tpl->assign('langUrl', (isset($_GET['lang']) && $_GET['lang'] != '') ? '&amp;lang='.$_GET['lang'] : '');
 

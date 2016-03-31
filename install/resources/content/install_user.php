@@ -18,21 +18,21 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 				if ($pPassword == $pPassword2)
 				{
 					if (($return = writeToFile('user', json_encode(array('username' => $pUsername, 'password' => password_hash($pPassword, PASSWORD_BCRYPT))))) === 0)
-						$showInfo = true; //$tpl->redirect('?s=install_cron');
+						$showInfo = true;
 					else
-						$tpl->msg('error', '', _t('Es gab ein Fehler w&auml;hrend der Dateioperation! Fehlercode: %s', $return));
+						$tpl->msg('error', _t('Fehler'), _t('Es gab ein Fehler w&auml;hrend der Dateioperation! Fehlercode: %s', $return));
 				}
 				else
-					$tpl->msg('error', '', _t('Die angegebenen Passw&ouml;rter stimmen nicht &uuml;berein!'));
+					$tpl->msg('error', _t('Fehler'), _t('Die angegebenen Passw&ouml;rter stimmen nicht &uuml;berein!'));
 			}
 			else
-				$tpl->msg('error', '', _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # .'));
+				$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # .'));
 		}
 		else
-			$tpl->msg('error', '', _t('Leider ist der Benutzername ung&uuml;ltig! Der Benutzername muss aus 2 bis 32 Zeichen bestehen. Das erste Zeichen muss ein Buchstabe sein und es sind nur folgende Zeichen erlaubt: A-Z 0-9 - _'));
+			$tpl->msg('error', _t('Fehler'), _t('Leider ist der Benutzername ung&uuml;ltig! Der Benutzername muss aus 2 bis 32 Zeichen bestehen. Das erste Zeichen muss ein Buchstabe sein und es sind nur folgende Zeichen erlaubt: A-Z 0-9 - _'));
 	}
 	else
-		$tpl->msg('error', '', _t('Bitte alle Felder ausf&uuml;llen!'));
+		$tpl->msg('error', _t('Fehler'), _t('Bitte alle Felder ausf&uuml;llen!'));
 }
 
 if ($showInfo === true)

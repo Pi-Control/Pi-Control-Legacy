@@ -1,8 +1,8 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'main/rpi.function.php') or die($error_code['0x0006']);
-(include_once LIBRARY_PATH.'install/install.function.php') or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Error: 0x0010');
+(include_once LIBRARY_PATH.'install/install.function.php')	or die('Error: 0x0011');
 $tpl->setHeaderTitle(_t('Anforderungen'));
 
 // PHP

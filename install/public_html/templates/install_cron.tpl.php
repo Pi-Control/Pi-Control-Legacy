@@ -39,7 +39,7 @@
 			<span><?php _e('SSH-Login'); ?></span>
 		</div>
 		<div class="inner-info">
-			<div><?php _e('Deine Daten werden f&uuml;r diese Funtkion nicht gespeichert und nur zum einmaligen Eintragen eines Crons in /etc/crontab ben&ouml;tigt.'); ?></div>
+			<div><?php _e('Deine Daten werden f&uuml;r diese Funktion nicht gespeichert und nur zum einmaligen Eintragen eines Crons in /etc/crontab ben&ouml;tigt.'); ?></div>
 		</div>
 		<form action="?s=install_cron" method="post">
 			<input type="radio" id="ssh-login-passwd" name="ssh-login" value="password" checked="checked" />

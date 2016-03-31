@@ -14,7 +14,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		$tpl->redirect('?s=install_requirement&lang='.$_POST['language']);
 	}
 	
-	$tpl->msg('error', '', 'Konnte die gew&auml;hlte Sprache nicht finden! Bitte versuche es noch einmal.');
+	$tpl->msg('error', _t('Fehler'), _t('Konnte die gew&auml;hlte Sprache nicht finden! Bitte versuche es noch einmal.'));
 }
 
 $languages = array('de', 'en');

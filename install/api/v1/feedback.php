@@ -1,10 +1,10 @@
 <?php
 define('PICONTROL', true);
 
-(include_once realpath(dirname(__FILE__)).'/../../resources/init.php');
-(include_once LIBRARY_PATH.'main/main.function.php') or die('Fehler beim Laden!');
-(include_once LIBRARY_PATH.'main/rpi.function.php') or die('Fehler beim Laden!');
-(include_once LIBRARY_PATH.'install/install.function.php') or die('Fehler beim Laden!');
+(include_once realpath(dirname(__FILE__)).'/../../resources/init.php')	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/main.function.php')					or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'main/rpi.function.php')						or die('Error: 0x0002');
+(include_once LIBRARY_PATH.'install/install.function.php')				or die('Error: 0x0003');
 
 setGlobalLanguage();
 

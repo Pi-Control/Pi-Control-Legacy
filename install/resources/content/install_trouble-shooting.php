@@ -1,7 +1,7 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'install/install.function.php') or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'install/install.function.php') or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Problembehandlung'));
 
 $filesFolders = fileFolderPermission();
