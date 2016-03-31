@@ -75,7 +75,7 @@
 				</tr>
 				<tr>
 					<td><?php _e('Installierte Pakete'); ?></td>
-					<td><?php echo $data['installedPackagesCount']; ?> <a href="?s=installed_packages">(Pakete auflisten)</a></td>
+					<td><?php echo $data['installedPackagesCount']; ?> <a href="?s=installed_packages">(<?php _e('Pakete auflisten'); ?>)</a></td>
 				</tr>
 			</table>
 			<br />

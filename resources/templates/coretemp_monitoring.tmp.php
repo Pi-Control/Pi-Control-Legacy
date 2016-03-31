@@ -3,11 +3,11 @@ if (PHP_SAPI != 'cli') exit();
 define('PICONTROL', true);
 
 $doNotCheckForAuthentification = true;
-(include_once realpath(dirname(__FILE__)).'/../init.php') 	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
-(include_once LIBRARY_PATH.'main/main.function.php')		or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0001');
-(include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
-(include_once LIBRARY_PATH.'cron/cron.class.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0003');
-(include_once LIBRARY_PATH.'curl/curl.class.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0004');
+(include_once realpath(dirname(__FILE__)).'/../init.php') 	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/main.function.php')		or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Error: 0x0002');
+(include_once LIBRARY_PATH.'cron/cron.class.php')			or die('Error: 0x0003');
+(include_once LIBRARY_PATH.'curl/curl.class.php')			or die('Error: 0x0004');
 
 $cron = new Cron;
 $cron->setName('coretemp_monitoring');

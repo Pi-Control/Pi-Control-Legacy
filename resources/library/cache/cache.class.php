@@ -136,7 +136,7 @@ class Cache
 			return NULL;
 		
 		if ($boolean == false)
-			return '<div><span class="cached" title="Stand: '.formatTime($this->modificationTime).'"><span>Cached</span><a href="?s=settings&amp;do=cache&amp;clear='.$this->name.'&amp;redirect='.urlencode($_SERVER['QUERY_STRING']).'">Aktualisieren</a></span></div>';
+			return '<div><span class="cached" title="'._t('Stand').': '.formatTime($this->modificationTime).'"><span>'._t('Cached').'</span><a href="?s=settings&amp;do=cache&amp;clear='.$this->name.'&amp;redirect='.urlencode($_SERVER['QUERY_STRING']).'">'._t('Aktualisieren').'</a></span></div>';
 		else
 			return array('name' => $this->name, 'modificationTime' => $this->modificationTime);
 	}

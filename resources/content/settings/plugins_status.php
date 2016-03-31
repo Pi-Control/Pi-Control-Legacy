@@ -6,15 +6,15 @@ $plugin = $gPlugin;
 if ($plugin['disabled'] == true)
 {
 	if (setPluginStatus($plugin['id'], true) == true)
-		$tpl->msg('success', '', 'Das Plugin "'.$plugin['name'].'" wurde erfolgreich aktiviert.');
+		$tpl->msg('success', _t('Plugin aktiviert'), _t('Das Plugin "%s" wurde erfolgreich aktiviert.', $plugin['name']));
 	else
-		$tpl->msg('error', '', 'Das Plugin "'.$plugin['name'].'" konnte nicht aktiviert werden.');
+		$tpl->msg('error', _t(''), _t('Das Plugin "%s" konnte nicht aktiviert werden.', $plugin['name']));
 }
 elseif ($plugin['disabled'] == false)
 {
 	if (setPluginStatus($plugin['id'], false) == true)
-		$tpl->msg('success', '', 'Das Plugin "'.$plugin['name'].'" wurde erfolgreich deaktiviert.');
+		$tpl->msg('success', _t('Plugin deaktiviert'), _t('Das Plugin "%s" wurde erfolgreich deaktiviert.', $plugin['name']));
 	else
-		$tpl->msg('error', '', 'Das Plugin "'.$plugin['name'].'" konnte nicht deaktiviert werden.');
+		$tpl->msg('error', _t(''), _t('Das Plugin "%s" konnte nicht deaktiviert werden.', $plugin['name']));
 }
 ?>

@@ -3,7 +3,7 @@ if (!defined('PICONTROL')) exit();
 
 function pluginDisabled($pluginId)
 {
-	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/plugin_disabled.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/plugin_disabled.php'))
+	if (file_exists(PLUGINS_PATH.$pluginId.'/plugin_disabled.php') && is_file(PLUGINS_PATH.$pluginId.'/plugin_disabled.php'))
 		return true;
 	
 	return false;
@@ -13,7 +13,7 @@ function pluginConfig($pluginId)
 {
 	global $config;
 	
-	if (!file_exists(PLUGINS_PATH.'/'.$pluginId.'/plugin.config.php') || !is_file(PLUGINS_PATH.'/'.$pluginId.'/plugin.config.php') || !include PLUGINS_PATH.'/'.$pluginId.'/plugin.config.php')
+	if (!file_exists(PLUGINS_PATH.$pluginId.'/plugin.config.php') || !is_file(PLUGINS_PATH.$pluginId.'/plugin.config.php') || !include PLUGINS_PATH.$pluginId.'/plugin.config.php')
 		return false;
 	
 	if (!isset($pluginConfig) || empty($pluginConfig))
@@ -24,12 +24,12 @@ function pluginConfig($pluginId)
 	
 	$pluginConfig['disabled'] = pluginDisabled($pluginId);
 	
-	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/resources/content/settings/settings.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/resources/content/settings/settings.php'))
+	if (file_exists(PLUGINS_PATH.$pluginId.'/resources/content/settings/settings.php') && is_file(PLUGINS_PATH.$pluginId.'/resources/content/settings/settings.php'))
 		$pluginConfig['settings'] = true;
 	else
 		$pluginConfig['settings'] = false;
 	
-	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/resources/content/widget/widget.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/resources/content/widget/widget.php'))
+	if (file_exists(PLUGINS_PATH.$pluginId.'/resources/content/widget/widget.php') && is_file(PLUGINS_PATH.$pluginId.'/resources/content/widget/widget.php'))
 		$pluginConfig['widget'] = true;
 	else
 		$pluginConfig['widget'] = false;
@@ -52,7 +52,7 @@ function pluginLanguage($pluginId)
 		return false;
 	
 	$lang = $globalLanguage;
-	$langFile = PLUGINS_PATH.'/'.$pluginConfig['id'].'/resources/languages/'.$lang.'.php';
+	$langFile = PLUGINS_PATH.$pluginConfig['id'].'/resources/languages/'.$lang.'.php';
 	
 	if (file_exists($langFile) === true && is_file($langFile) === true)
 	{
@@ -77,7 +77,7 @@ function pluginList($listDisabled = true, $listConfig = true)
 		if ($plugin == '.' || $plugin == '..')
 			continue;
 		
-		if (!file_exists(PLUGINS_PATH.'/'.$plugin.'/plugin.config.php') || !is_file(PLUGINS_PATH.'/'.$plugin.'/plugin.config.php'))
+		if (!file_exists(PLUGINS_PATH.$plugin.'/plugin.config.php') || !is_file(PLUGINS_PATH.'/'.$plugin.'/plugin.config.php'))
 			continue;
 		
 		$pluginConfig = pluginConfig($plugin);
@@ -106,13 +106,13 @@ function setPluginStatus($pluginId, $status)
 	
 	if ($status == true)
 	{
-		if (unlink(PLUGINS_PATH.'/'.$pluginId.'/plugin_disabled.php') == true)
+		if (unlink(PLUGINS_PATH.$pluginId.'/plugin_disabled.php') == true)
 			return true;
 		else
 			return false;
 	}
 	
-	if (touch(PLUGINS_PATH.'/'.$pluginId.'/plugin_disabled.php') == true)
+	if (touch(PLUGINS_PATH.$pluginId.'/plugin_disabled.php') == true)
 		return true;
 	else
 		return false;
@@ -123,14 +123,14 @@ function deletePlugin($pluginId, $referer = NULL)
 	if (empty($pluginId))
 		return false;
 	
-	if (file_exists(PLUGINS_PATH.'/'.$pluginId.'/uninstall.php') && is_file(PLUGINS_PATH.'/'.$pluginId.'/uninstall.php'))
+	if (file_exists(PLUGINS_PATH.$pluginId.'/uninstall.php') && is_file(PLUGINS_PATH.$pluginId.'/uninstall.php'))
 	{
 		if ($referer != NULL)
 			$tpl->redirect('resources/plugins/'.$pluginId.'/uninstall.php?referer='.urlencode($referer));
 	}
 	else
 	{
-		deleteFolder(PLUGINS_PATH.'/'.$pluginId.'/');
+		deleteFolder(PLUGINS_PATH.$pluginId.'/');
 		
 		if ($referer != NULL)
 			$tpl->redirect($referer);

@@ -2,19 +2,19 @@
 <div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Installierte Pakete</span>
+			<span><?php _e('Installierte Pakete'); ?></span>
 			<?php showGoBackIcon('?s=detailed_overview'); ?>
 		</div>
 		<div class="inner">
-			<strong>Anzahl an installierten Paketen: <?php echo $data['installedPackagesCount']; ?></strong>
+			<strong><?php _e('Anzahl an installierten Paketen: %s', $data['installedPackagesCount']); ?></strong>
 			</table>
 		</div>
 		<div class="inner-table overflow-auto">
 			<table class="table table-borderless">
 				<tr>
-					<th>Paketname</th>
-					<th>Version</th>
-					<th>Beschreibung</th>
+					<th><?php _e('Paketname'); ?></th>
+					<th><?php _e('Version'); ?></th>
+					<th><?php _e('Beschreibung'); ?></th>
 				</tr>
 <?php foreach ($data['installedPackages'] as $package) { ?>
 				<tr>

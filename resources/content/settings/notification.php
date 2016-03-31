@@ -16,17 +16,17 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		if (strlen($token) >= 32 && strlen($token) <= 46)
 			setConfig('main:notificationPB.token', $token);
 		else
-			$tpl->msg('error', '', 'Leider ist der angegebene Zugangstoken ung&uuml;ltig!', true, 10);
+			$tpl->msg('error', _t('Fehler'), _t('Leider ist der angegebene Zugangstoken ung&uuml;ltig!'), true, 10);
 		
 		if ($cpu_temperature_maximum != '' && $cpu_temperature_maximum >= 40 && $cpu_temperature_maximum <= 90)
 			setConfig('main:notificationPB.cpuTemperatureMaximum', $cpu_temperature_maximum);
 		else
-			$tpl->msg('error', '', 'Leider ist die angegebene Temperatur ung&uuml;ltig!', true, 11);
+			$tpl->msg('error', _t('Fehler'), _t('Leider ist die angegebene Temperatur ung&uuml;ltig!'), true, 11);
 		
 		if ($memory_used_text != '' && $memory_used_text >= 1 && $memory_used_text <= 100)
 			setConfig('main:notificationPB.memoryUsedLimit', $memory_used_text);
 		else
-			$tpl->msg('error', '', 'Leider ist der angegebene Prozentsatz ung&uuml;ltig!', true, 12);
+			$tpl->msg('error', _t('Fehler'), _t('Leider ist der angegebene Prozentsatz ung&uuml;ltig!'), true, 12);
 		
 		if ($tpl->msgExists(10) === false)
 			setConfig('main:notificationPB.picontrolVersionEnabled', (isset($_POST['event-pi-control-version'])) ? 'true' : 'false');
@@ -46,11 +46,11 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 				
                 if ($cron->save() === true)
 				{
-                    $tpl->msg('success', '', 'Die Benachrichtigung wurde aktiviert.');
+                    $tpl->msg('success', _t('Benachrichtigung aktiviert'), _t('Die Benachrichtigung wurde aktiviert.'));
 					setConfig('main:notificationPB.enabled', 'true');
 				}
                 else
-                    $tpl->msg('error', '', 'Konnte die Benachrichtigung nicht aktivieren!');
+                    $tpl->msg('error', _t('Fehler'), _t('Konnte die Benachrichtigung nicht aktivieren!'));
             }
         }
         else
@@ -61,24 +61,24 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 				
                 if ($cron->delete() === true)
 				{
-                    $tpl->msg('success', '', 'Die Benachrichtigung wurde deaktiviert.');
+                    $tpl->msg('success', _t('Benachrichtigung deaktiviert'), _t('Die Benachrichtigung wurde deaktiviert.'));
 					setConfig('main:notificationPB.enabled', 'false');
 				}
                 else
-                    $tpl->msg('error', '', 'Konnte die Benachrichtigung nicht deaktivieren!');
+                    $tpl->msg('error', _t('Fehler'), _t('Konnte die Benachrichtigung nicht deaktivieren!'));
             }
         }
 		
 		if ($tpl->msgExists(10) === false && $tpl->msgExists(11) === false && $tpl->msgExists(12) === false)
-			$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.');
+			$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'));
 	}
 	elseif (isset($_POST['token']) && ($token = trim($_POST['token'])) == '')
 	{
 		setConfig('main:notificationPB.token', '');
-		$tpl->msg('success', '', 'Der Token wurde erfolgreich entfernt.');
+		$tpl->msg('success', _t('Token entfernt'), _t('Der Token wurde erfolgreich entfernt.'));
 	}
 	else
-		$tpl->msg('error', '', 'Bitte f&uuml;lle alle n&ouml;tigen Felder aus und w&auml;hle mindestens eine der Aktionen!');
+		$tpl->msg('error', _t('Fehler'), _t('Bitte f&uuml;lle alle n&ouml;tigen Felder aus und w&auml;hle mindestens eine der Aktionen!'));
 }
 
 $token = getConfig('main:notificationPB.token', '');
@@ -88,11 +88,11 @@ if ($token != '')
     {
 		$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 		$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-		$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control', 'body' => 'Dein Pi Control hat dir eine Testbenachrichtigung gesendet.')));
+		$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control', 'body' => _t('Dein Pi Control hat dir eine Testbenachrichtigung gesendet.'))));
 		$curl->execute();
 		
 		if ($curl->getStatusCode() != 200)
-			$tpl->msg('error', 'Verbindungsfehler', 'Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: '.$curl->getStatusCode());
+			$tpl->msg('error', _t('Verbindungsfehler'), _t('Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: %d', $curl->getStatusCode()));
     }
 	
 	$curl = new cURL('https://api.pushbullet.com/v2/users/me');
@@ -104,7 +104,7 @@ if ($token != '')
 		if ($curl->getResult($dataMe) == JSON_ERROR_NONE)
 		{
 			if (isset($dataMe['error']))
-				$tpl->msg('error', 'Pushbullet', 'Pushbullet meldet einen Fehler mit einer Anfrage: '.$dataMe['error']['message']);
+				$tpl->msg('error', 'Pushbullet', _t('Pushbullet meldet einen Fehler mit einer Anfrage: %s', $dataMe['error']['message']));
 			else
 			{
 				$curl = new cURL('https://api.pushbullet.com/v2/devices');
@@ -116,16 +116,16 @@ if ($token != '')
 					if ($curl->getResult($dataDevices) == JSON_ERROR_NONE)
 					{
 						if (isset($dataDevices['error']))
-							$tpl->msg('error', 'Pushbullet', 'Pushbullet meldet einen Fehler mit einer Anfrage: '.$dataDevices['error']['message']);
+							$tpl->msg('error', 'Pushbullet', _t('Pushbullet meldet einen Fehler mit einer Anfrage: %s', $dataDevices['error']['message']));
 					}
 				}
 				else
-					$tpl->msg('error', 'Verbindungsfehler', 'Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: '.$curl->getStatusCode());
+					$tpl->msg('error', _t('Verbindungsfehler'), _t('Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: %d', $curl->getStatusCode()));
 			}
 		}
 	}
 	else
-		$tpl->msg('error', 'Verbindungsfehler', 'Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: '.$curl->getStatusCode());
+		$tpl->msg('error', _t('Verbindungsfehler'), _t('Bei der Verbindung zu Pushbullet ist ein unerwarteter Fehler aufgetreten. Fehlercode: %d', $curl->getStatusCode()));
 }
 
 $tpl->assign('activation', (getConfig('main:notificationPB.enabled', 'false') == 'true') ? true : false);

@@ -18,7 +18,7 @@ foreach ($filesFolders as $file => $info)
 }
 
 // Cron
-$cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" # By Pi Control';
+$cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
 
 exec('cat /etc/crontab', $crontab);
 $cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode(PHP_EOL, $crontab));
@@ -32,10 +32,10 @@ $lastExecutionLog = array(
 
 rsort($lastExecutionLog);
 
-if (isset($_POST['cronSubmit']) && $_POST['cronSubmit'] != '')
+/*if (isset($_POST['cronSubmit']) && $_POST['cronSubmit'] != '')
 {
 	addCronToCrontab($cronEntry, $ssh); // TODO
-}
+}*/
 
 $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);

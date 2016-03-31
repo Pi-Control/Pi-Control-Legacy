@@ -3,7 +3,7 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle(_t('Einstellungen - Statistik'));
 
-$folder = LOG_PATH.'/statistic/';
+$folder = LOG_PATH.'statistic/';
 $fileArray = array();
 $logArray = array();
 $statistics = array();
@@ -37,9 +37,9 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 		$hiddenStatistics = array_diff($statistics, (isset($_POST['check'])) ? $_POST['check'] : array());
 		
 		if (setConfig('main:statistic.hidden', htmlspecialchars(serialize($hiddenStatistics))) !== false)
-			$tpl->msg('success', '', _t('Die Einstellungen wurden erfolgreich gespeichert.'));
+			$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'));
 		else
-			$tpl->msg('error', '', $error_code['0x0043']);
+			$tpl->msg('error', _t('Fehler'), _t('Konnte Wert nicht in Konfigurationsdatei speichern!'));
 	}
 	
 	foreach ($fileArray as $file)
@@ -89,7 +89,7 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 elseif (isset($_GET['reset']))
 {
 	if (array_search(urldecode($_GET['reset']), $statistics) === false)
-		$tpl->msg('error', '', $error_code['2x0013'].urldecode($_GET['reset']));
+		$tpl->msg('error', _t('Fehler'), _t('Der Verlauf konnte nicht gefunden werden: %s', urldecode($_GET['reset'])));
 	
 	if (isset($_GET['confirm']) && $_GET['confirm'] == '')
 	{
@@ -97,11 +97,11 @@ elseif (isset($_GET['reset']))
 		{
 			if (($logFile = fopen($folder.urldecode($_GET['reset']).'.csv', 'w')) !== false)
 			{
-				$tpl->msg('success', '', _t('Verlauf wurde erfolgreich zur&uuml;ckgesetzt.'));
+				$tpl->msg('success', _t('Verlauf zur&uuml;ckgesetzt'), _t('Verlauf wurde erfolgreich zur&uuml;ckgesetzt.'));
 				fclose($logFile);
 			}
 			else
-				$tpl->msg('error', '', _t('Verlauf konnte nicht zur&uuml;ckgesetzt werden.'));
+				$tpl->msg('error', _t('Fehler'), _t('Verlauf konnte nicht zur&uuml;ckgesetzt werden.'));
 		}
 	}
 	

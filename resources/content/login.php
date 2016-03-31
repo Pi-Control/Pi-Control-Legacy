@@ -2,9 +2,9 @@
 if (!defined('PICONTROL')) exit();
 
 $doNotCheckForAuthentification = true;
-(include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
-(include_once LIBRARY_PATH.'main/tpl.class.php')			or die($error_code['0x0001']);
-(include_once LIBRARY_PATH.'main/main.function.php')		or die($error_code['0x0002']);
+(include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Error: 0x0010');
+(include_once LIBRARY_PATH.'main/tpl.class.php')			or die('Error: 0x0011');
+(include_once LIBRARY_PATH.'main/main.function.php')		or die('Error: 0x0012');
 
 $tpl = new PiTpl;
 $tpl->setTpl($tpl);
@@ -16,10 +16,10 @@ $externalAccess = (urlIsPublic($_SERVER['REMOTE_ADDR']) && getConfig('main:acces
 $nextTry = getConfig('login:login.nextTry');
 
 if ($externalAccess === false)
-	$tpl->assign('errorMsg', 'Der Zugang steht nur im lokalem Netzwerk (LAN) zur Verf&uuml;gung!');
+	$tpl->assign('errorMsg', _t('Der Zugang steht nur im lokalem Netzwerk (LAN) zur Verf&uuml;gung!'));
 
 if ($nextTry > time())
-	$tpl->assign('errorMsg', 'Login noch f&uuml;r '.($nextTry-time()).' Sekunden gesperrt!');
+	$tpl->assign('errorMsg', _t('Login noch f&uuml;r %d Sekunden gesperrt!', $nextTry-time()));
 
 if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $externalAccess === true)
 {
@@ -35,7 +35,7 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $external
 			if ($nextTry > time())
 				break;
 			
-			if (($userinfo = $tpl->getConfig('user:user_'.$pUsername, 0)) === 0)
+			if (($userinfo = getConfig('user:user_'.$pUsername, 0)) === 0)
 				break;
 			
 			if (!is_array($userinfo))
@@ -48,14 +48,14 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $external
 			setConfig('login:login.nextTry', 0);
 			$uniqid = generateUniqId(32, false);
 			
-			if ($tpl->setConfig('login:token_'.$uniqid.'.created', time())					!== true) break;
-			if ($tpl->setConfig('login:token_'.$uniqid.'.username', $pUsername) 			!== true) break;
-			if ($tpl->setConfig('login:token_'.$uniqid.'.address', $_SERVER['REMOTE_ADDR']) !== true) break;
-			if ($tpl->setConfig('user:user_'.$pUsername.'.last_login', time())				!== true) break;
+			if (setConfig('login:token_'.$uniqid.'.created', time())					!== true) break;
+			if (setConfig('login:token_'.$uniqid.'.username', $pUsername)				!== true) break;
+			if (setConfig('login:token_'.$uniqid.'.address', $_SERVER['REMOTE_ADDR'])	!== true) break;
+			if (setConfig('user:user_'.$pUsername.'.last_login', time())				!== true) break;
 			
 			if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 'checked')
 			{
-				$tpl->setConfig('login:token_'.$uniqid.'.remember_me', 'true');
+				setConfig('login:token_'.$uniqid.'.remember_me', 'true');
 				setcookie('_pi-control_login', $uniqid, time()+60*60*24*30);
 			}
 			else
@@ -72,31 +72,31 @@ if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $external
 		
 		if ($nextTry > time())
 		{
-			$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!<br />Login noch f&uuml;r '.($nextTry-time()).' Sekunden gesperrt!');
+			$tpl->assign('errorMsg', _t('Fehler bei der Anmeldung!<br />Login noch f&uuml;r %d Sekunden gesperrt!', $nextTry-time()));
 		}
 		elseif ($try == 5)
 		{
-			$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r 30 Sekunden gesperrt!');
+			$tpl->assign('errorMsg', _t('Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r %d Sekunden gesperrt!', 30));
 			setConfig('login:login.nextTry', time() + 30);
 		}
 		elseif ($try == 6)
 		{
-			$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r 1 Minute gesperrt!');
+			$tpl->assign('errorMsg', _t('Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r %d Minute gesperrt!', 1));
 			setConfig('login:login.nextTry', time() + 60);
 		}
 		elseif ($try == 7)
 		{
-			$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r 2 Minuten gesperrt!');
+			$tpl->assign('errorMsg', _t('Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r %d Minuten gesperrt!', 2));
 			setConfig('login:login.nextTry', time() + 120);
 		}
 		elseif ($try >= 8)
 		{
-			$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r 5 Minuten gesperrt!');
+			$tpl->assign('errorMsg', _t('Fehler bei der Anmeldung!<br />Zu viele Fehlversuche. Login f&uuml;r %d Minuten gesperrt!', 5));
 			setConfig('login:login.nextTry', time() + 300);
 		}
 		else
 		{
-			$tpl->assign('errorMsg', 'Fehler bei der Anmeldung!');
+			$tpl->assign('errorMsg', _t('Fehler bei der Anmeldung!'));
 		}
 		
 		setConfig('login:login.try', $try + 1);

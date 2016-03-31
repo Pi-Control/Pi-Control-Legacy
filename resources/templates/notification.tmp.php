@@ -3,10 +3,10 @@ if (PHP_SAPI != 'cli') exit();
 define('PICONTROL', true);
 
 $doNotCheckForAuthentification = true;
-(include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
-(include_once LIBRARY_PATH.'main/main.function.php')		or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0001');
-(include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
-(include_once LIBRARY_PATH.'curl/curl.class.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
+(include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/main.function.php')		or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Error: 0x0002');
+(include_once LIBRARY_PATH.'curl/curl.class.php')			or die('Error: 0x0003');
 
 if (getConfig('main:notificationPB.enabled', false))
 {
@@ -30,7 +30,7 @@ if (getConfig('main:notificationPB.enabled', false))
                 
 				$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 				$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-				$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | Aktualisierung verfügbar', 'body' => 'Pi Control Version '.$picontrolUpdate['version'].' steht ab sofort zum herunterladen bereit.', 'lang' => $globalLanguage)));
+				$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Aktualisierung verfügbar'), 'body' => _t('Pi Control Version %s steht ab sofort zum herunterladen bereit.', $picontrolUpdate['version']))));
 				$curl->execute();
                 
                 // Reduziere Traffic, da selbst bei Fehler erst wieder nach 21600 Sek. geprüft wird
@@ -59,7 +59,7 @@ if (getConfig('main:notificationPB.enabled', false))
         {
 			$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 			$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | Temperaturüberschreitung', 'body' => 'Dein Pi Control meldet eine erhöhte Temperatur der CPU von '.$temp.' °C.')));
+			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Temperaturüberschreitung'), 'body' => _t('Dein Pi Control meldet eine erhöhte Temperatur der CPU von %s °C.', $temp))));
 			$curl->execute();
 			
 			if ($curl->getResult($data) == JSON_ERROR_NONE)
@@ -88,7 +88,7 @@ if (getConfig('main:notificationPB.enabled', false))
         {
 			$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 			$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | Speicherverbrauch', 'body' => 'Dein Pi Control meldet einen Speicherverbrauch von '.$percent.'%.')));
+			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Speicherverbrauch'), 'body' => _t('Dein Pi Control meldet einen Speicherverbrauch von %d%%.', $percent))));
 			$curl->execute();
 			
 			if ($curl->getResult($data) == JSON_ERROR_NONE)

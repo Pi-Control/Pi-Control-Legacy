@@ -54,6 +54,7 @@ $(document).on('ready', function(e)
 		
 		if(type == 'system')
 		{
+			umsg = (umsg == 'connected') ? 'Verbunden' : umsg;
 			$('#status').text(umsg);
 			$('#command').removeAttr('disabled');
 			msgBuffer = umsg;

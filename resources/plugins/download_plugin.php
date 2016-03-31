@@ -1,10 +1,10 @@
 <?php
 define('PICONTROL', true);
 
-(include_once realpath(dirname(__FILE__)).'/../init.php');
-(include_once LIBRARY_PATH.'main/tpl.class.php') or die('Fehler beim Laden!');
-(include_once LIBRARY_PATH.'main/main.function.php') or die('Fehler beim Laden!');
-(include_once LIBRARY_PATH.'plugin/plugin.function.php') or die('Fehler beim Laden!');
+(include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/tpl.class.php')			or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'main/main.function.php')		or die('Error: 0x0002');
+(include_once LIBRARY_PATH.'plugin/plugin.function.php')	or die('Error: 0x0003');
 
 $onlinePlugins = getOnlinePlugins();
 $pluginId = (isset($_GET['id'])) ? $_GET['id'] : '';
@@ -47,32 +47,32 @@ if (is_array($onlinePlugins))
 									$tpl->redirect('?s=discover_plugins&id='.$pluginId.'&installed');
 							}
 							else
-								$errorMsg = 'Leider ist ein Fehler beim entpacken des Plugins aufgetreten! Fehlercode: '.$zipRrror;
+								$errorMsg = _t('Leider ist ein Fehler beim entpacken des Plugins aufgetreten! Fehlercode: %s', $zipRrror);
 						}
 						else
-							$errorMsg = 'Der Ordner f&uuml;r das Plugin konnte nicht erstellt werden. Ordnerberechtigungen pr&uuml;fen und erneut versuchen. Sollte der Fehler weiterhin auftreten, schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiterhelfen kann.';
+							$errorMsg = _t('Der Ordner f&uuml;r das Plugin konnte nicht erstellt werden. Ordnerberechtigungen pr&uuml;fen und erneut versuchen. Sollte der Fehler weiterhin auftreten, schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiterhelfen kann.', 'https://willy-tech.de/kontakt/');
 					}
 					else
-						$errorMsg = 'Der Ordner f&uuml;r das Plugin existiert bereits. Bitte zun&auml;chst den Ordner l&ouml;schen.';
+						$errorMsg = _t('Der Ordner f&uuml;r das Plugin existiert bereits. Bitte zun&auml;chst den Ordner l&ouml;schen.');
 				}
 				else
-					$errorMsg = 'Das Plugin wurde nicht vollst&auml;ndig heruntergeladen. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiterhelfen kann.';
+					$errorMsg = _t('Das Plugin wurde nicht vollst&auml;ndig heruntergeladen. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiterhelfen kann.', 'https://willy-tech.de/kontakt/');
 			}
 			else
-				$errorMsg = 'Konnte das Plugin nicht zwischenspeichern! Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+				$errorMsg = _t('Konnte das Plugin nicht zwischenspeichern! Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', 'https://willy-tech.de/kontakt/');
 		}
 		else
-			$errorMsg = 'Konnte das Plugin auf dem Server nicht finden! Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+			$errorMsg = _t('Konnte das Plugin auf dem Server nicht finden! Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', 'https://willy-tech.de/kontakt/');
 	}
 	else
-		$errorMsg = 'Konnte die PluginID auf dem Server nicht finden! Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+		$errorMsg = _t('Konnte die PluginID auf dem Server nicht finden! Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', 'https://willy-tech.de/kontakt/');
 }
 else
-	$errorMsg = 'Leider ist beim Abrufen der Plugins ein Fehler aufgetreten. Fehlercode: '.$onlinePlugins.'<br />Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+	$errorMsg = _t('Leider ist beim Abrufen der Plugins ein Fehler aufgetreten. Fehlercode: %s<br />Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', $onlinePlugins, 'https://willy-tech.de/kontakt/');
 
 if (isset($errorMsg))
 {
-	$tpl->assign('content', '<div class="inner-header"><span>Plugin Installation</span></div><div class="inner"><strong class="red">'.$errorMsg.'</strong></div><div class="inner-end"><a href="?s=discover_plugins&amp;id='.$pluginId.'" class="button">Zur&uuml;ck zum Plugin</a></div>');
+	$tpl->assign('content', '<div class="inner-header"><span>'._t('Plugin Installation').'</span></div><div class="inner"><strong class="red">'.$errorMsg.'</strong></div><div class="inner-end"><a href="?s=discover_plugins&amp;id='.$pluginId.'" class="button">'._t('Zur&uuml;ck zum Plugin').'</a></div>');
 	$tpl->draw('single_box');
 }
 ?>

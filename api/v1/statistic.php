@@ -1,10 +1,11 @@
 <?php
 define('PICONTROL', true);
 
-(include_once realpath(dirname(__FILE__)).'/../../resources/init.php')	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
-(include_once LIBRARY_PATH.'statistic/statistic.class.php')				or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0001');
-(include_once LIBRARY_PATH.'statistic/statistic.function.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
-(include_once LIBRARY_PATH.'api/api.class.php')							or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
+(include_once realpath(dirname(__FILE__)).'/../../resources/init.php')	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/main.function.php')					or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'statistic/statistic.class.php')				or die('Error: 0x0002');
+(include_once LIBRARY_PATH.'statistic/statistic.function.php')			or die('Error: 0x0003');
+(include_once LIBRARY_PATH.'api/api.class.php')							or die('Error: 0x0004');
 
 $api = new API;
 
@@ -15,10 +16,10 @@ if (isset($_POST['data'], $_POST['type']))
 	
 	switch ($_POST['type'])
 	{
-		case 'coretemp': // CPU-Temperatur
+		case 'coretemp':
 			$arr = $info = array();
-			$arr['cols'][] = array('id' => '', 'label' => 'Zeit', 'type' => 'datetime');
-			$arr['cols'][] = array('id' => '', 'label' => 'Temperatur', 'type' => 'number');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Zeit'), 'type' => 'datetime');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Temperatur'), 'type' => 'number');
 			
 			getRowsFromLog($arr, $info, $log->getAll(), 'coretemp');
 			
@@ -31,10 +32,10 @@ if (isset($_POST['data'], $_POST['type']))
 			}
 				break;
 		
-		case 'cpuload': // CPU-Auslastung
+		case 'cpuload':
 			$arr = $info = array();
-			$arr['cols'][] = array('id' => '', 'label' => 'Zeit', 'type' => 'datetime');
-			$arr['cols'][] = array('id' => '', 'label' => 'Auslastung', 'type' => 'number');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Zeit'), 'type' => 'datetime');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Auslastung'), 'type' => 'number');
 			
 			getRowsFromLog($arr, $info, $log->getAll(), 'cpuload');
 			
@@ -47,10 +48,10 @@ if (isset($_POST['data'], $_POST['type']))
 			}
 				break;
 		
-		case 'ram': // Arbeitsspeicher
+		case 'ram':
 			$arr = $info = array();
-			$arr['cols'][] = array('id' => '', 'label' => 'Zeit', 'type' => 'datetime');
-			$arr['cols'][] = array('id' => '', 'label' => 'Auslastung', 'type' => 'number');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Zeit'), 'type' => 'datetime');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Auslastung'), 'type' => 'number');
 			
 			getRowsFromLog($arr, $info, $log->getAll(), 'ram');
 			
@@ -63,11 +64,11 @@ if (isset($_POST['data'], $_POST['type']))
 			}
 				break;
 		
-		case 'network': // Netzwerk
+		case 'network':
 			$arr = $info = array();
-			$arr['cols'][] = array('id' => '', 'label' => 'Zeit', 'type' => 'datetime');
-			$arr['cols'][] = array('id' => '', 'label' => 'Gesendet', 'type' => 'number');
-			$arr['cols'][] = array('id' => '', 'label' => 'Empfangen', 'type' => 'number');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Zeit'), 'type' => 'datetime');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Gesendet'), 'type' => 'number');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Empfangen'), 'type' => 'number');
 			
 			getRowsFromLog($arr, $info, $log->getAll(), 'network');
 			
@@ -109,27 +110,27 @@ else
 		if (substr($file_ , 0, -4) == 'coretemp' && array_search('coretemp', $hiddenStatistics) === false)
 		{
 			$logArray[] = array('log' => 'coretemp',
-								'label' => 'CPU-Temperatur',
+								'label' => _t('CPU-Temperatur'),
 								'type' => 'coretemp',
-								'title' => 'Grad Celsius',
+								'title' => _t('Grad Celsius'),
 								'unit' => ' °C',
 								'columns' => array(1));
 		}
 		if (substr($file_ , 0, -4) == 'cpuload' && array_search('cpuload', $hiddenStatistics) === false)
 		{
 			$logArray[] = array('log' => 'cpuload',
-								'label' => 'CPU-Auslastung',
+								'label' => _t('CPU-Auslastung'),
 								'type' => 'cpuload',
-								'title' => 'Auslastung %',
+								'title' => _t('Auslastung %%'),
 								'unit' => ' %',
 								'columns' => array(1));
 		}
 		if (substr($file_ , 0, -4) == 'ram' && array_search('ram', $hiddenStatistics) === false)
 		{
 			$logArray[] = array('log' => 'ram',
-								'label' => 'RAM-Auslastung',
+								'label' => _t('RAM-Auslastung'),
 								'type' => 'ram',
-								'title' => 'Auslastung %',
+								'title' => _t('Auslastung %'),
 								'unit' => ' %',
 								'columns' => array(1));
 		}
@@ -138,7 +139,7 @@ else
 			$logArray[] = array('log' => substr($file_, 0, -4),
 								'label' => substr($file_ , 8, -4),
 								'type' => 'network',
-								'title' => 'Traffic (MB)',
+								'title' => _t('Traffic (MB)'),
 								'unit' => ' MB',
 								'columns' => array(1,2));
 		}

@@ -101,7 +101,7 @@ class LogStatistic
 	{
 		if (is_file($this->file))
 		{
-			if (unlink($this->file) or exit('Konnte Log-Datei nicht l&ouml;schen: '.$this->file))
+			if (unlink($this->file) or exit(_t('Konnte Log-Datei nicht l&ouml;schen: %s', $this->file)))
 				return true;
 		}
 		else
@@ -124,7 +124,7 @@ class LogStatistic
 	
 	private function open()
 	{
-		$this->stream = fopen($this->file, 'r+') or exit('Konnte Log-Datei nicht &ouml;ffnen: '.$this->file);
+		$this->stream = fopen($this->file, 'r+') or exit(_t('Konnte Log-Datei nicht &ouml;ffnen: %s', $this->file));
 	}
 }
 ?>

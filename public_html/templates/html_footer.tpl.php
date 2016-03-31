@@ -13,7 +13,7 @@
 					<td rowspan="2"><a href="?s=settings"><?php _e('Einstellungen'); ?></a><br />
 						<a href="https://willy-tech.de/kontakt/" target="_blank"><?php _e('Feedback'); ?></a><br />
 						<a href="<?php echo $data['helpLink']; ?>" target="_blank"><?php _e('Hilfe'); ?></a><br />
-						<a href="https://play.google.com/store/apps/details?id=de.willytech.picontrol" target="_blank" title="<?php _e('Öffne Play Store'); ?>"><?php _e('App im Play Store'); ?></a></td>
+						<a href="https://play.google.com/store/apps/details?id=de.willytech.picontrol" target="_blank" title="<?php _e('&Ouml;ffne im Play Store'); ?>"><?php _e('App im Play Store'); ?></a></td>
 					<td rowspan="2"><a href="https://willy-tech.de/" target="_blank"><?php _e('Mein Blog'); ?></a><br />
 						<a href="https://twitter.com/Willys_TechBlog" target="_blank"><?php _e('Twitter'); ?></a><br />
 						<a href="https://github.com/willfri" target="_blank"><?php _e('GitHub'); ?></a><br />

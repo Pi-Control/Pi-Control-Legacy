@@ -1,7 +1,7 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'pi-control/pi-control.function.php') or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'pi-control/pi-control.function.php') or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Einstellungen - Pi Control'));
 
 if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
@@ -10,24 +10,24 @@ if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 	{
 		$tpl->setConfig('main:theme.color', $_POST['theme-color']);
 		$tpl->setConfig('main:theme.colorChanged', time());
-		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
+		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	
 	if (isset($_POST['pi-control-language']) && in_array($_POST['pi-control-language'], array('de', 'en')) === true)
 	{
 		setConfig('init:language', $_POST['pi-control-language']);
-		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
+		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	
 	if (isset($_POST['external-access']) && $_POST['external-access'] == 'checked')
 	{
 		$tpl->setConfig('main:access.external', 'true');
-		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
+		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	else
 	{
 		$tpl->setConfig('main:access.external', 'false');
-		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
+		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	
 	if (isset($_POST['pi-control-label']) && ($pLabel = trim($_POST['pi-control-label'])) != '')
@@ -35,13 +35,13 @@ if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 		if (preg_match('/^[a-z][a-z0-9_\-\+\/\.\(\)\[\] ]{2,32}$/i', $pLabel) === 1)
 		{
 			$tpl->setConfig('main:main.label', $pLabel);
-			$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.', true, 10);
+			$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 		}
 		else
-			$tpl->msg('error', '', 'Leider ist die Bezeichnung ung&uuml;ltig! Die Bezeichnung muss aus 2 bis 32 Zeichen bestehen. Das erste Zeichen muss ein Buchstabe sein und es sind nur folgende Zeichen erlaubt: A-Z 0-9 _ - + / . ( ) [ ] "Leerzeichen"', true, 10);
+			$tpl->msg('error', _t('Fehler'), _t('Leider ist die Bezeichnung ung&uuml;ltig! Die Bezeichnung muss aus 2 bis 32 Zeichen bestehen. Das erste Zeichen muss ein Buchstabe sein und es sind nur folgende Zeichen erlaubt: A-Z 0-9 _ - + / . ( ) [ ] "Leerzeichen"'), true, 10);
 	}
 	else
-		$tpl->msg('error', '', 'Bitte vergebe f&uuml;r dein Pi Control eine Bezeichnung!', true, 10);
+		$tpl->msg('error', _t('Fehler'), _t('Bitte vergebe f&uuml;r dein Pi Control eine Bezeichnung!'), true, 10);
 }
 elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '')
 {
@@ -60,7 +60,7 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 		if (isset($_POST['temperature-action-email']))
 		{
 			if (!filter_var($pActionEmail, FILTER_VALIDATE_EMAIL) || !strlen($pActionEmail) >= 6)
-				$tpl->msg('error', '', 'Bitte gebe eine g&uuml;ltige E-Mailadresse an.', true, 10);
+				$tpl->msg('error', _t('Fehler'), _t('Bitte gebe eine g&uuml;ltige E-Mailadresse an.'), true, 10);
 		}
 		
 		if ($tpl->msgExists(10) === false)
@@ -69,7 +69,7 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 		if (isset($_POST['temperature-action-shell']))
 		{
 			if ($pActionShell == '')
-				$tpl->msg('error', '', 'Bitte gebe einen g&uuml;ltigen Shell Befehl an.', true, 11);
+				$tpl->msg('error', _t('Fehler'), _t('Bitte gebe einen g&uuml;ltigen Shell Befehl an.'), true, 11);
 		}
 		
 		if ($tpl->msgExists(11) === false)
@@ -85,18 +85,18 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 			checkTemperatureMonitoringEmailStatus();
 	}
 	else
-		$tpl->msg('error', '', 'Bitte w&auml;hle mindestens eine Aktion.', true, 10);
+		$tpl->msg('error', _t('Fehler'), _t('Bitte w&auml;hle mindestens eine Aktion.'), true, 10);
 	
 	if (isset($_POST['temperature-activation']) && $_POST['temperature-activation'] == 'checked')
 	{
 		if ($cron->isExists() === false)
 		{
 			$cron->setInterval(1);
-			$cron->setSource(TEMPLATES2_PATH.'/coretemp_monitoring.tmp.php');
+			$cron->setSource(TEMPLATES2_PATH.'coretemp_monitoring.tmp.php');
 			if ($cron->save() === true)
-				$tpl->msg('success', '', 'Die Temperatur&uuml;berwachung wurde aktiviert.');
+				$tpl->msg('success', _t('Temperatur&uuml;berwachung aktiviert'), _t('Die Temperatur&uuml;berwachung wurde aktiviert.'));
 			else
-				$tpl->msg('error', '', 'Konnte die Temperatur&uuml;berwachung nicht aktivieren!');
+				$tpl->msg('error', _t('Fehler'), _t('Konnte die Temperatur&uuml;berwachung nicht aktivieren!'));
 		}
 	}
 	else
@@ -106,14 +106,14 @@ elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '
 			//$cron->readFile();
 			$cron->setInterval($cron->getInterval());
 			if ($cron->delete() === true)
-				$tpl->msg('success', '', 'Die Temperatur&uuml;berwachung wurde deaktiviert.');
+				$tpl->msg('success', _t('Temperatur&uuml;berwachung deaktiviert'), _t('Die Temperatur&uuml;berwachung wurde deaktiviert.'));
 			else
-				$tpl->msg('error', '', 'Konnte die Temperatur&uuml;berwachung nicht deaktivieren!');
+				$tpl->msg('error', _t('Fehler'), _t('Konnte die Temperatur&uuml;berwachung nicht deaktivieren!'));
 		}
 	}
 	
 	if ($tpl->msgExists(10) === false && $tpl->msgExists(11) === false)
-		$tpl->msg('success', '', 'Die Einstellungen wurden erfolgreich gespeichert.');
+		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'));
 }
 
 if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperature-confirmation'] != '')
@@ -124,7 +124,7 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 	$label = getConfig('main:main.label', '');
 	
 	if ($id == '' || $email == '' || $label == '')
-		$tpl->msg('error', '', 'Leider ist ein Fehler aufgetrteten. Bitte wiederhole die Vergabe der Bezeichnung und der E-Mailadresse.');
+		$tpl->msg('error', _t('Fehler'), _t('Leider ist ein Fehler aufgetreten. Bitte wiederhole die Vergabe der Bezeichnung und der E-Mailadresse.'));
 	else
 	{
 		$fields = array('type' => 'add', 'id' => $id, 'email' => $email, 'label' => $label, 'referer' => $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 'lang' => $globalLanguage);
@@ -142,7 +142,7 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 			if (($data = curl_exec($curl)) === false)
 			{
 				$info = curl_getinfo($curl);
-				$tpl->msg('error', 'Verbindungsfehler', 'Bei der Verbindung zum Server ist ein unerwarteter Fehler aufgetreten. Fehlercode: '.$info['http_code'].' ('.curl_error($curl).')');
+				$tpl->msg('error', _t('Verbindungsfehler'), _t('Bei der Verbindung zum Server ist ein unerwarteter Fehler aufgetreten. Fehlercode: %d (%s)', $info['http_code'], curl_error($curl)));
 				break;
 			}
 			else
@@ -151,18 +151,18 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 				
 				if ($info['http_code'] == 404)
 				{
-					$tpl->msg('error', 'Verbindungsfehler', 'Leider konnte keine Verbindung zum Server hergestellt werden, da dieser momentan vermutlich nicht erreichbar ist. Fehlercode: '.$info['http_code']);
+					$tpl->msg('error', _t('Verbindungsfehler'), _t('Leider konnte keine Verbindung zum Server hergestellt werden, da dieser momentan vermutlich nicht erreichbar ist. Fehlercode: %d', $info['http_code']));
 					break;
 				}
 				elseif ($info['http_code'] != 200)
 				{
-					$tpl->msg('error', 'Verbindungsfehler', 'Bei der Verbindung zum Server ist ein unerwarteter Fehler aufgetreten. Fehlercode: '.$info['http_code']);
+					$tpl->msg('error', _t('Verbindungsfehler'), _t('Bei der Verbindung zum Server ist ein unerwarteter Fehler aufgetreten. Fehlercode: %d', $info['http_code']));
 					break;
 				}
 				
 				if ($data == '')
 				{
-					$tpl->msg('error', 'Serverfehler', 'Bei der Verbindung zum Server ist ein Fehler aufgetreten. Der Server sendet eine leere Antwort.');
+					$tpl->msg('error', _t('Serverfehler'), _t('Bei der Verbindung zum Server ist ein Fehler aufgetreten. Der Server sendet eine leere Antwort.'));
 					break;
 				}
 				
@@ -171,7 +171,7 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 				
 				if (json_last_error() != JSON_ERROR_NONE && (!isset($json['existing'], $json['sent']) || !isset($json['type'], $json['title'], $json['msg'], $json['skip'])))
 				{
-					$tpl->msg('error', 'Verarbeitungsfehler', 'Bei der Verbindung zum Server ist ein Fehler aufgetreten. Der Server sendet eine fehlerhafte Antwort.');
+					$tpl->msg('error', _t('Verarbeitungsfehler'), _t('Bei der Verbindung zum Server ist ein Fehler aufgetreten. Der Server sendet eine fehlerhafte Antwort.'));
 					break;
 				}
 				
@@ -184,7 +184,7 @@ if (isset($_POST['submit-temperature-confirmation']) && $_POST['submit-temperatu
 				}
 				
 				// Antwort in Ordnung
-				$tpl->msg('success', 'E-Mail gesendet', 'Eine E-Mail mit einem Best&auml;tigungslink wurde an <strong>'.$email.'</strong> versandt. In der E-Mail ist ein Link, der angeklickt bzw. ge&ouml;ffnet werden muss. Sollte die E-Mail nach sp&auml;testens 10 Minuten nicht angekommen sein, schaue in deinem Spam-Ordner nach. Ansonsten wiederhole den Vorgang.');
+				$tpl->msg('success', _t('E-Mail gesendet'), _t('Eine E-Mail mit einem Best&auml;tigungslink wurde an <strong>%s</strong> versandt. In der E-Mail ist ein Link, der angeklickt bzw. ge&ouml;ffnet werden muss. Sollte die E-Mail nach sp&auml;testens 10 Minuten nicht angekommen sein, schaue in deinem Spam-Ordner nach. Ansonsten wiederhole den Vorgang.', $email));
 			}
 		}
 		while (false);

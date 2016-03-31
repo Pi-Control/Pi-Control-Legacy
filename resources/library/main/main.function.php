@@ -547,7 +547,7 @@ function showSettingsIcon($url)
 
 function showGoBackIcon($url)
 {
-	echo '<div><a href="'.$url.'" class="go-back-icon"><img src="public_html/img/arrow-icon.svg" alt="'._t('Zurück').'" title="'._t('Zurück').'" /></a></div>'.PHP_EOL;
+	echo '<div><a href="'.$url.'" class="go-back-icon"><img src="public_html/img/arrow-icon.svg" alt="'._t('Zur&uuml;ck').'" title="'._t('Zur&uuml;ck').'" /></a></div>'.PHP_EOL;
 }
 
 function getDirectory($folder_)
@@ -661,7 +661,7 @@ function showHelper($url, $extern = false)
 	if ($extern === false)
 		$url = $config['url']['help'].'#'.$url;
 	
-	return '<a href="'.$url.'" title="Klicke f&uuml;r Hilfe" target="_blank" class="helper">&nbsp;</a>';
+	return '<a href="'.$url.'" title="'._t('Klicke f&uuml;r Hilfe').'" target="_blank" class="helper">&nbsp;</a>';
 }
 
 function addCronToCrontab($cronEntry, $ssh)

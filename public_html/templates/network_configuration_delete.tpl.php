@@ -2,7 +2,7 @@
 <div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Netzwerkkonfiguration - Interface l&ouml;schen</span>
+			<span><?php _e('Netzwerkkonfiguration - Interface l&ouml;schen'); ?></span>
 			<?php showGoBackIcon('?s=network_configuration'); ?>
 		</div>
 		<form action="?s=network_configuration&amp;delete=<?php echo urlencode($data['interfaceName']); ?>" method="post">

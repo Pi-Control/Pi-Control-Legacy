@@ -12,6 +12,8 @@ if (isset($_GET['kill']) && $_GET['kill'])
 	{
 		removeConfig('terminal:port_'.$_GET['kill']);
 		exec('kill -9 '.$terminal['pid']);
+		
+		$tpl->msg('success', _t('Terminal beendet'), _t('Das Terminal wurde erfolgreich beendet.'));
 	}
 }
 

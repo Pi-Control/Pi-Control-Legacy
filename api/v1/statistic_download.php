@@ -1,6 +1,11 @@
 <?php
 define('PICONTROL', true);
 
+(include_once realpath(dirname(__FILE__)).'/../../resources/init.php')	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/main.function.php')					or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'statistic/statistic.class.php')				or die('Error: 0x0002');
+(include_once LIBRARY_PATH.'statistic/statistic.function.php')			or die('Error: 0x0003');
+
 $fileName = 'statistik';
 
 if (isset($_GET['label']))
@@ -13,10 +18,6 @@ header("Content-Disposition: attachment; filename=".$fileName.".csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-(include_once realpath(dirname(__FILE__)).'/../../resources/init.php')	or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0000');
-(include_once LIBRARY_PATH.'statistic/statistic.class.php')				or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0001');
-(include_once LIBRARY_PATH.'statistic/statistic.function.php')			or die('Fehler beim Laden der Seite. Konnte Konfigurationen nicht laden. Fehlercode: 0x0002');
-
 $log = new LogStatistic();
 $log->setFile(LOG_PATH.'statistic/'.$_GET['log'].'.csv');
 
@@ -27,8 +28,8 @@ function convertTimestampToISO(&$value, $key)
 
 switch ($_GET['type'])
 {
-	case 'coretemp': // CPU-Temperatur
-		$header = array('Datum', 'Temperatur in Grad Celsius');
+	case 'coretemp':
+		$header = array(_t('Datum'), _t('Temperatur in Grad Celsius'));
 		$output = fopen('php://output', 'w');
 		
 		$data = $log->getAll();
@@ -42,8 +43,8 @@ switch ($_GET['type'])
 		fclose($output);
 			break;
 	
-	case 'cpuload': // CPU-Auslastung
-		$header = array('Datum', 'Auslastung in Prozent');
+	case 'cpuload':
+		$header = array(_t('Datum'), _t('Auslastung in Prozent'));
 		$output = fopen('php://output', 'w');
 		
 		$data = $log->getAll();
@@ -57,8 +58,8 @@ switch ($_GET['type'])
 		fclose($output);
 			break;
 	
-	case 'ram': // Arbeitsspeicher
-		$header = array('Datum', 'Auslastung in Prozent');
+	case 'ram':
+		$header = array(_t('Datum'), _t('Auslastung in Prozent'));
 		$output = fopen('php://output', 'w');
 		
 		$data = $log->getAll();
@@ -72,8 +73,8 @@ switch ($_GET['type'])
 		fclose($output);
 			break;
 	
-	case 'network': // Netzwerk
-		$header = array('Datum', 'Gesendet in Byte', 'Empfangen in Byte');
+	case 'network':
+		$header = array(_t('Datum'), _t('Gesendet in Byte'), _t('Empfangen in Byte'));
 		$output = fopen('php://output', 'w');
 		
 		$data = $log->getAll();
@@ -89,5 +90,5 @@ switch ($_GET['type'])
 }
 
 if (file_exists(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') && is_file(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') && filesize(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') == 0)
-	header("HTTP/1.0 412");
+	header('HTTP/1.0 412');
 ?>

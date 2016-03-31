@@ -45,29 +45,29 @@ if (is_array($onlinePlugins))
 								$tpl->redirect('?s=discover_plugins&id='.$pluginId.'&updated');
 						}
 						else
-							$errorMsg = 'Leider ist ein Fehler beim entpacken des Plugins aufgetreten! Fehlercode: '.$zipRrror;
+							$errorMsg = _t('Leider ist ein Fehler beim entpacken des Plugins aufgetreten! Fehlercode: %s', $zipRrror);
 					}
 					else
-						$errorMsg = 'Der Ordner f&uuml;r das Plugin existiert nicht. Bitte installiere zun&auml;chst das Plugin.';
+						$errorMsg = _t('Der Ordner f&uuml;r das Plugin existiert nicht. Bitte installiere zun&auml;chst das Plugin.');
 				}
 				else
-					$errorMsg = 'Das Plugin wurde nicht vollst&auml;ndig heruntergeladen. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiterhelfen kann.';
+					$errorMsg = _t('Das Plugin wurde nicht vollst&auml;ndig heruntergeladen. Bitte versuche es erneut. Sollte der Fehler weiterhin auftreten, schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiterhelfen kann.', 'https://willy-tech.de/kontakt/');
 			}
 			else
-				$errorMsg = 'Konnte das Plugin nicht zwischenspeichern! Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+				$errorMsg = _t('Konnte das Plugin nicht zwischenspeichern! Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', 'https://willy-tech.de/kontakt/');
 		}
 		else
-			$errorMsg = 'Konnte das Plugin auf dem Server nicht finden! Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+			$errorMsg = _t('Konnte das Plugin auf dem Server nicht finden! Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', 'https://willy-tech.de/kontakt/');
 	}
 	else
-		$errorMsg = 'Konnte die PluginID auf dem Server nicht finden! Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+		$errorMsg = _t('Konnte die PluginID auf dem Server nicht finden! Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', 'https://willy-tech.de/kontakt/');
 }
 else
-	$errorMsg = 'Leider ist beim Abrufen der Plugins ein Fehler aufgetreten. Fehlercode: '.$onlinePlugins.'<br />Bitte schreibe mir unter <a href="https://willy-tech.de/kontakt/" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.';
+	$errorMsg = _t('Leider ist beim Abrufen der Plugins ein Fehler aufgetreten. Fehlercode: %s<br />Bitte schreibe mir unter <a href="%s" target="_blank">Kontakt</a>, sodass ich dir m&ouml;glichst schnell weiter helfen kann.', $onlinePlugins, 'https://willy-tech.de/kontakt/');
 
 if (isset($errorMsg))
 {
-	$tpl->assign('content', '<div class="inner-header"><span>Plugin Aktualisierung</span></div><div class="inner"><strong class="red">'.$errorMsg.'</strong></div><div class="inner-end"><a href="?s=discover_plugins&amp;id='.$pluginId.'" class="button">Zur&uuml;ck zum Plugin</a></div>');
+	$tpl->assign('content', '<div class="inner-header"><span>'._t('Plugin Installation').'</span></div><div class="inner"><strong class="red">'.$errorMsg.'</strong></div><div class="inner-end"><a href="?s=discover_plugins&amp;id='.$pluginId.'" class="button">'._t('Zur&uuml;ck zum Plugin').'</a></div>');
 	$tpl->draw('single_box');
 }
 ?>

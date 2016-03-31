@@ -10,7 +10,7 @@
 			<div class="inner-table">
 				<table class="table table-borderless table-form">
 					<tr>
-						<td>Theme-Farbe</td>
+						<td><?php _e('Theme-Farbe'); ?></td>
 						<td><input type="radio" name="theme-color"<?php if ($data['main-theme-color'] == 'red') echo ' checked="checked"'; ?> value="red" id="rb-red" /><label for="rb-red" class="radio only-radio settings-pi-control-theme-color-red">&nbsp;</label>
 							<input type="radio" name="theme-color"<?php if ($data['main-theme-color'] == 'pink') echo ' checked="checked"'; ?> value="pink" id="rb-pink" /><label for="rb-pink" class="radio only-radio settings-pi-control-theme-color-pink">&nbsp;</label>
 							<input type="radio" name="theme-color"<?php if ($data['main-theme-color'] == 'purple') echo ' checked="checked"'; ?> value="purple" id="rb-purple" /><label for="rb-purple" class="radio only-radio settings-pi-control-theme-color-purple">&nbsp;</label>
@@ -32,19 +32,19 @@
 							<input type="radio" name="theme-color"<?php if ($data['main-theme-color'] == 'blueGrey') echo ' checked="checked"'; ?> value="blueGrey" id="rb-blueGrey" /><label for="rb-blueGrey" class="radio only-radio settings-pi-control-theme-color-blueGrey">&nbsp;</label></td>
 					</tr>
 					<tr>
-						<td>Bezeichnung</td>
-						<td><input type="text" name="pi-control-label"<?php echo ' value="'.$data['main-pi-control-label'].'"'; ?> maxlength="32" /> <span class="small-info">Bennene dein Pi Control, um es in Benachrichtigungen besser identifizieren zu können.</span></td>
+						<td><?php _e('Bezeichnung'); ?></td>
+						<td><input type="text" name="pi-control-label"<?php echo ' value="'.$data['main-pi-control-label'].'"'; ?> maxlength="32" /> <span class="small-info"><?php _e('Bennene dein Pi Control, um es in Benachrichtigungen besser identifizieren zu k&ouml;nnen.'); ?></span></td>
 					</tr>
 					<tr>
-						<td>Sprache</td>
+						<td><?php _e('Sprache'); ?></td>
 						<td><select name="pi-control-language">
-								<option value="de"<?php if ($data['main-pi-control-language'] == 'de') echo ' selected="selected"'; ?>>Deutsch</option>
-								<option value="en"<?php if ($data['main-pi-control-language'] == 'en') echo ' selected="selected"'; ?>>Englisch</option>
+								<option value="de"<?php if ($data['main-pi-control-language'] == 'de') echo ' selected="selected"'; ?>><?php _e('Deutsch'); ?></option>
+								<option value="en"<?php if ($data['main-pi-control-language'] == 'en') echo ' selected="selected"'; ?>><?php _e('Englisch'); ?></option>
 							</select></td>
 					</tr>
 					<tr>
-						<td>Externer Zugriff</td>
-						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info">Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.</span> <?php echo showHelper('welcher-adressbereich-zaehlt-zum-lokalen-netzwerk'); ?></td>
+						<td><?php _e('Externer Zugriff'); ?></td>
+						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info"><?php _e('Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.'); ?></span> <?php echo showHelper('welcher-adressbereich-zaehlt-zum-lokalen-netzwerk'); ?></td>
 					</tr>
 				</table>
 			</div>
@@ -55,20 +55,20 @@
 	</div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Temperatur&uuml;berwachung</span>
+			<span><?php _e('Temperatur&uuml;berwachung'); ?></span>
 		</div>
 		<div class="inner">
-			Aktiviere diese Option, um von deinem Raspberry Pi, beim &Uuml;berschreiten einer bestimmten Temperatur benachrichtigt zu werden. F&uuml;r diesen Fall lassen sich auch spezifische Verhalten festlegen.
+			<?php _e('Aktiviere diese Option, um von deinem Raspberry Pi, beim &Uuml;berschreiten einer bestimmten Temperatur, benachrichtigt zu werden. F&uuml;r diesen Fall lassen sich auch spezifische Verhalten festlegen.'); ?>
 		</div>
 		<form action="?s=settings&amp;do=pi-control" method="post">
 			<div class="inner-table overflow-auto">
 				<table class="table table-borderless table-form">
 					<tr>
-						<td>Aktivieren</td>
-						<td colspan="2"><input type="checkbox" name="temperature-activation" id="cb-temperature" value="checked"<?php if ($data['temperature-activation'] === true) echo ' checked="checked"'; ?> /><label for="cb-temperature" class="checkbox only-checkbox">&nbsp;</label><?php if (!empty($data['temperature-last-execution'])) { ?><strong class="red">Pausiert f&uuml;r <?php echo $data['temperature-last-execution']; ?></strong><?php } ?></td>
+						<td><?php _e('Aktivieren'); ?></td>
+						<td colspan="2"><input type="checkbox" name="temperature-activation" id="cb-temperature" value="checked"<?php if ($data['temperature-activation'] === true) echo ' checked="checked"'; ?> /><label for="cb-temperature" class="checkbox only-checkbox">&nbsp;</label><?php if (!empty($data['temperature-last-execution'])) { ?><strong class="red"><?php _e('Pausiert f&uuml;r %s', $data['temperature-last-execution']); ?></strong><?php } ?></td>
 					</tr>
 					<tr>
-						<td>H&ouml;chsttemperatur</td>
+						<td><?php _e('H&ouml;chsttemperatur'); ?></td>
 						<td colspan="2"><select name="temperature-maximum">
 								<option style="background: #4CAF50;" value="40"<?php if ($data['temperature-maximum'] == 40) echo ' selected="selected"'; ?>>40 °C</option>
 								<option style="background: #5ABC45;" value="45"<?php if ($data['temperature-maximum'] == 45) echo ' selected="selected"'; ?>>45 °C</option>
@@ -84,15 +84,15 @@
 							</select></td>
 					</tr>
 					<tr>
-						<td>Aktion</td>
-						<td style="width: 130px;"><input type="checkbox" name="temperature-action-email" id="cb-temperature-email" value="checked"<?php if ($data['temperature-action-email'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-email" class="checkbox">E-Mail senden</label></td>
+						<td><?php _e('Aktion'); ?></td>
+						<td style="width: 130px;"><input type="checkbox" name="temperature-action-email" id="cb-temperature-email" value="checked"<?php if ($data['temperature-action-email'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-email" class="checkbox"><?php _e('E-Mail senden'); ?></label></td>
 						<td><input type="text" name="temperature-action-email-text"<?php echo ' value="'.$data['temperature-action-email-text'].'"'; ?> />
-							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="Best&auml;tigen" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">&Uuml;berpr&uuml;fen</a> '.showHelper('wie-bestaetige-ich-meine-e-mail', true) : '<strong class="green">Bestätigt</strong>'; } ?></td>
+							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="'._t('Best&auml;tigen').'" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">'._t('&Uuml;berpr&uuml;fen').'</a> '.showHelper('wie-bestaetige-ich-meine-e-mail', true) : '<strong class="green">'._t('Best&auml;tigt').'</strong>'; } ?></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="checkbox" name="temperature-action-shell" id="cb-temperature-shell" value="checked"<?php if ($data['temperature-action-shell'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-shell" class="checkbox">Shell Befehl</label></td>
-						<td><input type="text" name="temperature-action-shell-text"<?php echo ' value="'.$data['temperature-action-shell-text'].'"'; ?> /> <span class="small-info">Wird als <?php echo $data['whoami']; ?> ausgef&uuml;hrt.</span></td>
+						<td><input type="checkbox" name="temperature-action-shell" id="cb-temperature-shell" value="checked"<?php if ($data['temperature-action-shell'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-shell" class="checkbox"><?php _e('Shell Befehl'); ?></label></td>
+						<td><input type="text" name="temperature-action-shell-text"<?php echo ' value="'.$data['temperature-action-shell-text'].'"'; ?> /> <span class="small-info"><?php _e('Wird als %s ausgef&uuml;hrt.', $data['whoami']); ?></span></td>
 					</tr>
 				</table>
 			</div>
@@ -103,13 +103,13 @@
 	</div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Pi Control entfernen</span>
+			<span><?php _e('Pi Control entfernen'); ?></span>
 		</div>
 		<div class="inner">
-			Wenn dir das Pi Control nicht gef&auml;llt und du es wieder entfernen m&ouml;chtest, schreib mir unten unter "Feedback" doch bitte den Grund. Somit kann ich besser auf m&ouml;gliche Probleme eingehen und Pi Control st&auml;tig verbessern. Eine genaue Anleitung zum Entfernen des Pi Control findest du mit einem Klick auf den folgenden Button.
+			<?php _e('Wenn dir das Pi Control nicht gef&auml;llt und du es wieder entfernen m&ouml;chtest, schreib mir unten unter "Feedback" doch bitte den Grund. Somit kann ich besser auf m&ouml;gliche Probleme eingehen und Pi Control st&auml;tig verbessern. Eine genaue Anleitung zum Entfernen des Pi Control findest du mit einem Klick auf den folgenden Button.'); ?>
 		</div>
 		<div class="inner-end">
-			<a href="#" class="button">Anleitung zum Entfernen</a>
+			<a href="#" class="button"><?php _e('Anleitung zum Entfernen'); ?></a>
 		</div>
 	</div>
 </div>

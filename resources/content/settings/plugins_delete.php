@@ -7,11 +7,11 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 {
 	if (deletePlugin($plugin['id']) == true)
 	{
-		$tpl->msg('success', '', 'Das Plugin "'.$plugin['name'].'" wurde erfolgreich gel&ouml;scht.');
+		$tpl->msg('success', _t('Plugin gel&ouml;scht'), _t('Das Plugin "%s" wurde erfolgreich gel&ouml;scht.', $plugin['name']));
 		$showList = true;
 	}
 	else
-		$tpl->msg('error', '', 'Das Plugin "'.$plugin['name'].'" konnte nicht gel&ouml;scht werden.');
+		$tpl->msg('error', _t('Fehler'), _t('Das Plugin "%s" konnte nicht gel&ouml;scht werden.', $plugin['name']));
 }
 
 if ($showList == false)

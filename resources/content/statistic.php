@@ -22,27 +22,27 @@ foreach ($fileArray as $file_)
 	if (substr($file_ , 0, -4) == 'coretemp' && array_search('coretemp', $hiddenStatistics) === false)
 	{
 		$logArray[] = array('log' => 'coretemp',
-							'label' => 'CPU-Temperatur',
+							'label' => _t('CPU-Temperatur'),
 							'type' => 'coretemp',
-							'title' => 'Grad Celsius',
+							'title' => _t('Grad Celsius'),
 							'unit' => ' °C',
 							'columns' => array(1));
 	}
 	if (substr($file_ , 0, -4) == 'cpuload' && array_search('cpuload', $hiddenStatistics) === false)
 	{
 		$logArray[] = array('log' => 'cpuload',
-							'label' => 'CPU-Auslastung',
+							'label' => _t('CPU-Auslastung'),
 							'type' => 'cpuload',
-							'title' => 'Auslastung %',
+							'title' => _t('Auslastung %'),
 							'unit' => ' %',
 							'columns' => array(1));
 	}
 	if (substr($file_ , 0, -4) == 'ram' && array_search('ram', $hiddenStatistics) === false)
 	{
 		$logArray[] = array('log' => 'ram',
-							'label' => 'RAM-Auslastung',
+							'label' => _t('RAM-Auslastung'),
 							'type' => 'ram',
-							'title' => 'Auslastung %',
+							'title' => _t('Auslastung %'),
 							'unit' => ' %',
 							'columns' => array(1));
 	}
@@ -51,13 +51,12 @@ foreach ($fileArray as $file_)
 		$logArray[] = array('log' => substr($file_, 0, -4),
 							'label' => substr($file_ , 8, -4),
 							'type' => 'network',
-							'title' => 'Traffic (MB)',
+							'title' => _t('Traffic (MB)'),
 							'unit' => ' MB',
 							'columns' => array(1,2));
 	}
 }
 
-$tpl->assign('statistic_path', str_replace(dirname($_SERVER['SCRIPT_FILENAME']).'/', '', LIBRARY_PATH).'/statistic');
 $tpl->assign('logArrayCount', count($fileArray));
 $tpl->assign('logArray', $logArray);
 

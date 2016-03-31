@@ -28,21 +28,21 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 			}
 			
 			if ($networkInterface->existsInterface($pInterface) === true)
-				$tpl->msg('error', '', 'Leider konnte das Interface nicht gespeichert werden. Der Name f&uuml;r dieses Interface ist bereits vergeben.', true, 10);
+				$tpl->msg('error', _t('Fehler'), _t('Leider konnte das Interface nicht gespeichert werden. Der Name f&uuml;r dieses Interface ist bereits vergeben.'), true, 10);
 			
 			if ($tpl->msgExists(10) === false)
 			{
 				if ($networkInterface->addInterface($pInterface, $newInterface) === true)
 					$tpl->redirect('?s=network_configuration&edit='.urlencode($pInterface).'&msg=add');
 				else
-					$tpl->msg('error', '', 'Leider konnte das Interface nicht gespeichert werden. Es ist w&auml;hrend der &Uuml;bertragung ein Fehler aufgetreten.');
+					$tpl->msg('error', _t('Fehler'), _t('Leider konnte das Interface nicht gespeichert werden. Es ist w&auml;hrend der &Uuml;bertragung ein Fehler aufgetreten.'));
 			}
 		}
 		else
-			$tpl->msg('error', '', 'Leider wurde die Konfigurationsdatei zwischenzeitlich ver&auml;ndert, versuche es deshalb noch einmal.');
+			$tpl->msg('error', _t('Fehler'), _t('Leider wurde die Konfigurationsdatei zwischenzeitlich ver&auml;ndert, versuche es deshalb noch einmal.'));
 	}
 	else
-		$tpl->msg('error', '', 'Bitte vergebe eine Interfacebezeichnung, ein Protokoll und eine Methode!');
+		$tpl->msg('error', _t('Fehler'), _t('Bitte vergebe eine Interfacebezeichnung, ein Protokoll und eine Methode!'));
 }
 
 $tpl->assign('checksum', $networkInterface->getInterfaceHash());

@@ -26,11 +26,11 @@ function getCacheName($file)
 	switch ($file)
 	{
 		case 'usb_devices':
-			return 'Angeschlossene Ger&auml;te';
+			return _t('Angeschlossene Ger&auml;te');
 		case 'users':
-			return 'Alle Benutzer';
+			return _t('Alle Benutzer');
 		case 'weather':
-			return 'Wetter';
+			return _t('Wetter');
 		default:
 			return $file;
 	}

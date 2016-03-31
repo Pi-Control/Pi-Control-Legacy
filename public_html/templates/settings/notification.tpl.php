@@ -3,15 +3,15 @@
 <div class="sidebar">
     <div class="box">
         <div class="inner-header">
-            <span>Du / Deine Ger&auml;te</span>
+            <span><?php _e('Du'); ?> / <?php _e('Deine Ger&auml;te'); ?></span>
         </div>
         <div class="inner">
-            Verifiziert als <strong><?php echo $data['me']['name']; ?></strong>.
+            <?php _e('Verifiziert als '); ?><strong><?php echo $data['me']['name']; ?></strong>.
         </div>
         <div class="inner-table">
             <table class="table table-borderless">
                 <tr>
-                    <th>Ger&auml;tebezeichnung / Erstelldatum</th>
+                    <th><?php _e('Ger&auml;tebezeichnung'); ?> / <?php _e('Erstelldatum'); ?></th>
                 </tr>
 <?php foreach ($data['devices']['devices'] as $device) { ?>
                 <tr>
@@ -32,40 +32,40 @@
 			<?php showGoBackIcon('?s=settings'); ?>
 		</div>
 		<div class="inner">
-			Die Benachrichtigungen werden &uuml;ber Pushbullet realisiert. Daher ist ein Konto bei Pushbullet notwendig.
+			<?php _e('Die Benachrichtigungen werden &uuml;ber Pushbullet realisiert. Daher ist ein Konto bei Pushbullet notwendig.'); ?>
 		</div>
 		<form action="?s=settings&amp;do=notification" method="post">
 			<div class="inner-table">
 				<table class="table table-borderless table-form">
 					<tr>
-						<td>Aktivieren</td>
+						<td><?php _e('Aktivieren'); ?></td>
 						<td><input type="checkbox" name="activation" value="checked" id="cb-activation"<?php if ($data['activation'] == true) echo ' checked="checked"'; ?> /><label for="cb-activation" class="checkbox only-checkbox">&nbsp;</label></td>
 					</tr>
 					<tr>
-						<td>Zugangstoken</td>
+						<td><?php _e('Zugangstoken'); ?></td>
 						<td><input type="text" name="token" maxlength="46" value="<?php echo $data['token']; ?>" style="width: 300px;" /></td>
 					</tr>
 <?php if (is_array($data['me']) && is_array($data['devices'])) { ?>
 					<tr>
-						<td>Testbenachrichtigung</td>
-						<td><form action="?s=settings&amp;do=notification" method="post"><input type="submit" name="submit-test-notification" value="Jetzt senden" class="button-small" /></form></td>
+						<td><?php _e('Testbenachrichtigung'); ?></td>
+						<td><form action="?s=settings&amp;do=notification" method="post"><input type="submit" name="submit-test-notification" value="<?php _e('Jetzt senden'); ?>" class="button-small" /></form></td>
 					</tr>
 <?php } ?>
 				</table>
 			</div>
 			<div class="inner">
 				<br /><br />
-				<strong>Benachrichtige mich, wenn...</strong> <?php echo showHelper('in-welchen-abstaenden-sendet-das-pi-control-benachrichtigungen'); ?>
+				<strong><?php _e('Benachrichtige mich, wenn...'); ?></strong> <?php echo showHelper('in-welchen-abstaenden-sendet-das-pi-control-benachrichtigungen'); ?>
 			</div>
 			<div class="inner-table">
 				<table class="table table-borderless table-form">
 					<tr>
 						<td style="width: 1%;"><input type="checkbox" name="event-pi-control-version" value="checked" id="cb-event-pi-control-version"<?php if ($data['pi-control-enabled'] === true) echo ' checked="checked"'; ?> /><label for="cb-event-pi-control-version" class="checkbox only-checkbox">&nbsp;</label></td>
-						<td style="width: 35%;" colspan="2">eine neue Pi Control Version erscheint</td>
+						<td style="width: 35%;" colspan="2"><?php _e('eine neue Pi Control Version erscheint'); ?></td>
 					</tr>
 					<tr>
 						<td style="width: 1%;"><input type="checkbox" name="event-cpu-temperature" value="checked" id="cb-event-cpu-temperature"<?php if ($data['cpu-temperature-enabled'] === true) echo ' checked="checked"'; ?> /><label for="cb-event-cpu-temperature" class="checkbox only-checkbox">&nbsp;</label></td>
-						<td style="width: 35%;">die CPU-Temperatur einen Wert &uuml;berschreitet</td>
+						<td style="width: 35%;"><?php _e('die CPU-Temperatur einen Wert &uuml;berschreitet'); ?></td>
 						<td><select name="event-cpu-temperature-maximum">
 								<option style="background: #4CAF50;" value="40"<?php if ($data['cpu-temperature-maximum'] == 40) echo ' selected="selected"'; ?>>40 °C</option>
 								<option style="background: #5ABC45;" value="45"<?php if ($data['cpu-temperature-maximum'] == 45) echo ' selected="selected"'; ?>>45 °C</option>
@@ -82,13 +82,13 @@
 					</tr>
 					<tr>
 						<td style="width: 1%;"><input type="checkbox" name="event-memory-used" value="checked" id="cb-event-memory-used"<?php if ($data['memory-used-enabled'] === true) echo ' checked="checked"'; ?> /><label for="cb-event-memory-used" class="checkbox only-checkbox">&nbsp;</label></td>
-						<td style="width: 35%;">der Speicherverbrauch (Gesamtspeicher) einen Wert &uuml;berschreitet</td>
+						<td style="width: 35%;"><?php _e('der Speicherverbrauch (Gesamtspeicher) einen Wert &uuml;berschreitet'); ?></td>
 						<td><input type="text" name="event-memory-used-text" style="width: 30px !important;" maxlength="3" value="<?php echo $data['memory-used-limit']; ?>" /> %</td>
 					</tr>
 				</table>
 			</div>
 			<div class="inner-end">
-				<input type="submit" name="submit" value="Speichern" />
+				<input type="submit" name="submit" value="<?php _e('Speichern'); ?>" />
 			</div>
 		</form>
 	</div>

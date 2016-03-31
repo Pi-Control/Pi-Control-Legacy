@@ -36,23 +36,23 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 			if ($pInterface != $interfaceName && $networkInterface->existsInterface($pInterface) == false)
 				$newInterfaceName = $pInterface;
 			elseif ($pInterface != $interfaceName)
-				$tpl->msg('error', '', 'Leider konnte das Interface nicht gespeichert werden. Der Name f&uuml;r dieses Interface ist bereits vergeben.', true, 10);
+				$tpl->msg('error', _t('Fehler'), _t('Leider konnte das Interface nicht gespeichert werden. Der Name f&uuml;r dieses Interface ist bereits vergeben.'), true, 10);
 			
 			if ($tpl->msgExists(10) === false)
 			{
 				if ($networkInterface->editInterface($interfaceName, $newInterface, $newInterfaceName) === true)
-					$tpl->msg('success', '', 'Interface wurde erfolgreich gespeichert. Damit diese Einstellungen jedoch wirksam werden, muss das Interface neu gestartet werden.');
+					$tpl->msg('success', _t('Interface gespeichert'), _t('Interface wurde erfolgreich gespeichert. Damit diese Einstellungen jedoch wirksam werden, muss das Interface neu gestartet werden.'));
 				else
-					$tpl->msg('error', '', 'Leider konnte das Interface nicht gespeichert werden. Es ist w&auml;hrend der &Uuml;bertragung ein Fehler aufgetreten.');
+					$tpl->msg('error', _t('Fehler'), _t('Leider konnte das Interface nicht gespeichert werden. Es ist w&auml;hrend der &Uuml;bertragung ein Fehler aufgetreten.'));
 					
 				$interfaceName = $pInterface;
 			}
 		}
 		else
-			$tpl->msg('error', '', 'Leider wurde die Konfigurationsdatei zwischenzeitlich ver&auml;ndert, versuche es deshalb noch einmal.');
+			$tpl->msg('error', _t('Fehler'), _t('Leider wurde die Konfigurationsdatei zwischenzeitlich ver&auml;ndert, versuche es deshalb noch einmal.'));
 	}
 	else
-		$tpl->msg('error', '', 'Bitte vergebe eine Interfacebezeichnung, ein Protokol und eine Methode!');
+		$tpl->msg('error', _t('Fehler'), _t('Bitte vergebe eine Interfacebezeichnung, ein Protokoll und eine Methode!'));
 }
 
 $interfaces = $networkInterface->getInterfaces();

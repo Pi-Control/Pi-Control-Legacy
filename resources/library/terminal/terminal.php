@@ -1,9 +1,9 @@
 <?php
 define('PICONTROL', true);
 
-(include_once realpath(dirname(__FILE__)).'/../../init.php') or die('Fehler beim Laden!');
-(include_once LIBRARY_PATH.'main/tpl.class.php') or die('Fehler beim Laden!');
-(include_once LIBRARY_PATH.'main/main.function.php') or die('Fehler beim Laden!');
+(include_once realpath(dirname(__FILE__)).'/../../init.php')	or die('Error: 0x0000');
+(include_once LIBRARY_PATH.'main/tpl.class.php')				or die('Error: 0x0001');
+(include_once LIBRARY_PATH.'main/main.function.php')			or die('Error: 0x0002');
 
 $host = '127.0.0.1';
 $port = (isset($_GET['port'])) ? $_GET['port'] : 0;
@@ -64,7 +64,7 @@ while (true)
 			$found_socket = array_search($socket, $changed);
 			unset($changed[$found_socket]);
 			
-			$response = mask(json_encode(array('type'=> 'system', 'message' => 'Verbunden')));
+			$response = mask(json_encode(array('type'=> 'system', 'message' => 'connected')));
 			send_message($response);
 			$response_text = mask(json_encode(array('type' => 'console', 'message' => $lastLine)));
 			send_message($response_text);
@@ -129,7 +129,7 @@ while (true)
 			$response_text = mask(json_encode(array('type' => 'console', 'message' => $ansi->getScreen())));
 			send_message($response_text);
 			
-			$response = mask(json_encode(array('type' => 'system', 'message' => 'Verbunden')));
+			$response = mask(json_encode(array('type' => 'system', 'message' => 'connected')));
 			send_message($response);
 		}
 	}

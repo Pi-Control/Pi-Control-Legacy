@@ -3,7 +3,7 @@
 <div>
 	<div class="info_red box">
 		<div class="inner">
-			<strong>Bitte aktiviere JavaScript, um dir die Statistiken anzusehen.</strong>
+			<strong><?php _e('Bitte aktiviere JavaScript, um dir die Statistiken anzusehen.'); ?></strong>
 		</div>
 	</div>
 </div>
@@ -97,7 +97,7 @@
 				'controlType': 'DateRangeFilter',
 				'containerId': 'chart_control_log_<?php echo $value['log']; ?>',
 				'options': {
-					'filterColumnLabel': 'Zeit',
+					'filterColumnLabel': '<?php _e('Zeit'); ?>',
 					'ui': {
 						'step': 'hour',
 						'label': '',

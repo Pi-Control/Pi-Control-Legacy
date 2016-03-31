@@ -19,7 +19,6 @@
 	<link rel="mask-icon" href="public_html/img/favicon/safari-pinned-tab.svg" color="#1975d0" />
 	<link rel="shortcut icon" href="public_html/img/favicon/favicon.ico" />
 	<script type="text/javascript" src="public_html/js/jquery.min.js"></script>
-	<script type="text/javascript">var req_url = '{<?php echo $data['javascriptReqUrl']; ?>}';</script>
 	<script type="text/javascript" src="public_html/js/main.js"></script>
 	<script type="text/javascript" src="public_html/js/feedback.js"></script>
 	<title><?php echo $data['title']; ?></title>
@@ -65,10 +64,10 @@
 		<div class="box info">
 			<div>
 				<div class="inner-header">
-					<span>Nicht unterst&uuml;tzte Browserversion</span>
+					<span><?php _e('Nicht unterst&uuml;tzte Browserversion'); ?></span>
 				</div>
 				<div class="inner">
-					Deine aktuelle Browserversion wird von Pi Control nicht unterst&uuml;tzt. Bitte aktualisiere deinen Browser oder verwende einen anderen!
+					<?php _e('Deine aktuelle Browserversion wird von Pi Control nicht unterst&uuml;tzt. Bitte aktualisiere deinen Browser oder verwende einen anderen!'); ?>
 				</div>
 			</div>
 		</div>
@@ -78,10 +77,10 @@
 		<div class="box info info-update pulse-update">
 			<div>
 				<div class="inner-header">
-					<span>Pi Control <?php echo $data['updatePicontrol']['version']; ?> ist verf&uuml;gbar</span>
+					<span><?php _e('Pi Control %s ist verf&uuml;gbar', $data['updatePicontrol']['version']); ?></span>
 				</div>
 				<div class="inner">
-					Zur <a href="?s=settings&amp;do=update">Aktualisierung</a>, um diese anzusehen und zu starten.
+					<?php _e('Zur <a href="%s">Aktualisierung</a>, um diese anzusehen und zu starten.', '?s=settings&amp;do=update'); ?>
 				</div>
 			</div>
 		</div>
@@ -91,11 +90,11 @@
 		<div class="box error">
 			<div>
 				<div class="inner-header">
-					<span>Fehler mit dem Cron</span>
+					<span><?php _e('Fehler mit dem Cron'); ?></span>
 					<div><span class="cancel"></span></div>
 				</div>
 				<div class="inner">
-					<?php _e('Es gibt anscheinend ein Problem mit dem Cron für das Pi Control. Dieser wurde seit mehr als 2 Minuten nicht mehr ausgeführt. Sollte diese Meldung in ca. 5 Minuten immer noch erscheinen, führe eine <a href="?s=settings&amp;do=trouble-shooting">Problembehandlung</a> durch.'); ?>
+					<?php _e('Es gibt anscheinend ein Problem mit dem Cron für das Pi Control. Dieser wurde seit mehr als 2 Minuten nicht mehr ausgef&uuml;hrt. Sollte diese Meldung in ca. 5 Minuten immer noch erscheinen, f&uuml;hre eine <a href="%s">Problembehandlung</a> durch.', '?s=settings&amp;do=trouble-shooting'); ?>
 				</div>
 			</div>
 		</div>

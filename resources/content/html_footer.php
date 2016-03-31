@@ -4,7 +4,6 @@ if (!defined('PICONTROL')) exit();
 $tpl = new PiTpl;
 
 $tpl->assign('errorHandler', urlencode(base64_encode(json_encode($tplErrorHandler))));
-$tpl->assign('servertime', date('H:i:s', time()-1));
 $tpl->assign('version', $tplConfig['version']['version']);
 $tpl->assign('helpLink', $tplConfig['url']['help']);
 

@@ -2,7 +2,7 @@
 <div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Plugins</span>
+			<span><?php _e('Plugins'); ?></span>
 			<?php showSettingsIcon('?s=settings&amp;do=plugins'); ?>
 		</div>
 <?php $i = 0; foreach ($data['plugins'] as $plugin) { $i++; ?>
@@ -18,7 +18,7 @@
 		</div>
 <?php } ?>
 		<div class="inner-end">
-			<a href="?s=discover_plugins"><button>Plugins entdecken</button></a>
+			<a href="?s=discover_plugins"><button><?php _e('Plugins entdecken'); ?></button></a>
 		</div>
 	</div>
 </div>

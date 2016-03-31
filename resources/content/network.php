@@ -1,7 +1,8 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'main/rpi.function.php') or die($error_code['0x0003']);
+(include_once LIBRARY_PATH.'main/rpi.function.php')			or die('Error: 0x0010');
+(include_once LIBRARY_PATH.'network/network.function.php')	or die('Error: 0x0011');
 $tpl->setHeaderTitle(_t('Netzwerk'));
 
 if (isset($_GET['hostname']))
@@ -12,15 +13,13 @@ if (isset($_GET['hostname']))
 		{
 			if (preg_match('/^([a-z][a-z0-9\-\.]*[^\-]){1,24}$/im', $pHostname))
 			{
-				(include_once LIBRARY_PATH.'network/network.function.php');
-				
 				if (($status = editHostname($pHostname)) === true)
-					$tpl->msg('success', '', 'Damit die &Auml;nderung wirksam wird, muss dein Raspberry Pi neu gestartet werden. <a href="?s=shutdown&restart">Jetzt neu starten.</a>');
+					$tpl->msg('success', _t('Hostname gespeichert'), _t('Damit die &Auml;nderung wirksam wird, muss dein Raspberry Pi neu gestartet werden. <a href="%s">Jetzt neu starten.</a>', '?s=shutdown&restart'));
 				else
-					$tpl->msg('error', '', 'Fehler beim &Auml;ndern des Hostname! Fehlercode: '.$status);
+					$tpl->msg('error', _t('Fehler'), _t('Fehler beim &Auml;ndern des Hostname! Fehlercode: %s', $status));
 			}
 			else
-				$tpl->msg('error', '', 'Der Hostname ist ung&uuml;ltig! Er muss aus mindestens 1 bis 24 Zeichen bestehen und darf nur folgende Zeichen enthalten: A-Z a-z 0-9 -<br />Der Hostname darf nicht mit einem Bindestrich Anfangen oder Enden.');
+				$tpl->msg('error', _t('Fehler'), _t('Der Hostname ist ung&uuml;ltig! Er muss aus mindestens 1 bis 24 Zeichen bestehen und darf nur folgende Zeichen enthalten: A-Z a-z 0-9 -<br />Der Hostname darf nicht mit einem Bindestrich Anfangen oder Enden.'));
 		}
 	}
 	

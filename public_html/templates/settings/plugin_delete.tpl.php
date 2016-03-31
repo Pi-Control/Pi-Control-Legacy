@@ -2,7 +2,7 @@
 <div>
 	<div class="box">
 		<div class="inner-header">
-			<span>Einstellungen zu Plugins - L&ouml;schen</span>
+			<span><?php _e('Einstellungen zu Plugins - Plugin l&ouml;schen'); ?></span>
 			<?php showGoBackIcon('?s=settings&amp;do=plugins'); ?>
 		</div>
 		<form action="?s=settings&amp;do=plugins&amp;delete=<?php echo $data['plugin']['id']; ?>" method="post">

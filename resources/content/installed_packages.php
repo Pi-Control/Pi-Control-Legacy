@@ -1,7 +1,7 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'main/rpi.function.php') or die('');
+(include_once LIBRARY_PATH.'main/rpi.function.php') or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Installierte Pakete'));
 
 $packages = rpi_getInstalledPackages();
