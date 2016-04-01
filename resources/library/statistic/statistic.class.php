@@ -124,6 +124,9 @@ class LogStatistic
 	
 	private function open()
 	{
+		if (!file_exists($this->file) || !is_file($this->file))
+			touch($this->file);
+		
 		$this->stream = fopen($this->file, 'r+') or exit(_t('Konnte Log-Datei nicht &ouml;ffnen: %s', $this->file));
 	}
 }
