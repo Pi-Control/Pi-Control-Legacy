@@ -194,7 +194,9 @@ function rpi_getRpiRevision()
 	$revision[16] = array('revision' => '0010', 'model' => 'B+', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
 	$revision[17] = array('revision' => '0011', 'model' => 'Compute Module', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
 	$revision[18] = array('revision' => '0012', 'model' => 'A+', 'pcb' => 1, 'memory' => 256, 'manufacturer' => 'Sony');
-	$revision[19] = array('revision' => '0013', 'model' => 'B+', 'pcb' => 1.2, 'memory' => 512, 'manufacturer' => _t('Unbekannt'));
+	$revision[19] = array('revision' => '0013', 'model' => 'B+', 'pcb' => 1.2, 'memory' => 512, 'manufacturer' => 'Embest');
+	$revision[20] = array('revision' => '0014', 'model' => 'Compute Module', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
+	$revision[21] = array('revision' => '0015', 'model' => 'A+', 'pcb' => 1, 'memory' => 256, 'manufacturer' => 'Sony');
 	
 	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module', 7 => 'Zero', 8 => 'Pi 3 B');
 	$revision_memory = array(0 => 256, 1 => 512, 2 => 1024);
@@ -205,7 +207,7 @@ function rpi_getRpiRevision()
 	
 	if (isset($match[1]))
 	{
-		if ($match[1][0] == '1')
+		if ($match[1][0] == '1' || $match[1][0] == '2')
 			$match[1] = substr($match[1], 1);
 		
 		if (strlen($match[1]) == 4)
