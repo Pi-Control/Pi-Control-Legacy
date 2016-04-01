@@ -89,7 +89,7 @@
 				</tr>
 <?php foreach ($data['usb_devices'] as $value) { ?>
 				<tr>
-					<td><?php echo $value; ?></td>
+					<td><?php echo htmlentities($value); ?></td>
 				</tr>
 <?php } ?>
 			</table>

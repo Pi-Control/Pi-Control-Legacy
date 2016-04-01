@@ -24,18 +24,13 @@ exec('cat /etc/crontab', $crontab);
 $cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode(PHP_EOL, $crontab));
 
 $lastExecutionLog = array(
-						filemtime(LOG_PATH.'statistic/coretemp.csv'),
-						filemtime(LOG_PATH.'statistic/cpuload.csv'),
-						filemtime(LOG_PATH.'statistic/ram.csv'),
-						filemtime(LOG_PATH.'statistic/network_eth0.csv')
+						(file_exists(LOG_PATH.'statistic/coretemp.csv')) ? filemtime(LOG_PATH.'statistic/coretemp.csv') : 1,
+						(file_exists(LOG_PATH.'statistic/cpuload.csv')) ? filemtime(LOG_PATH.'statistic/cpuload.csv') : 1,
+						(file_exists(LOG_PATH.'statistic/ram.csv')) ? filemtime(LOG_PATH.'statistic/ram.csv') : 1,
+						(file_exists(LOG_PATH.'statistic/network_eth0.csv')) ? filemtime(LOG_PATH.'statistic/network_eth0.csv') : 1
 					);
 
 rsort($lastExecutionLog);
-
-/*if (isset($_POST['cronSubmit']) && $_POST['cronSubmit'] != '')
-{
-	addCronToCrontab($cronEntry, $ssh); // TODO
-}*/
 
 $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);

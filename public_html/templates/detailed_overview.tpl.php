@@ -162,10 +162,10 @@
 				<tr>
 					<th style="width: 20%;"><?php _e('Partition'); ?></th>
 					<th style="width: 10%;"><?php _e('Mountpunkt'); ?></th>
-					<th style="width: 10%;"><?php _e('Belegt'); ?></th>
-					<th style="width: 10%;"><?php _e('Frei'); ?></th>
-					<th style="width: 10%;"><?php _e('Gesamt'); ?></th>
-					<th style="width: 40%;"></th>
+					<th style="width: 10%; min-width: 70px;"><?php _e('Belegt'); ?></th>
+					<th style="width: 10%; min-width: 70px;"><?php _e('Frei'); ?></th>
+					<th style="width: 10%; min-width: 70px;"><?php _e('Gesamt'); ?></th>
+					<th style="width: 40%; min-width: 150px;"></th>
 				</tr>
 <?php $i = 0; foreach ($data['memory'] as $value) {
 		if (++$i != $data['memory_count']) { ?>

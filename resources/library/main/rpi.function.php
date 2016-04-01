@@ -135,6 +135,19 @@ function rpi_getCPULoad($accurate = false, $mulitcore = false)
 function rpi_getDistribution()
 {
 	$distribution = trim(@shell_exec('cat /etc/issue | cut -d " " -f 1-3'));
+	
+	if ($distribution == '')
+	{
+		$distributionString = @shell_exec('cat /etc/*-release | grep PRETTY_NAME');
+		
+		preg_match('/.*="([\w\s\d\/]*).*"/i', $distributionString, $match);
+		
+		if (count($match) == 2)
+			$distribution = trim($match[1]);
+		else
+			$distribution = _t('Unbekannt');
+	}
+	
 	return $distribution;
 }
 
@@ -336,7 +349,11 @@ function rpi_getUsbDevices()
 	foreach ($data as $row)
 	{
 		preg_match('#[0-9a-f]{4}:[0-9a-f]{4}\s+(.+)#i', $row, $match);
-		$devices[] = trim($match[1]);
+		
+		if (count($match) == 2)
+			$devices[] = trim($match[1]);
+		else
+			$devices[] = '<'._t('Unbekannt').'>';
 	}
 	
 	return $devices;
@@ -370,7 +387,9 @@ function rpi_getAllUsers()
 	foreach ($dataLoggedIn as $row)
 	{
 		$split = preg_split('/\s+/i', $row);
-		$usersLoggedIn[$split[0]][] = array('port' => $split[1], 'lastLogin' => strtotime($split[2].' '.$split[3].' '.$split[4]), 'lastLoginAddress' => $split[5]);
+		
+		if (count($split) == 6)
+			$usersLoggedIn[$split[0]][] = array('port' => $split[1], 'lastLogin' => strtotime($split[2].' '.$split[3].' '.$split[4]), 'lastLoginAddress' => $split[5]);
 	}
 	
 	foreach ($dataAllUsers as $row)

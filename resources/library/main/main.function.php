@@ -276,6 +276,8 @@ function sizeUnit($size)
 		return number_format(round($size/1048576,2), 2, ',', '').' MB';
 	elseif ($size < 1073741824000)
 		return number_format(round($size/1073741824,2), 2, ',', '').' GB';
+	elseif ($size < 1099511627776000)
+		return number_format(round($size/1099511627776,2), 2, ',', '').' TB';
 }
 
 function return_bytes($size)
