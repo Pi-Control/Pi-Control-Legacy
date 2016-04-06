@@ -125,15 +125,32 @@ body {
 }
 
 #inner-header {
-	background: url('../img/logo.svg') left 15px center no-repeat;
-	background-size: auto 60%;
 	margin: 0 auto;
 	max-width: 900px;
 	text-align: right;
+	display: table;
+	width: 100%;
+}
+
+#header-logo {
+	display: table-cell;
+	width: 1%;
+	vertical-align: middle;
+    padding: 9px 15px;
+}
+
+#header-logo:hover {
+	background: <?php echo $colorPallet[8]; ?>;
+}
+
+#header-logo img {
+	height: 100%;
+	width: auto;
+	margin-bottom: -4px;
 }
 
 #header-navi {
-	display: inline-block;
+	display: table-cell;
 }
 
 #header-navi > a, #header-navi > div > a {
@@ -1393,12 +1410,12 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 	}
 	
 	#header-mobile ~ #inner-header {
+		background: url('../img/logo.svg') right 15px center no-repeat;
 		min-height: 55px;
 		text-align: left;
-		background-position: right 15px center;
 	}
 	
-	#header-navi {
+	#header-logo, #header-navi {
 		display: none;
 	}
 	

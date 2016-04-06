@@ -77,11 +77,11 @@
 			<table class="table table-borderless table-form">
 				<tr>
 					<td style="width: 50%;"><?php _e('Vorhanden'); ?></td>
-					<td class="<?php echo ($data['filesFoldersExist']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['filesFoldersExist']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit;" href="?s=install_trouble-shooting'. $data['langUrl'].'" target="_blank">'._t('Mindestens %d Fehler', $data['filesFoldersExist']['count']).'</a>'; ?></td>
+					<td class="<?php echo ($data['filesFoldersExist']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['filesFoldersExist']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline;" href="?s=install_trouble-shooting'. $data['langUrl'].'" target="_blank">'._t('Mindestens %d Fehler', $data['filesFoldersExist']['count']).'</a>'; ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('Berechtigungen'); ?></td>
-					<td class="<?php echo ($data['filesFoldersPermission']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['filesFoldersPermission']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit;" href="?s=install_trouble-shooting'.$data['langUrl'].'" target="_blank">'._t('Mindestens %d Fehler', $data['filesFoldersPermission']['count']).'</a>'; ?></td>
+					<td class="<?php echo ($data['filesFoldersPermission']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['filesFoldersPermission']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline" href="?s=install_trouble-shooting'.$data['langUrl'].'" target="_blank">'._t('Mindestens %d Fehler', $data['filesFoldersPermission']['count']).'</a>'; ?></td>
 				</tr>
 			</table>
 		</div>

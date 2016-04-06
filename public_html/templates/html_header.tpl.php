@@ -41,6 +41,7 @@
 		<input type="checkbox" id="header-mobile" />
 		<div id="inner-header">
 			<label for="header-mobile"></label>
+			<a href="?s=overview" id="header-logo"><img src="public_html/img/logo.svg" /></a>
 			<div id="header-navi">
 				<a href="?s=overview"><?php _e('&Uuml;bersicht'); ?></a>
 				<a href="?s=network"><?php _e('Netzwerk'); ?></a>
@@ -50,7 +51,7 @@
 					<div class="navi-dropdown-container">
 <?php if (isset($data['naviPluginsUpdates'])) { ?>
 						<a href="?s=discover_plugins" class="navi-dropdown-update">UPDATE</a>
-<?php } if (is_array($data['naviPlugins'])) {	foreach ($data['naviPlugins'] as $plugin) { ?>
+<?php } if (is_array($data['naviPlugins'])) { foreach ($data['naviPlugins'] as $plugin) { ?>
 						<a href="?s=plugins&amp;id=<?php echo $plugin['id']; ?>"><?php _e($plugin['name']); if (isset($data['naviPluginsUpdates'][$plugin['id']])) echo '<span class="update-bull">&bull;</span>'; ?></a>
 <?php } } ?>
 					</div>

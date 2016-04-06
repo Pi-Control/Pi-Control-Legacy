@@ -97,6 +97,8 @@ $langArray = array(
 	'3797658z' => 'The cron for the Pi Control was created successfully.',
 	'ccd2cb88' => 'Unfortunately an error has occurred while reading the Pi Control user! Please repeat the installation.',
 	'744e8e56' => 'Couldn\'t find the selected language! Please try again.',
-	'52e5304c' => 'Fault'
+	'52e5304c' => 'Fault',
+	'352619fd' => 'Currently known restrictions',
+	'4706b3bb' => '- The terminal works only under HTTP, not HTTPS.<br />- Some missing translations in English.<br />- Initially no plugins. Be submitted with the time.<br />- Still no Android app. Will be also submitted.'
 );
 ?>
