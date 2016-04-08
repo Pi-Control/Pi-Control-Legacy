@@ -4,29 +4,42 @@ if (!defined('PICONTROL')) exit();
 (include_once LIBRARY_PATH.'pi-control/pi-control.function.php') or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Einstellungen zum Pi Control'));
 
+if (isset($_GET['msg']) && $_GET['msg'] == 'theme')
+	$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.<br /><br />Tipp: Um die Theme-&Auml;nderung wirksam zu machen, leere deinen Browser-Cache mit Ctrl + F5'));
+elseif (isset($_GET['msg']) && $_GET['msg'] == 'main')
+	$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'));
+
 if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 {
+	$redirect = 0;
+	
 	if (isset($_POST['theme-color']) && in_array($_POST['theme-color'], array('red', 'pink', 'purple', 'deepPurple', 'indigo', 'blue', 'lightBlue', 'cyan', 'teal', 'green', 'lightGreen', 'lime', 'yellow', 'amber', 'orange', 'deepOrange', 'brown', 'grey', 'blueGrey')) === true)
 	{
-		$tpl->setConfig('main:theme.color', $_POST['theme-color']);
-		$tpl->setConfig('main:theme.colorChanged', time());
+		if (getConfig('main:theme.color', 'blue') != $_POST['theme-color'])
+			$redirect += 1;
+		
+		setConfig('main:theme.color', $_POST['theme-color']);
+		setConfig('main:theme.colorChanged', time());
 		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	
 	if (isset($_POST['pi-control-language']) && in_array($_POST['pi-control-language'], array('de', 'en')) === true)
 	{
+		if (getConfig('init:language', 'de') != $_POST['pi-control-language'])
+			$redirect += 2;
+		
 		setConfig('init:language', $_POST['pi-control-language']);
 		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	
 	if (isset($_POST['external-access']) && $_POST['external-access'] == 'checked')
 	{
-		$tpl->setConfig('main:access.external', 'true');
+		setConfig('main:access.external', 'true');
 		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	else
 	{
-		$tpl->setConfig('main:access.external', 'false');
+		setConfig('main:access.external', 'false');
 		$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 	}
 	
@@ -34,14 +47,25 @@ if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 	{
 		if (preg_match('/^[a-z][a-z0-9_\-\+\/\.\(\)\[\] ]{2,32}$/i', $pLabel) === 1)
 		{
-			$tpl->setConfig('main:main.label', $pLabel);
+			setConfig('main:main.label', $pLabel);
 			$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'), true, 10);
 		}
 		else
+		{
+			$redirect = 0;
 			$tpl->msg('error', _t('Fehler'), _t('Leider ist die Bezeichnung ung&uuml;ltig! Die Bezeichnung muss aus 2 bis 32 Zeichen bestehen. Das erste Zeichen muss ein Buchstabe sein und es sind nur folgende Zeichen erlaubt: A-Z 0-9 _ - + / . ( ) [ ] "Leerzeichen"'), true, 10);
+		}
 	}
 	else
+	{
+		$redirect = 0;
 		$tpl->msg('error', _t('Fehler'), _t('Bitte vergebe f&uuml;r dein Pi Control eine Bezeichnung!'), true, 10);
+	}
+	
+	if ($redirect == 1 || $redirect == 3)
+		header('Location: ?s=settings&do=pi-control&msg=theme');
+	elseif ($redirect == 2)
+		header('Location: ?s=settings&do=pi-control&msg=main');
 }
 elseif (isset($_POST['submit-temperature']) && $_POST['submit-temperature'] != '')
 {
