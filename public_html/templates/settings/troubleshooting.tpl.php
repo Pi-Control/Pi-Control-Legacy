@@ -1,5 +1,5 @@
 <?php if (!defined('PICONTROL')) exit(); ?>
-<script type="text/javascript" src="public_html/js/settings.trouble-shooting.cron_selection.js"></script>
+<script type="text/javascript" src="public_html/js/settings.troubleshooting.cron_selection.js"></script>
 <div>
 	<div class="box">
 		<div class="inner-header">
@@ -77,7 +77,7 @@
 		</div>
 <?php if ($data['cronError'] === 1) { ?>
 		<div class="inner-end">
-			<form action="?s=settings&amp;do=trouble-shooting" method="post"><input type="submit" name="cronSubmit" value="<?php _e('Problem beheben'); ?>" /></form>
+			<form action="?s=settings&amp;do=troubleshooting" method="post"><input type="submit" name="cronSubmit" value="<?php _e('Problem beheben'); ?>" /></form>
 		</div>
 <?php } elseif ($data['cronError'] === 2) { ?>
 		<div class="inner-end">

@@ -95,7 +95,7 @@
 					<div><span class="cancel"></span></div>
 				</div>
 				<div class="inner">
-					<?php _e('Es gibt anscheinend ein Problem mit dem Cron für das Pi Control. Dieser wurde seit mehr als 2 Minuten nicht mehr ausgef&uuml;hrt. Sollte diese Meldung in ca. 5 Minuten immer noch erscheinen, f&uuml;hre eine <a href="%s">Problembehandlung</a> durch.', '?s=settings&amp;do=trouble-shooting'); ?>
+					<?php _e('Es gibt anscheinend ein Problem mit dem Cron für das Pi Control. Dieser wurde seit mehr als 2 Minuten nicht mehr ausgef&uuml;hrt. Sollte diese Meldung in ca. 5 Minuten immer noch erscheinen, f&uuml;hre eine <a href="%s">Problembehandlung</a> durch.', '?s=settings&amp;do=troubleshooting'); ?>
 				</div>
 			</div>
 		</div>

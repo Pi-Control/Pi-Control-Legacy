@@ -1,7 +1,7 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'trouble-shooting/trouble-shooting.function.php') or die($error_code['0x0006']);
+(include_once LIBRARY_PATH.'troubleshooting/troubleshooting.function.php') or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Problembehandlung'));
 
 // Dateien und Ordner
@@ -48,5 +48,5 @@ $tpl->assign('cronUserGroup', $filesFolders['resources/cron/init.php']['userGrou
 $tpl->assign('cronUserGroupBool', ($cronUserGroupBool = $filesFolders['resources/cron/init.php']['userGroupBool']));
 $tpl->assign('cronError', ($cronMatch !== 1) ? 1 : (($cronPHPCLI !== true || $cronLastExecutionBool !== true || $cronLastExecutionLogBool !== true || $cronPermissionBool !== true || $cronUserGroupBool !== true) ? 2 : 0));
 
-$tpl->draw('settings/trouble-shooting');
+$tpl->draw('settings/troubleshooting');
 ?>

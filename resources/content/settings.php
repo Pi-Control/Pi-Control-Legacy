@@ -20,8 +20,8 @@ switch ((isset($_GET['do']) ? $_GET['do'] : ''))
 	case 'plugins':
 		include_once CONTENT_PATH.'settings/plugins.php';
 			break;
-	case 'trouble-shooting':
-		include_once CONTENT_PATH.'settings/trouble-shooting.php';
+	case 'troubleshooting':
+		include_once CONTENT_PATH.'settings/troubleshooting.php';
 			break;
 	case 'statistic':
 		include_once CONTENT_PATH.'settings/statistic.php';
