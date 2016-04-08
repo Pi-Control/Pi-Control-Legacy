@@ -110,13 +110,14 @@
 				'chartType' : 'AreaChart',
 				'containerId' : 'chart_log_<?php echo $value['log']; ?>',
 				'options': {
-					vAxis: { viewWindow: { max: data.data.statistic.max, min: data.data.statistic.min }, textPosition: 'in', textStyle: { fontSize: 11, color: '#AAAAAA' }, gridlines: { color: '#fff' } },
+					vAxis: { title: '<?php echo $value['title']; ?>', viewWindow: { max: data.data.statistic.max, min: data.data.statistic.min }, textPosition: 'in', textStyle: { fontSize: 11, color: '#AAAAAA' }, titleTextStyle:  { fontSize: 11, color: '#AAAAAA' }, gridlines: { color: '#fff' } },
 					dateFormat: 'dd.MM.yy HH:mm',
 					hAxis: { format: 'dd.MM. HH:mm', textPosition: 'out', gridlines: { color: '#fff' } , textStyle: { fontSize: 11, color: '#AAAAAA' }},
 					focusTarget: 'category',
 					crosshair: { orientation: 'vertical', trigger: 'both', color: '#AAAAAA', opacity: 0.4 },
-					chartArea: {width: '100%', height: '80%', top: 0},
-					legend: {position: 'bottom', alignment: 'end', textStyle: { fontSize: 11, color: '#AAAAAA' } },
+					chartArea: { width: '100%', height: '80%', top: 0 },
+					legend: { position: 'bottom', alignment: 'end', textStyle: { fontSize: 11, color: '#AAAAAA' } },
+					axisTitlesPosition: 'in'
 				}
 			});
 			

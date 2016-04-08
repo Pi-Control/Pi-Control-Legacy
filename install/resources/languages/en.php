@@ -49,6 +49,7 @@ $langArray = array(
 	'1f83bfbc' => 'Yay, now you\'re done with the installation of Pi Control. At the last step, everything will ready configured and created. Then you\'ll redirected to the Pi Control.<br /><br />Have fun!',
 	'bea4c2c8' => 'Feedback',
 	'9a4883bb' => 'App in Play Store',
+	'b6d49679' => 'Open at Play Store',
 	'57d0632a' => 'Help',
 	'9c0864a5' => 'ABOUT ME',
 	'62db69f3' => 'My blog',

@@ -29,15 +29,9 @@ if (isset($_GET['hostname']))
 }
 else
 {
-	$ssh = NULL;
-	
-	if (isset($_GET['refresh_wlan']) && !empty($_GET['refresh_wlan']))
-		$ssh = $tpl->getSSHResource();
-	
 	$networkConnections = getAllNetworkConnections();
 	
-	$networkCountsJson = htmlspecialchars_decode(getConfig('main:network.overflowCount', '{}'));
-	$networkCounts = json_decode($networkCountsJson, true);
+	$networkCounts = unserialize(htmlspecialchars_decode(getConfig('main:network.overflowCount', 'a:0:{}')));
 	$counter = 0;
 	
 	foreach ($networkConnections as $network)
@@ -47,7 +41,7 @@ else
 		
 		if (isset($networkCounts[$network['interface']]['sent']))
 			$countSent = $networkCounts[$network['interface']]['sent'];
-			
+		
 		if (isset($networkCounts[$network['interface']]['receive']))
 			$countReceive = $networkCounts[$network['interface']]['receive'];
 		

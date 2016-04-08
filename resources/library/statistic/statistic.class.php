@@ -68,10 +68,10 @@ class LogStatistic
 		if (!is_resource($this->stream))
 			$this->open();
 		
-		fseek($this->stream, 0);
+		$entries = $this->getAll();
 		
-		if (is_array(($data = fgetcsv($this->stream, $this->length))))
-			return end($data);
+		if (is_array($entries))
+			return end($entries);
 	}
 	
 	private function shortLog()
