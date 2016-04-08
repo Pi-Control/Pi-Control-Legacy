@@ -136,7 +136,6 @@ class NetworkInterface
 				{
 					$isInterface = NULL;
 					$this->interfaces[trim(substr($line, 10))]['allow-auto'] = true;
-					$this->interfaces[trim(substr($line, 10))]['allow-auto'][] = $index+1;
 					continue;
 				}
 				
@@ -144,7 +143,6 @@ class NetworkInterface
 				{
 					$isInterface = NULL;
 					$this->interfaces[trim(substr($line, 13))]['allow-hotplug'] = true;
-					$this->interfaces[trim(substr($line, 13))]['allow-hotplug'][] = $index+1;
 					continue;
 				}
 				
@@ -186,8 +184,8 @@ class NetworkInterface
 				if (isset($line['allow-auto']) && $line['allow-auto'] == true)
 					$fileLines .= 'allow-auto '.$interface.PHP_EOL;
 				
-				if (isset($line['allow-hotplug ']) && $line['allow-hotplug '] == true)
-					$fileLines .= 'allow-hotplug  '.$interface.PHP_EOL;
+				if (isset($line['allow-hotplug']) && $line['allow-hotplug'] == true)
+					$fileLines .= 'allow-hotplug '.$interface.PHP_EOL;
 				
 				if (isset($line['protocol'], $line['method']) && $line['protocol'] != '' && $line['method'] != '')
 				{
