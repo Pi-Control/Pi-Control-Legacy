@@ -1,7 +1,7 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-$tpl->setHeaderTitle(_t('Einstellungen - Statistik'));
+$tpl->setHeaderTitle(_t('Einstellungen zur Statistik'));
 
 $folder = LOG_PATH.'statistic/';
 $fileArray = array();

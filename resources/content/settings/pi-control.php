@@ -2,7 +2,7 @@
 if (!defined('PICONTROL')) exit();
 
 (include_once LIBRARY_PATH.'pi-control/pi-control.function.php') or die('Error: 0x0010');
-$tpl->setHeaderTitle(_t('Einstellungen - Pi Control'));
+$tpl->setHeaderTitle(_t('Einstellungen zum Pi Control'));
 
 if (isset($_POST['submit-main']) && $_POST['submit-main'] != '')
 {
