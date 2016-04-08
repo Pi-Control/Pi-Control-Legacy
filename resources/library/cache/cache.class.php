@@ -27,7 +27,7 @@ class Cache
 		$this->efFunction = $function;
 		$this->efArgs = $args;
 		
-		if (($cLifetime = getConfig('cache:activation.'.$this->name, 'false')) == 'false')
+		if (getConfig('cache:activation.cache', 'false') == 'false' || getConfig('cache:activation.'.$this->name, 'false') == 'false')
 		{
 			$this->loadType = self::EXECUTION_NOCACHE;
 			return;
