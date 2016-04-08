@@ -227,7 +227,7 @@ $langArray = array(
 	'637b84d1' => 'Shell command',
 	'0ab43de2' => 'Runs as %s.',
 	'ae455599' => 'Remove Pi Control',
-	'8842997z' => 'If you don\'t like the Pi Control and you want to remove it, let me know the reason below under "Feedback" please. So I can better take on possible problems and constantly improve Pi Control. Instructions to remove the Pi Control can be found by clicking on the button below.',
+	'4c51f524' => 'If you don\'t like the Pi Control and you want to remove it, let me know the reason below under "Feedback" please. So I can better take on possible problems and constantly improve Pi Control.',
 	'7a92f000' => 'Instructions to remove',
 	'15b9ca9e' => 'Paused for %s',
 	'dec44579' => 'Confirm',
@@ -502,6 +502,7 @@ $langArray = array(
 	'8faea4b1' => 'Could not cache the update! Please write me at  <a href="%s" target="_blank">contact</a> so that I can help you as quickly on.',
 	'a03e97c2' => 'Couldn\'t find the update on the server! Please write me at  <a href="%s" target="_blank">contact</a> so that I can help you as quickly on.',
 	'dbfe2368' => 'Unfortunately, an error has occurred during the update: %s<br />Please write me at  <a href="%s" target="_blank">contact</a> so that I can help you as quickly on.',
-	'c0b73d75' => 'Return to the update'
+	'c0b73d75' => 'Return to the update',
+	'60f82d83' => 'The settings have been successfully saved.<br /><br />Tip: To make effective the theme change, empty your browser cache with Ctrl + F5'
 );
 ?>
