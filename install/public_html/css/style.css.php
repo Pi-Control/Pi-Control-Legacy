@@ -808,6 +808,7 @@ img {
     display: table;
     padding: 5px;
     box-sizing: border-box;
+	z-index: 1000;
 }
 
 .feedback > a {
