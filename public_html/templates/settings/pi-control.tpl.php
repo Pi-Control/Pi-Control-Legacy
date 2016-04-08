@@ -106,10 +106,10 @@
 			<span><?php _e('Pi Control entfernen'); ?></span>
 		</div>
 		<div class="inner">
-			<?php _e('Wenn dir das Pi Control nicht gef&auml;llt und du es wieder entfernen m&ouml;chtest, schreib mir unten unter "Feedback" doch bitte den Grund. Somit kann ich besser auf m&ouml;gliche Probleme eingehen und Pi Control st&auml;tig verbessern. Eine genaue Anleitung zum Entfernen des Pi Control findest du mit einem Klick auf den folgenden Button.'); ?>
+			<?php _e('Wenn dir das Pi Control nicht gef&auml;llt und du es wieder entfernen m&ouml;chtest, schreib mir unten unter "Feedback" doch bitte den Grund. Somit kann ich besser auf m&ouml;gliche Probleme eingehen und Pi Control stetig verbessern.'); ?>
 		</div>
 		<div class="inner-end">
-			<a href="#" class="button"><?php _e('Anleitung zum Entfernen'); ?></a>
+			<a href="<?php echo $data['configHelp']; ?>#wie-entferne-ich-das-pi-control-wieder" class="button" target="_blank"><?php _e('Anleitung zum Entfernen'); ?></a>
 		</div>
 	</div>
 </div>

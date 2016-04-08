@@ -238,6 +238,7 @@ $tpl->assign('temperature-action-shell', (getConfig('main:monitoringCpuTemp.shel
 $tpl->assign('temperature-action-shell-text', htmlentities(base64_decode(getConfig('main:monitoringCpuTemp.shell', ''))));
 $tpl->assign('temperature-last-execution', (getConfig('cron:execution.monitoringCpuTemp', 0)-time()+3600 > 0) ? getDateFormat(getConfig('cron:execution.monitoringCpuTemp', 0)-time()+3600) : '');
 $tpl->assign('whoami', exec('whoami'));
+$tpl->assign('configHelp', $config['url']['help']);
 
 $tpl->draw('settings/pi-control');
 ?>
