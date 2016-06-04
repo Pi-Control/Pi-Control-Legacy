@@ -24,6 +24,10 @@ foreach ($fileArray as $file)
 		$statistics[] = 'coretemp';
 	elseif (substr($file , 0, -4) == 'cpuload')
 		$statistics[] = 'cpuload';
+	elseif (substr($file , 0, -4) == 'cpufrequency')
+		$statistics[] = 'cpufrequency';
+	elseif (substr($file , 0, -4) == 'memory')
+		$statistics[] = 'memory';
 	elseif (substr($file , 0, -4) == 'ram')
 		$statistics[] = 'ram';
 	elseif (substr($file , 0, 8) == 'network_')
@@ -79,6 +83,20 @@ if (!isset($_GET['reset']) && (!isset($_GET['download']) || !isset($_GET['type']
 								'display' => (array_search(substr($file, 0, -4), $hiddenStatistics) !== false) ? 0 : 1);
 			
 			$statistics[] = substr($file, 0, -4);
+		}
+		elseif (substr($file , 0, -4) == 'cpufrequency')
+		{
+			$logArray[] = array('log' => 'cpufrequency',
+								'label' => _t('CPU-Takt'),
+								'type' => 'cpufrequency',
+								'display' => (array_search('cpufrequency', $hiddenStatistics) !== false) ? 0 : 1);
+		}
+		elseif (substr($file , 0, -4) == 'memory')
+		{
+			$logArray[] = array('log' => 'memory',
+								'label' => _t('Speicherverbrauch'),
+								'type' => 'memory',
+								'display' => (array_search('memory', $hiddenStatistics) !== false) ? 0 : 1);
 		}
 	}
 	

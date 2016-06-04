@@ -87,6 +87,36 @@ switch ($_GET['type'])
 		
 		fclose($output);
 			break;
+	
+	case 'cpufrequency':
+		$header = array(_t('Datum'), _t('Auslastung in MHz'));
+		$output = fopen('php://output', 'w');
+		
+		$data = $log->getAll();
+		array_walk($data, 'convertTimestampToISO');
+		
+		fputcsv($output, $header);
+		
+		foreach ($data as $entry)
+			fputcsv($output, $entry);
+		
+		fclose($output);
+			break;
+	
+	case 'memory':
+		$header = array(_t('Datum'), _t('Gesamt in Byte'), _t('Belegt in Byte'));
+		$output = fopen('php://output', 'w');
+		
+		$data = $log->getAll();
+		array_walk($data, 'convertTimestampToISO');
+		
+		fputcsv($output, $header);
+		
+		foreach ($data as $entry)
+			fputcsv($output, $entry);
+		
+		fclose($output);
+			break;
 }
 
 if (file_exists(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') && is_file(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') && filesize(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') == 0)

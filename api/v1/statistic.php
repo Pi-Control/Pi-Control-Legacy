@@ -80,6 +80,40 @@ if (isset($_POST['data'], $_POST['type']))
 				$arr['periods'] = $info['periods'];
 			}
 				break;
+		
+		case 'cpufrequency':
+			$arr = $info = array();
+			$arr['cols'][] = array('id' => '', 'label' => _t('Zeit'), 'type' => 'datetime');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Takt'), 'type' => 'number');
+			
+			getRowsFromLog($arr, $info, $log->getAll(), 'cpufrequency');
+			
+			if (isset($arr['rows']))
+			{
+				$arr['rows'] = array_slice($arr['rows'], -2016);
+				$arr['max'] = 1200;
+				$arr['min'] = 0.01;
+				$arr['periods'] = $info['periods'];
+			}
+				break;
+		
+		case 'memory':
+			$arr = $info = array();
+			$arr['cols'][] = array('id' => '', 'label' => _t('Zeit'), 'type' => 'datetime');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Gesamt'), 'type' => 'number');
+			$arr['cols'][] = array('id' => '', 'label' => _t('Belegt'), 'type' => 'number');
+			
+			getRowsFromLog($arr, $info, $log->getAll(), 'memory');
+			
+			if (isset($arr['rows']))
+			{
+				$arr['rows'] = array_slice($arr['rows'], -2016);
+				$arr['max'] = round(((max($info['total']) > max($info['used'])) ? max($info['total']) : max($info['used'])) * 1.10);
+				$arr['min'] = 0.01;
+				$arr['periods'] = $info['periods'];
+			}
+				break;
+		
 		default:
 			$api->setError('error', 'Data for "'.$_POST['data'].'" are not available.');
 	}

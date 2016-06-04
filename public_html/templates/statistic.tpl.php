@@ -67,7 +67,7 @@
 	function createTable()
 	{
 <?php foreach ($data['logArray'] as $value) { ?>
-		var jsonData = $.ajax({
+		var jsonData = jQuery.ajax({
 			url: 'api/v1/statistic.php',
 			method: 'POST',
 			data: { data: '<?php echo $value['log']; ?>', type: '<?php echo $value['type']; ?>' },
@@ -79,9 +79,9 @@
 			if (data.error != null)
 			{
 				if (data.error.message == 'Empty data.')
-					$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es sind noch keine Werte verf&uuml;gbar. Werte werden alle 5 Minuten eingetragen.'); ?></strong>');
+					jQuery('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es sind noch keine Werte verf&uuml;gbar. Werte werden alle 5 Minuten eingetragen.'); ?></strong>');
 				else
-					$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehler: %s', '\'+data.error.message+\''); ?></strong>');
+					jQuery('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehler: %s', '\'+data.error.message+\''); ?></strong>');
 				
 				return;
 			}
@@ -90,7 +90,7 @@
 			
 			var myData = new google.visualization.DataTable(data.data.statistic);
 			
-			$('#chart_log_<?php echo $value['log']; ?>').html('');
+			jQuery('#chart_log_<?php echo $value['log']; ?>').html('');
 			var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_log_<?php echo $value['log']; ?>'));
 			
 			myDateSlider_<?php echo $value['log']; ?> = new google.visualization.ControlWrapper({
@@ -131,7 +131,7 @@
 			myDashboard.draw(myData);
 		}).fail(function(xhr, textStatus)
 		{
-			$('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehlercode: %s', '\'+xhr.status+\''); ?></strong>');
+			jQuery('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehlercode: %s', '\'+xhr.status+\''); ?></strong>');
 		});
 <?php } ?>
 	}

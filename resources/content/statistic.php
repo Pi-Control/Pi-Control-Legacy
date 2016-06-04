@@ -28,7 +28,7 @@ foreach ($fileArray as $file_)
 							'unit' => ' °C',
 							'columns' => array(1));
 	}
-	if (substr($file_ , 0, -4) == 'cpuload' && array_search('cpuload', $hiddenStatistics) === false)
+	elseif (substr($file_ , 0, -4) == 'cpuload' && array_search('cpuload', $hiddenStatistics) === false)
 	{
 		$logArray[] = array('log' => 'cpuload',
 							'label' => _t('CPU-Auslastung'),
@@ -37,7 +37,7 @@ foreach ($fileArray as $file_)
 							'unit' => ' %',
 							'columns' => array(1));
 	}
-	if (substr($file_ , 0, -4) == 'ram' && array_search('ram', $hiddenStatistics) === false)
+	elseif (substr($file_ , 0, -4) == 'ram' && array_search('ram', $hiddenStatistics) === false)
 	{
 		$logArray[] = array('log' => 'ram',
 							'label' => _t('RAM-Auslastung'),
@@ -52,6 +52,24 @@ foreach ($fileArray as $file_)
 							'label' => substr($file_ , 8, -4),
 							'type' => 'network',
 							'title' => _t('Traffic (MB)'),
+							'unit' => ' MB',
+							'columns' => array(1,2));
+	}
+	elseif (substr($file_ , 0, -4) == 'cpufrequency' && array_search('cpufrequency', $hiddenStatistics) === false)
+	{
+		$logArray[] = array('log' => 'cpufrequency',
+							'label' => _t('CPU-Takt'),
+							'type' => 'cpufrequency',
+							'title' => _t('MHz'),
+							'unit' => ' MHz',
+							'columns' => array(1));
+	}
+	elseif (substr($file_ , 0, -4) == 'memory' && array_search('memory', $hiddenStatistics) === false)
+	{
+		$logArray[] = array('log' => 'memory',
+							'label' => _t('Speicherverbrauch'),
+							'type' => 'memory',
+							'title' => _t('MB'),
 							'unit' => ' MB',
 							'columns' => array(1,2));
 	}

@@ -19,7 +19,7 @@ function calculateEmptyRows(&$arr, $type, $firstTime)
 	{
 		for ($i = 0; $i < (2016 - count($arr['rows'])); $i++)
 		{
-			if ($type == 'network')
+			if ($type == 'network' || $type == 'memory')
 			{
 				$buffer[] = array('c' =>
 								array(
@@ -83,7 +83,7 @@ function getRowsFromLog(&$arr, &$info, $log, $type)
 			$skipped = round(($row[0] - $lastTime)/300);
 			for ($i = 0; $i < $skipped; $i++)
 			{
-				if ($type == 'network')
+				if ($type == 'network' || $type == 'memory')
 				{
 					$arr['rows'][]['c'] = array(
 						array('v' => 'Date('.date('Y,'.(date('m', $lastTime+(($i+1) * 300))-1).',d,H,i', $lastTime+(($i+1) * 300)).')'),
@@ -106,6 +106,16 @@ function getRowsFromLog(&$arr, &$info, $log, $type)
 			{
 				$info['up'][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2));
 				$info['down'][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[2])/1048576,2));
+				$arr['rows'][]['c'] = array(
+										array('v' => 'Date('.date('Y,'.(date('m', $row[0])-1).',d,H,i', $row[0]).')'),
+										getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2)),
+										getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[2])/1048576,2))
+									);
+			}
+			elseif ($type == 'memory')
+			{
+				$info['total'][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2));
+				$info['used'][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[2])/1048576,2));
 				$arr['rows'][]['c'] = array(
 										array('v' => 'Date('.date('Y,'.(date('m', $row[0])-1).',d,H,i', $row[0]).')'),
 										getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2)),
@@ -150,6 +160,10 @@ function Interface_calculateEmptyRows(&$arr, $type, $firstTime)
 			if ($type == 'network')
 			{
 				$buffer[] = array('date' => $firstTime-(($i+1) * 300), 'up' => floatval(0), 'down' => floatval(0));
+			}
+			elseif ($type == 'memory')
+			{
+				$buffer[] = array('date' => $firstTime-(($i+1) * 300), 'total' => floatval(0), 'used' => floatval(0));
 			}
 			elseif ($type == 'coretemp')
 			{
@@ -197,6 +211,10 @@ function Interface_getRowsFromLog(&$arr, $log, $type)
 				{
 					$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'up' => floatval(0), 'down' => floatval(0));
 				}
+				elseif ($type == 'memory')
+				{
+					$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'total' => floatval(0), 'used' => floatval(0));
+				}
 				elseif ($type == 'coretemp')
 				{
 					$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'temp' => floatval(0));
@@ -212,6 +230,10 @@ function Interface_getRowsFromLog(&$arr, $log, $type)
 			if ($type == 'network')
 			{
 				$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'up' => Interface_getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2)), 'down' => Interface_getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[2])/1048576,2)));
+			}
+			elseif ($type == 'memory')
+			{
+				$arr['rows'][] = array('date' => $lastTime+(($i+1) * 300), 'total' => Interface_getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[1])/1048576,2)), 'used' => Interface_getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[2])/1048576,2)));
 			}
 			elseif ($type == 'coretemp')
 			{
