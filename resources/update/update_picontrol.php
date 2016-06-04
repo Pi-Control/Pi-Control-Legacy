@@ -34,7 +34,7 @@ if (is_array($update))
 					sleep(3); // Verhindere Cachen der init.php
 					
 					if (file_exists(UPDATE_PATH.'setup.php') && is_file(UPDATE_PATH.'setup.php'))
-						$tpl->redirect(UPDATE_PATH.'setup.php');
+						$tpl->redirect('resources/update/setup.php');
 					else
 						$tpl->redirect('?s=settings&do=update&complete');
 				}

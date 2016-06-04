@@ -52,6 +52,8 @@ $troubleshootingFilesFildersWhoAmI = exec('whoami');
 
 function getFileFolderStatus(&$item, $key)
 {
+	global $troubleshootingFilesFildersWhoAmI;
+	
 	if (PICONTROL_PATH != $key)
 		$key = PICONTROL_PATH.$key;
 	
