@@ -339,6 +339,10 @@ body {
 	width: 100%;
 }
 
+.box .inner-single2 {
+	padding: 15px;
+}
+
 .box .inner-margin-vertical {
 	margin-top: 15px;
 	margin-bottom: 15px;

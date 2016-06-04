@@ -339,6 +339,10 @@ body {
 	width: 100%;
 }
 
+.box .inner-single2 {
+	padding: 15px;
+}
+
 .box .inner-margin-vertical {
 	margin-top: 15px;
 	margin-bottom: 15px;
@@ -482,6 +486,10 @@ td.table-left, th.table-left {
 
 td.table-right, th.table-right {
 	text-align: right;
+}
+
+td.table-middle *, th.table-middle * {
+	vertical-align: middle;
 }
 
 .progressbar {
