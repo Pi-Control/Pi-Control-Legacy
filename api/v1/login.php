@@ -13,8 +13,7 @@ $nextTry = getConfig('login:login.nextTry');
 
 if ($externalAccess === false)
 	$api->addData('error', 'Local network.');
-
-if ($nextTry > time())
+elseif ($nextTry > time())
 	$api->addData('error', array('msg' => 'Login disabled.', 'seconds' => $nextTry-time()));
 
 if (isset($_POST['username'], $_POST['password']) && $externalAccess === true)

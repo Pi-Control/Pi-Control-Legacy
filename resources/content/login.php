@@ -17,8 +17,7 @@ $nextTry = getConfig('login:login.nextTry');
 
 if ($externalAccess === false)
 	$tpl->assign('errorMsg', _t('Der Zugang steht nur im lokalem Netzwerk (LAN) zur Verf&uuml;gung!'));
-
-if ($nextTry > time())
+elseif ($nextTry > time())
 	$tpl->assign('errorMsg', _t('Login noch f&uuml;r %d Sekunden gesperrt!', $nextTry-time()));
 
 if (isset($_POST['submit'], $_POST['username'], $_POST['password']) && $externalAccess === true)
