@@ -5,7 +5,10 @@ $tpl = new PiTpl;
 $tpl->assign('title', (isset($data['title']) && $data['title'] != '') ? $data['title'] : 'Pi Control');
 
 if (isset($_GET['s']) && $_GET['s'] == 'install' || !isset($_GET['s']))
-	$picontrolUpdate = checkUpdate();
+{
+	if (function_exists('curl_init') === true)
+		$picontrolUpdate = checkUpdate();
+}
 
 $referer = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 
