@@ -1,4 +1,4 @@
-$(document).on('ready', function(e)
+jQuery(document).on('ready', function(e)
 {
 	var msgBuffer = '';
 	
@@ -7,12 +7,12 @@ $(document).on('ready', function(e)
 	
 	websocket.onopen = function(ev)
 	{
-		$('#status').text('Verbindung herstellen...');
+		jQuery('#status').text('Verbindung herstellen...');
 	}
 
-	$(document).on('click', '#submit', function(e)
+	jQuery(document).on('click', '#submit', function(e)
 	{
-		var mymessage = $('#command').val();
+		var mymessage = jQuery('#command').val();
 		
 		if(mymessage == '')
 		{
@@ -23,17 +23,17 @@ $(document).on('ready', function(e)
 		var msg = { message: mymessage };
 		websocket.send(JSON.stringify(msg));
 		
-		$('#command').val('');
+		jQuery('#command').val('');
 	});
 	
-	$(document).on('click', 'input[name=close]', function(e)
+	jQuery(document).on('click', 'input[name=close]', function(e)
 	{
 		var mymessage = '^PI';
 		var msg = { message: mymessage };
 		websocket.send(JSON.stringify(msg));
 	});
 	
-	$(document).on('click', '#cancel', function(e)
+	jQuery(document).on('click', '#cancel', function(e)
 	{
 		var mymessage = '^C';
 		var msg = { message: mymessage };
@@ -48,56 +48,56 @@ $(document).on('ready', function(e)
 		
 		if(type == 'console')
 		{
-			$('#terminal').append('<span class="console">' + umsg + '</span>');
-			$('#terminal').animate({scrollTop: $('#terminal')[0].scrollHeight}, 'fast');
+			jQuery('#terminal').append('<span class="console">' + umsg + '</span>');
+			jQuery('#terminal').animate({scrollTop: jQuery('#terminal')[0].scrollHeight}, 'fast');
 		}
 		
 		if(type == 'system')
 		{
 			umsg = (umsg == 'connected') ? 'Verbunden' : umsg;
-			$('#status').text(umsg);
-			$('#command').removeAttr('disabled');
+			jQuery('#status').text(umsg);
+			jQuery('#command').removeAttr('disabled');
 			msgBuffer = umsg;
 			
-			$('select[name=terminal] option[value=' + port + ']').text($('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Online)');
-			$('select[name=terminal] option[value=' + port + ']').css('background-color', '#73CA3C');
+			jQuery('select[name=terminal] option[value=' + port + ']').text(jQuery('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Online)');
+			jQuery('select[name=terminal] option[value=' + port + ']').css('background-color', '#73CA3C');
 		}
 	};
 	
 	websocket.onerror = function(ev)
 	{
-		$('#status').text('Fehler aufgetreten!');
-		$('#command').attr('disabled', 'disabled');
+		jQuery('#status').text('Fehler aufgetreten!');
+		jQuery('#command').attr('disabled', 'disabled');
 		
-		$('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
+		jQuery('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
 	};
 	
 	websocket.onclose = function(ev)
 	{
 		if (msgBuffer == 'newSession')
-			$('#status').html('Verbindung getrennt<br />(Anmeldung an anderem Fenster)');
+			jQuery('#status').html('Verbindung getrennt<br />(Anmeldung an anderem Fenster)');
 		else if (msgBuffer == 'denied')
-			$('#status').html('Verbindung getrennt<br />(Keine Berechtigung)');
+			jQuery('#status').html('Verbindung getrennt<br />(Keine Berechtigung)');
 		else
 		{
-			$('#status').text('Verbindung getrennt');
-			$('select[name=terminal] option[value=' + port + ']').text($('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Offline)');
-			$('select[name=terminal] option[value=' + port + ']').css('background-color', '#E9492E');
+			jQuery('#status').text('Verbindung getrennt');
+			jQuery('select[name=terminal] option[value=' + port + ']').text(jQuery('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Offline)');
+			jQuery('select[name=terminal] option[value=' + port + ']').css('background-color', '#E9492E');
 		}
 		
-		$('#command').attr('disabled', 'disabled');
-		$('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
+		jQuery('#command').attr('disabled', 'disabled');
+		jQuery('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
 	};
 	
-	$(document).on('change', 'select[name=terminal]', function(e)
+	jQuery(document).on('change', 'select[name=terminal]', function(e)
 	{
 		window.document.location.href = '?s=terminal&port=' + this.value;
 	});
 	
-	$(document).on('click', 'input[name=reload]', function(e)
+	jQuery(document).on('click', 'input[name=reload]', function(e)
 	{
 		window.document.location.href = '?s=terminal&port=' + port;
 	});
 	
-	$("#frame").load('resources/library/terminal/terminal.php?port=' + port);
+	jQuery("#frame").load('resources/library/terminal/terminal.php?port=' + port);
 });

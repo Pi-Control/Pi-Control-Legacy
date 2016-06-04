@@ -1,6 +1,6 @@
-$(document).on('click', 'input[name=theme-color] + label', function(e)
+jQuery(document).on('click', 'input[name=theme-color] + label', function(e)
 {
-	switch ($(this).attr('for').substr(3))
+	switch (jQuery(this).attr('for').substr(3))
 	{
 		case 'red':
 		var color = new Array('#FFEBEE', '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#D32F2F', '#C62828', '#B71C1C');
@@ -61,13 +61,13 @@ $(document).on('click', 'input[name=theme-color] + label', function(e)
 			break;
 	}
 
-	$('a').css('color', color[9]);
-	$('#header-navi > a, #header-navi > div > a').css('color', '#FFFFFF');
-	$('.header-top-inner-cell a').css('color', '#DDDDDD');
-	$('#header').css('background-color', color[7]);
-	$('#header-top').css('background-color', color[8]);
-	$('.box .inner-header span').css('color', color[7]);
-	$('.table-form tr:nth-child(even)').css('background-color', color[0]);
-	$('input[type="button"], button, input[type="submit"], .button').css('border-color', color[7]);
-	$('input[type="button"], button, input[type="submit"], .button').css('color', color[8]);
+	jQuery('a').css('color', color[9]);
+	jQuery('#header-navi > a, #header-navi > div > a').css('color', '#FFFFFF');
+	jQuery('.header-top-inner-cell a').css('color', '#DDDDDD');
+	jQuery('#header').css('background-color', color[7]);
+	jQuery('#header-top').css('background-color', color[8]);
+	jQuery('.box .inner-header span').css('color', color[7]);
+	jQuery('.table-form tr:nth-child(even)').css('background-color', color[0]);
+	jQuery('input[type="button"], button, input[type="submit"], .button').css('border-color', color[7]);
+	jQuery('input[type="button"], button, input[type="submit"], .button').css('color', color[8]);
 });

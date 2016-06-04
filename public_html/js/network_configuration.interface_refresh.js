@@ -1,29 +1,29 @@
 function show_error(msg)
 {
-	$('div.dummy-1').html('<strong class="red">' + msg + '</strong>');
+	jQuery('div.dummy-1').html('<strong class="red">' + msg + '</strong>');
 }
 
-$(document).on('click', 'a[href=#refresh]', function(e)
+jQuery(document).on('click', 'a[href=#refresh]', function(e)
 {
-	if ($('a[href=#refresh]').css('opacity') == 1)
+	if (jQuery('a[href=#refresh]').css('opacity') == 1)
 	{
 		var _this = this;
-		var _interface = $(this).attr('name');
+		var _interface = jQuery(this).attr('name');
 		
-		$('a[href=#refresh]').not(this).animate({opacity: 0.2}, 300);
-		$(this).find('span').addClass('rotate-icon');
+		jQuery('a[href=#refresh]').not(this).animate({opacity: 0.2}, 300);
+		jQuery(this).find('span').addClass('rotate-icon');
 		
-		$('div.dummy-1 .inner-header span').text('Status (' + _interface + ')');
-		$('div.dummy-1 .inner').html('<strong>Das Interface wird neu gestartet...</strong>');
-		$('div.dummy-1').slideDown('fast');
+		jQuery('div.dummy-1 .inner-header span').text('Status (' + _interface + ')');
+		jQuery('div.dummy-1 .inner').html('<strong>Das Interface wird neu gestartet...</strong>');
+		jQuery('div.dummy-1').slideDown('fast');
 		
-		$.post('api/v1/network_configuration_interface.php', { interface: _interface }, function(data)
+		jQuery.post('api/v1/network_configuration_interface.php', { interface: _interface }, function(data)
 		{
 			if (data.status == 200)
 			{
-				$('div.dummy-1 .inner').html('<strong class="green">Das Interface wurde neu gestartet.</strong>');
-				$('a[href=#refresh]').not(_this).animate({opacity: 1}, 300);
-				$(_this).find('span').removeClass('rotate-icon');
+				jQuery('div.dummy-1 .inner').html('<strong class="green">Das Interface wurde neu gestartet.</strong>');
+				jQuery('a[href=#refresh]').not(_this).animate({opacity: 1}, 300);
+				jQuery(_this).find('span').removeClass('rotate-icon');
 			}
 			else
 			{

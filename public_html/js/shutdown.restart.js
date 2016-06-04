@@ -2,7 +2,7 @@ var shutdown = false;
 
 function ping()
 {
-	var jsonData = $.ajax(
+	var jsonData = jQuery.ajax(
 	{
 		url: 'api/v1/ping.php',
 		dataType:"json",
@@ -28,7 +28,7 @@ function ping()
 	});
 }
 
-$(document).on('ready', function(e)
+jQuery(document).on('ready', function(e)
 {
 	ping();
 });

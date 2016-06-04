@@ -10,33 +10,33 @@ function overviewStatusRefreshEffect(element)
 
 function showError()
 {
-	$('.error-msg-refresh-bar').remove();
-	$('.flex-box-refresh div:eq(0)').after('<div class="red error-msg-refresh-bar" style="vertical-align: bottom; font-weight: bold;">Fehler!</div>');
-	$('.refresh-bar').stop(false, true).css('width', 0);
-	$('a[href=#refresh] img').removeClass('rotate-icon');
+	jQuery('.error-msg-refresh-bar').remove();
+	jQuery('.flex-box-refresh div:eq(0)').after('<div class="red error-msg-refresh-bar" style="vertical-align: bottom; font-weight: bold;">Fehler!</div>');
+	jQuery('.refresh-bar').stop(false, true).css('width', 0);
+	jQuery('a[href=#refresh] img').removeClass('rotate-icon');
 	
 	setTimeout('overviewStatusRefresh()', 3000);
 }
 
 function overviewStatusRefresh()
 {
-	$('.error-msg-refresh-bar').remove();
-	$('.refresh-bar').animate({width: '100%'}, reload_timeout, 'linear', function(e)
+	jQuery('.error-msg-refresh-bar').remove();
+	jQuery('.refresh-bar').animate({width: '100%'}, reload_timeout, 'linear', function(e)
 	{
-		var this_ =			$(this);
-		var runtime =		$('.flex-container > div:eq(2)');
-		var cpuClock =		$('.flex-container > div:eq(3)');
-		var cpuLoad =		$('.flex-container > div:eq(4)');
-		var cpuTemp =		$('.flex-container > div:eq(5)');
-		var ramPercentage =	$('.flex-container > div:eq(6)');
-		var memoryUsed =	$('.flex-container > div:eq(7)');
-		var memoryFree =	$('.flex-container > div:eq(8)');
-		var memoryTotal =	$('.flex-container > div:eq(9)');
+		var this_ =			jQuery(this);
+		var runtime =		jQuery('.flex-container > div:eq(2)');
+		var cpuClock =		jQuery('.flex-container > div:eq(3)');
+		var cpuLoad =		jQuery('.flex-container > div:eq(4)');
+		var cpuTemp =		jQuery('.flex-container > div:eq(5)');
+		var ramPercentage =	jQuery('.flex-container > div:eq(6)');
+		var memoryUsed =	jQuery('.flex-container > div:eq(7)');
+		var memoryFree =	jQuery('.flex-container > div:eq(8)');
+		var memoryTotal =	jQuery('.flex-container > div:eq(9)');
 		
-		$('a[href=#refresh] img').addClass('rotate-icon');
+		jQuery('a[href=#refresh] img').addClass('rotate-icon');
 		
 		this_.animate({width: '88.8%'}, 300, 'linear');
-		$.post('api/v1/overview.php', { data: 'runtime' }, function(data)
+		jQuery.post('api/v1/overview.php', { data: 'runtime' }, function(data)
 		{
 			if (runtime.find('span').html() != data.data.runtime)
 			{
@@ -45,7 +45,7 @@ function overviewStatusRefresh()
 			}
 			
 			this_.animate({width: '77.7%'}, 300, 'linear');
-			$.post('api/v1/overview.php', { data: 'cpuClock' }, function(data)
+			jQuery.post('api/v1/overview.php', { data: 'cpuClock' }, function(data)
 			{
 				if (cpuClock.find('span').html() != data.data.cpuClock+' MHz')
 				{
@@ -54,7 +54,7 @@ function overviewStatusRefresh()
 				}
 				
 				this_.animate({width: '66.6%'}, 300, 'linear');
-				$.post('api/v1/overview.php', { data: 'cpuLoad' }, function(data)
+				jQuery.post('api/v1/overview.php', { data: 'cpuLoad' }, function(data)
 				{
 					if (cpuLoad.find('.progressbar div').html() != data.data.cpuLoad+'%')
 					{
@@ -63,7 +63,7 @@ function overviewStatusRefresh()
 					}
 					
 					this_.animate({width: '55.5%'}, 300, 'linear');
-					$.post('api/v1/overview.php', { data: 'cpuTemp' }, function(data)
+					jQuery.post('api/v1/overview.php', { data: 'cpuTemp' }, function(data)
 					{
 						if (cpuTemp.find('span').html() != data.data.cpuTemp+' °C')
 						{
@@ -72,7 +72,7 @@ function overviewStatusRefresh()
 						}
 						
 						this_.animate({width: '44.4%'}, 300, 'linear');
-						$.post('api/v1/overview.php', { data: 'ramPercentage' }, function(data)
+						jQuery.post('api/v1/overview.php', { data: 'ramPercentage' }, function(data)
 						{
 							if (ramPercentage.find('.progressbar div').html() != data.data.ramPercentage+'%')
 							{
@@ -81,7 +81,7 @@ function overviewStatusRefresh()
 							}
 							
 							this_.animate({width: '33.3%'}, 300, 'linear');
-							$.post('api/v1/overview.php', { data: 'memoryUsed' }, function(data)
+							jQuery.post('api/v1/overview.php', { data: 'memoryUsed' }, function(data)
 							{
 								if (memoryUsed.find('span').html() != data.data.memoryUsed)
 								{
@@ -90,7 +90,7 @@ function overviewStatusRefresh()
 								}
 								
 								this_.animate({width: '22.2%'}, 300, 'linear');
-								$.post('api/v1/overview.php', { data: 'memoryFree' }, function(data)
+								jQuery.post('api/v1/overview.php', { data: 'memoryFree' }, function(data)
 								{
 									if (memoryFree.find('span').html() != data.data.memoryFree)
 									{
@@ -99,7 +99,7 @@ function overviewStatusRefresh()
 									}
 									
 									this_.animate({width: '11.1%'}, 300, 'linear');
-									$.post('api/v1/overview.php', { data: 'memoryTotal' }, function(data)
+									jQuery.post('api/v1/overview.php', { data: 'memoryTotal' }, function(data)
 									{
 										if (memoryTotal.find('span').html() != data.data.memoryTotal)
 										{
@@ -109,7 +109,7 @@ function overviewStatusRefresh()
 										
 										this_.animate({width: '0%'}, 300, 'linear', function(e) {
 											is_loding = false;
-											$('a[href=#refresh] img').removeClass('rotate-icon');
+											jQuery('a[href=#refresh] img').removeClass('rotate-icon');
 										});
 										
 										overviewStatusRefresh();
@@ -124,15 +124,15 @@ function overviewStatusRefresh()
 	});
 }
 
-$(document).on('click', 'a[href=#refresh]', function(e)
+jQuery(document).on('click', 'a[href=#refresh]', function(e)
 {
 	if (is_loding == false)
-		$('.refresh-bar').stop(false, true);
+		jQuery('.refresh-bar').stop(false, true);
 	
 	return false;
 });
 
-$(document).ready(function(e)
+jQuery(document).ready(function(e)
 {
 	overviewStatusRefresh();
 });
