@@ -18,10 +18,10 @@ foreach ($filesFolders as $file => $info)
 }
 
 // Cron
-$cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
+$cronEntry = '* * * * * '.exec('whoami').' php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
 
 exec('cat /etc/crontab', $crontab);
-$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode(PHP_EOL, $crontab));
+$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\s'.preg_quote(exec('whoami')).'\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode(PHP_EOL, $crontab));
 
 $lastExecutionLog = array(
 						(file_exists(LOG_PATH.'statistic/coretemp.csv')) ? filemtime(LOG_PATH.'statistic/coretemp.csv') : 1,

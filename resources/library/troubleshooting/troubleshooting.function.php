@@ -1,8 +1,12 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
+$troubleshootingFilesFildersWhoAmI = exec('whoami');
+
 function getFileFolderStatus(&$item, $key)
 {
+	global $troubleshootingFilesFildersWhoAmI;
+	
 	$item['existsBool'] = $item['exists'] = (file_exists($key) && (is_file($key) || is_dir($key))) ? true : false;
 	
 	if ($item['existsBool'] === false)
@@ -24,7 +28,7 @@ function getFileFolderStatus(&$item, $key)
 	
 	$item['permissionBool'] = ((is_file($key) && $per == 644) || (is_dir($key) && $per == 755)) ? true : false;
 	$item['permission'] = $per;
-	$item['userGroupBool'] = ($uid['name'] == 'www-data') ? true : false;
+	$item['userGroupBool'] = ($uid['name'] == $troubleshootingFilesFildersWhoAmI) ? true : false;
 	$item['userGroup'] = $uid['name'].':'.$gid['name'];
 	$item['filesizeBool'] = ($siz != 0 || substr($key, 0, 14) == 'resources/log/') ? true : false;
 	$item['filesize'] = (is_dir($key)) ? getFolderSize($key) : $siz;

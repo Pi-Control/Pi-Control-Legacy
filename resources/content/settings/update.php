@@ -1,7 +1,7 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-(include_once LIBRARY_PATH.'trouble-shooting/trouble-shooting.function.php') or die('Error: 0x0010');
+(include_once LIBRARY_PATH.'troubleshooting/troubleshooting.function.php') or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Aktualisierung'));
 
 if (isset($_POST['update']) && $_POST['update'] != '')

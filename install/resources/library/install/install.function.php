@@ -48,6 +48,8 @@ function readFromFile($name)
 	return unserialize($data);
 }
 
+$troubleshootingFilesFildersWhoAmI = exec('whoami');
+
 function getFileFolderStatus(&$item, $key)
 {
 	if (PICONTROL_PATH != $key)
@@ -74,7 +76,7 @@ function getFileFolderStatus(&$item, $key)
 	
 	$item['permissionBool'] = ((is_file($key) && $per == 644) || (is_dir($key) && $per == 755)) ? true : false;
 	$item['permission'] = $per;
-	$item['userGroupBool'] = ($uid['name'] == 'www-data') ? true : false;
+	$item['userGroupBool'] = ($uid['name'] == $troubleshootingFilesFildersWhoAmI) ? true : false;
 	$item['userGroup'] = $uid['name'].':'.$gid['name'];
 	$item['filesizeBool'] = ($siz != 0 || substr($key, strlen(PICONTROL_PATH), 14) == 'resources/log/' || substr($key, strlen(PICONTROL_PATH), 24) == 'install/resources/cache/' || substr($key, strlen(PICONTROL_PATH), 16) == 'resources/cache/') ? true : false;
 	$item['filesize'] = $siz;
@@ -257,9 +259,9 @@ function setCronToCrontab($type, $port, $username, $password, $privateKey)
 			return false;
 	}
 	
-	$cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
+	$cronEntry = '* * * * * '.exec('whoami').' php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
 	exec('cat /etc/crontab', $crontab);
-	$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"(.*)/im', implode(PHP_EOL, $crontab));
+	$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\s'.preg_quote(exec('whoami')).'\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"(.*)/im', implode(PHP_EOL, $crontab));
 	
 	if ($cronMatch === 0)
 	{
