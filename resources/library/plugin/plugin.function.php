@@ -34,7 +34,7 @@ function pluginConfig($pluginId)
 	else
 		$pluginConfig['widget'] = false;
 	
-	if ($pluginConfig['version']['require'] >= $config['version']['versioncode'])
+	if ($pluginConfig['version']['require'] <= $config['version']['versioncode'])
 		$pluginConfig['compatible'] = true;
 	else
 		$pluginConfig['compatible'] = false;
@@ -201,5 +201,15 @@ function checkPluginUpdate($plugins = NULL, $onlinePlugins = NULL)
 	}
 	
 	return $availableUpdates;
+}
+
+function getPluginConfig($config, $default = NULL)
+{
+	return getConfig($config, $default, PLUGIN_PATH.'resources/config/');
+}
+
+function setPluginConfig($config, $value)
+{
+	return setConfig($config, $value, PLUGIN_PATH.'resources/config/');
 }
 ?>

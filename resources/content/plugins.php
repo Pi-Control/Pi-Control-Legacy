@@ -14,30 +14,32 @@ if (isset($_GET['id']))
 		
 		if ($plugin['disabled'] == false)
 		{
-			if ($plugin['disabled'] == false)
+			if ($plugin['compatible'] == true)
 			{
 				$pluginLoaded = true;
 				$tpl->setTplFolderPlugin('resources/plugins/'.$plugin['id']);
+				define('PLUGIN_PATH', PLUGINS_PATH.$plugin['id'].'/');
+				define('PLUGIN_PUBLIC_PATH', str_replace(PICONTROL_PATH, '', PLUGINS_PATH.$plugin['id'].'/'));
 				
-				if (file_exists(PLUGINS_PATH.$plugin['id'].'/resources/library/sites.php') && is_file(PLUGINS_PATH.$plugin['id'].'/resources/library/sites.php'))
-					include PLUGINS_PATH.$plugin['id'].'/resources/library/sites.php';
+				if (file_exists(PLUGIN_PATH.'resources/library/sites.php') && is_file(PLUGIN_PATH.'resources/library/sites.php'))
+					include PLUGIN_PATH.'resources/library/sites.php';
 				
 				if (isset($_GET['settings']))
 				{
 					if ($plugin['settings'] === true)
-						include PLUGINS_PATH.$plugin['id'].'/resources/content/settings/settings.php';
+						include PLUGIN_PATH.'resources/content/settings/settings.php';
 					else
 						$tpl->msg('error', _t('Fehler beim Laden des Plugins'), _t('Das gesuchte Plugin unterst&uuml;tzt momentan keine Einstellungen.'), true);
 				}
-				elseif (isset($pluginSite, $_GET['do']) && isset($pluginSite[$_GET['do']]) && file_exists(PLUGINS_PATH.$plugin['id'].'/resources/content/'.$pluginSite[$_GET['do']]))
-					include PLUGINS_PATH.$plugin['id'].'/resources/content/'.$pluginSite[$_GET['do']];
+				elseif (isset($pluginSite, $_GET['do']) && isset($pluginSite[$_GET['do']]) && file_exists(PLUGIN_PATH.'resources/content/'.$pluginSite[$_GET['do']]))
+					include PLUGIN_PATH.'resources/content/'.$pluginSite[$_GET['do']];
 				else
-					include PLUGINS_PATH.$plugin['id'].'/resources/content/index.php';
+					include PLUGIN_PATH.'resources/content/index.php';
 				
 				$tpl->setTplFolderPlugin('');
 			}
 			else
-				$tpl->msg('error', _t('Plugin ist inkompatibel'), _t('Das gesuchte Plugin kann aktuell nicht ge&ouml;ffnet werden, da es inkompatibel ist. Bitte aktualisiere das Plugin, um es weiterhin verwenden zu k&ouml;nnen.'), true);
+				$tpl->msg('error', _t('Plugin ist inkompatibel'), _t('Das gesuchte Plugin kann aktuell nicht ge&ouml;ffnet werden, da es inkompatibel ist. Bitte aktualisiere dein Pi Control, um das Plugin weiterhin verwenden zu k&ouml;nnen.'), true);
 		}
 		else
 			$tpl->msg('error', _t('Plugin ist deaktiviert'), _t('Das gesuchte Plugin kann aktuell nicht ge&ouml;ffnet werden, da es deaktiviert ist.'), true);
