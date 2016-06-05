@@ -5,7 +5,7 @@ if (!defined('PICONTROL')) exit();
 $tpl->setHeaderTitle(_t('Einstellungen zum Pi Control'));
 
 if (isset($_GET['msg']) && $_GET['msg'] == 'theme')
-	$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.<br /><br />Tipp: Um die Theme-&Auml;nderung wirksam zu machen, leere deinen Browser-Cache mit Ctrl + F5'));
+	$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.<br /><br />Tipp: Um die Theme-&Auml;nderung wirksam zu machen, leere deinen Browser-Cache mit Strg + F5 (Windows) / &#8997;&#8984; + E (OS X / Safari) / &#8679;&#8984; + R (OS X / Chrome)'));
 elseif (isset($_GET['msg']) && $_GET['msg'] == 'main')
 	$tpl->msg('success', _t('Einstellungen gespeichert'), _t('Die Einstellungen wurden erfolgreich gespeichert.'));
 
