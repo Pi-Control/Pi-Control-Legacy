@@ -47,6 +47,10 @@
 				</table>
 			</a>
 		</div>
+<?php } if (empty($data['onlinePlugins'])) { ?>
+		<div class="inner-info">
+			<div><?php _e('Es konnten keine verf&uuml;gbaren Plugins gefunden werden.'); ?></div>
+		</div>
 <?php } ?>
 	</div>
 </div>

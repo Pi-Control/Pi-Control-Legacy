@@ -16,6 +16,10 @@
 				</table>
 			</a>
 		</div>
+<?php } if (empty($data['plugins'])) { ?>
+		<div class="inner-info">
+			<div><?php _e('Es sind momentan noch keine Plugins installiert.'); ?></div>
+		</div>
 <?php } ?>
 		<div class="inner-end">
 			<a href="?s=discover_plugins"><button><?php _e('Plugins entdecken'); ?></button></a>
