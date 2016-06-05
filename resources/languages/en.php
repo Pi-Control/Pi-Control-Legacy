@@ -415,7 +415,7 @@ $langArray = array(
 	'953fbe20' => 'Could value not save in configuration file!',
 	'e815ef70' => 'The history could not be found: %s',
 	'4c30bad9' => 'Pi Control updated to version %s',
-	'97684b35' => 'Your Pi Control was successfully updated and is now ready for use. Should problems occur, click below on "Feedback" and write me. Have fun!<br /><br />Tip: Clear your browser cache with CTRL + F5',
+	'ef0db072' => 'Your Pi Control was successfully updated and is now ready for use. Should problems occur, click below on "Feedback" and write me. Have fun!<br /><br />Tip: Clear your browser cache with Ctrl + F5 (Windows) / &#8997;&#8984; + E (OS X / Safari) / &#8679;&#8984; + R (OS X / Chrome)',
 	'9ec860ec' => 'Update blocked',
 	'e203e667' => 'It was found at least one error with the files or folders of the Pi Control. Please fix the problem using the <a href="%s">troubleshooting</a> first, otherwise an update is not possible.',
 	'21caa2f6' => 'User created',
@@ -503,6 +503,11 @@ $langArray = array(
 	'a03e97c2' => 'Couldn\'t find the update on the server! Please write me at  <a href="%s" target="_blank">contact</a> so that I can help you as quickly on.',
 	'dbfe2368' => 'Unfortunately, an error has occurred during the update: %s<br />Please write me at  <a href="%s" target="_blank">contact</a> so that I can help you as quickly on.',
 	'c0b73d75' => 'Return to the update',
-	'60f82d83' => 'The settings have been successfully saved.<br /><br />Tip: To make effective the theme change, empty your browser cache with Ctrl + F5'
+	'9c7509af' => 'The settings have been successfully saved.<br /><br />Tip: To make effective the theme change, empty your browser cache with Ctrl+ F5 (Windows) / &#8997;&#8984; + E (OS X / Safari) / &#8679;&#8984; + R (OS X / Chrome)',
+	'84186a7b' => 'There are currently no plugins installed.',
+	'47ab20bc' => 'There are currently no plugins available.',
+	'de3e456f' => 'Total in byte',
+	'8e19b4db' => 'Used in byte',
+	'4ad0e6c0' => 'Usage in MHz'
 );
 ?>
