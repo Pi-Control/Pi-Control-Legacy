@@ -81,7 +81,7 @@
 		</div>
 <?php } elseif ($data['cronError'] === 2) { ?>
 		<div class="inner-end">
-			<a href="<?php echo $config['url']['help']; ?>#wie-behebe-ich-probleme-mit-einem-fehlerhaften-cron-fuer-das-pi-control" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
+			<a href="<?php echo $data['configHelp']; ?>#wie-behebe-ich-probleme-mit-einem-fehlerhaften-cron-fuer-das-pi-control" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
 		</div>
 <?php } ?>
 	</div>

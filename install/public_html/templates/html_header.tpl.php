@@ -66,7 +66,7 @@
 					<span><?php _e('Pi Control %s ist verf&uuml;gbar', $data['updatePicontrol']['version']); ?></span>
 				</div>
 				<div class="inner">
-					<?php _e('Es steht ein Update zur Verf&uuml;gung. Bitte aktualisiere auf die neuste Version, bevor du die Installation startest: <a href="%s" target="_blank">Download</a>', 'https://pi-control.de/beta.php'); ?>
+					<?php _e('Es steht ein Update zur Verf&uuml;gung. Bitte aktualisiere auf die neuste Version, bevor du die Installation startest: <a href="%s" target="_blank">Download</a>', 'https://pi-control.de/beta/'); ?>
 				</div>
 			</div>
 		</div>
