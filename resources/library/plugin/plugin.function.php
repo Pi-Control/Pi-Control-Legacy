@@ -1,6 +1,20 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
+function initPluginConstants()
+{
+	$debug = debug_backtrace();
+	$file = $debug[0]['file'];
+	
+	$file = str_replace(PLUGINS_PATH, '', $file);
+	$explodes = explode('/', $file);
+	
+	define('PLUGIN_ID', $explodes[0]);
+	define('PLUGIN_PATH', PLUGINS_PATH.$explodes[0].'/');
+	
+	return true;
+}
+
 function pluginDisabled($pluginId)
 {
 	if (file_exists(PLUGINS_PATH.$pluginId.'/plugin_disabled.php') && is_file(PLUGINS_PATH.$pluginId.'/plugin_disabled.php'))
@@ -205,11 +219,11 @@ function checkPluginUpdate($plugins = NULL, $onlinePlugins = NULL)
 
 function getPluginConfig($config, $default = NULL)
 {
-	return getConfig($config, $default, PLUGIN_PATH.'resources/config/');
+	return getConfig('plugin.'.PLUGIN_ID.'.'.$config, $default);
 }
 
 function setPluginConfig($config, $value)
 {
-	return setConfig($config, $value, PLUGIN_PATH.'resources/config/');
+	return setConfig('plugin.'.PLUGIN_ID.'.'.$config, $value);
 }
 ?>
