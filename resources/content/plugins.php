@@ -18,6 +18,8 @@ if (isset($_GET['id']))
 			{
 				$pluginLoaded = true;
 				$tpl->setTplFolderPlugin('resources/plugins/'.$plugin['id']);
+				
+				define('PLUGIN_ID', $plugin['id']);
 				define('PLUGIN_PATH', PLUGINS_PATH.$plugin['id'].'/');
 				define('PLUGIN_PUBLIC_PATH', str_replace(PICONTROL_PATH, '', PLUGINS_PATH.$plugin['id'].'/'));
 				
