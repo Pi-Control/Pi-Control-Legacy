@@ -21,8 +21,8 @@ if (isset($_GET['id']))
 				define('PLUGIN_PATH', PLUGINS_PATH.$plugin['id'].'/');
 				define('PLUGIN_PUBLIC_PATH', str_replace(PICONTROL_PATH, '', PLUGINS_PATH.$plugin['id'].'/'));
 				
-				if (file_exists(PLUGIN_PATH.'resources/library/sites.php') && is_file(PLUGIN_PATH.'resources/library/sites.php'))
-					include PLUGIN_PATH.'resources/library/sites.php';
+				if (file_exists(PLUGIN_PATH.'resources/library/main/sites.php') && is_file(PLUGIN_PATH.'resources/library/main/sites.php'))
+					include PLUGIN_PATH.'resources/library/main/sites.php';
 				
 				if (isset($_GET['settings']))
 				{
