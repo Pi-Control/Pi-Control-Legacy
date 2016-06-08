@@ -7,6 +7,9 @@ class Cron
 	
 	public function setName($file = '')
 	{
+		if (defined('PLUGIN_ID'))
+			$file = 'plugin.'.PLUGIN_ID.'.'.$file;
+		
 		$this->cronFile = $file;
 	}
 	
