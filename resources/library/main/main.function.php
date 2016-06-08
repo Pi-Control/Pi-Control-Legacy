@@ -29,7 +29,10 @@ function setConfig($config, $value, $customFile = NULL)
 	$configFile = $configPath.$file[0].$configFileSuffix;
 	
 	if (file_exists($configFile) !== true || is_file($configFile) !== true)
-		return false;
+	{
+		if (!touch($configFile))
+			return false;
+	}
 	
 	$configArray = parse_ini_file($configFile, true);
 	
@@ -263,20 +266,20 @@ function _e()
 	return true;
 }
 
-function sizeUnit($size)
+function sizeUnit($size, $fixUnit = NULL)
 {
 	if ($size == '')
 		$size = 0;
 	
-	if ($size < 1024)
+	if (($size < 1024 && !isset($fixUnit)) ||  (isset($fixUnit) && $fixUnit == 'B'))
 		return number_format($size, 0, ',', '').' Byte';
-	elseif ($size < 1024000)
+	elseif (($size < 1024000 && !isset($fixUnit)) || (isset($fixUnit) && $fixUnit == 'K'))
 		return number_format(round($size/1024,2), 2, ',', '').' KB';
-	elseif ($size < 1048576000)
+	elseif (($size < 1048576000 && !isset($fixUnit)) || (isset($fixUnit) && $fixUnit == 'M'))
 		return number_format(round($size/1048576,2), 2, ',', '').' MB';
-	elseif ($size < 1073741824000)
+	elseif (($size < 1073741824000 && !isset($fixUnit)) || (isset($fixUnit) && $fixUnit == 'G'))
 		return number_format(round($size/1073741824,2), 2, ',', '').' GB';
-	elseif ($size < 1099511627776000)
+	elseif (($size < 1099511627776000 && !isset($fixUnit)) || (isset($fixUnit) && $fixUnit == 'T'))
 		return number_format(round($size/1099511627776,2), 2, ',', '').' TB';
 }
 
