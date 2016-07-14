@@ -5,120 +5,51 @@ define('PICONTROL', true);
 (include_once LIBRARY_PATH.'main/main.function.php')					or die('Error: 0x0001');
 (include_once LIBRARY_PATH.'statistic/statistic.class.php')				or die('Error: 0x0002');
 (include_once LIBRARY_PATH.'statistic/statistic.function.php')			or die('Error: 0x0003');
+(include_once LIBRARY_PATH.'statistic/statistic.class.php')				or die('Error: 0x0004');
+(include_once LIBRARY_PATH.'plugin/plugin.function.php')				or die('Error: 0x0005');
 
-$fileName = 'statistik';
-
-if (isset($_GET['label']))
-	$fileName = preg_replace('/[^a-zA-Z0-9_-]+/', '', $_GET['label']);
-else
+if (!isset($_GET['id']) || $_GET['id'] == '')
 	exit();
 
+$controller = new StatisticController();
+$controller->loadStatistics();
+
+if (($name = $controller->getStatisticName($_GET['id'])) === false)
+	exit();
+
+if (isset($_GET['plugin']) && trim($_GET['plugin']) != '')
+	pluginLanguage(trim($_GET['plugin']));
+
+$builder = new StatisticBuilder();
+$builder->loadFromFile($name, (isset($_GET['plugin']) && trim($_GET['plugin']) != '') ? $_GET['plugin'] : NULL);
+$statistic = $builder->getArray();
+
 header("Content-type: text/csv");
-header("Content-Disposition: attachment; filename=".$fileName.".csv");
+header("Content-Disposition: attachment; filename=".$statistic['title'].".csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 
 $log = new LogStatistic();
-$log->setFile(LOG_PATH.'statistic/'.$_GET['log'].'.csv');
+$log->setFile(LOG_PATH.$statistic['raw'].'.csv');
 
 function convertTimestampToISO(&$value, $key)
 {
 	$value[0] = date('c', trim($value[0]));
 }
 
-switch ($_GET['type'])
-{
-	case 'coretemp':
-		$header = array(_t('Datum'), _t('Temperatur in Grad Celsius'));
-		$output = fopen('php://output', 'w');
-		
-		$data = $log->getAll();
-		array_walk($data, 'convertTimestampToISO');
-		
-		fputcsv($output, $header);
-		
-		foreach ($data as $entry)
-			fputcsv($output, $entry);
-		
-		fclose($output);
-			break;
-	
-	case 'cpuload':
-		$header = array(_t('Datum'), _t('Auslastung in Prozent'));
-		$output = fopen('php://output', 'w');
-		
-		$data = $log->getAll();
-		array_walk($data, 'convertTimestampToISO');
-		
-		fputcsv($output, $header);
-		
-		foreach ($data as $entry)
-			fputcsv($output, $entry);
-		
-		fclose($output);
-			break;
-	
-	case 'ram':
-		$header = array(_t('Datum'), _t('Auslastung in Prozent'));
-		$output = fopen('php://output', 'w');
-		
-		$data = $log->getAll();
-		array_walk($data, 'convertTimestampToISO');
-		
-		fputcsv($output, $header);
-		
-		foreach ($data as $entry)
-			fputcsv($output, $entry);
-		
-		fclose($output);
-			break;
-	
-	case 'network':
-		$header = array(_t('Datum'), _t('Gesendet in Byte'), _t('Empfangen in Byte'));
-		$output = fopen('php://output', 'w');
-		
-		$data = $log->getAll();
-		array_walk($data, 'convertTimestampToISO');
-		
-		fputcsv($output, $header);
-		
-		foreach ($data as $entry)
-			fputcsv($output, $entry);
-		
-		fclose($output);
-			break;
-	
-	case 'cpufrequency':
-		$header = array(_t('Datum'), _t('Auslastung in MHz'));
-		$output = fopen('php://output', 'w');
-		
-		$data = $log->getAll();
-		array_walk($data, 'convertTimestampToISO');
-		
-		fputcsv($output, $header);
-		
-		foreach ($data as $entry)
-			fputcsv($output, $entry);
-		
-		fclose($output);
-			break;
-	
-	case 'memory':
-		$header = array(_t('Datum'), _t('Gesamt in Byte'), _t('Belegt in Byte'));
-		$output = fopen('php://output', 'w');
-		
-		$data = $log->getAll();
-		array_walk($data, 'convertTimestampToISO');
-		
-		fputcsv($output, $header);
-		
-		foreach ($data as $entry)
-			fputcsv($output, $entry);
-		
-		fclose($output);
-			break;
-}
+$header = array();
+foreach ($statistic['columns'] as $column)
+	$header[] = _t($column['downloadTitle']);
 
-if (file_exists(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') && is_file(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') && filesize(LOG_PATH.'/statistic/'.$_GET['log'].'.csv') == 0)
-	header('HTTP/1.0 412');
+$output = fopen('php://output', 'w');
+
+$data = $log->getAll();
+array_walk($data, 'convertTimestampToISO');
+
+fputcsv($output, $header);
+
+foreach ($data as $entry)
+	fputcsv($output, $entry);
+
+fclose($output);
 ?>
