@@ -78,7 +78,7 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 			
 			$api->addData('success', 'true');
 			$api->addData('ip', (filter_var(trim($status), FILTER_VALIDATE_IP) !== false) ? trim($status) : 'no ip');
-			$api->addData('errorMsg', 'Konnte IP-Adresse nicht abrufen!');
+			$api->addData('errorMsg', _t('Konnte IP-Adresse nicht abrufen!'));
 			$api->addData('status', $status);
 			$api->addData('error', $error);
 		}
