@@ -11,7 +11,7 @@ function overviewStatusRefreshEffect(element)
 function showError()
 {
 	jQuery('.error-msg-refresh-bar').remove();
-	jQuery('.flex-box-refresh div:eq(0)').after('<div class="red error-msg-refresh-bar" style="vertical-align: bottom; font-weight: bold;">Fehler!</div>');
+	jQuery('.flex-box-refresh div:eq(0)').after('<div class="red error-msg-refresh-bar" style="vertical-align: bottom; font-weight: bold;">' + _t('Fehler!') + '</div>');
 	jQuery('.refresh-bar').stop(false, true).css('width', 0);
 	jQuery('a[href=#refresh] img').removeClass('rotate-icon');
 	
