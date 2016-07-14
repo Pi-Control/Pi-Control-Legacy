@@ -7,9 +7,6 @@ define('PICONTROL', true);
 (include_once LIBRARY_PATH.'main/rpi.function.php')								or die('Error: 0x0003');
 (include_once LIBRARY_PATH.'troubleshooting/troubleshooting.function.php')		or die('Error: 0x0004');
 
-$tpl = new PiTpl;
-$tpl->setTpl($tpl);
-
 $stats = array();
 
 // Pi Control Cron
