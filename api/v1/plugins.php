@@ -9,6 +9,12 @@ $api = new API;
 
 $plugins = pluginList();
 
+if (isset($_GET['id']) && !isset($_POST['id']))
+	$_POST['id'] = $_GET['id'];
+
+if (isset($_GET['action']) && !isset($_POST['action']))
+	$_POST['action'] = $_GET['action'];
+
 if (isset($_POST['id'], $plugins[$_POST['id']]))
 {
 	$id = $_POST['id'];
@@ -18,7 +24,10 @@ if (isset($_POST['id'], $plugins[$_POST['id']]))
 		if (preg_match('/^v[0-9]\/[a-z][a-z0-9\-_]+$/i', $action) === 1)
 		{
 			if (file_exists(PLUGINS_PATH.$id.'/api/'.$action.'.php') && is_file(PLUGINS_PATH.$id.'/api/'.$action.'.php'))
+			{
+				initPluginConstants($id);
 				include PLUGINS_PATH.$id.'/api/'.$action.'.php';
+			}
 			else
 				$api->setError('error', 'Action not available.');
 		}
