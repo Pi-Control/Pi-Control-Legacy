@@ -100,6 +100,11 @@ $langArray = array(
 	'744e8e56' => 'Couldn\'t find the selected language! Please try again.',
 	'52e5304c' => 'Fault',
 	'352619fd' => 'Currently known restrictions',
-	'4706b3bb' => '- The terminal works only under HTTP, not HTTPS.<br />- Some missing translations in English.<br />- Initially no plugins. Be submitted with the time.<br />- Still no Android app. Will be also submitted.'
+	'2cbfa862' => '- The terminal works only under HTTP, not HTTPS.<br />- Still no Android app. Will be also submitted.',
+	'2963f17d' => 'Unfortunately, an unexpected error has occurred. Please close the feedback window and try again. Otherwise, write me at <a href="%%s" target="_blank">contact</a>.',
+	'8311b9b6' => 'Close',
+	'28c330db' => 'Some data must be collected for the feedback.',
+	'fcb4bb2f' => 'Diagnostic data was collected. A new window will open when you click on the button below.',
+	'db72d0d6' => 'Open feedback',
 );
 ?>
