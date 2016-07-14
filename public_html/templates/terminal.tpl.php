@@ -6,7 +6,7 @@
 	pre { margin: 0; }
 </style>
 <script language="javascript" type="text/javascript">
-var ip = '<?php echo $_SERVER['SERVER_NAME']; ?>';
+var ip = '<?php echo $_SERVER['SERVER_ADDR']; ?>';
 var port = <?php echo $data['port']; ?>;
 var cookie = '<?php echo $data['cookie']; ?>';
 </script>
