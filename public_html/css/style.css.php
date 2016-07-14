@@ -136,7 +136,7 @@ body {
 	display: table-cell;
 	width: 1%;
 	vertical-align: middle;
-    padding: 9px 15px;
+	padding: 9px 15px;
 }
 
 #header-logo:hover {
@@ -183,6 +183,7 @@ body {
 	transition: 100ms linear;
 	transform: translateY(-5px);
 	right: 0px;
+	z-index: 100;
 }
 
 #header-navi .navi-dropdown:hover .navi-dropdown-container {
@@ -197,6 +198,7 @@ body {
 	font-weight: bold;
 	padding: 15px;
 	text-decoration: none;
+	white-space: nowrap;
 	transition: all 100ms linear;
 }
 
@@ -490,6 +492,10 @@ td.table-right, th.table-right {
 
 td.table-middle *, th.table-middle * {
 	vertical-align: middle;
+}
+
+.white-space-nowrap {
+	white-space: nowrap;
 }
 
 .progressbar {
@@ -1246,6 +1252,11 @@ input[type=checkbox], input[type=radio] {
 	display: none;
 }
 
+input.width-100, textarea.width-100, button.width-100 {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 label.settings-pi-control-theme-color-red::before {
 	border-color: <?php echo $colors['red'][7]; ?>;
 	background: <?php echo $colors['red'][7]; ?>;
@@ -1419,6 +1430,126 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 
 .button-small, input.button-small {
 	padding: 2px 5px;
+}
+
+.color-0 {
+	color: <?php echo $colorPallet[0]; ?>;
+}
+
+.color-1 {
+	color: <?php echo $colorPallet[1]; ?>;
+}
+
+.color-2 {
+	color: <?php echo $colorPallet[2]; ?>;
+}
+
+.color-3 {
+	color: <?php echo $colorPallet[3]; ?>;
+}
+
+.color-4 {
+	color: <?php echo $colorPallet[4]; ?>;
+}
+
+.color-5 {
+	color: <?php echo $colorPallet[5]; ?>;
+}
+
+.color-6 {
+	color: <?php echo $colorPallet[6]; ?>;
+}
+
+.color-7 {
+	color: <?php echo $colorPallet[7]; ?>;
+}
+
+.color-8 {
+	color: <?php echo $colorPallet[8]; ?>;
+}
+
+.color-9 {
+	color: <?php echo $colorPallet[9]; ?>;
+}
+
+.background-color-0 {
+	background-color: <?php echo $colorPallet[0]; ?>;
+}
+
+.background-color-1 {
+	background-color: <?php echo $colorPallet[1]; ?>;
+}
+
+.background-color-2 {
+	background-color: <?php echo $colorPallet[2]; ?>;
+}
+
+.background-color-3 {
+	background-color: <?php echo $colorPallet[3]; ?>;
+}
+
+.background-color-4 {
+	background-color: <?php echo $colorPallet[4]; ?>;
+}
+
+.background-color-5 {
+	background-color: <?php echo $colorPallet[5]; ?>;
+}
+
+.background-color-6 {
+	background-color: <?php echo $colorPallet[6]; ?>;
+}
+
+.background-color-7 {
+	background-color: <?php echo $colorPallet[7]; ?>;
+}
+
+.background-color-8 {
+	background-color: <?php echo $colorPallet[8]; ?>;
+}
+
+.background-color-9 {
+	background-color: <?php echo $colorPallet[9]; ?>;
+}
+
+.border-color-0 {
+	border-color: <?php echo $colorPallet[0]; ?>;
+}
+
+.border-color-1 {
+	border-color: <?php echo $colorPallet[1]; ?>;
+}
+
+.border-color-2 {
+	border-color: <?php echo $colorPallet[2]; ?>;
+}
+
+.border-color-3 {
+	border-color: <?php echo $colorPallet[3]; ?>;
+}
+
+.border-color-4 {
+	border-color: <?php echo $colorPallet[4]; ?>;
+}
+
+.border-color-5 {
+	border-color: <?php echo $colorPallet[5]; ?>;
+}
+
+.border-color-6 {
+	border-color: <?php echo $colorPallet[6]; ?>;
+}
+
+.border-color-7 {
+	border-color: <?php echo $colorPallet[7]; ?>;
+}
+
+.border-color-8 {
+	border-color: <?php echo $colorPallet[8]; ?>;
+}
+
+.border-color-9 {
+	border-color: <?php echo $colorPallet[9]; ?>;
 }
 
 @keyframes rotate {
