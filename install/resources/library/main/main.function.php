@@ -581,4 +581,17 @@ function arraySort($array, $on, $order = SORT_ASC)
 
     return $new_array;
 }
+
+function getTranslatedArrayForJs($translations)
+{
+	if (!is_array($translations))
+		return false;
+	
+	$output = array();
+	
+	foreach ($translations as $translation)
+		$output[$translation] = _t($translation);
+	
+	return $output;
+}
 ?>

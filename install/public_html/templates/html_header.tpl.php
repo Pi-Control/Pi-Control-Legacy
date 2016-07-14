@@ -19,6 +19,14 @@
 	<link rel="mask-icon" href="public_html/img/favicon/safari-pinned-tab.svg" color="#1975d0" />
 	<link rel="shortcut icon" href="public_html/img/favicon/favicon.ico" />
 	<script type="text/javascript" src="public_html/js/jquery.min.js"></script>
+	<script type="text/javascript" src="public_html/js/translation.js"></script>
+<?php if (!empty($data['jsTranslations'])) { ?>
+	<script type="text/javascript">
+<?php foreach ($data['jsTranslations'] as $key => $value) { ?>
+		jsTranslations['<?php echo $key; ?>'] = '<?php echo $value; ?>';
+<?php } ?>
+	</script>
+<?php } ?>
 	<script type="text/javascript" src="public_html/js/main.js"></script>
 	<script type="text/javascript" src="public_html/js/feedback.js"></script>
 	<title><?php echo $data['title']; ?></title>
