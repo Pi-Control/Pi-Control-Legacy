@@ -12,7 +12,15 @@ if (isset($_GET['restart']) && $_GET['restart'] == '')
 	if (!empty($SSHError))
 		$tpl->msg('error', _t('Neu starten nicht m&ouml;glich'), nl2br($SSHError));
 	else
+	{
+		$jsTranslations = array();
+		$jsTranslations[] = 'Online - Du wirst sofort weitergeleitet';
+		$jsTranslations[] = 'Offline';
+		
+		$tpl->assign('jsTranslations', $jsTranslations);
+		
 		$tpl->draw('restart');
+	}
 }
 else
 {

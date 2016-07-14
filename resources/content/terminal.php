@@ -3,6 +3,16 @@ if (!defined('PICONTROL')) exit();
 
 $tpl->setHeaderTitle('Terminal');
 
+$jsTranslations = array();
+$jsTranslations[] = 'Verbindung herstellen...';
+$jsTranslations[] = 'Bitte gebe einen Befehl ein!';
+$jsTranslations[] = 'Verbunden';
+$jsTranslations[] = 'Verbindung getrennt';
+$jsTranslations[] = 'Fehler aufgetreten!';
+$jsTranslations[] = 'Verbindung erneut herstellen';
+$jsTranslations[] = 'Verbindung getrennt<br />(Anmeldung an anderem Fenster)';
+$jsTranslations[] = 'Verbindung getrennt<br />(Keine Berechtigung)';
+
 $selectedPort = (isset($_GET['port'])) ? $_GET['port'] : 9001;
 $ports = array();
 
@@ -48,6 +58,7 @@ if ($tpl->getSSHResource(1) !== false)
 $tpl->assign('port', $selectedPort);
 $tpl->assign('ports', $ports);
 $tpl->assign('cookie', substr($_COOKIE['_pi-control_login'], 0, 16));
+$tpl->assign('jsTranslations', $jsTranslations);
 
 $tpl->draw('terminal');
 ?>

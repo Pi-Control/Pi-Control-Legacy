@@ -5,6 +5,13 @@ if (!defined('PICONTROL')) exit();
 (include_once LIBRARY_PATH.'network/network.class.php')		or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Netzwerkkonfiguration'));
 
+$jsTranslations = array();
+$jsTranslations[] = 'Das Interface wird neu gestartet...';
+$jsTranslations[] = 'Das Interface wurde neu gestartet.';
+$jsTranslations[] = 'Es ist ein unerwarteter Fehler aufgetreten!';
+$jsTranslations[] = 'Es ist ein Fehler aufgetreten! Vermutlich wurde die Verbindung getrennt.';
+$jsTranslations[] = 'Es kann nur ein Interface zeitgleich neu gestartet werden.';
+
 $networkInterface = new NetworkInterface($tpl);
 
 if (isset($_GET['msg']) && $_GET['msg'] == 'add')
@@ -23,12 +30,14 @@ elseif (isset($_GET['edit']) || isset($_GET['delete']))
 	$tpl->msg('error', _t('Interface nicht verf&uuml;gbar'), _t('Es wurde kein Interface mit dem angegebenen Namen gefunden!'), false);
 	
 	$tpl->assign('interfaces', $networkInterface->getInterfaces());
+	$tpl->assign('jsTranslations', $jsTranslations);
 	
 	$tpl->draw('network_configuration');
 }
 else
 {
 	$tpl->assign('interfaces', $networkInterface->getInterfaces());
+	$tpl->assign('jsTranslations', $jsTranslations);
 
 	$tpl->draw('network_configuration');
 }
