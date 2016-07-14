@@ -477,7 +477,7 @@ function scanAccessPoints($networkConnections, $ssh = false)
 		$wlan[$interface['interface']] = array();
 		
 		if ($ssh == true)
-			$streamWlan = $tpl->executeSSH('sudo /sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
+			list ($streamWlan, ) = $tpl->executeSSH('sudo /sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
 		else
 			$streamWlan = shell_exec('/sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
 		
@@ -1127,5 +1127,18 @@ function getLanguageFromIso($isoCode)
 	}
 	
 	return false;
+}
+
+function getTranslatedArrayForJs($translations)
+{
+	if (!is_array($translations))
+		return false;
+	
+	$output = array();
+	
+	foreach ($translations as $translation)
+		$output[$translation] = _t($translation);
+	
+	return $output;
 }
 ?>

@@ -116,6 +116,8 @@ class API
 		if (!is_int($status))
 			return false;
 		
+		header('HTTP/1.0 '.$status);
+		
 		$this->error = array('type' => $type, 'message' => $message);
 		$this->status = $status;
 		

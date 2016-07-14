@@ -291,12 +291,16 @@ class PiTpl
 	 * @return bool
 	 */
 	
-	public function assign($name, $value = NULL)
+	public function assign($name, $value = NULL, $merge = false)
 	{
 		if (!strlen($name) > 0 || !is_string($name))
 			return false;
 		
-		$this->tplVariables[$name] = $value;
+		if ($merge === true)
+			$this->tplVariables[$name] = array_merge((isset($this->tplVariables[$name])) ? $this->tplVariables[$name] : array(), $value);
+		else
+			$this->tplVariables[$name] = $value;
+		
 		
 		return true;
 	}
@@ -423,6 +427,9 @@ class PiTpl
 		
 		// Übergebe Titel
 		$data['title'] = sprintf($this->tplHeaderTitleFormat, $this->tplHeaderTitle);
+		
+		// Uebergebe Uebersetzung
+		$data['jsTranslations'] = isset($this->tplVariables['jsTranslations']) ? $this->tplVariables['jsTranslations'] : array();
 		
 		(include_once $fileName) or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $fileName), __LINE__);
 		
@@ -703,7 +710,7 @@ class PiTpl
 			$data['msg']		= $msg[2];
 			$data['cancelable']	= $msg[3];
 			
-			(include $this->tplFolderPath.'msg'.$this->tplFileSuffix) or self::tplError(self::_t('Konnte Datei "%s" nicht öffnen und auslesen.', $this->tplFolderPath.'msg'.$this->tplFileSuffix), __LINE__);
+			(include $this->tplFolderPath.'msg'.$this->tplFileSuffix) or self::tplError(self::_t('Konnte Datei "%s" nicht &ouml;ffnen und auslesen.', $this->tplFolderPath.'msg'.$this->tplFileSuffix), __LINE__);
 		}
 		
 		return false;
