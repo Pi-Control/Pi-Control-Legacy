@@ -1,82 +1,27 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
+(include_once LIBRARY_PATH.'statistic/statistic.class.php')	or die('Error: 0x0010');
 $tpl->setHeaderTitle(_t('Statistik'));
 
-$folder = LOG_PATH.'statistic';
-$fileArray = array();
-$logArray = array();
+$statistics = array();
 $hiddenStatistics = unserialize(htmlspecialchars_decode(getConfig('main:statistic.hidden', 'a:0:{}')));
 
-foreach (@scandir($folder) as $file)
+$controller = new StatisticController($tpl);
+$controller->loadStatistics('statistic/');
+
+foreach ($controller->getStatistics() as $statistic)
 {
-	if ($file[0] != '.')
-	{
-		if (is_file($folder.'/'.$file) && substr($file, -4) == '.csv')
-			$fileArray[] = $file;
-	}
+	$builder = new StatisticBuilder();
+	$builder->loadFromFile($statistic);
+	
+	$array = $builder->getArray();
+	if (!in_array($builder->getId(), $hiddenStatistics))
+		$statistics[] = array('array' => $array, 'json' => $builder->getJSON());
 }
 
-foreach ($fileArray as $file_)
-{
-	if (substr($file_ , 0, -4) == 'coretemp' && array_search('coretemp', $hiddenStatistics) === false)
-	{
-		$logArray[] = array('log' => 'coretemp',
-							'label' => _t('CPU-Temperatur'),
-							'type' => 'coretemp',
-							'title' => _t('Grad Celsius'),
-							'unit' => ' °C',
-							'columns' => array(1));
-	}
-	elseif (substr($file_ , 0, -4) == 'cpuload' && array_search('cpuload', $hiddenStatistics) === false)
-	{
-		$logArray[] = array('log' => 'cpuload',
-							'label' => _t('CPU-Auslastung'),
-							'type' => 'cpuload',
-							'title' => _t('Auslastung %%'),
-							'unit' => ' %',
-							'columns' => array(1));
-	}
-	elseif (substr($file_ , 0, -4) == 'ram' && array_search('ram', $hiddenStatistics) === false)
-	{
-		$logArray[] = array('log' => 'ram',
-							'label' => _t('RAM-Auslastung'),
-							'type' => 'ram',
-							'title' => _t('Auslastung %%'),
-							'unit' => ' %',
-							'columns' => array(1));
-	}
-	elseif (substr($file_ , 0, 8) == 'network_' && array_search(substr($file_ , 0, -4), $hiddenStatistics) === false)
-	{
-		$logArray[] = array('log' => substr($file_, 0, -4),
-							'label' => substr($file_ , 8, -4),
-							'type' => 'network',
-							'title' => _t('Traffic (MB)'),
-							'unit' => ' MB',
-							'columns' => array(1,2));
-	}
-	elseif (substr($file_ , 0, -4) == 'cpufrequency' && array_search('cpufrequency', $hiddenStatistics) === false)
-	{
-		$logArray[] = array('log' => 'cpufrequency',
-							'label' => _t('CPU-Takt'),
-							'type' => 'cpufrequency',
-							'title' => _t('MHz'),
-							'unit' => ' MHz',
-							'columns' => array(1));
-	}
-	elseif (substr($file_ , 0, -4) == 'memory' && array_search('memory', $hiddenStatistics) === false)
-	{
-		$logArray[] = array('log' => 'memory',
-							'label' => _t('Speicherverbrauch'),
-							'type' => 'memory',
-							'title' => _t('MB'),
-							'unit' => ' MB',
-							'columns' => array(1,2));
-	}
-}
-
-$tpl->assign('logArrayCount', count($fileArray));
-$tpl->assign('logArray', $logArray);
+$tpl->assign('statistics', $statistics);
+$tpl->assign('msgInfo', (count($hiddenStatistics) == count($controller->getStatistics())) ? 'invisible' : ((count($controller->getStatistics()) == 0) ? 'empty' : ''));
 
 $tpl->draw('statistic');
 ?>

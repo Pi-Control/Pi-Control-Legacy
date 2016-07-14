@@ -33,11 +33,11 @@
 			<span><?php _e('Statistik'); ?></span>
 			<?php showSettingsIcon('?s=settings&amp;do=statistic'); ?>
 		</div>
-<?php if(empty($data['logArray']) && $data['logArrayCount'] > 0) { ?>
+<?php if ($data['msgInfo'] == 'invisible') { ?>
 		<div class="inner-info">
 			<div><?php _e('Alle Statistiken sind ausgeblendet!'); ?></div>
 		</div>
-<?php } elseif (empty($data['logArray'])) { ?>
+<?php } elseif ($data['msgInfo'] == 'empty') { ?>
 		<div class="inner-info">
 			<div><?php _e('Es sind noch keine Statistiken verf&uuml;gbar. Werte werden alle 5 Minuten eingetragen.'); ?></div>
 		</div>
@@ -46,163 +46,29 @@
 </div>
 <div class="clear-both"></div>
 <div class="order-3">
-<?php foreach ($data['logArray'] as $value) { ?>
-	<div class="box google-controls" id="dashboard_log_<?php echo $value['log']; ?>">
+<?php foreach ($data['statistics'] as $statistic) { ?>
+	<div class="box google-controls" id="dashboard_log_<?php echo $statistic['array']['id']; ?>">
 		<div class="inner-header">
-			<span><?php _e($value['label']); ?></span>
+			<span><?php _e($statistic['array']['title']); ?></span>
 		</div>
-		<div class="inner text-center padding-0" id="chart_log_<?php echo $value['log']; ?>">
-			<img src="public_html/img/loader2.svg" style="margin: 20px;" />
+		<div class="inner text-center padding-0" id="chart_log_<?php echo $statistic['array']['id']; ?>">
+			<img src="public_html/img/loader.svg" style="margin: 20px;" />
 		</div>
-		<div class="inner text-center" id="chart_control_log_<?php echo $value['log']; ?>">
+		<div class="inner text-center" id="chart_control_log_<?php echo $statistic['array']['id']; ?>">
 		</div>
 	</div>
 <?php } ?>
 </div>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="public_html/js/statistic_builder.js"></script>
 <script type="text/javascript">
 	google.load('visualization', '1', {packages:['controls']});
 	google.setOnLoadCallback(createTable);
-	
+
 	function createTable()
 	{
-<?php foreach ($data['logArray'] as $value) { ?>
-		var jsonData = jQuery.ajax({
-			url: 'api/v1/statistic.php',
-			method: 'POST',
-			data: { data: '<?php echo $value['log']; ?>', type: '<?php echo $value['type']; ?>' },
-			dataType: 'json',
-			
-			async: true
-		}).done(function(data)
-		{
-			if (data.error != null)
-			{
-				if (data.error.message == 'Empty data.')
-					jQuery('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es sind noch keine Werte verf&uuml;gbar. Werte werden alle 5 Minuten eingetragen.'); ?></strong>');
-				else
-					jQuery('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehler: %s', '\'+data.error.message+\''); ?></strong>');
-				
-				return;
-			}
-			
-			period_<?php echo $value['log']; ?> = data.data.statistic.periods;
-			
-			var myData = new google.visualization.DataTable(data.data.statistic);
-			
-			jQuery('#chart_log_<?php echo $value['log']; ?>').html('');
-			var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_log_<?php echo $value['log']; ?>'));
-			
-			myDateSlider_<?php echo $value['log']; ?> = new google.visualization.ControlWrapper({
-				'controlType': 'DateRangeFilter',
-				'containerId': 'chart_control_log_<?php echo $value['log']; ?>',
-				'options': {
-					'filterColumnLabel': '<?php _e('Zeit'); ?>',
-					'ui': {
-						'step': 'hour',
-						'label': '',
-						'format': { 'pattern': 'dd.MM. HH:mm' }
-					}
-				}
-			});
-			
-			var myLine = new google.visualization.ChartWrapper({
-				'chartType' : 'AreaChart',
-				'containerId' : 'chart_log_<?php echo $value['log']; ?>',
-				'options': {
-					vAxis: { title: '<?php echo $value['title']; ?>', viewWindow: { max: data.data.statistic.max, min: data.data.statistic.min }, textPosition: 'in', textStyle: { fontSize: 11, color: '#AAAAAA' }, titleTextStyle:  { fontSize: 11, color: '#AAAAAA' }, gridlines: { color: '#fff' } },
-					dateFormat: 'dd.MM.yy HH:mm',
-					hAxis: { format: 'dd.MM. HH:mm', textPosition: 'out', gridlines: { color: '#fff' } , textStyle: { fontSize: 11, color: '#AAAAAA' }},
-					focusTarget: 'category',
-					crosshair: { orientation: 'vertical', trigger: 'both', color: '#AAAAAA', opacity: 0.4 },
-					chartArea: { width: '100%', height: '80%', top: 0 },
-					legend: { position: 'bottom', alignment: 'end', textStyle: { fontSize: 11, color: '#AAAAAA' } },
-					axisTitlesPosition: 'in'
-				}
-			});
-			
-			var formatter = new google.visualization.NumberFormat(
-				{ suffix: '<?php echo $value['unit']; ?>' }
-			);
-<?php foreach ($value['columns'] as $value2) { ?>
-			formatter.format(myData, <?php echo $value2; ?>);
-<?php } ?>
-			myDashboard.bind(myDateSlider_<?php echo $value['log']; ?>, myLine);
-			myDashboard.draw(myData);
-		}).fail(function(xhr, textStatus)
-		{
-			jQuery('#chart_log_<?php echo $value['log']; ?>').html('<br /><br /><strong class="red"><?php _e('Es ist ein Fehler aufgetreten! Fehlercode: %s', '\'+xhr.status+\''); ?></strong>');
-		});
+<?php foreach ($data['statistics'] as $statistic) { ?>
+		statisticBuilder(<?php echo $statistic['json']; ?>);
 <?php } ?>
 	}
-	
-	function changeRange(dropdown) {
-		switch (dropdown.value)
-		{
-			case 'seven':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.seven)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-			case 'six':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.six)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-			case 'five':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.five)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-			case 'four':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.four)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-			case 'three':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.three)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-			case 'two':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.two)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-			case 'one':
-<?php foreach ($data['logArray'] as $value) { ?>
-				if (typeof myDateSlider_<?php echo $value['log']; ?> != 'undefined')
-				{
-	        		myDateSlider_<?php echo $value['log']; ?>.setState({'lowValue': new Date(period_<?php echo $value['log']; ?>.one)});
-	        		myDateSlider_<?php echo $value['log']; ?>.draw();
-				}
-<?php } ?>
-					break;
-				
-		}
-    }
 </script>

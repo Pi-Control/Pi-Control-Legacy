@@ -20,12 +20,12 @@
 						<th style="width: 10%;" class="table-center"><?php _e('Download'); ?></th>
 						<th style="width: 10%;"></th>
 					</tr>
-<?php foreach ($data['logArray'] as $value) { ?>
+<?php foreach ($data['statistics'] as $id => $statistic) { ?>
 					<tr>
-						<td align="center"><input type="checkbox" name="check[]" id="cb<?php echo urlencode($value['log']); ?>" value="<?php echo $value['log']; ?>" <?php if ($value['display'] == 1) echo 'checked="checked"'; ?> /><label class="checkbox only-checkbox" for="cb<?php echo urlencode($value['log']); ?>">&nbsp;</label></td>
-						<td><?php echo $value['label']; ?></td>
-						<td class="table-center"><a href="?s=settings&amp;do=statistic&amp;download&amp;log=<?php echo urlencode($value['log']); ?>&amp;type=<?php echo urlencode($value['type']); ?>&amp;label=<?php echo urlencode($value['label']); ?>" class="text-decoration-none"><span class="button button-small">CSV</span></a></td>
-						<td class="table-right"><a href="?s=settings&amp;do=statistic&amp;reset=<?php echo urlencode($value['log']); ?>" class="text-decoration-none"><span class="button button-small"><?php _e('Zur&uuml;cksetzen'); ?></span></a></td>
+						<td align="center"><input type="checkbox" name="check[]" id="cb-<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if ($statistic['visible'] == true) echo 'checked="checked"'; ?> /><label class="checkbox only-checkbox" for="cb-<?php echo $id; ?>">&nbsp;</label></td>
+						<td><?php echo $statistic['array']['title'] ?></td>
+						<td class="table-center"><a href="?s=settings&amp;do=statistic&amp;download=<?php echo $id; ?>" class="text-decoration-none"><span class="button button-small">CSV</span></a></td>
+						<td class="table-right"><a href="?s=settings&amp;do=statistic&amp;reset=<?php echo $id; ?>" class="text-decoration-none"><span class="button button-small"><?php _e('Zur&uuml;cksetzen'); ?></span></a></td>
 					</tr>
 <?php } ?>
 				</table>
