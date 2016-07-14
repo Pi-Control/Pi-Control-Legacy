@@ -11,9 +11,10 @@ setGlobalLanguage();
 $stats = array();
 
 // Pi Control Cron
-$cronEntry = '* * * * * www-data php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
+$cronEntry = '* * * * * '.exec('whoami').' php -f "'.CRON_PATH.'init.php" >/dev/null 2>&1 # By Pi Control';
+
 exec('cat /etc/crontab', $crontab);
-$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\swww\-data\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"(.*)/im', implode(PHP_EOL, $crontab));
+$cronMatch = preg_match('/^\*\s\*\s\*\s\*\s\*\s'.preg_quote(exec('whoami')).'\sphp \-f "'.preg_quote(CRON_PATH, '/').'init\.php"( )?(# By Pi Control)?/im', implode(PHP_EOL, $crontab));
 
 // Dateien und Ordner
 $filesFoldersExist = array('count' => 0, 'status' => true);
