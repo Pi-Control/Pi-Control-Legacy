@@ -95,7 +95,7 @@
 				</tr>
 	<?php } if (count($value) == 0) { ?>
 				<tr>
-					<td colspan="5"><strong class="red"><?php _e('Keine WLAN-Netzwerke gefunden. <a href="?s=network&amp;refresh_wlan">Erneut suchen.</a>'); ?></strong></td>
+					<td colspan="5"><strong class="red"><?php _e('Keine WLAN-Netzwerke gefunden. <a href="%s">Erneut suchen.</a>', '?s=network&amp;refresh_wlan'); ?></strong></td>
 				</tr>
 	<?php } ?>
 			</table>
