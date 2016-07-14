@@ -131,8 +131,19 @@ function setPluginStatus($pluginId, $status)
 			return false;
 	}
 	
-	if (touch(PLUGINS_PATH.$pluginId.'/plugin_disabled.php') == true)
-		return true;
+	if (($stream = fopen(PLUGINS_PATH.$pluginId.'/plugin_disabled.php', 'w')) !== false)
+	{
+		if ((fwrite($stream, '<?php exit(); ?>')) !== false)
+		{
+			fclose($stream);
+			return true;
+		}
+		else
+		{
+			fclose($stream);
+			return false;
+		}
+	}
 	else
 		return false;
 }
@@ -141,6 +152,36 @@ function deletePlugin($pluginId, $referer = NULL)
 {
 	if (empty($pluginId))
 		return false;
+	
+	foreach (scandir(CRON_PATH) as $file)
+	{
+		if ($file[0] == '.' || !is_file(CRON_PATH.$file) || CRON_PATH.$file == 'init.php')
+			continue;
+		
+		if (($pos = strpos($file, '-')) === false)
+			continue;
+		
+		if (substr($file, $pos+1, strlen($pluginId)+8) == 'plugin.'.$pluginId.'.')
+			var_dump(CRON_PATH.$file);
+	}
+	
+	foreach (scandir(CONFIG_PATH) as $file)
+	{
+		if ($file[0] == '.' || !is_file(CONFIG_PATH.$file))
+			continue;
+		
+		if (substr($file, 0, strlen($pluginId)+8) == 'plugin.'.$pluginId.'.')
+			unlink(CONFIG_PATH.$file);
+	}
+	
+	foreach (scandir(LOG_PATH.'plugin/') as $file)
+	{
+		if ($file[0] == '.' || !is_file(LOG_PATH.'plugin/'.$file))
+			continue;
+		
+		if (substr($file, 0, strlen($pluginId)+1) == $pluginId.'.')
+			unlink(LOG_PATH.'plugin/'.$file);
+	}
 	
 	if (file_exists(PLUGINS_PATH.$pluginId.'/uninstall.php') && is_file(PLUGINS_PATH.$pluginId.'/uninstall.php'))
 	{
