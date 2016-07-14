@@ -28,6 +28,7 @@ $tpl->assign('ram_percentage', $ram['percent'].'%');
 $tpl->assign('memory', end($memory));
 $tpl->assign('usb_devices', (getConfig('main:overview.showDevices', 'true') == 'true') ? $usbDevices->getContent() : '');
 $tpl->assign('usb_devices_cache_hint', $usbDevices->displayHint());
+$tpl->assign('jsTranslations', array('Fehler!'));
 
 $tpl->draw('overview');
 ?>
