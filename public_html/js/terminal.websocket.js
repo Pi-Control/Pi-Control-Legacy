@@ -7,7 +7,7 @@ jQuery(document).on('ready', function(e)
 	
 	websocket.onopen = function(ev)
 	{
-		jQuery('#status').text('Verbindung herstellen...');
+		jQuery('#status').text(_t('Verbindung herstellen...'));
 	}
 
 	jQuery(document).on('click', '#submit', function(e)
@@ -16,7 +16,7 @@ jQuery(document).on('ready', function(e)
 		
 		if(mymessage == '')
 		{
-			alert('Bitte gebe einen Befehl ein!');
+			alert(_t('Bitte gebe einen Befehl ein!'));
 			return;
 		}
 		
@@ -54,39 +54,39 @@ jQuery(document).on('ready', function(e)
 		
 		if(type == 'system')
 		{
-			umsg = (umsg == 'connected') ? 'Verbunden' : umsg;
+			umsg = (umsg == 'connected') ? _t('Verbunden') : umsg;
 			jQuery('#status').text(umsg);
 			jQuery('#command').removeAttr('disabled');
 			msgBuffer = umsg;
 			
-			jQuery('select[name=terminal] option[value=' + port + ']').text(jQuery('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Online)');
+			jQuery('select[name=terminal] option[value=' + port + ']').text(jQuery('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(' + _t('Online') + ')');
 			jQuery('select[name=terminal] option[value=' + port + ']').css('background-color', '#73CA3C');
 		}
 	};
 	
 	websocket.onerror = function(ev)
 	{
-		jQuery('#status').text('Fehler aufgetreten!');
+		jQuery('#status').text(_t('Fehler aufgetreten!'));
 		jQuery('#command').attr('disabled', 'disabled');
 		
-		jQuery('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
+		jQuery('input[name=close]').attr('name', 'reload').val(_t('Verbindung erneut herstellen'));
 	};
 	
 	websocket.onclose = function(ev)
 	{
 		if (msgBuffer == 'newSession')
-			jQuery('#status').html('Verbindung getrennt<br />(Anmeldung an anderem Fenster)');
+			jQuery('#status').html(_t('Verbindung getrennt<br />(Anmeldung an anderem Fenster)'));
 		else if (msgBuffer == 'denied')
-			jQuery('#status').html('Verbindung getrennt<br />(Keine Berechtigung)');
+			jQuery('#status').html(_t('Verbindung getrennt<br />(Keine Berechtigung)'));
 		else
 		{
-			jQuery('#status').text('Verbindung getrennt');
-			jQuery('select[name=terminal] option[value=' + port + ']').text(jQuery('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(Offline)');
+			jQuery('#status').text(_t('Verbindung getrennt'));
+			jQuery('select[name=terminal] option[value=' + port + ']').text(jQuery('select[name=terminal] option[value=' + port + ']').text().substr(0, 11) + '(' + _t('Offline') + ')');
 			jQuery('select[name=terminal] option[value=' + port + ']').css('background-color', '#E9492E');
 		}
 		
 		jQuery('#command').attr('disabled', 'disabled');
-		jQuery('input[name=close]').attr('name', 'reload').val('Verbindung erneut herstellen');
+		jQuery('input[name=close]').attr('name', 'reload').val(_t('Verbindung erneut herstellen'));
 	};
 	
 	jQuery(document).on('change', 'select[name=terminal]', function(e)

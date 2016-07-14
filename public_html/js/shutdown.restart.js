@@ -12,7 +12,7 @@ function ping()
 	{
 		if (shutdown == true)
 		{
-			jQuery('.inner strong').text('Online - Du wirst sofort weitergeleitet');
+			jQuery('.inner strong').text(_t('Online - Du wirst sofort weitergeleitet'));
 			setTimeout('window.document.location.href = \'?s=overview\'', 2000);
 		}
 		
@@ -20,7 +20,7 @@ function ping()
 		setTimeout('ping()', 5000);
 	}).error(function(data)
 	{
-		jQuery('.inner strong').text('Offline');
+		jQuery('.inner strong').text(_t('Offline'));
 		shutdown = true;
 		
 		jQuery('.inner strong').addClass('red').removeClass('green');
