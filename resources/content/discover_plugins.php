@@ -11,7 +11,7 @@ $availableUpdates = checkPluginUpdate($plugins, $onlinePlugins);
 
 if (!is_array($onlinePlugins))
 {
-	$tpl->error('Fehler beim Abrufen', 'Leider ist beim Abrufen der Plugins ein Fehler aufgetreten. Fehlercode: '.$onlinePlugins);
+	$tpl->error(_t('Fehler beim Abrufen'), _t('Leider ist beim Abrufen der Plugins ein Fehler aufgetreten. Fehlercode: %s', $onlinePlugins));
 	$showList = false;
 }
 
@@ -23,7 +23,7 @@ if (isset($_GET['id']) && $_GET['id'] != '')
 		include_once 'discover_plugins_info.php';
 	}
 	else
-		$tpl->msg('error', '', 'Das von dir gesuchte Plugin konnte nicht gefunden werden.');
+		$tpl->msg('error', _t('Plugin nicht gefunden'), _t('Das von dir gesuchte Plugin konnte nicht gefunden werden.'));
 }
 
 if ($showList == true)

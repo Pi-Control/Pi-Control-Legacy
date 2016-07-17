@@ -26,7 +26,7 @@
 		</div>
 		<div class="inner">
 			<?php if (!empty($data['plugin'])) { ?>
-				<strong class="green">Das Plugin ist bereits installiert.</strong>
+				<strong class="green"><?php _e('Das Plugin ist bereits installiert.'); ?></strong>
 			<?php if ($data['plugin']['version']['code'] < $data['onlinePlugin']['latestVersion']) { ?>
 				<br /><br /><strong class="red"><?php _e('Das Plugin ist nicht mehr aktuell. Version %s ist verf&uuml;gbar!', $data['onlinePlugin']['versions'][$data['onlinePlugin']['latestVersion']]['name']); ?></strong>
 			<?php } } ?>
@@ -39,11 +39,11 @@
 				</tr>
 				<tr>
 					<td><?php _e('Ver&ouml;ffentlicht am'); ?></td>
-					<td><?php echo formatTime($data['onlinePlugin']['date']); ?></td>
+					<td><?php echo formatTime($data['onlinePlugin']['date'], 'd.m.Y'); ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('Letzte Aktualisierung'); ?></td>
-					<td><?php echo formatTime($data['onlinePlugin']['versions'][$data['onlinePlugin']['latestVersion']]['date']); ?></td>
+					<td><?php echo formatTime($data['onlinePlugin']['versions'][$data['onlinePlugin']['latestVersion']]['date'], 'd.m.Y'); ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('Beschreibung'); ?></td>

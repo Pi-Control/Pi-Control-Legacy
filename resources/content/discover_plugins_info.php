@@ -16,13 +16,13 @@ if (isset($_GET['install']) && $_GET['install'] == '')
 	$tpl->redirect('?i=download_plugin&id='.$pluginId);
 
 if (isset($_GET['installed']) && $_GET['installed'] == '')
-	$tpl->msg('success', '', 'Das Plugin wurde erfolgreich installiert.');
+	$tpl->msg('success', _t('Plugin installiert'), _t('Das Plugin wurde erfolgreich installiert.'));
 
 if (isset($_GET['update']) && $_GET['update'] == '')
 	$tpl->redirect('?i=update_plugin&id='.$pluginId);
 
 if (isset($_GET['updated']) && $_GET['updated'] == '')
-	$tpl->msg('success', '', 'Das Plugin wurde erfolgreich aktualisiert.');
+	$tpl->msg('success', _t('Plugin aktualisiert'), _t('Das Plugin wurde erfolgreich aktualisiert.'));
 
 $tpl->assign('plugin', isset($plugins[$pluginId]) ? $plugins[$pluginId] : array());
 $tpl->assign('onlinePlugin', $onlinePlugins[$pluginId]);

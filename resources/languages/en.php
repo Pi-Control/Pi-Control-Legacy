@@ -544,6 +544,10 @@ $langArray = array(
 	'cd9ff94e' => 'The folder for the plugin does not exist. Please install the plugin first.',
 	'de3e456f' => 'Total in byte',
 	'8e19b4db' => 'Used in byte',
-	'4ad0e6c0' => 'Usage in MHz'
+	'4ad0e6c0' => 'Usage in MHz',
+	'532d516e' => 'Error while retrieving',
+	'26c88659' => 'Unfortunately, an error has occurred while retrieving the plugin. Error code: %s',
+	'01c5cdaa' => 'The plugin is already installed.',
+	'9d34e0e2' => 'The plugin you are looking for could not be found.'
 );
 ?>
