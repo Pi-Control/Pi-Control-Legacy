@@ -226,6 +226,9 @@ function getOnlinePlugins()
 	{
 		foreach ($attributes as $attribute)
 		{
+			if (!isset($plugin[$attribute]))
+				continue;
+			
 			if (isset($plugin[$attribute][$lang]))
 				$plugin[$attribute] = $plugin[$attribute][$lang];
 			else
