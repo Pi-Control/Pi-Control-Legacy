@@ -53,7 +53,7 @@ if (isset($_POST['submit-weather']) && $_POST['submit-weather'] != '')
 		}
 		elseif ($_POST['weather-location-type'] == 'city')
 		{
-			if (strlen($cityText) >= 3 && preg_match('/^[A-Za-z \(\)\.]+$/', $cityText))
+			if (strlen($cityText) >= 3 && preg_match('/^[A-Za-zÄÖÜäöü \(\)\.]+$/', $cityText))
 				setConfig('main:weather.city', $cityText);
 			else
 				$tpl->msg('error', _t('Fehler'), _t('Leider ist der angegebene Stadtname ung&uuml;ltig!'), true, 10);
