@@ -28,7 +28,7 @@ if (extension_loaded('ssh2'))
 if (function_exists('mcrypt_encrypt') !== false)
 	$phpMcrypt['status'] = true;
 
-if (trim(exec('dpkg -s php5-cli | grep Status: ')))
+if (trim(exec('dpkg -s php5-cli | grep Status: ')) != '' || trim(exec('dpkg -s php7.0-cli | grep Status: ')) != '')
 	$phpCLI['status'] = true;
 
 if (function_exists('curl_init') !== false)

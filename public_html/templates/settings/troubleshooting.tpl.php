@@ -54,7 +54,7 @@
 					<td class="<?php echo ($data['cronMatch'] === 1) ? 'green' : 'red'; ?>"><?php echo ($data['cronMatch'] === 1) ? '&#10004;' : '&#10006;'; ?></td>
 				</tr>
 				<tr>
-					<td><?php _e('PHP5-CLI installiert'); ?></td>
+					<td><?php _e('PHP-CLI installiert'); ?></td>
 					<td class="<?php echo ($data['cronPHPCLI']) ? 'green' : 'red'; ?>"><?php echo ($data['cronPHPCLI']) ? '&#10004;' : '&#10006;'; ?></td>
 				</tr>
 				<tr>
@@ -72,6 +72,10 @@
 				<tr>
 					<td><?php _e('Benutzer:Gruppe'); ?></td>
 					<td class="<?php echo ($data['cronUserGroupBool']) ? 'green' : 'red'; ?>"><?php echo $data['cronUserGroup']; ?></td>
+				</tr>
+				<tr>
+					<td><?php _e('Zeichencodierung'); ?></td>
+					<td class="<?php echo ($data['cronCharacterEncodingBool']) ? 'green' : 'red'; ?>"><?php echo $data['cronCharacterEncoding']; ?></td>
 				</tr>
 			</table>
 		</div>

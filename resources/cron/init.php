@@ -25,11 +25,11 @@ foreach ($fileArray as $file)
 	
 	if (is_numeric($rest) && $rest == 0)
 	{
-		var_dump(exec('/usr/bin/php -f "'.CRON_PATH.$file.'"'));
+		exec('/usr/bin/php -f "'.CRON_PATH.$file.'"');
 		set_time_limit(30);
 	}
 }
 
-if (trim(exec('dpkg -s php5-cli | grep Status: ')) != '')
+if (trim(exec('dpkg -s php5-cli | grep Status: ')) != '' || trim(exec('dpkg -s php7.0-cli | grep Status: ')) != '')
 	setConfig('cron:execution.cron', time());
 ?>
