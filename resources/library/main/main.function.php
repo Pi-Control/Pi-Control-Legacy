@@ -1142,7 +1142,7 @@ function getTranslatedArrayForJs($translations)
 	return $output;
 }
 
-function getURLLangParam($echo = false, $html = true)
+function getURLLangParam($echo = false, $html = true, $first = false)
 {
 	global $globalLanguage;
 	
@@ -1150,6 +1150,9 @@ function getURLLangParam($echo = false, $html = true)
 	
 	if ($html === true)
 		$param .= 'amp;';
+	
+	if ($first !== false)
+		$param = '?';
 	
 	$param .= 'lang='.$globalLanguage;
 	

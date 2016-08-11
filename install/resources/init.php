@@ -16,7 +16,7 @@ if (!isset($config))
 			'update'							=> 'https://pi-control.de/service/v1/update/',
 			'updateDownload'					=> 'https://pi-control.de/?service=update',
 			'updateNotification'				=> 'https://pi-control.de/?service=update_notification',
-			'help'								=> 'https://pi-control.de/?service=help'
+			'help'								=> 'https://pi-control.de/help/'
 		)
 	);
 }

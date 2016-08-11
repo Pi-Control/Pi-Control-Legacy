@@ -594,4 +594,24 @@ function getTranslatedArrayForJs($translations)
 	
 	return $output;
 }
+
+function getURLLangParam($echo = false, $html = true, $first = false)
+{
+	global $globalLanguage;
+	
+	$param = '&';
+	
+	if ($html === true)
+		$param .= 'amp;';
+	
+	if ($first !== false)
+		$param = '?';
+	
+	$param .= 'lang='.$globalLanguage;
+	
+	if ($echo !== false)
+		echo $param;
+	
+	return $param;
+}
 ?>
