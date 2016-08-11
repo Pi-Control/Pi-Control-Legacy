@@ -499,26 +499,30 @@ td.table-middle *, th.table-middle * {
 }
 
 .progressbar {
-	background: #DDDDDD;
-	border-radius: 2px;
-	font-size: 0px;
-	text-align: left;
+	width: 100%;
+    position: relative;
+    height: 17px;
+    background: #DDDDDD;
+    border-radius: 2px;
+}
+
+.progressbar::after {
+    content: attr(data-text);
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 17px;
+    font-size: 11px;
+	left: 0;
 }
 
 .progressbar > div {
-	background: <?php echo $colorPallet[5]; ?>;
+	background: <?php echo $colorPallet[3]; ?>;
 	border-radius: 2px;
-	color: #FFFFFF;
-	text-shadow: 0 0 1px #333333;
-	font-size: 11px;
-	line-height: 17px;
-	text-align: center;
-	font-weight: normal;
-	display: inline-block;
-}
-
-.progressbar > div:hover {
-	background: <?php echo $colorPallet[6]; ?>;
+	position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .show-more {

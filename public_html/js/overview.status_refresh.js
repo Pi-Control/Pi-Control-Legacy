@@ -59,7 +59,7 @@ function overviewStatusRefresh()
 					if (cpuLoad.find('.progressbar div').html() != data.data.cpuLoad+'%')
 					{
 						overviewStatusRefreshEffect(cpuLoad);
-						cpuLoad.find('.progressbar div').html(data.data.cpuLoad+'%').css('width', data.data.cpuLoad+'%');
+						cpuLoad.find('.progressbar').attr('data-text', data.data.cpuLoad+'%').find('div').css('width', data.data.cpuLoad+'%');
 					}
 					
 					this_.animate({width: '55.5%'}, 300, 'linear');
@@ -77,7 +77,7 @@ function overviewStatusRefresh()
 							if (ramPercentage.find('.progressbar div').html() != data.data.ramPercentage+'%')
 							{
 								overviewStatusRefreshEffect(ramPercentage);
-								ramPercentage.find('.progressbar div').html(data.data.ramPercentage+'%').css('width', data.data.ramPercentage+'%');
+								ramPercentage.find('.progressbar').attr('data-text', data.data.ramPercentage+'%').find('div').css('width', data.data.ramPercentage+'%');
 							}
 							
 							this_.animate({width: '33.3%'}, 300, 'linear');

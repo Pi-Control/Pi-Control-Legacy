@@ -115,12 +115,12 @@
 				</tr>
 				<tr>
 					<td><?php _e('Auslastung Gesamt'); ?></td>
-					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $data['cpu_load']; ?>%;"><?php echo $data['cpu_load']; ?>%</div></div></td>
+					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" data-text="<?php echo $data['cpu_load']; ?>%" style="max-width: 250px;"><div style="width: <?php echo $data['cpu_load']; ?>%;"></div></div></td>
 				</tr>
 <?php foreach ($data['cpu_loads'] as $name => $value) { ?>
 				<tr>
 					<td><?php _e('Auslastung %s', $name); ?></td>
-					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $value; ?>%;"><?php echo $value; ?>%</div></div></td>
+					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" data-text="<?php echo $value; ?>%" style="max-width: 250px;"><div style="width: <?php echo $value; ?>%;"></div></div></td>
 				</tr>
 <?php } ?>
 				<tr>
@@ -149,7 +149,7 @@
 				</tr>
 				<tr>
 					<td><?php _e('Auslastung'); ?></td>
-					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" style="max-width: 250px;"><div style="width: <?php echo $data['ram_percentage']; ?>;"><?php echo $data['ram_percentage']; ?></div></div></td>
+					<td style="padding: 6px 15px 6px 7px;"><div class="progressbar" data-text="<?php echo $data['ram_percentage']; ?>" style="max-width: 250px;"><div style="width: <?php echo $data['ram_percentage']; ?>;"></div></div></td>
 				</tr>
 			</table>
 			<br />
@@ -175,16 +175,16 @@
 					<td><?php echo sizeUnit($value['used']); ?></td>
 					<td><?php echo sizeUnit($value['free']); ?></td>
 					<td><?php echo sizeUnit($value['total']); ?></td>
-					<td><div class="progressbar"><div style="width: <?php echo $value['percent']; ?>%;"><?php echo $value['percent']; ?>%</div></div></td>
+					<td><div class="progressbar" data-text="<?php echo $value['percent']; ?>%"><div style="width: <?php echo $value['percent']; ?>%;"></div></div></td>
 				</tr>
 <?php } else { ?>
-				<tr style="background: #A6C5E8; font-weight: bold;">
+				<tr style="font-weight: bold;" class="background-color-2">
 					<td><?php _e('Gesamt'); ?></td>
 					<td></td>
 					<td><?php echo sizeUnit($value['used']); ?></td>
 					<td><?php echo sizeUnit($value['free']); ?></td>
 					<td><?php echo sizeUnit($value['total']); ?></td>
-					<td><div class="progressbar"><div style="width: <?php echo $value['percent']; ?>%;"><?php echo $value['percent']; ?>%</div></div></td>
+					<td style="font-weight: normal;"><div class="progressbar" data-text="<?php echo $value['percent']; ?>%"><div style="width: <?php echo $value['percent']; ?>%;"></div></div></td>
 				</tr>
 <?php }
 } ?>
