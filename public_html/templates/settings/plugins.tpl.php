@@ -3,6 +3,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Einstellungen zu Plugins'); ?></span>
+			<?php showGoBackIcon('?s=plugins'); ?>
 		</div>
 <?php $i = 0; foreach ($data['plugins'] as $plugin) { $i++; ?>
 		<div class="inner-table settings-plugins-table-list<?php echo ($i != count($data['plugins'])) ? ' padding-0' : ''; ?>">

@@ -44,7 +44,7 @@
 					</tr>
 					<tr>
 						<td><?php _e('Externer Zugriff'); ?></td>
-						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info"><?php _e('Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.'); ?></span> <?php echo showHelper('welcher-adressbereich-zaehlt-zum-lokalen-netzwerk'); ?></td>
+						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info"><?php _e('Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.'); ?></span> <?php echo showHelper('6'); ?></td>
 					</tr>
 				</table>
 			</div>
@@ -109,7 +109,7 @@
 			<?php _e('Wenn dir das Pi Control nicht gef&auml;llt und du es wieder entfernen m&ouml;chtest, schreib mir unten unter "Feedback" doch bitte den Grund. Somit kann ich besser auf m&ouml;gliche Probleme eingehen und Pi Control stetig verbessern.'); ?>
 		</div>
 		<div class="inner-end">
-			<a href="<?php echo $data['configHelp']; ?>#wie-entferne-ich-das-pi-control-wieder" class="button" target="_blank"><?php _e('Anleitung zum Entfernen'); ?></a>
+			<a href="<?php echo $data['configHelp']; ?>" class="button" target="_blank"><?php _e('Anleitung zum Entfernen'); ?></a>
 		</div>
 	</div>
 </div>

@@ -34,7 +34,8 @@ rsort($lastExecutionLog);
 
 $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);
-$tpl->assign('configHelp', $config['url']['help']);
+$tpl->assign('configHelpFilesFolders', $config['url']['help'].'?s=view&amp;i=1'.getURLLangParam());
+$tpl->assign('configHelpCron', $config['url']['help'].'?s=view&amp;i=10'.getURLLangParam());
 $tpl->assign('cronEntry', $cronEntry);
 $tpl->assign('cronMatch', $cronMatch);
 $tpl->assign('cronPHPCLI', ($cronPHPCLI = (trim(exec('dpkg -s php5-cli | grep Status: ')) != '' || trim(exec('dpkg -s php7.0-cli | grep Status: ')) != '') ? true : false));

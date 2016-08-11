@@ -4,6 +4,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Problembehandlung'); ?></span>
+			<?php showGoBackIcon('?s=settings'); ?>
 		</div>
 		<div class="inner">
 			<?php _e('Die Problembehandlung kann dir bei Problemen helfen und bei Bedarf diese sogar beseitigen.'); ?>
@@ -35,7 +36,7 @@
 		</div>
 <?php if ($data['filesFoldersError'] === true) { ?>
 		<div class="inner-end">
-			<a href="<?php echo $data['configHelp']; ?>#wie-behebe-ich-probleme-mit-fehlenden-oder-fehlerhaften-dateien-und-ordnern" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
+			<a href="<?php echo $data['configHelpFilesFolders']; ?>" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
 		</div>
 <?php } ?>
 	</div>
@@ -85,7 +86,7 @@
 		</div>
 <?php } elseif ($data['cronError'] === 2) { ?>
 		<div class="inner-end">
-			<a href="<?php echo $data['configHelp']; ?>#wie-behebe-ich-probleme-mit-einem-fehlerhaften-cron-fuer-das-pi-control" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
+			<a href="<?php echo $data['configHelpCron']; ?>" target="_blank" class="button"><?php _e('Anleitung zur Problembehebung'); ?></a>
 		</div>
 <?php } ?>
 	</div>

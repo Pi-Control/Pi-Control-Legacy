@@ -23,7 +23,7 @@ if ($fileError === true)
 $tpl->assign('updateError', $fileError);
 $tpl->assign('updateStatus', checkUpdate());
 $tpl->assign('configVersion', $config['version']['version']);
-$tpl->assign('configMailUrl', $config['url']['updateNotification'].'&amp;lang='.$globalLanguage);
+$tpl->assign('configMailUrl', $config['url']['updateNotification'].getURLLangParam());
 
 $tpl->draw('settings/update');
 ?>

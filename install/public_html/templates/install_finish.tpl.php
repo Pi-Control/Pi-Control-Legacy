@@ -36,7 +36,7 @@
 			<span><?php _e('Aktualisierungsbenachrichtigung'); ?></span>
 		</div>
 		<div class="inner">
-			<?php _e('Wenn du zuk&uuml;nftig eine E-Mail bei einer neuen Version des Pi Control erhalten m&ouml;chtest, dann kannst du dich <a href="%s" target="_blank">hier in die Liste eintragen</a>.', $data['configUpdateNotification']); ?>
+			<?php _e('Wenn du zuk&uuml;nftig eine E-Mail bei einer neuen Version des Pi Control erhalten m&ouml;chtest, dann kannst du dich <a href="%s" target="_blank">hier in die Liste eintragen</a>.', $data['configUpdateNotification'].getURLLangParam()); ?>
 		</div>
 		<div class="inner-end">
 			<form action="?s=install_finish" method="post">

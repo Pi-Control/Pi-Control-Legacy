@@ -3,6 +3,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Einstellungen zum Benutzer'); ?></span>
+			<?php showGoBackIcon('?s=settings'); ?>
 		</div>
 		<div class="inner-table overflow-auto">
 			<table class="table table-borderless">
