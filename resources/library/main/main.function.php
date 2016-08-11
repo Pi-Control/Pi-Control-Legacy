@@ -1141,4 +1141,21 @@ function getTranslatedArrayForJs($translations)
 	
 	return $output;
 }
+
+function getURLLangParam($echo = false, $html = true)
+{
+	global $globalLanguage;
+	
+	$param = '&';
+	
+	if ($html === true)
+		$param .= 'amp;';
+	
+	$param .= 'lang='.$globalLanguage;
+	
+	if ($echo !== false)
+		echo $param;
+	
+	return $param;
+}
 ?>
