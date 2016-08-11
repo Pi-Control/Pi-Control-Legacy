@@ -671,7 +671,7 @@ function showHelper($url, $extern = false)
 	global $config;
 	
 	if ($extern === false)
-		$url = $config['url']['help'].'#'.$url;
+		$url = $config['url']['help'].'?s=view&amp;i='.$url;
 	
 	return '<a href="'.$url.'" title="'._t('Klicke f&uuml;r Hilfe').'" target="_blank" class="helper">&nbsp;</a>';
 }
