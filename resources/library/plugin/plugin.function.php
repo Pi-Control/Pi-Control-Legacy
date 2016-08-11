@@ -220,7 +220,7 @@ function getOnlinePlugins()
 	if (!isset($data['plugins']))
 		return 1;
 	
-	$attributes = array('name', 'description', 'manual', 'requirement');
+	$attributes = array('name', 'description', 'manual', 'requirement', 'screenshots');
 	
 	foreach ($data['plugins'] as $pluginName => &$plugin)
 	{
