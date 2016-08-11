@@ -53,6 +53,7 @@ $stats['lastStart'] = time() - rpi_getRuntime();
 $stats['serverAddr'] = $_SERVER['SERVER_ADDR'];
 $stats['serverPort'] = $_SERVER['SERVER_PORT'];
 $stats['distribution'] = rpi_getDistribution();
+$stats['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
 $stats['config'] = array('installed' => 'false');
 
 echo urlencode(base64_encode(json_encode($stats)));
