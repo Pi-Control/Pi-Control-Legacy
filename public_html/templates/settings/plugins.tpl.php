@@ -16,6 +16,10 @@
 				</tr>
 			</table>
 		</div>
+<?php } if (empty($data['plugins'])) { ?>
+		<div class="inner-info">
+			<div><?php _e('Es sind momentan noch keine Plugins installiert.'); ?></div>
+		</div>
 <?php } ?>
 	</div>
 </div>
