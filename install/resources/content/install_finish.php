@@ -5,7 +5,11 @@ $tpl->setHeaderTitle(_t('Abschließen'));
 
 if (isset($_POST['submit']) && $_POST['submit'] != '')
 {
+	$dataLanguage = json_decode(readFromFile('language'), true);
 	$dataUser = json_decode(readFromFile('user'), true);
+	
+	if (isset($dataLanguage['language']) && $dataUser['language'] != '')
+		setConfig('init:language', $dataUser['language'], PICONTROL_PATH.'resources/config/');
 	
 	if (isset($dataUser['username'], $dataUser['password']) && $dataUser['username'] != '' && $dataUser['password'] != '')
 	{
@@ -30,7 +34,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		$tpl->msg('error', _t('Fehler'), _t('Leider ist ein Fehler beim Auslesen des Pi Control Benutzers aufgetreten! Bitte wiederhole die Installation.'));
 }
 
-$tpl->assign('configUpdateNotification', $config['url']['updateNotification'].'&amp;lang='.$globalLanguage);
+$tpl->assign('configUpdateNotification', $config['url']['updateNotification'].getURLLangParam());
 
 $tpl->draw('install_finish');
 ?>
