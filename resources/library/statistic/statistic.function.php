@@ -43,9 +43,9 @@ function calculateEmptyRows(&$arr, $columns, $firstTime, $cycle)
 {
 	$buffer = array();
 
-	if (isset($arr['rows']) && count($arr['rows']) < 2016)
+	if (isset($arr['rows']) && count($arr['rows']) < (604800/($cycle*60)))
 	{
-		for ($i = 0; $i < (2016 - count($arr['rows'])); $i++)
+		for ($i = 0; $i < ((604800/($cycle*60)) - count($arr['rows'])); $i++)
 		{
 			$dummy = array('c' =>
 							array(
@@ -99,7 +99,7 @@ function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
 		
 		if ($lastTime !== NULL && $lastTime+($cycle*60)+100 < $row[0])
 		{
-			$skipped = round(($row[0] - $lastTime)/300);
+			$skipped = round(($row[0]-($lastTime+($cycle*60)))/300);
 			for ($i = 0; $i < $skipped; $i++)
 			{
 				$dummy = array(

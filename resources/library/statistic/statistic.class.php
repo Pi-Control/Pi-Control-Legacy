@@ -46,6 +46,8 @@ class LogStatistic
 			foreach ($entry as $item)
 				fputcsv($this->stream, $item);
 		}
+		
+		return true;
 	}
 	
 	public function getAll()
@@ -95,6 +97,8 @@ class LogStatistic
 			foreach ($entries as $entry)
 				fputcsv($this->stream, $entry);
 		}
+		
+		return true;
 	}
 	
 	public function deleteLog()
