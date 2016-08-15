@@ -38,7 +38,7 @@ $languageArray = array(
 					);
 
 $tpl->assign('languageArray', json_encode($languageArray));
-$tpl->assign('language', (isset($$dataLanguage['language'])) ? $dataLanguage['language'] : $globalLanguage);
+$tpl->assign('language', (isset($dataLanguage['language'])) ? $dataLanguage['language'] : $globalLanguage);
 
 $tpl->draw('install_language');
 ?>
