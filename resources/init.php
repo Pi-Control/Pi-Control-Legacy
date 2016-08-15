@@ -21,7 +21,7 @@ if (!isset($config))
 			'plugin'							=> 'https://pi-control.de/service/v1/plugin/',
 			'pluginDownload'					=> 'https://pi-control.de/?service=plugin',
 			'temperatureMonitoring'				=> 'https://pi-control.de/service/v1/temperature_monitoring/',
-			'help'								=> 'https://pi-control.de/?service=help'
+			'help'								=> 'https://pi-control.de/help/'
 		)
 	);
 }
