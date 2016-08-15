@@ -110,7 +110,6 @@ if (isset($_GET['logout']))
 		removeConfig('login:token_'.$uniqid);
 		setcookie('_pi-control_login', '', time()-60);
 	}
-	session_destroy();
 	
 	if (isset($_GET['referer']) && $_GET['referer'] != '')
 		header('Location: ?i=login&referer='.urlencode($_GET['referer']));
