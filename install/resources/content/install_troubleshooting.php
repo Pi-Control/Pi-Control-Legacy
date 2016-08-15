@@ -18,7 +18,7 @@ foreach ($filesFolders as $file => $info)
 
 $tpl->assign('filesFolders', $filesFolders);
 $tpl->assign('filesFoldersError', $filesFoldersError);
-$tpl->assign('configHelp', $config['url']['help']);
+$tpl->assign('configHelp', $config['url']['help'].'?s=view&amp;i=1'.getURLLangParam());
 
 $tpl->draw('install_troubleshooting');
 ?>
