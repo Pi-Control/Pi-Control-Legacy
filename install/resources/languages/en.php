@@ -46,10 +46,10 @@ $langArray = array(
 	'c871d098' => 'Third step',
 	'c75a5ab4' => 'Finish',
 	'9da86aaf' => 'Fourth step',
-	'1f83bfbc' => 'Yay, now you\'re done with the installation of Pi Control. At the last step, everything will ready configured and created. Then you\'ll redirected to the Pi Control.<br /><br />Have fun!',
+	'bbe35208' => 'Yay, now you\'re done with the installation of Pi Control. At the last step, everything will ready configured and created. Then you\'ll redirected to the Pi Control.<br /><br />Have fun!',
 	'bea4c2c8' => 'Feedback',
 	'9a4883bb' => 'App in Play Store',
-	'b6d49679' => 'Open at Play Store',
+	'64ed4ee0' => 'Open at Play Store',
 	'57d0632a' => 'Help',
 	'9c0864a5' => 'ABOUT ME',
 	'62db69f3' => 'My blog',
@@ -105,6 +105,6 @@ $langArray = array(
 	'8311b9b6' => 'Close',
 	'28c330db' => 'Some data must be collected for the feedback.',
 	'fcb4bb2f' => 'Diagnostic data was collected. A new window will open when you click on the button below.',
-	'db72d0d6' => 'Open feedback',
+	'db72d0d6' => 'Open feedback'
 );
 ?>
