@@ -27,6 +27,7 @@ foreach ($fileArray as $file)
 	{
 		exec('/usr/bin/php -f "'.CRON_PATH.$file.'"');
 		set_time_limit(30);
+		usleep(500000);
 	}
 }
 
