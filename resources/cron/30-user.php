@@ -13,5 +13,8 @@ foreach ($loggedInUsers as $token => $user)
 {
 	if ($user['created'] < time()-60*60*12 && !(isset($user['remember_me']) && $user['remember_me'] == 'true'))
 		removeConfig('login:'.$token);
+	
+	if ($user['created'] < time()-60*60*24*30 && (isset($user['remember_me']) && $user['remember_me'] == 'true'))
+		removeConfig('login:'.$token);
 }
 ?>
