@@ -496,7 +496,7 @@ td.table-right, th.table-right {
 }
 
 .progressbar > div {
-	background: <?php echo $colorPallet[5]; ?>;
+	background: <?php echo $colorPallet[3]; ?>;
 	border-radius: 2px;
 	color: #FFFFFF;
 	text-shadow: 0 0 1px #333333;
@@ -505,10 +505,6 @@ td.table-right, th.table-right {
 	text-align: center;
 	font-weight: normal;
 	display: inline-block;
-}
-
-.progressbar > div:hover {
-	background: <?php echo $colorPallet[6]; ?>;
 }
 
 .show-more {
