@@ -115,6 +115,8 @@ function pluginList($listDisabled = true, $listConfig = true)
 			$pluginList[] = $plugin;
 	}
 	
+	array_multisort($pluginList, SORT_ASC);
+	
 	return $pluginList;
 }
 
@@ -240,6 +242,8 @@ function getOnlinePlugins()
 		else
 			$plugin['versions'][$plugin['latestVersion']]['changelog'] = current($plugin['versions'][$plugin['latestVersion']]['changelog'][$lang]);
 	}
+	
+	array_multisort($data['plugins'], SORT_ASC);
 	
 	return $data['plugins'];
 }
