@@ -99,7 +99,7 @@ function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
 		
 		if ($lastTime !== NULL && $lastTime+($cycle*60)+100 < $row[0])
 		{
-			$skipped = round(($row[0]-($lastTime+($cycle*60)))/300);
+			$skipped = round(($row[0]-($lastTime+($cycle*60)))/($cycle*60));
 			for ($i = 0; $i < $skipped; $i++)
 			{
 				$dummy = array(
@@ -112,37 +112,35 @@ function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
 				$arr['rows'][]['c'] = $dummy;
 			}
 		}
-		else
+		
+		for ($i = 1; $i < count($columns); $i++)
 		{
-			for ($i = 1; $i < count($columns); $i++)
-			{
-				if (isset($columns[$i]['division']))
-					$info[$i-1][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[$i])/$columns[$i]['division'], 2));
-				elseif (isset($columns[$i]['multiplication']))
-					$info[$i-1][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[$i])*$columns[$i]['multiplication'], 2));
-				else
-					$info[$i-1][] = floatval(str_replace(array("\n", ','), array('', '.'), $row[$i]));
-			}
-			
-			$dummy = array(
-				array('v' => 'Date('.date('Y,'.(date('m', $row[0])-1).',d,H,i', $row[0]).')')
-			);
-			
-			for ($i = 1; $i < count($columns); $i++)
-			{
-				if (isset($columns[$i]['division']))
-					$dummy[] = getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[$i])/$columns[$i]['division'], 2));
-				elseif (isset($columns[$i]['multiplication']))
-					$dummy[] = getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[$i])*$columns[$i]['multiplication'], 2));
-				else
-					$dummy[] = getValueRow($row[$i]);
-			}
-			
-			$arr['rows'][]['c'] = $dummy;
-			
-			if ($firstTime == 0)
-				$firstTime = $row[0];
+			if (isset($columns[$i]['division']))
+				$info[$i-1][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[$i])/$columns[$i]['division'], 2));
+			elseif (isset($columns[$i]['multiplication']))
+				$info[$i-1][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[$i])*$columns[$i]['multiplication'], 2));
+			else
+				$info[$i-1][] = floatval(str_replace(array("\n", ','), array('', '.'), $row[$i]));
 		}
+		
+		$dummy = array(
+			array('v' => 'Date('.date('Y,'.(date('m', $row[0])-1).',d,H,i', $row[0]).')')
+		);
+		
+		for ($i = 1; $i < count($columns); $i++)
+		{
+			if (isset($columns[$i]['division']))
+				$dummy[] = getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[$i])/$columns[$i]['division'], 2));
+			elseif (isset($columns[$i]['multiplication']))
+				$dummy[] = getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[$i])*$columns[$i]['multiplication'], 2));
+			else
+				$dummy[] = getValueRow($row[$i]);
+		}
+		
+		$arr['rows'][]['c'] = $dummy;
+		
+		if ($firstTime == 0)
+			$firstTime = $row[0];
 		
 		$lastTime = $row[0];
 	}
