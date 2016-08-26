@@ -314,7 +314,7 @@ function rpi_getMemoryInfo()
 	
 	foreach ($data as $row)
 	{
-		list($device, $type, $blocks, $use, $available, $used, $mountpoint) = preg_split('#[^\dA-Z/]+#i', $row);
+		list($device, $type, $blocks, $use, $available, $used, $mountpoint) = preg_split('#[^\dA-Z/_]+#i', $row);
 		
 		if (multiArraySearch($devices, 'device', $device) === false)
 		{
