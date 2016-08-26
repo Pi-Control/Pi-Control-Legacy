@@ -1437,123 +1437,123 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 }
 
 .color-0 {
-	color: <?php echo $colorPallet[0]; ?>;
+	color: <?php echo $colorPallet[0]; ?> !important;
 }
 
 .color-1 {
-	color: <?php echo $colorPallet[1]; ?>;
+	color: <?php echo $colorPallet[1]; ?> !important;
 }
 
 .color-2 {
-	color: <?php echo $colorPallet[2]; ?>;
+	color: <?php echo $colorPallet[2]; ?> !important;
 }
 
 .color-3 {
-	color: <?php echo $colorPallet[3]; ?>;
+	color: <?php echo $colorPallet[3]; ?> !important;
 }
 
 .color-4 {
-	color: <?php echo $colorPallet[4]; ?>;
+	color: <?php echo $colorPallet[4]; ?> !important;
 }
 
 .color-5 {
-	color: <?php echo $colorPallet[5]; ?>;
+	color: <?php echo $colorPallet[5]; ?> !important;
 }
 
 .color-6 {
-	color: <?php echo $colorPallet[6]; ?>;
+	color: <?php echo $colorPallet[6]; ?> !important;
 }
 
 .color-7 {
-	color: <?php echo $colorPallet[7]; ?>;
+	color: <?php echo $colorPallet[7]; ?> !important;
 }
 
 .color-8 {
-	color: <?php echo $colorPallet[8]; ?>;
+	color: <?php echo $colorPallet[8]; ?> !important;
 }
 
 .color-9 {
-	color: <?php echo $colorPallet[9]; ?>;
+	color: <?php echo $colorPallet[9]; ?> !important;
 }
 
 .background-color-0 {
-	background-color: <?php echo $colorPallet[0]; ?>;
+	background-color: <?php echo $colorPallet[0]; ?> !important;
 }
 
 .background-color-1 {
-	background-color: <?php echo $colorPallet[1]; ?>;
+	background-color: <?php echo $colorPallet[1]; ?> !important;
 }
 
 .background-color-2 {
-	background-color: <?php echo $colorPallet[2]; ?>;
+	background-color: <?php echo $colorPallet[2]; ?> !important;
 }
 
 .background-color-3 {
-	background-color: <?php echo $colorPallet[3]; ?>;
+	background-color: <?php echo $colorPallet[3]; ?> !important;
 }
 
 .background-color-4 {
-	background-color: <?php echo $colorPallet[4]; ?>;
+	background-color: <?php echo $colorPallet[4]; ?> !important;
 }
 
 .background-color-5 {
-	background-color: <?php echo $colorPallet[5]; ?>;
+	background-color: <?php echo $colorPallet[5]; ?> !important;
 }
 
 .background-color-6 {
-	background-color: <?php echo $colorPallet[6]; ?>;
+	background-color: <?php echo $colorPallet[6]; ?> !important;
 }
 
 .background-color-7 {
-	background-color: <?php echo $colorPallet[7]; ?>;
+	background-color: <?php echo $colorPallet[7]; ?> !important;
 }
 
 .background-color-8 {
-	background-color: <?php echo $colorPallet[8]; ?>;
+	background-color: <?php echo $colorPallet[8]; ?> !important;
 }
 
 .background-color-9 {
-	background-color: <?php echo $colorPallet[9]; ?>;
+	background-color: <?php echo $colorPallet[9]; ?> !important;
 }
 
 .border-color-0 {
-	border-color: <?php echo $colorPallet[0]; ?>;
+	border-color: <?php echo $colorPallet[0]; ?> !important;
 }
 
 .border-color-1 {
-	border-color: <?php echo $colorPallet[1]; ?>;
+	border-color: <?php echo $colorPallet[1]; ?> !important;
 }
 
 .border-color-2 {
-	border-color: <?php echo $colorPallet[2]; ?>;
+	border-color: <?php echo $colorPallet[2]; ?> !important;
 }
 
 .border-color-3 {
-	border-color: <?php echo $colorPallet[3]; ?>;
+	border-color: <?php echo $colorPallet[3]; ?> !important;
 }
 
 .border-color-4 {
-	border-color: <?php echo $colorPallet[4]; ?>;
+	border-color: <?php echo $colorPallet[4]; ?> !important;
 }
 
 .border-color-5 {
-	border-color: <?php echo $colorPallet[5]; ?>;
+	border-color: <?php echo $colorPallet[5]; ?> !important;
 }
 
 .border-color-6 {
-	border-color: <?php echo $colorPallet[6]; ?>;
+	border-color: <?php echo $colorPallet[6]; ?> !important;
 }
 
 .border-color-7 {
-	border-color: <?php echo $colorPallet[7]; ?>;
+	border-color: <?php echo $colorPallet[7]; ?> !important;
 }
 
 .border-color-8 {
-	border-color: <?php echo $colorPallet[8]; ?>;
+	border-color: <?php echo $colorPallet[8]; ?> !important;
 }
 
 .border-color-9 {
-	border-color: <?php echo $colorPallet[9]; ?>;
+	border-color: <?php echo $colorPallet[9]; ?> !important;
 }
 
 @keyframes rotate {
