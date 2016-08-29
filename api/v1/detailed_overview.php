@@ -5,6 +5,7 @@ define('PICONTROL', true);
 (include_once LIBRARY_PATH.'main/main.function.php')					or die('Error: 0x0001');
 (include_once LIBRARY_PATH.'main/rpi.function.php')						or die('Error: 0x0002');
 (include_once LIBRARY_PATH.'api/api.class.php')							or die('Error: 0x0003');
+(include_once LIBRARY_PATH.'cache/cache.class.php')						or die('Error: 0x0004');
 
 $api = new API;
 
@@ -56,8 +57,8 @@ if (isset($_POST['data']))
 				$api->addData('cpuClockMax', rpi_getCpuMaxClock());
 					break;
 			case 'cpuLoad':
-				$cpu = rpi_getCPULoad(true, false);
-				$api->addData('cpuLoad', $cpu['cpu']);
+				$cpu = rpi_getCPULoad(true);
+				$api->addData('cpuLoad', $cpu);
 					break;
 			case 'cpuLoads':
 				$cpu = rpi_getCPULoad(true, true);
@@ -86,6 +87,7 @@ if (isset($_POST['data']))
 					break;
 			case 'allUsers':
 				$users = new Cache('users', 'rpi_getAllUsers');
+				$users->load();
 				$api->addData('allUsers', array('data' => $users->getContent(), 'hint' => $users->displayHint(true)));
 					break;
 			case 'runningTasksCount':
@@ -96,6 +98,7 @@ if (isset($_POST['data']))
 					break;
 			default:
 				$api->setError('error', 'Data for "'.$data.'" is not available.');
+					break 2;
 		}
 	}
 }

@@ -16,6 +16,9 @@ if (isset($_POST['data']))
 	{
 		switch ($data)
 		{
+			case 'startTime':
+				$api->addData('startTime', formatTime(time() - rpi_getRuntime()));
+					break;
 			case 'runtime':
 				$api->addData('runtime', getDateFormat(rpi_getRuntime()));
 					break;
@@ -48,8 +51,12 @@ if (isset($_POST['data']))
 				$memory = rpi_getMemoryInfo();
 				$api->addData('memoryPercent', $memory[count($memory)-1]['percent']);
 					break;
+			case 'devices':
+				$api->addData('devices', rpi_getUsbDevices());
+					break;
 			default:
 				$api->setError('error', 'Data for "'.$data.'" are not available.');
+					break 2;
 		}
 	}
 }

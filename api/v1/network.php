@@ -21,7 +21,7 @@ foreach ($networkConnections as $network)
 	
 	if (isset($networkCounts[$network['interface']]['sent']))
 		$countSent = $networkCounts[$network['interface']]['sent'];
-		
+	
 	if (isset($networkCounts[$network['interface']]['receive']))
 		$countReceive = $networkCounts[$network['interface']]['receive'];
 	
