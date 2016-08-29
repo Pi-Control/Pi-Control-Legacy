@@ -19,7 +19,7 @@
 					<td><?php echo count($data['plugins']); ?></td>
 				</tr>
 				<tr>
-					<td><?php _e('Update'); ?></td>
+					<td><?php _e('Aktualisierung'); ?></td>
 					<td><?php echo count($data['availableUpdates']); ?></td>
 				</tr>
 				<tr>
