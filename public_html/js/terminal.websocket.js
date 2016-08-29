@@ -9,8 +9,8 @@ jQuery(document).on('ready', function(e)
 	{
 		jQuery('#status').text(_t('Verbindung herstellen...'));
 	}
-
-	jQuery(document).on('click', '#submit', function(e)
+	
+	function sendCommand()
 	{
 		var mymessage = jQuery('#command').val();
 		
@@ -24,6 +24,27 @@ jQuery(document).on('ready', function(e)
 		websocket.send(JSON.stringify(msg));
 		
 		jQuery('#command').val('');
+	}
+	
+	function sendCancel()
+	{
+		var mymessage = '^C';
+		var msg = { message: mymessage };
+		websocket.send(JSON.stringify(msg));
+	}
+	
+	jQuery(document).on('click', '#submit', function(e)
+	{
+		sendCommand();
+	});
+	
+	jQuery(document).on('keydown', '#command', function(e)
+	{
+		if (e.keyCode == 13)
+			sendCommand();
+		
+		if ((e.metaKey || e.ctrlKey) && (String.fromCharCode(e.which).toLowerCase() === 'c'))
+			sendCancel();
 	});
 	
 	jQuery(document).on('click', 'input[name=close]', function(e)
@@ -35,9 +56,7 @@ jQuery(document).on('ready', function(e)
 	
 	jQuery(document).on('click', '#cancel', function(e)
 	{
-		var mymessage = '^C';
-		var msg = { message: mymessage };
-		websocket.send(JSON.stringify(msg));
+		sendCancel();
 	});
 	
 	websocket.onmessage = function(ev)
