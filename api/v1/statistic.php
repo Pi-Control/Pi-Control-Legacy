@@ -36,19 +36,22 @@ if (isset($_POST['id']))
 		
 		if (isset($arr['rows']))
 		{
+			if (isset($_POST['type']) && $_POST['type'] == 'googleChart')
+				$arr['rows'] = convertForGoogleChart($arr['rows']);
+			
 			$arr['rows'] = array_slice($arr['rows'], -2016);
 			$arr['periods'] = $info['periods'];
 			
 			foreach (array('min', 'max') as $type)
 			{
 				if ($statistic['limits'][$type]['use'] == 'multiply')
-					$arr[$type] = round(getExtreme($type, $info) * $statistic['limits'][$type]['value']);
+					$arr[$type] = round($info[$type] * $statistic['limits'][$type]['value']);
 				elseif ($statistic['limits'][$type]['use'] == 'fix')
 				{
 					if ($statistic['limits'][$type]['fix'] == true)
 						$arr[$type] = $statistic['limits'][$type]['value'];
 					else
-						$arr[$type] = round(getExtreme($type, $info));
+						$arr[$type] = round($info[$type]);
 				}
 			}
 			

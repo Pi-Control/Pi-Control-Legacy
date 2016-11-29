@@ -12,6 +12,7 @@ $api->addData('version', array('name' => $config['version']['version'], 'code' =
 $api->addData('installed', (file_exists(INSTALL_PATH) && is_dir(INSTALL_PATH)) ? false : true);
 $api->addData('language', $globalLanguage);
 $api->addData('theme', getConfig('main:theme.color', 'blue'));
+$api->addData('label', getConfig('main:main.label', 'Raspberry Pi'));
 
 $api->display();
 ?>
