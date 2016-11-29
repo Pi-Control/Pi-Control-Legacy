@@ -6,7 +6,7 @@ function statisticBuilder(builder, plugin = null)
 	var jsonData = jQuery.ajax({
 		url: 'api/v1/statistic.php',
 		method: 'POST',
-		data: { id: builder.id, plugin: plugin },
+		data: { id: builder.id, plugin: plugin, type: 'googleChart' },
 		dataType: 'json',
 		async: true
 	}).done(function(data)

@@ -212,15 +212,15 @@ function rpi_getRpiRevision()
 		
 		if (strlen($match[1]) == 4)
 			return $revision[hexdec($match[1])];
-		elseif (strlen($match[1]) == 6 && $match[1][0] != 'a' && $match[1] != '900092')
+		elseif (strlen($match[1]) == 6 && $match[1][0] != 'a' && $match[1][0] != '9')
 			return $revision[hexdec(substr($match[1], -4))];
-		elseif ($match[1] == '900092')
+		elseif ($match[1][0] == '9')
 		{
 			return array('revision' => $match[1],
 						 'model' => $revision_model[7],
-						 'pcb' => '1.2',
+						 'pcb' => '1.'.hexdec(substr($match[1], -1)),
 						 'memory' => $revision_memory[1],
-						 'manufacturer' => $revision_manufacturer[0]);
+						 'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
 		}
 		elseif (strlen($match[1]) == 6)
 		{
@@ -420,9 +420,9 @@ function rpi_getAllUsers()
 			$usersAll[] = array('username' => $row,
 								'userId' => exec('id -u '.escapeshellarg($row)),
 								'groupId' => exec('id -g '.escapeshellarg($row)),
-								'port' => '-',
-								'lastLoginAddress' => '-',
-								'lastLogin' => 'Nie',
+								'port' => '',
+								'lastLoginAddress' => '',
+								'lastLogin' => 0,
 								'isLoggedIn' => isset($usersLoggedIn[$row]) ? true : false);
 		}
 	}
