@@ -55,6 +55,12 @@ if ($tpl->getSSHResource(1) !== false)
 	}
 }
 
+// Vorkehrung aufgrund fehlendem HTTPS-Support
+if (isset($_SERVER['HTTPS']))
+{
+	$tpl->msg('info', _t('Terminal nicht verf&uuml;gbar'), _t('Das Terminal kann momentan noch nicht unter HTTPS verwendet werden.'));
+}
+
 $tpl->assign('port', $selectedPort);
 $tpl->assign('ports', $ports);
 $tpl->assign('cookie', substr($_COOKIE['_pi-control_login'], 0, 16));
