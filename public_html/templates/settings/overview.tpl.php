@@ -36,11 +36,11 @@
 					</tr>
 					<tr>
 						<td><?php _e('Dienst'); ?></td>
-						<td><select name="weather-service">
+						<td><select name="weather-service" onchange="if (this.selectedIndex == 0) jQuery('input[name=weather-service-token]').show(); else jQuery('input[name=weather-service-token]').hide();">
 								<option value="openweathermap"<?php if ($data['weather-service'] == 'openweathermap') echo ' selected="selected"'; ?>>OpenWeatherMap</option>
 								<option value="yahoo"<?php if ($data['weather-service'] == 'yahoo') echo ' selected="selected"'; ?>>Yahoo Weather</option>
 							</select></td>
-						<td><input type="text" name="weather-service-token" value="<?php echo $data['weather-service-token']; ?>" placeholder="API-Key" maxlength="32" /></td>
+						<td><input type="text" name="weather-service-token" value="<?php echo $data['weather-service-token']; ?>" placeholder="API-Key" maxlength="32"<?php if ($data['weather-service'] == 'yahoo') echo ' style="display: none;"'; ?> /></td>
 					</tr>
 					<tr>
 						<td><?php _e('Standort'); ?></td>

@@ -75,7 +75,7 @@
 					<td class="<?php echo ($data['cronUserGroupBool']) ? 'green' : 'red'; ?>"><?php echo $data['cronUserGroup']; ?></td>
 				</tr>
 				<tr>
-					<td><?php _e('Zeichencodierung'); ?></td>
+					<td><?php _e('Zeichenkodierung'); ?></td>
 					<td class="<?php echo ($data['cronCharacterEncodingBool']) ? 'green' : 'red'; ?>"><?php echo $data['cronCharacterEncoding']; ?></td>
 				</tr>
 			</table>
