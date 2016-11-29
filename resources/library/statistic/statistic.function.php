@@ -1,34 +1,6 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-function getExtreme($type, $info)
-{
-	if ($type == 'min')
-	{
-		$mins = array();
-		
-		foreach ($info as $key => $value)
-		{
-			if (is_int($key))
-				$mins[] = min($value);
-		}
-		
-		return min($mins);
-	}
-	elseif ($type == 'max')
-	{
-		$maxs = array();
-		
-		foreach ($info as $key => $value)
-		{
-			if (is_int($key))
-				$maxs[] = max($value);
-		}
-		
-		return max($maxs);
-	}
-}
-
 function minNotNull($values)
 {
 	return min(array_diff(array_map('intval', $values), array(0)));
@@ -37,29 +9,6 @@ function minNotNull($values)
 function getValueRow($value)
 {
 	return array('v' => floatval(str_replace(array("\n", ','), array('', '.'), $value)));
-}
-
-function calculateEmptyRows(&$arr, $columns, $firstTime, $cycle)
-{
-	$buffer = array();
-
-	if (isset($arr['rows']) && count($arr['rows']) < (604800/($cycle*60)))
-	{
-		for ($i = 0; $i < ((604800/($cycle*60)) - count($arr['rows'])); $i++)
-		{
-			$dummy = array('c' =>
-							array(
-								array('v' => 'Date('.date('Y,'.(date('m', $firstTime-(($i+1) * ($cycle*60)))-1).',d,H,i', $firstTime-(($i+1) * ($cycle*60))).')')
-							)
-						);
-			
-			for ($j = 1; $j < count($columns); $j++)
-				$dummy['c'][] = getValueRow(0);
-			
-			$buffer[] = $dummy;
-		}
-		$arr['rows'] = array_merge(array_reverse($buffer), $arr['rows']);
-	}
 }
 
 function calculatePeriods(&$info, $lastTime)
@@ -71,6 +20,40 @@ function calculatePeriods(&$info, $lastTime)
 	$info['periods']['three'] =	($lastTime - 259200) * 1000;
 	$info['periods']['two'] =	($lastTime - 172800) * 1000;
 	$info['periods']['one'] =	($lastTime - 86400) * 1000;
+}
+function calculateEmptyRows(&$arr, $columns, $firstTime, $lastTime, $cycle)
+{
+	$buffer = array();
+
+	if ($lastTime < (time() - ($cycle * 60)))
+	{
+		for ($i = 0; $i < ceil(((time() - ($cycle * 60)) - $lastTime) / ($cycle * 60)); $i++)
+		{
+			$dummy = array($lastTime + (($i + 1) * ($cycle * 60)));
+			
+			for ($j = 1; $j < count($columns); $j++)
+				$dummy[] = 0;
+			
+			$buffer[] = $dummy;
+		}
+		$arr['rows'] = array_merge($arr['rows'], $buffer);
+	}
+	
+	$buffer = array();
+
+	if (isset($arr['rows']) && count($arr['rows']) < (604800 / ($cycle * 60)))
+	{
+		for ($i = 0; $i < ((604800 / ($cycle * 60)) - count($arr['rows'])); $i++)
+		{
+			$dummy = array($firstTime - (($i + 1) * ($cycle * 60)));
+			
+			for ($j = 1; $j < count($columns); $j++)
+				$dummy[] = 0;
+			
+			$buffer[] = $dummy;
+		}
+		$arr['rows'] = array_merge(array_reverse($buffer), $arr['rows']);
+	}
 }
 
 function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
@@ -91,53 +74,49 @@ function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
 		if ($leapyear != -1 && $leapyear > date('I', $row[0]))
 		{
 			$leapyear = 0;
-			$leapyearSkip = 11;
+			$leapyearSkip = (60/$cycle)-1;
 			continue;
 		}
 		
 		$leapyear = date('I', $row[0]);
 		
-		if ($lastTime !== NULL && $lastTime+($cycle*60)+100 < $row[0])
+		if ($lastTime !== NULL && ($lastTime + ($cycle * 60) + 100) < $row[0])
 		{
-			$skipped = round(($row[0]-($lastTime+($cycle*60)))/($cycle*60));
+			$skipped = round(($row[0] - ($lastTime + ($cycle * 60))) / ($cycle * 60));
 			for ($i = 0; $i < $skipped; $i++)
 			{
-				$dummy = array(
-					array('v' => 'Date('.date('Y,'.(date('m', $lastTime+(($i+1) * ($cycle * 60)))-1).',d,H,i', $lastTime+(($i+1) * ($cycle * 60))).')')
-				);
+				$dummy = array($lastTime + (($i + 1) * ($cycle * 60)));
 				
 				for ($j = 1; $j < count($columns); $j++)
-					$dummy[] = getValueRow(0);
+					$dummy[] = 0;
 				
-				$arr['rows'][]['c'] = $dummy;
+				$arr['rows'][] = $dummy;
 			}
 		}
 		
-		for ($i = 1; $i < count($columns); $i++)
-		{
-			if (isset($columns[$i]['division']))
-				$info[$i-1][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[$i])/$columns[$i]['division'], 2));
-			elseif (isset($columns[$i]['multiplication']))
-				$info[$i-1][] = floatval(round(str_replace(array("\n", ','), array('', '.'), $row[$i])*$columns[$i]['multiplication'], 2));
-			else
-				$info[$i-1][] = floatval(str_replace(array("\n", ','), array('', '.'), $row[$i]));
-		}
-		
-		$dummy = array(
-			array('v' => 'Date('.date('Y,'.(date('m', $row[0])-1).',d,H,i', $row[0]).')')
-		);
+		$dummy = array((int) $row[0]);
 		
 		for ($i = 1; $i < count($columns); $i++)
 		{
+			$rowFloat = 0;
+			
 			if (isset($columns[$i]['division']))
-				$dummy[] = getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[$i])/$columns[$i]['division'], 2));
+				$rowFloat = (float) round(str_replace(array("\n", ','), array('', '.'), $row[$i]) / $columns[$i]['division'], 2);
 			elseif (isset($columns[$i]['multiplication']))
-				$dummy[] = getValueRow(round(str_replace(array("\n", ','), array('', '.'), $row[$i])*$columns[$i]['multiplication'], 2));
+				$rowFloat = (float) round(str_replace(array("\n", ','), array('', '.'), $row[$i]) * $columns[$i]['multiplication'], 2);
 			else
-				$dummy[] = getValueRow($row[$i]);
+				$rowFloat = (float) $row[$i];
+			
+			if (!isset($info['min']) || $rowFloat < $info['min'])
+				$info['min'] = $rowFloat;
+			
+			if (!isset($info['max']) || $rowFloat > $info['max'])
+				$info['max'] = $rowFloat;
+			
+			$dummy[] = $rowFloat;
 		}
 		
-		$arr['rows'][]['c'] = $dummy;
+		$arr['rows'][] = $dummy;
 		
 		if ($firstTime == 0)
 			$firstTime = $row[0];
@@ -145,7 +124,24 @@ function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
 		$lastTime = $row[0];
 	}
 	
-	calculateEmptyRows($arr, $columns, $firstTime, $cycle);
+	calculateEmptyRows($arr, $columns, $firstTime, $lastTime, $cycle);
 	calculatePeriods($info, $lastTime);
+}
+
+function convertForGoogleChart($rows)
+{
+	foreach ($rows as $index => $row)
+	{
+		$dummy = array('c' => array(array('v' => 'Date('.date('Y,'.(date('m', $row[0])-1).',d,H,i', $row[0]).')')));
+		
+		unset($row[0]);
+		
+		foreach ($row as $inde2 => $row2)
+			$dummy['c'][] = array('v' => $row2);
+		
+		$rows[$index] = $dummy;
+	}
+	
+	return $rows;
 }
 ?>
