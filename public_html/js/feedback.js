@@ -20,6 +20,8 @@ jQuery(document).on('mousedown', 'a[href="https://willy-tech.de/kontakt/"]', fun
 	
 	window.scrollTo(0, 0);
 	
+	var _this = this;
+	
 	if (feedbackError == true)
 	{
 		feedbackError = false;
@@ -41,7 +43,11 @@ jQuery(document).on('mousedown', 'a[href="https://willy-tech.de/kontakt/"]', fun
 			if (data == '')
 				return showFeedbackError();
 			
-			formFeedback = jQuery('<form action="https://pi-control.de/?service=feedback" method="post" target="_blank"><input type="hidden" name="data" value="'+data+'" /><input type="hidden" name="error-handler" value="'+errorHandler+'" /></form>');
+			var langParam = '';
+			if (jQuery(_this).data('lang') != 'de')
+				langParam = '&amp;lang=' + jQuery(_this).data('lang');
+			
+			formFeedback = jQuery('<form action="https://pi-control.de/?service=feedback' + langParam + '" method="post" target="_blank"><input type="hidden" name="data" value="'+data+'" /><input type="hidden" name="error-handler" value="'+errorHandler+'" /></form>');
 			
 			jQuery('.feedback div.box .inner:eq(0)').html(_t('Diagnosedaten wurden gesammelt. Beim Klick auf den folgenden Button wird ein neues Fenster ge&ouml;ffnet.'));
 			jQuery('.feedback div.box img').remove();
