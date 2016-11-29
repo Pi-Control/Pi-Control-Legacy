@@ -109,6 +109,9 @@ function pluginList($listDisabled = true, $listConfig = true)
 		
 		pluginLanguage($pluginConfig['id']);
 		
+		$pluginConfig['name'] = _t($pluginConfig['name']);
+		$pluginConfig['description'] = _t($pluginConfig['description']);
+		
 		if ($listConfig === true)
 			$pluginList[$pluginConfig['id']] = $pluginConfig;
 		else
