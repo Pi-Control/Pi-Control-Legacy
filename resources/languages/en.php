@@ -302,7 +302,7 @@ $langArray = array(
 	'3bb82d0b' => 'If you change the hostname, the new name is visible only after a reboot.',
 	'4ffd5e49' => 'Do you really want restart your Raspberry Pi?',
 	'bad5b81c' => 'Restart',
-	'4da1bb14' => 'Do you really want reboot your Raspberry Pi?',
+	'4da1bb14' => 'Do you really want shutdown your Raspberry Pi?',
 	'4eac40b9' => 'Shutdown',
 	'4ce188e1' => 'The current postal code is invalid.',
 	'6500e84c' => 'Weather has not been configured. <a href="%s">To the settings.</a>',
@@ -549,6 +549,9 @@ $langArray = array(
 	'26c88659' => 'Unfortunately, an error has occurred while retrieving the plugin. Error code: %s',
 	'01c5cdaa' => 'The plugin is already installed.',
 	'9d34e0e2' => 'The plugin you are looking for could not be found.',
-	'53461d3f' => 'Character encoding'
+	'eef7f68b' => 'Character encoding',
+	'cdb36567' => 'RAM-Load',
+	'50ba55ca' => 'Terminal not available',
+	'ca9e3c3f' => 'The terminal cannot be used under HTTPS at the moment.'
 );
 ?>
