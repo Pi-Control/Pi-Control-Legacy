@@ -666,12 +666,32 @@ function checkInternetConnection()
 		return false;
 }
 
+function getURLLangParam($echo = false, $html = true, $first = false)
+{
+	global $globalLanguage;
+	
+	$param = '&';
+	
+	if ($html === true)
+		$param .= 'amp;';
+	
+	if ($first !== false)
+		$param = '?';
+	
+	$param .= 'lang='.$globalLanguage;
+	
+	if ($echo !== false)
+		echo $param;
+	
+	return $param;
+}
+
 function showHelper($url, $extern = false)
 {
 	global $config;
 	
 	if ($extern === false)
-		$url = $config['url']['help'].'?s=view&amp;i='.$url;
+		$url = $config['url']['help'].'?s=view&amp;i='.$url.getURLLangParam();
 	
 	return '<a href="'.$url.'" title="'._t('Klicke f&uuml;r Hilfe').'" target="_blank" class="helper">&nbsp;</a>';
 }
@@ -869,7 +889,7 @@ function getWeather()
 	$postcode = getConfig('main:weather.postcode', '');
 	$city = getConfig('main:weather.city', '');
 	
-	if ($serviceToken == '')
+	if ($serviceToken == '' && $service == 'openweathermap')
 		return 3;
 	
 	if ($postcode == '' && $city == '')
@@ -930,7 +950,7 @@ function getWeather()
 	}
 	else
 	{
-		$yahooApiUrl = 'http://query.yahooapis.com/v1/public/yql';
+		$yahooApiUrl = 'https://query.yahooapis.com/v1/public/yql';
 		$yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
 		$yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
 		
@@ -1140,25 +1160,5 @@ function getTranslatedArrayForJs($translations)
 		$output[$translation] = _t($translation);
 	
 	return $output;
-}
-
-function getURLLangParam($echo = false, $html = true, $first = false)
-{
-	global $globalLanguage;
-	
-	$param = '&';
-	
-	if ($html === true)
-		$param .= 'amp;';
-	
-	if ($first !== false)
-		$param = '?';
-	
-	$param .= 'lang='.$globalLanguage;
-	
-	if ($echo !== false)
-		echo $param;
-	
-	return $param;
 }
 ?>
