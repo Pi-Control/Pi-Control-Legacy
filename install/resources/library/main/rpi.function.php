@@ -1,6 +1,12 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
+function rpi_getRuntime()
+{
+	$runtime = trim(@shell_exec('cat /proc/uptime | awk -F \'.\' \'{print $1}\''));
+	return $runtime;
+}
+
 function rpi_getDistribution()
 {
 	$distribution = trim(@shell_exec('cat /etc/issue | cut -d " " -f 1-3'));

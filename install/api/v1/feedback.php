@@ -48,7 +48,7 @@ $stats['webserver'] = $_SERVER['SERVER_SOFTWARE'];
 $stats['filesFoldersExist'] = $filesFoldersExist;
 $stats['filesFoldersPermission'] = $filesFoldersPermission;
 $stats['piControlCron'] = array('match' => $cronMatch, 'paketStatus' => trim(exec('dpkg -s php5-cli | grep Status: ')));
-$stats['whoaim'] = exec('whoami');
+$stats['whoami'] = exec('whoami');
 $stats['lastStart'] = time() - rpi_getRuntime();
 $stats['serverAddr'] = $_SERVER['SERVER_ADDR'];
 $stats['serverPort'] = $_SERVER['SERVER_PORT'];
