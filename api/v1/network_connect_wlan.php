@@ -48,6 +48,8 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'down':
 		if (isset($_POST['interface']) && ($pInterface = trim($_POST['interface'])) != '')
 		{
+			set_time_limit(60);
+			
 			list ($status, $error) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface));
 			
 			$api->addData('success', 'true');
@@ -61,6 +63,8 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'up':
 		if (isset($_POST['interface']) && ($pInterface = trim($_POST['interface'])) != '')
 		{
+			set_time_limit(60);
+			
 			list ($status, $error) = $tpl->executeSSH('sudo ifup '.escapeshellarg($pInterface), 60);
 			
 			$api->addData('success', 'true');

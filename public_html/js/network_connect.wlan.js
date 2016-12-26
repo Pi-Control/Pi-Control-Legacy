@@ -1,7 +1,18 @@
-function show_error(msg)
+var dummy2Msg = '';
+
+function showError(msg)
 {
-	console.log(msg);
-	jQuery('div.dummy-3 strong span').html(msg.data.errorMsg);
+	if (msg != undefined)
+	{
+		console.log(msg);
+		jQuery('div.dummy-3 strong span').html(msg.data.errorMsg);
+	}
+	else
+	{
+		alert(_t('Es ist ein unerwarteter Fehler aufgetreten!'));
+ 		jQuery('div.dummy-3 strong span').html(_t('Es ist ein unerwarteter Fehler aufgetreten!'));
+	}
+	
 	jQuery('div.dummy-2').slideUp('fast');
 	jQuery('div.dummy-3').slideDown('fast');
 }
@@ -16,6 +27,11 @@ jQuery(document).on('click', 'input[name=submit]', function(e)
 	
 	if (jQuery('input[name=password]').length == 1)
 		jQuery('input[name=password]').prop('disabled', true);
+		
+	if (dummy2Msg == '')
+		dummy2Msg = jQuery('div.dummy-2 strong').html();
+	else
+		jQuery('div.dummy-2 strong').html(dummy2Msg);
 	
 	jQuery('div.dummy-1').slideUp('fast');
 	jQuery('div.dummy-2').slideDown('fast');
@@ -26,7 +42,7 @@ jQuery(document).on('click', 'input[name=submit]', function(e)
 			jQuery('div.dummy-2 strong').html(_t('Verbindung wird getrennt...'));
 		else
 		{
-			show_error(data);
+			showError(data);
 			return false;
 		}
 		
@@ -36,7 +52,7 @@ jQuery(document).on('click', 'input[name=submit]', function(e)
 				jQuery('div.dummy-2 strong').html(_t('Verbindung wird wieder hergestellt...'));
 			else
 			{
-				show_error(data);
+				showError(data);
 				return false;
 			}
 			
@@ -46,7 +62,7 @@ jQuery(document).on('click', 'input[name=submit]', function(e)
 					jQuery('div.dummy-2 strong').html(_t('Ermittle IP-Adresse von Verbindung...'));
 				else
 				{
-					show_error(data);
+					showError(data);
 					return false;
 				}
 				
@@ -60,13 +76,13 @@ jQuery(document).on('click', 'input[name=submit]', function(e)
 					}
 					else
 					{
-						show_error(data);
+						showError(data);
 						return false;
 					}
-				});
-			});
-		});
-	});
+				}).fail(function(e) { showError(); });
+			}).fail(function(e) { showError(); });
+		}).fail(function(e) { showError(); });
+	}).fail(function(e) { showError(); });
 	
 	return false;
 });
