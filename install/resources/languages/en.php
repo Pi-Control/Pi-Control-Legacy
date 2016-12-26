@@ -99,12 +99,11 @@ $langArray = array(
 	'ccd2cb88' => 'Unfortunately an error has occurred while reading the Pi Control user! Please repeat the installation.',
 	'744e8e56' => 'Couldn\'t find the selected language! Please try again.',
 	'52e5304c' => 'Fault',
-	'352619fd' => 'Currently known restrictions',
-	'b7c6ca34' => '- The terminal works only under HTTP, not HTTPS.',
 	'2963f17d' => 'Unfortunately, an unexpected error has occurred. Please close the feedback window and try again. Otherwise, write me at <a href="%%s" target="_blank">contact</a>.',
 	'8311b9b6' => 'Close',
 	'28c330db' => 'Some data must be collected for the feedback.',
 	'fcb4bb2f' => 'Diagnostic data was collected. A new window will open when you click on the button below.',
-	'db72d0d6' => 'Open feedback'
+	'db72d0d6' => 'Open feedback',
+	'9979a4ea' => 'Manual to installation'
 );
 ?>

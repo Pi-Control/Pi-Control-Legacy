@@ -46,27 +46,27 @@
 				</tr>
 				<tr>
 					<td><?php _e('SSH2-Erweiterung installiert'); ?></td>
-					<td class="<?php echo ($data['phpSSH']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpSSH']['status'] == true) ? '&#10004;' : '&#10006;'; ?></td>
+					<td class="<?php echo ($data['phpSSH']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpSSH']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline" href="'.$data['configHelp'].'?s=view&amp;i=11'.getURLLangParam().'" target="_blank">'._t('Anleitung zur Installation').'</a>'; ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('Mcrypt-Erweiterung installiert'); ?></td>
-					<td class="<?php echo ($data['phpMcrypt']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpMcrypt']['status'] == true) ? '&#10004;' : '&#10006;'; ?></td>
+					<td class="<?php echo ($data['phpMcrypt']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpMcrypt']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline" href="'.$data['configHelp'].'?s=view&amp;i=12'.getURLLangParam().'" target="_blank">'._t('Anleitung zur Installation').'</a>'; ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('CLI-Erweiterung installiert'); ?></td>
-					<td class="<?php echo ($data['phpCLI']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpCLI']['status'] == true) ? '&#10004;' : '&#10006;'; ?></td>
+					<td class="<?php echo ($data['phpCLI']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpCLI']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline" href="'.$data['configHelp'].'?s=view&amp;i=13'.getURLLangParam().'" target="_blank">'._t('Anleitung zur Installation').'</a>'; ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('cURL-Erweiterung installiert'); ?></td>
-					<td class="<?php echo ($data['phpCURL']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpCURL']['status'] == true) ? '&#10004;' : '&#10006;'; ?></td>
+					<td class="<?php echo ($data['phpCURL']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpCURL']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline" href="'.$data['configHelp'].'?s=view&amp;i=14'.getURLLangParam().'" target="_blank">'._t('Anleitung zur Installation').'</a>'; ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('ZipArchive-Erweiterung installiert'); ?></td>
-					<td class="<?php echo ($data['phpZipArchive']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpZipArchive']['status'] == true) ? '&#10004;' : '&#10006;'; ?></td>
+					<td class="<?php echo ($data['phpZipArchive']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpZipArchive']['status'] == true) ? '&#10004;' : '&#10006; <a style="color: inherit; text-decoration: underline" href="'.$data['configHelp'].'?s=view&amp;i=15'.getURLLangParam().'" target="_blank">'._t('Anleitung zur Installation').'</a>'; ?></td>
 				</tr>
 				<tr>
 					<td><?php _e('Laden externer Inhalte aktiviert'); ?></td>
-					<td class="<?php echo ($data['phpAllowUrlFopen']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpAllowUrlFopen']['status'] == true) ? '&#10004;' : '&#10006;'; ?></td>
+					<td class="<?php echo ($data['phpAllowUrlFopen']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpAllowUrlFopen']['status'] == true) ? '&#10004;' : '&#10006; '.$data['phpAllowUrlFopen']['info']; ?></td>
 				</tr>
 			</table>
 		</div>

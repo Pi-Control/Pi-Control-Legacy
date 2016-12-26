@@ -87,6 +87,7 @@ $tpl->assign('otherDistribution', $otherDistribution);
 $tpl->assign('otherCookie', $otherCookie);
 $tpl->assign('error', $error);
 $tpl->assign('langUrl', (isset($_GET['lang']) && $_GET['lang'] != '') ? '&amp;lang='.$_GET['lang'] : '');
+$tpl->assign('configHelp', $config['url']['help']);
 
 $tpl->draw('install_requirement');
 ?>
