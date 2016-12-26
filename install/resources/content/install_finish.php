@@ -8,7 +8,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 	$dataLanguage = json_decode(readFromFile('language'), true);
 	$dataUser = json_decode(readFromFile('user'), true);
 	
-	if (isset($dataLanguage['language']) && $dataUser['language'] != '')
+	if (isset($dataLanguage['language']) && $dataLanguage['language'] != '')
 		setConfig('init:language', $dataLanguage['language'], PICONTROL_PATH.'resources/config/');
 	else
 		setConfig('init:language', $globalLanguage, PICONTROL_PATH.'resources/config/');

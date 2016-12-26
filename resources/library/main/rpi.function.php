@@ -1,7 +1,6 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
-// functions_rpi.php
 function rpi_getRuntime()
 {
 	$runtime = trim(@shell_exec('cat /proc/uptime | awk -F \'.\' \'{print $1}\''));
