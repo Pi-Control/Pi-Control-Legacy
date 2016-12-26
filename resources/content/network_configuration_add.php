@@ -1,6 +1,9 @@
 <?php
 if (!defined('PICONTROL')) exit();
 
+// Fehler vorbeugen
+$tpl->getSSHResource(1);
+
 if (isset($_POST['submit']) && $_POST['submit'] != '')
 {
 	if (isset($_POST['interface'], $_POST['protocol'], $_POST['method'], $_POST['checksum']) && ($pInterface = trim($_POST['interface'])) != '' && ($pProtocol = trim($_POST['protocol'])) != '' && ($pMethod = trim($_POST['method'])) != '' && ($pChecksum = trim($_POST['checksum'])) != '' && in_array($_POST['protocol'], array('inet', 'inet6', 'ipx')) && in_array($_POST['method'], array('dhcp', 'static', 'manual')))

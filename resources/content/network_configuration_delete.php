@@ -3,6 +3,9 @@ if (!defined('PICONTROL')) exit();
 
 $interfaceName = urldecode($_GET['delete']);
 
+// Fehler vorbeugen
+$tpl->getSSHResource(1);
+
 if (isset($_POST['submit']) && $_POST['submit'] != '')
 {
 	if (isset($_POST['checksum']) && ($pChecksum = trim($_POST['checksum'])) != '')
