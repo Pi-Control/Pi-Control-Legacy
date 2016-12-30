@@ -452,8 +452,22 @@ function getAllNetworkConnections()
 				$wirelessOption['mac'] = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
 				
 				$posConfig_start = @strpos($streamWirelessInterface, 'Signal level=', 0) + 13;
-				$posConfig_end = @strpos($streamWirelessInterface, '/100', $posConfig_start);
-				$wirelessOption['signal'] = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
+				
+				if (($posConfig_end = @strpos($streamWirelessInterface, '/100', $posConfig_start)) === false)
+				{
+					$posConfig_end = @strpos($streamWirelessInterface, ' dBm', $posConfig_start);
+					$signal = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
+					
+					if ($signal <= -100)
+						$wirelessOption['signal'] = 0;
+					elseif ($signal >= -50)
+						$wirelessOption['signal'] = 100;
+					else
+						$wirelessOption['signal'] = 2 * ($signal + 100);
+				}
+				else
+					$wirelessOption['signal'] = trim(substr($streamWirelessInterface, $posConfig_start, ($posConfig_end - $posConfig_start)));
+				
 			}
 		}
 		
