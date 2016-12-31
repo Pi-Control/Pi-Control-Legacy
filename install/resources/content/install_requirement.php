@@ -19,7 +19,7 @@ $otherDistribution = array('version' => rpi_getDistribution(), 'status' => false
 $otherCookie = array('status' => false);
 $error = false;
 
-if (version_compare(PHP_VERSION, '5.4.0') >= 0)
+if (version_compare(PHP_VERSION, '5.5.0') >= 0)
 	$phpVersion['status'] = true;
 
 if (extension_loaded('ssh2'))

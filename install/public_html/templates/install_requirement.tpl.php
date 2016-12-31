@@ -41,7 +41,7 @@
 		<div class="inner-table">
 			<table class="table table-borderless table-form">
 				<tr>
-					<td style="width: 50%;"><?php _e('Version %s', '>= 5.4'); ?></td>
+					<td style="width: 50%;"><?php _e('Version %s', '>= 5.5'); ?></td>
 					<td class="<?php echo ($data['phpVersion']['status'] == true) ? 'green' : 'red'; ?>"><?php echo ($data['phpVersion']['status'] == true) ? '&#10004;' : '&#10006;'; echo ' '.$data['phpVersion']['version']; ?></td>
 				</tr>
 				<tr>
