@@ -8,8 +8,8 @@ if (!isset($config))
 			'ssh_ip'							=> '127.0.0.1'
 		),
 		'version' => array(
-			'version'							=> '2.0.8 Beta',
-			'versioncode'						=> 25,
+			'version'							=> '2.0',
+			'versioncode'						=> 26,
 			'android_comp_level'				=> 19
 		),
 		'url' => array(
@@ -66,7 +66,7 @@ function myErrorHandler($code, $msg, $file, $line)
 	if (isset($_COOKIE['debug']) && $_COOKIE['debug'] == 'debug_mode')
 		return false;
 	else
-		return false; // true
+		return true;
 }
 
 error_reporting(E_ALL ^ E_STRICT);
