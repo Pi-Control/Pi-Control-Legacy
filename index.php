@@ -91,6 +91,4 @@ catch(Exception $e)
 </body>
 </html>';
 }
-
-//$tpl->showDebug();
 ?>
