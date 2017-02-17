@@ -16,8 +16,7 @@
 						<a href="https://play.google.com/store/apps/details?id=de.willytech.picontrol" target="_blank" title="<?php _e('&Ouml;ffne im Play Store'); ?>"><?php _e('App im Play Store'); ?></a></td>
 					<td rowspan="2"><a href="https://willy-tech.de/" target="_blank"><?php _e('Mein Blog'); ?></a><br />
 						<a href="https://twitter.com/Willys_TechBlog" target="_blank"><?php _e('Twitter'); ?></a><br />
-						<a href="https://github.com/willfri" target="_blank"><?php _e('GitHub'); ?></a><br />
-						<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7PKQV4RWDS7E4" target="_blank"><?php _e('Spenden'); ?></a></td>
+						<a href="https://www.paypal.me/fritzsche" target="_blank"><?php _e('Spenden'); ?></a></td>
 					<td><?php echo $data['version']; ?></td>
 				</tr>
 				<tr>
