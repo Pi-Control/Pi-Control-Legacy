@@ -39,7 +39,7 @@ if (isset($_POST['login']))
 	}
 	elseif ($pType == 'publickey')
 	{
-		if (isset($_POST['port'], $_POST['username'], $_POST['publickey']) && ($pPort = intval(trim($_POST['port']))) != '' && ($pUsername = trim($_POST['username'])) != '' && ($pPrivateKey = $_POST['privatekey']) != '')
+		if (isset($_POST['port'], $_POST['username'], $_POST['privatekey']) && ($pPort = intval(trim($_POST['port']))) != '' && ($pUsername = trim($_POST['username'])) != '' && ($pPrivateKey = urldecode($_POST['privatekey'])) != '')
 		{
 			$pPassword = isset($_POST['password']) ? $_POST['password'] : '';
 			$pRememberMe = (isset($_POST['remember-me']) && $_POST['remember-me'] == 'checked') ? true : false;
