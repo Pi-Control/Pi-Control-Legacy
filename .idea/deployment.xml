@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="Willys-Pi">
     <serverData>
       <paths name="A-Z-Service">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Willys-Pi">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/pic" local="$PROJECT_DIR$" web="/pic" />
+            <mapping deploy="/pic/resources/plugins/philips-hue" local="$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/philips-hue" web="/pic/?s=plugins&amp;id=philips-hue" />
           </mappings>
         </serverdata>
       </paths>
@@ -17,5 +25,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
   </component>
 </project>

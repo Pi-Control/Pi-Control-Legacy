@@ -40,7 +40,7 @@ function calculateEmptyRows(&$arr, $columns, $firstTime, $lastTime, $cycle)
 	}
 	
 	$buffer = array();
-
+	
 	if (isset($arr['rows']) && count($arr['rows']) < (604800 / ($cycle * 60)))
 	{
 		for ($i = 0; $i < ((604800 / ($cycle * 60)) - count($arr['rows'])); $i++)

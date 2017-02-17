@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/philips-hue/.idea/philips-hue.iml" filepath="$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/philips-hue/.idea/philips-hue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/picontrol.iml" filepath="$PROJECT_DIR$/.idea/picontrol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/temperature/.idea/temperature.iml" filepath="$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/temperature/.idea/temperature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../willy-fritzsche/.idea/willy-fritzsche.iml" filepath="$PROJECT_DIR$/../willy-fritzsche/.idea/willy-fritzsche.iml" />
+    </modules>
+  </component>
+</project>

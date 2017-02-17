@@ -36,11 +36,6 @@ if (isset($_POST['token']) && $logout === true)
 		die($authentificationMsg);
 	else
 	{
-		$referer = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
-		
-		if ($referer != '')
-			$referer = '&referer='.urlencode($referer);
-		
 		header('HTTP/1.0 403 Forbidden');
 		exit();
 	}
@@ -56,7 +51,11 @@ elseif ((!isset($_COOKIE['_pi-control_login']) || $logout === true) && !isset($_
 		if ($referer != '')
 			$referer = '&referer='.urlencode($referer);
 		
-		header('Location: ?i=login'.$referer);
+		$dir = '';
+		for ($i = 0; $i < substr_count(str_replace(realpath(dirname(__FILE__).'/../../../').'/', '', realpath(dirname($_SERVER["SCRIPT_FILENAME"])).'/'), '/'); $i += 1)
+			$dir .= '../';
+		
+		header('Location: '.$dir.'?i=login'.$referer);
 		exit();
 	}
 }

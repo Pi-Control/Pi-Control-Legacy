@@ -61,6 +61,7 @@ $tpl->assign('updatePicontrol', isset($picontrolUpdate) ? $picontrolUpdate : '')
 $tpl->assign('cronExecutionFault', (getConfig('cron:execution.cron', 0)+140 < time()) ? true : false);
 $tpl->assign('username', getConfig('user:user_'.getConfig('login:token_'.$_COOKIE['_pi-control_login'].'.username', '').'.username', ''));
 $tpl->assign('referer', $referer);
+$tpl->assign('headerInfo', getInfoForHeaderBar());
 
 $tpl->draw('html_header');
 ?>

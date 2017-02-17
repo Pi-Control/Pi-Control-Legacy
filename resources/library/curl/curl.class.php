@@ -22,6 +22,8 @@ class cURL
 		$this->handler = curl_init();
 		curl_setopt($this->handler, CURLOPT_URL, $this->url);
 		curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, $this->method);
+		curl_setopt($this->handler, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt($this->handler, CURLOPT_TIMEOUT, 3);
 		
 		if ($this->method != HTTP_GET && !empty($this->parameter))
 		{
