@@ -36,15 +36,17 @@
 				<tr>
 					<td style="width: 100px; text-align: center;">
 						<img src="public_html/img/weather/<?php echo $data['weather']['icon']; ?>.svg" title="<?php echo $data['weather']['description']; ?>" alt="<?php _e('Wetter'); ?>" style="width: 64px;" /><br />
-						<span style="font-size: 11px;" title="<? _e('Windst&auml;rke | Luftfeuchtigkeit'); ?>"><?php echo $data['weather']['wind']; ?> km/h | <?php echo $data['weather']['humidity']; ?> %</span>
+						<span style="font-size: 11px; margin-top: 5px; display: block;" title="<?php _e('Windst&auml;rke'.(isset($data['weather']['humidity']) ? ' | Luftfeuchtigkeit' : '')); ?>"><?php echo $data['weather']['wind']; ?> km/h<?php if (isset($data['weather']['humidity'])) echo ' | '.$data['weather']['humidity'].' %'; ?></span>
 					</td>
 					<td style="width: 100px; text-align: center;"><span style="font-size: 30px;">
 						<?php echo $data['weather']['temp']; ?> &deg;C</span><br />
-						<span style="font-size: 13px;"><?php echo $data['weather']['temp_min']; ?> &deg;C | <?php echo $data['weather']['temp_max']; ?> &deg;C</span>
+						<?php if (isset($data['weather']['temp_min'])) { ?><span style="font-size: 13px;"><?php echo $data['weather']['temp_min']; ?> &deg;C | <?php echo $data['weather']['temp_max']; ?> &deg;C</span><?php } ?>
 					</td>
 				</tr>
 			</table>
-	<?php if ($data['weather']['service'] == 'yahoo') { ?><a href="https://www.yahoo.com/?ilc=401" target="_blank" style="float: right; margin-right: -12px;"><img src="public_html/img/weather/yahoo.png" width="80px" /></a><?php } ?>
+	<?php if ($data['weather']['service'] == 'yahoo') { ?><a href="https://www.yahoo.com/?ilc=401" target="_blank" style="float: right; margin-right: -12px;"><img src="public_html/img/weather/yahoo.png" width="80px" /></a><?php }
+		elseif ($data['weather']['service'] == 'wunderground') { ?><a href="https://www.wunderground.com/" target="_blank" style="float: right; margin-right: -14px; margin-top: -5px;"><img src="public_html/img/weather/wunderground.png" width="80px" /></a><?php }
+		elseif ($data['weather']['service'] == 'darksky') { ?><a href="https://darksky.net/poweredby/" target="_blank" style="float: right; margin-right: -14px; margin-top: -1px;"><img src="public_html/img/weather/darksky.png" width="100px" /></a><?php } ?>
 	<?php } ?>
 		</div>
 	</div>

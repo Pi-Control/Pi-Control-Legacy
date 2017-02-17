@@ -891,8 +891,228 @@ function getWeatherIconOpenWeatherMap($icon)
 	}
 }
 
+function getWeatherIconWunderground($icon)
+{
+	switch ($icon)
+	{
+		case 'clear':
+		case 'sunny':
+			return '01d';
+		case 'nt_clear':
+		case 'nt_sunny':
+			return '01n';
+		case 'mostlysunny':
+		case 'partlycloudy':
+			return '02d';
+		case 'nt_mostlysunny':
+		case 'nt_partlycloudy':
+			return '02n';
+		case 'cloudy':
+		case 'nt_cloudy':
+			return '03';
+		case 'mostlycloudy':
+		case 'partlysunny':
+		case 'nt_mostlycloudy':
+		case 'nt_partlysunny':
+			return '04';
+		case 'rain':
+		case 'nt_rain':
+			return '09';
+		/*case '':
+			return '10d';
+		case '':
+			return '10n';*/
+		case 'tstorms':
+		case 'nt_tstorms':
+			return '11';
+		case 'flurries':
+		case 'sleet':
+		case 'snow':
+		case 'nt_flurries':
+		case 'nt_sleet':
+		case 'nt_snow':
+			return '13';
+		case 'fog':
+		case 'hazy':
+		case 'nt_fog':
+		case 'nt_hazy':
+			return '50';
+		default:
+			return '01d';
+	}
+}
+
+function getWeatherIconDarksky($icon)
+{
+	switch ($icon)
+	{
+		case 'clear-day':
+			return '01d';
+		case 'clear-night':
+			return '01n';
+		case 'partly-cloudy-day':
+			return '02d';
+		case 'partly-cloudy-night':
+			return '02n';
+		case 'cloudy':
+			return '03';
+		case 'wind':
+			return '04';
+		case 'rain':
+			return '09';
+		/*case '':
+			return '10d';
+		case '':
+			return '10n';
+		case '':
+			return '11';*/
+		case 'sleet':
+		case 'snow':
+			return '13';
+		case 'fog':
+			return '50';
+		default:
+			return '01d';
+	}
+}
+
+function getWeatherIconYr($icon)
+{
+	switch ($icon)
+	{
+		case '1':
+		case '01':
+		case '01d':
+		case '01m':
+		case '2':
+		case '02':
+		case '02d':
+		case '02m':
+			return '01d';
+		case '01n':
+		case '02n':
+			return '01n';
+		case '3':
+		case '03':
+		case '03d':
+		case '03m':
+			return '02d';
+		case '03n':
+			return '02n';
+		case '4':
+		case '04':
+			return '03';
+		case '46':
+		case '9':
+		case '09':
+		case '10':
+			return '09';
+		case '40':
+		case '40d':
+		case '40m':
+		case '41':
+		case '41d':
+		case '41m':
+		case '5':
+		case '05':
+		case '05d':
+		case '05m':
+			return '10d';
+		case '40n':
+		case '41n':
+		case '05n':
+			return '10n';
+		case '24':
+		case '24d':
+		case '24n':
+		case '24m':
+		case '6':
+		case '06':
+		case '06d':
+		case '06n':
+		case '06m':
+		case '25':
+		case '25d':
+		case '25n':
+		case '25m':
+		case '26':
+		case '26d':
+		case '26n':
+		case '26m':
+		case '20':
+		case '20d':
+		case '20n':
+		case '20m':
+		case '27':
+		case '27d':
+		case '27n':
+		case '27m':
+		case '28':
+		case '28d':
+		case '28n':
+		case '28m':
+		case '21':
+		case '21d':
+		case '21n':
+		case '21m':
+		case '29':
+		case '29d':
+		case '29n':
+		case '29m':
+		case '30':
+		case '22':
+		case '11':
+		case '31':
+		case '23':
+		case '32':
+		case '33':
+		case '14':
+		case '34':
+			return '11';
+		case '42':
+		case '42d':
+		case '42n':
+		case '42m':
+		case '43':
+		case '43d':
+		case '43n':
+		case '43m':
+		case '7':
+		case '07':
+		case '07d':
+		case '07n':
+		case '07m':
+		case '44':
+		case '44d':
+		case '44n':
+		case '44m':
+		case '8':
+		case '08':
+		case '08d':
+		case '08n':
+		case '08m':
+		case '45':
+		case '45d':
+		case '45n':
+		case '45m':
+		case '47':
+		case '12':
+		case '48':
+		case '49':
+		case '13':
+		case '50':
+			return '13';
+		case '15':
+			return '50';
+		default:
+			return '01d';
+	}
+}
+
 function getWeather()
 {
+	global $globalLanguage;
+	
 	if (!class_exists('cURL'))
 		(include LIBRARY_PATH.'curl/curl.class.php');
 	
@@ -902,6 +1122,8 @@ function getWeather()
 	$type = getConfig('main:weather.type', 'postcode');
 	$postcode = getConfig('main:weather.postcode', '');
 	$city = getConfig('main:weather.city', '');
+	$latitude = getConfig('main:weather.latitude', '');
+	$longitude = getConfig('main:weather.longitude', '');
 	
 	if ($serviceToken == '' && $service == 'openweathermap')
 		return 3;
@@ -962,13 +1184,135 @@ function getWeather()
 			$output['country'] = $data['sys']['country'];
 		}
 	}
-	else
+	elseif ($service == 'yahoo')
 	{
-		$yahooApiUrl = 'https://query.yahooapis.com/v1/public/yql';
-		$yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
-		$yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
+		for ($i = 0; $i < 2; $i++)
+		{
+			$yahooApiUrl = 'https://query.yahooapis.com/v1/public/yql';
+			$yqlQuery = 'select location, wind, atmosphere, item.condition, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text="'.$location.', '.$country.'") AND u=\'c\' | truncate(count=1)';
+			$yqlQueryUrl = $yahooApiUrl.'?q='.urlencode($yqlQuery).'&format=json';
+			
+			$curl = new cURL($yqlQueryUrl);
+			$curl->execute();
+			
+			if ($curl->getStatusCode() != '200')
+			{
+				if ($curl->getStatusCode() == '0')
+					return 100;
+				
+				return $curl->getStatusCode();
+			}
+			
+			if ($curl->getResult($data) != JSON_ERROR_NONE)
+				return 1;
+			
+			if (!isset($data['query']['results']['channel']))
+			{
+				if ($i == 0)
+					continue;
+				
+				return 1;
+			}
+			
+			$data = $data['query']['results']['channel'];
+			
+			$output['service'] = 'yahoo';
+			$output['city'] = $data['location']['city'];
+			$output['country'] = $data['location']['country'];
+			$output['temp'] = str_replace('.', ',' , round($data['item']['condition']['temp']));
+			$output['temp_min'] = str_replace('.', ',' , round($data['item']['forecast']['low']));
+			$output['temp_max'] = str_replace('.', ',' , round($data['item']['forecast']['high']));
+			$output['humidity'] = $data['atmosphere']['humidity'];
+			$output['wind'] = str_replace('.', ',' , round($data['wind']['speed']));
+			$output['icon'] = getWeatherIconYahoo($data['item']['condition']['code']);
+			$output['description'] = $data['item']['condition']['text'];
+		}
+	}
+	elseif ($service == 'wunderground')
+	{
+		switch ($globalLanguage)
+		{
+			case 'de':
+			$lang = 'DL';
+				break;
+			case 'en':
+			$lang = 'US';
+				break;
+			default:
+			$lang = 'DL';
+		}
 		
-		$curl = new cURL($yqlQueryUrl);
+		switch ($country)
+		{
+			case 'germany':
+			$customCountry = 'germany';
+				break;
+			case 'uk':
+			$customCountry = 'UK';
+				break;
+			case 'swiss':
+			$customCountry = 'switzerland';
+				break;
+			case 'austria':
+			$customCountry = 'austria';
+				break;
+		}
+		
+		if ($type == 'city')
+			$location = $customCountry.'/'.$city;
+		elseif ($type == 'coordinates')
+			$location = $latitude.','.$longitude;
+		
+		$iMax = 2;
+		
+		do
+		{
+			if (($wundergroundCache = getConfig('main:weather.wundergroundCache', '')) != '')
+				$location = 'zmw:'.$wundergroundCache;
+			
+			$curl = new cURL('http://api.wunderground.com/api/'.$serviceToken.'/conditions/forecast/lang:'.$lang.'/q/'.$location.'.json');
+			$curl->execute();
+			
+			if ($curl->getStatusCode() != '200')
+				return $curl->getStatusCode();
+			
+			if ($curl->getResult($data) != JSON_ERROR_NONE)
+				return 1;
+			
+			if (isset($data['response']['results']) && count($data['response']['results']) > 0 && $iMax >= 0)
+			{
+				$i--;
+				
+				setConfig('main:weather.wundergroundCache', $data['response']['results'][0]['zmw']);
+				continue;
+			}
+		}
+		while (false);
+		
+		if (!isset($data['current_observation']))
+			return 1;
+		
+		$forecast = $data['forecast']['simpleforecast'];
+		$data = $data['current_observation'];
+		
+		preg_match('#c\/k\/([\w_]+)\.gif#', $data['icon_url'], $matches);
+		
+		$output['service'] = 'wunderground';
+		$output['city'] = $data['display_location']['city'];
+		$output['country'] = $data['display_location']['country_iso3166'];
+		$output['temp'] = str_replace('.', ',' , round($data['temp_c']));
+		$output['temp_min'] = str_replace('.', ',' , round($forecast['forecastday'][0]['low']['celsius']));
+		$output['temp_max'] = str_replace('.', ',' , round($forecast['forecastday'][0]['high']['celsius']));
+		$output['humidity'] = str_replace('%', '', $data['relative_humidity']);
+		$output['wind'] = str_replace('.', ',' , round($data['wind_kph']));
+		$output['icon'] = getWeatherIconWunderground(isset($matches[1]) ? $matches[1] : $data['icon']);
+		$output['description'] = $data['weather'];
+	}
+	elseif ($service == 'darksky')
+	{
+		$lang = $globalLanguage;
+		
+		$curl = new cURL('https://api.darksky.net/forecast/'.$serviceToken.'/'.$latitude.','.$longitude.'?lang='.$lang.'&units=si');
 		$curl->execute();
 		
 		if ($curl->getStatusCode() != '200')
@@ -977,24 +1321,108 @@ function getWeather()
 		if ($curl->getResult($data) != JSON_ERROR_NONE)
 			return 1;
 		
-		if (!isset($data['query']['results']['channel']))
+		if (!isset($data['currently']))
 			return 1;
 		
-		$data = $data['query']['results']['channel'];
+		$dataRaw = $data;
+		$data = $data['currently'];
 		
-		$output['service'] = 'yahoo';
-		$output['city'] = $data['location']['city'];
-		$output['country'] = $data['location']['country'];
-		$output['temp'] = str_replace('.', ',' , round($data['item']['condition']['temp']));
-		$output['temp_min'] = str_replace('.', ',' , round($data['item']['forecast']['low']));
-		$output['temp_max'] = str_replace('.', ',' , round($data['item']['forecast']['high']));
-		$output['humidity'] = $data['atmosphere']['humidity'];
-		$output['wind'] = str_replace('.', ',' , round($data['wind']['speed']));
-		$output['icon'] = getWeatherIconYahoo($data['item']['condition']['code']);
-		$output['description'] = $data['item']['condition']['text'];
+		$output['service'] = 'darksky';
+		$output['city'] = $dataRaw['latitude'].', '.$dataRaw['longitude'];
+		$output['country'] = $dataRaw['latitude'].', '.$dataRaw['longitude'];
+		$output['temp'] = str_replace('.', ',' , round($data['temperature']));
+		$output['temp_min'] = NULL;
+		$output['temp_max'] = NULL;
+		$output['humidity'] = $data['humidity'] * 100;
+		$output['wind'] = str_replace('.', ',' , round($data['windSpeed']));
+		$output['icon'] = getWeatherIconDarksky($data['icon']);
+		$output['description'] = $data['summary'];
+	}
+	elseif ($service == 'yr')
+	{
+		$yrCache = getConfig('main:weather.yrCache', '');
+		
+		if ($yrCache == '')
+		{
+			switch ($country)
+			{
+				case 'germany':
+				$customCountry = 'de';
+					break;
+				case 'uk':
+				$customCountry = 'gb';
+					break;
+				case 'swiss':
+				$customCountry = 'ch';
+					break;
+				case 'austria':
+				$customCountry = 'at';
+					break;
+			}
+			
+			$yrCache = getYrQueryFromLocation($location, $customCountry);
+			
+			if (is_int($yrCache))
+				return 1;
+			
+			setConfig('main:weather.yrCache', $yrCache);
+		}
+		
+		$curl = new cURL('http://www.yr.no/place/'.$yrCache.'/forecast.xml');
+		$curl->execute();
+		
+		if ($curl->getStatusCode() != '200')
+			return $curl->getStatusCode();
+		
+		$curl->getResult($data, false);
+		
+		$data = json_decode(json_encode(simplexml_load_string($data, "SimpleXMLElement", LIBXML_NOCDATA)), true);
+		
+		if (!isset($data['location']) || !isset($data['forecast']))
+			return 1;
+		
+		$dataRaw = $data;
+		$data = $data['forecast']['tabular']['time'][0];
+		
+		$icon = preg_match('#([\d]+[d|n]?)#i', $data['symbol']['@attributes']['var'], $matches);
+		
+		$output['service'] = 'yr';
+		$output['city'] = $dataRaw['location']['name'];
+		$output['country'] = $dataRaw['location']['country'];
+		$output['temp'] = str_replace('.', ',' , round($data['temperature']['@attributes']['value']));
+		$output['temp_min'] = NULL;
+		$output['temp_max'] = NULL;
+		$output['humidity'] = NULL;
+		$output['wind'] = str_replace('.', ',' , round($data['windSpeed']['@attributes']['mps'] * 1.609344));
+		$output['icon'] = getWeatherIconYr(isset($matches[1]) ? $matches[1] : $data['symbol']['@attributes']['numberEx']);
+		$output['description'] = $data['symbol']['@attributes']['name'];
 	}
 		
 	return $output;
+}
+
+function getYrQueryFromLocation($location, $country)
+{
+	if (!class_exists('cURL'))
+		(include LIBRARY_PATH.'curl/curl.class.php');
+	
+	$curl = new cURL('http://www.geonames.org/postalcode-search.html?q='.urlencode($location).'&country='.$country);
+	$curl->execute();
+	
+	if ($curl->getStatusCode() != '200')
+		return $curl->getStatusCode();
+	
+	$curl->getResult($data, false);
+	
+	preg_match('#(?:<td>(.*?)<\/td>){2}(?:<td>(.*?)<\/td>){2}(?:<td>(.*?)<\/td>)#si', $data, $matches);
+	
+	if (!isset($matches) || count($matches) != 4)
+		return 1;
+	
+	if ($country == 'ch')
+		return rawurlencode($matches[2]).'/'.rawurlencode($matches[1]).'/'.rawurlencode($matches[1]);
+	else
+		return rawurlencode($matches[2]).'/'.rawurlencode($matches[3]).'/'.rawurlencode($matches[1]);
 }
 
 function array_sort($array, $on, $order = SORT_ASC)
@@ -1174,5 +1602,21 @@ function getTranslatedArrayForJs($translations)
 		$output[$translation] = _t($translation);
 	
 	return $output;
+}
+
+function getInfoForHeaderBar()
+{
+	$type = getConfig('main:headerInfo.type', 'disable');
+	
+	switch ($type)
+	{
+		case 'label': return getConfig('main:main.label', 'Raspberry Pi');
+		case 'label-ip': return sprintf('%s (%s)', getConfig('main:main.label', 'Raspberry Pi'), $_SERVER['SERVER_ADDR']);
+		case 'label-hostname': return sprintf('%s (%s)', getConfig('main:main.label', 'Raspberry Pi'), trim(@shell_exec('cat /proc/sys/kernel/hostname')));
+		case 'ip': return $_SERVER['SERVER_ADDR'];
+		case 'hostname': return trim(@shell_exec('cat /proc/sys/kernel/hostname'));
+		case 'disable':
+		default: return false;
+	}
 }
 ?>
