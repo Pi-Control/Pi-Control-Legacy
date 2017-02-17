@@ -114,6 +114,10 @@ body {
 	text-decoration: none;
 }
 
+.header-top-inner-info {
+	padding: 5px;
+}
+
 .header-top-inner-username {
 	text-align: right;
 	padding: 5px;

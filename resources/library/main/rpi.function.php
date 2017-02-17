@@ -179,30 +179,40 @@ function rpi_getInstalledPackages()
 function rpi_getRpiRevision()
 {
 	$revision = array();
-	$revision[2] = array('revision' => '0002', 'model' => 'B', 'pcb' => 1, 'memory' => 256, 'manufacturer' => '');
-	$revision[3] = array('revision' => '0003', 'model' => 'B', 'pcb' => 1, 'memory' => 256, 'manufacturer' => '');
-	$revision[4] = array('revision' => '0004', 'model' => 'B', 'pcb' => 2, 'memory' => 256, 'manufacturer' => 'Sony');
-	$revision[5] = array('revision' => '0005', 'model' => 'B', 'pcb' => 2, 'memory' => 256, 'manufacturer' => 'Qisda');
-	$revision[6] = array('revision' => '0006', 'model' => 'B', 'pcb' => 2, 'memory' => 256, 'manufacturer' => 'Egoman');
-	$revision[7] = array('revision' => '0007', 'model' => 'A', 'pcb' => 2, 'memory' => 256, 'manufacturer' => 'Egoman');
-	$revision[8] = array('revision' => '0008', 'model' => 'A', 'pcb' => 2, 'memory' => 256, 'manufacturer' => 'Sony');
-	$revision[9] = array('revision' => '0009', 'model' => 'A', 'pcb' => 2, 'memory' => 256, 'manufacturer' => 'Qisda');
-	$revision[13] = array('revision' => '000d', 'model' => 'B', 'pcb' => 2, 'memory' => 512, 'manufacturer' => 'Egoman');
-	$revision[14] = array('revision' => '000e', 'model' => 'B', 'pcb' => 2, 'memory' => 512, 'manufacturer' => 'Sony');
-	$revision[15] = array('revision' => '000f', 'model' => 'B', 'pcb' => 2, 'memory' => 512, 'manufacturer' => 'Qisda');
-	$revision[16] = array('revision' => '0010', 'model' => 'B+', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
-	$revision[17] = array('revision' => '0011', 'model' => 'Compute Module', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
-	$revision[18] = array('revision' => '0012', 'model' => 'A+', 'pcb' => 1, 'memory' => 256, 'manufacturer' => 'Sony');
-	$revision[19] = array('revision' => '0013', 'model' => 'B+', 'pcb' => 1.2, 'memory' => 512, 'manufacturer' => 'Embest');
-	$revision[20] = array('revision' => '0014', 'model' => 'Compute Module', 'pcb' => 1, 'memory' => 512, 'manufacturer' => 'Sony');
-	$revision[21] = array('revision' => '0015', 'model' => 'A+', 'pcb' => 1, 'memory' => 256, 'manufacturer' => 'Sony');
+	$revision[2] = array('revision' => '0002', 'model' => 'B', 'pcb' => '1.0', 'memory' => 256, 'manufacturer' => '');
+	$revision[3] = array('revision' => '0003', 'model' => 'B', 'pcb' => '1.0', 'memory' => 256, 'manufacturer' => '');
+	$revision[4] = array('revision' => '0004', 'model' => 'B', 'pcb' => '2.0', 'memory' => 256, 'manufacturer' => 'Sony');
+	$revision[5] = array('revision' => '0005', 'model' => 'B', 'pcb' => '2.0', 'memory' => 256, 'manufacturer' => 'Qisda');
+	$revision[6] = array('revision' => '0006', 'model' => 'B', 'pcb' => '2.0', 'memory' => 256, 'manufacturer' => 'Egoman');
+	$revision[7] = array('revision' => '0007', 'model' => 'A', 'pcb' => '2.0', 'memory' => 256, 'manufacturer' => 'Egoman');
+	$revision[8] = array('revision' => '0008', 'model' => 'A', 'pcb' => '2.0', 'memory' => 256, 'manufacturer' => 'Sony');
+	$revision[9] = array('revision' => '0009', 'model' => 'A', 'pcb' => '2.0', 'memory' => 256, 'manufacturer' => 'Qisda');
+	$revision[13] = array('revision' => '000d', 'model' => 'B', 'pcb' => '2.0', 'memory' => 512, 'manufacturer' => 'Egoman');
+	$revision[14] = array('revision' => '000e', 'model' => 'B', 'pcb' => '2.0', 'memory' => 512, 'manufacturer' => 'Sony');
+	$revision[15] = array('revision' => '000f', 'model' => 'B', 'pcb' => '2.0', 'memory' => 512, 'manufacturer' => 'Qisda');
+	$revision[16] = array('revision' => '0010', 'model' => 'B+', 'pcb' => '1.0', 'memory' => 512, 'manufacturer' => 'Sony');
+	$revision[17] = array('revision' => '0011', 'model' => 'Compute Module', 'pcb' => '1.0', 'memory' => 512, 'manufacturer' => 'Sony');
+	$revision[18] = array('revision' => '0012', 'model' => 'A+', 'pcb' => '1.0', 'memory' => 256, 'manufacturer' => 'Sony');
+	$revision[19] = array('revision' => '0013', 'model' => 'B+', 'pcb' => '1.2', 'memory' => 512, 'manufacturer' => 'Embest');
+	$revision[20] = array('revision' => '0014', 'model' => 'Compute Module', 'pcb' => '1.0', 'memory' => 512, 'manufacturer' => 'Embest');
+	$revision[21] = array('revision' => '0015', 'model' => 'A+', 'pcb' => '1.1', 'memory' => 256, 'manufacturer' => 'Embest');
 	
-	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module', 7 => 'Zero', 8 => 'Pi 3 B');
+	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module', 7 => 'Zero', 8 => 'Pi 3 B', 9 => 'Zero', 10 => 'Compute Module 3');
 	$revision_memory = array(0 => 256, 1 => 512, 2 => 1024);
-	$revision_manufacturer = array(0 => 'Sony', 1 => 'Egoman', 2 => 'Embest', 3 => _t('Unbekannt'), 4 => 'Embest');
+	$revision_manufacturer = array(0 => 'Sony', 1 => 'Egoman', 2 => 'Embest', 3 => 'Sony Japan', 4 => 'Embest');
 	
 	$file = shell_exec('cat /proc/cpuinfo');
 	preg_match('#\nRevision\s*:\s*([\da-f]+)#i', $file, $match);
+	
+	/*
+	 * ######
+	 * |||||+- PCB
+	 * ||||+- Model
+	 * |||+- Model
+	 * ||+- Unknown
+	 * |+- Manufacturer
+	 * +- Memory
+	 */
 	
 	if (isset($match[1]))
 	{
@@ -213,21 +223,13 @@ function rpi_getRpiRevision()
 			return $revision[hexdec($match[1])];
 		elseif (strlen($match[1]) == 6 && $match[1][0] != 'a' && $match[1][0] != '9')
 			return $revision[hexdec(substr($match[1], -4))];
-		elseif ($match[1][0] == '9')
-		{
-			return array('revision' => $match[1],
-						 'model' => $revision_model[7],
-						 'pcb' => '1.'.hexdec(substr($match[1], -1)),
-						 'memory' => $revision_memory[1],
-						 'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
-		}
 		elseif (strlen($match[1]) == 6)
 		{
 			return array('revision' => $match[1],
-					'model' => $revision_model[hexdec(substr($match[1], 3, 2))],
-					'pcb' => '1.'.hexdec(substr($match[1], 5)),
-					'memory' => $revision_memory[bindec(substr(decbin(hexdec(substr($match[1], 0, 1))), 1))],
-					'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
+				'model' => $revision_model[hexdec(substr($match[1], 3, 2))],
+				'pcb' => '1.'.hexdec(substr($match[1], -1)),
+				'memory' => $revision_memory[bindec(substr(decbin(hexdec(substr($match[1], 0, 1))), 1))],
+				'manufacturer' => $revision_manufacturer[hexdec(substr($match[1], 1, 1))]);
 		}
 	}
 	

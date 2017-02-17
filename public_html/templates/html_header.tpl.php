@@ -37,6 +37,11 @@
 		<div id="header-top">
 			<div id="header-top-inner">
 				<div id="header-top-inner-row">
+<?php if ($data['headerInfo'] !== false) { ?>
+					<div class="header-top-inner-cell header-top-inner-info color-3">
+						<?php echo $data['headerInfo']; ?>
+					</div>
+<?php } ?>
 					<div class="header-top-inner-cell header-top-inner-username">
 						<?php _e('Angemeldet als %s', $data['username']); ?>
 					</div>

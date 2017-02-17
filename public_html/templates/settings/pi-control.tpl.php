@@ -43,6 +43,17 @@
 							</select></td>
 					</tr>
 					<tr>
+						<td><?php _e('Infoanzeige'); ?></td>
+						<td><select name="pi-control-header-info">
+								<option value="disable"<?php if ($data['main-pi-control-header-info'] == 'disable') echo ' selected="selected"'; ?>><?php _e('Deaktivieren'); ?></option>
+								<option value="label"<?php if ($data['main-pi-control-header-info'] == 'label') echo ' selected="selected"'; ?>><?php _e('Bezeichnung'); ?></option>
+								<option value="label-ip"<?php if ($data['main-pi-control-header-info'] == 'label-ip') echo ' selected="selected"'; ?>><?php echo _t('Bezeichnung').' ('._t('IP-Adresse').')'; ?></option>
+								<option value="label-hostname"<?php if ($data['main-pi-control-header-info'] == 'label-hostname') echo ' selected="selected"'; ?>><?php echo _t('Bezeichnung').' ('._t('Hostname').')'; ?></option>
+								<option value="ip"<?php if ($data['main-pi-control-header-info'] == 'ip') echo ' selected="selected"'; ?>><?php _e('IP-Adresse'); ?></option>
+								<option value="hostname"<?php if ($data['main-pi-control-header-info'] == 'hostname') echo ' selected="selected"'; ?>><?php _e('Hostname'); ?></option>
+							</select> <span class="small-info"><?php _e('W&auml;hle die Darstellung f&uuml;r die Infoanzeige.'); ?></span></td>
+					</tr>
+					<tr>
 						<td><?php _e('Externer Zugriff'); ?></td>
 						<td><input type="checkbox" id="cb-external-access" name="external-access" value="checked"<?php if ($data['main-external-access'] == 'true') echo ' checked="checked"'; ?> /><label for="cb-external-access" class="checkbox only-checkbox">&nbsp;</label> <span class="small-info"><?php _e('Auch außerhalb des lokalen Netzwerk erreichbar? Ggf. an Port-Weiterleitung denken.'); ?></span> <?php echo showHelper('6'); ?></td>
 					</tr>
