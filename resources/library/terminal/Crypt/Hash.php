@@ -7,7 +7,7 @@
  *
  * md2, md5, md5-96, sha1, sha1-96, sha256, sha256-96, sha384, and sha512, sha512-96
  *
- * If {@link Crypt_Hash::setKey() setKey()} is called, {@link Crypt_Hash::hash() hash()} will return the HMAC as opposed to
+ * If {@link self::setKey() setKey()} is called, {@link self::hash() hash()} will return the HMAC as opposed to
  * the hash.  If no valid algorithm is provided, sha1 will be used.
  *
  * PHP versions 4 and 5
@@ -56,7 +56,7 @@
 
 /**#@+
  * @access private
- * @see Crypt_Hash::Crypt_Hash()
+ * @see self::Crypt_Hash()
  */
 /**
  * Toggles the internal implementation
@@ -84,8 +84,8 @@ class Crypt_Hash
     /**
      * Hash Parameter
      *
-     * @see Crypt_Hash::setHash()
-     * @var Integer
+     * @see self::setHash()
+     * @var int
      * @access private
      */
     var $hashParam;
@@ -93,8 +93,8 @@ class Crypt_Hash
     /**
      * Byte-length of compression blocks / key (Internal HMAC)
      *
-     * @see Crypt_Hash::setAlgorithm()
-     * @var Integer
+     * @see self::setAlgorithm()
+     * @var int
      * @access private
      */
     var $b;
@@ -102,8 +102,8 @@ class Crypt_Hash
     /**
      * Byte-length of hash output (Internal HMAC)
      *
-     * @see Crypt_Hash::setHash()
-     * @var Integer
+     * @see self::setHash()
+     * @var int
      * @access private
      */
     var $l = false;
@@ -111,8 +111,8 @@ class Crypt_Hash
     /**
      * Hash Algorithm
      *
-     * @see Crypt_Hash::setHash()
-     * @var String
+     * @see self::setHash()
+     * @var string
      * @access private
      */
     var $hash;
@@ -120,8 +120,8 @@ class Crypt_Hash
     /**
      * Key
      *
-     * @see Crypt_Hash::setKey()
-     * @var String
+     * @see self::setKey()
+     * @var string
      * @access private
      */
     var $key = false;
@@ -129,8 +129,8 @@ class Crypt_Hash
     /**
      * Outer XOR (Internal HMAC)
      *
-     * @see Crypt_Hash::setKey()
-     * @var String
+     * @see self::setKey()
+     * @var string
      * @access private
      */
     var $opad;
@@ -138,8 +138,8 @@ class Crypt_Hash
     /**
      * Inner XOR (Internal HMAC)
      *
-     * @see Crypt_Hash::setKey()
-     * @var String
+     * @see self::setKey()
+     * @var string
      * @access private
      */
     var $ipad;
@@ -147,11 +147,11 @@ class Crypt_Hash
     /**
      * Default Constructor.
      *
-     * @param optional String $hash
+     * @param string $hash
      * @return Crypt_Hash
      * @access public
      */
-    function Crypt_Hash($hash = 'sha1')
+    function __construct($hash = 'sha1')
     {
         if (!defined('CRYPT_HASH_MODE')) {
             switch (true) {
@@ -170,12 +170,24 @@ class Crypt_Hash
     }
 
     /**
+     * PHP4 compatible Default Constructor.
+     *
+     * @see self::__construct()
+     * @param int $mode
+     * @access public
+     */
+    function Crypt_Hash($hash = 'sha1')
+    {
+        $this->__construct($hash);
+    }
+
+    /**
      * Sets the key for HMACs
      *
      * Keys can be of any length.
      *
      * @access public
-     * @param optional String $key
+     * @param string $key
      */
     function setKey($key = false)
     {
@@ -188,7 +200,7 @@ class Crypt_Hash
      * As set by the constructor or by the setHash() method.
      *
      * @access public
-     * @return String
+     * @return string
      */
     function getHash()
     {
@@ -199,7 +211,7 @@ class Crypt_Hash
      * Sets the hash function.
      *
      * @access public
-     * @param String $hash
+     * @param string $hash
      */
     function setHash($hash)
     {
@@ -306,8 +318,8 @@ class Crypt_Hash
      * Compute the HMAC.
      *
      * @access public
-     * @param String $text
-     * @return String
+     * @param string $text
+     * @return string
      */
     function hash($text)
     {
@@ -356,7 +368,7 @@ class Crypt_Hash
      * Returns the hash length (in bytes)
      *
      * @access public
-     * @return Integer
+     * @return int
      */
     function getLength()
     {
@@ -367,7 +379,7 @@ class Crypt_Hash
      * Wrapper for MD5
      *
      * @access private
-     * @param String $m
+     * @param string $m
      */
     function _md5($m)
     {
@@ -378,7 +390,7 @@ class Crypt_Hash
      * Wrapper for SHA1
      *
      * @access private
-     * @param String $m
+     * @param string $m
      */
     function _sha1($m)
     {
@@ -391,7 +403,7 @@ class Crypt_Hash
      * See {@link http://tools.ietf.org/html/rfc1319 RFC1319}.
      *
      * @access private
-     * @param String $m
+     * @param string $m
      */
     function _md2($m)
     {
@@ -467,7 +479,7 @@ class Crypt_Hash
      * See {@link http://en.wikipedia.org/wiki/SHA_hash_functions#SHA-256_.28a_SHA-2_variant.29_pseudocode SHA-256 (a SHA-2 variant) pseudocode - Wikipedia}.
      *
      * @access private
-     * @param String $m
+     * @param string $m
      */
     function _sha256($m)
     {
@@ -520,7 +532,6 @@ class Crypt_Hash
                       $this->_rightShift( $w[$i - 2], 10);
                 // @codingStandardsIgnoreEnd
                 $w[$i] = $this->_add($w[$i - 16], $s0, $w[$i - 7], $s1);
-
             }
 
             // Initialize hash value for this chunk
@@ -574,7 +585,7 @@ class Crypt_Hash
      * Pure-PHP implementation of SHA384 and SHA512
      *
      * @access private
-     * @param String $m
+     * @param string $m
      */
     function _sha512($m)
     {
@@ -757,10 +768,10 @@ class Crypt_Hash
      * Right Rotate
      *
      * @access private
-     * @param Integer $int
-     * @param Integer $amt
-     * @see _sha256()
-     * @return Integer
+     * @param int $int
+     * @param int $amt
+     * @see self::_sha256()
+     * @return int
      */
     function _rightRotate($int, $amt)
     {
@@ -773,10 +784,10 @@ class Crypt_Hash
      * Right Shift
      *
      * @access private
-     * @param Integer $int
-     * @param Integer $amt
-     * @see _sha256()
-     * @return Integer
+     * @param int $int
+     * @param int $amt
+     * @see self::_sha256()
+     * @return int
      */
     function _rightShift($int, $amt)
     {
@@ -788,9 +799,9 @@ class Crypt_Hash
      * Not
      *
      * @access private
-     * @param Integer $int
-     * @see _sha256()
-     * @return Integer
+     * @param int $int
+     * @see self::_sha256()
+     * @return int
      */
     function _not($int)
     {
@@ -803,9 +814,9 @@ class Crypt_Hash
      * _sha256() adds multiple unsigned 32-bit integers.  Since PHP doesn't support unsigned integers and since the
      * possibility of overflow exists, care has to be taken.  Math_BigInteger() could be used but this should be faster.
      *
-     * @param Integer $...
-     * @return Integer
-     * @see _sha256()
+     * @param int $...
+     * @return int
+     * @see self::_sha256()
      * @access private
      */
     function _add()
@@ -821,7 +832,14 @@ class Crypt_Hash
             $result+= $argument < 0 ? ($argument & 0x7FFFFFFF) + 0x80000000 : $argument;
         }
 
-        return fmod($result, $mod);
+        // PHP 5.3, per http://php.net/releases/5_3_0.php, introduced "more consistent float rounding"
+        // PHP_OS & "\xDF\xDF\xDF" == strtoupper(substr(PHP_OS, 0, 3)), but a lot faster
+        if (is_int($result) || version_compare(PHP_VERSION, '5.3.0') >= 0 || (PHP_OS & "\xDF\xDF\xDF") === 'WIN') {
+            return fmod($result, $mod);
+        }
+
+        return (fmod($result, 0x80000000) & 0x7FFFFFFF) |
+            ((fmod(floor($result / 0x80000000), 2) & 1) << 31);
     }
 
     /**
@@ -829,9 +847,9 @@ class Crypt_Hash
      *
      * Inspired by array_shift
      *
-     * @param String $string
-     * @param optional Integer $index
-     * @return String
+     * @param string $string
+     * @param int $index
+     * @return string
      * @access private
      */
     function _string_shift(&$string, $index = 1)

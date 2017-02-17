@@ -143,7 +143,7 @@ while (true)
 		{
 			socket_close($socket);
 			exec('kill -9 '.getmypid());
-			break 2;
+			break;
 		}
 		
 		$i = 0;

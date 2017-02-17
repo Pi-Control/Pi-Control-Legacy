@@ -101,38 +101,50 @@ class System_SSH_Agent_Identity
      *
      * @var Crypt_RSA
      * @access private
-     * @see System_SSH_Agent_Identity::getPublicKey()
+     * @see self::getPublicKey()
      */
     var $key;
 
     /**
      * Key Blob
      *
-     * @var String
+     * @var string
      * @access private
-     * @see System_SSH_Agent_Identity::sign()
+     * @see self::sign()
      */
     var $key_blob;
 
     /**
      * Socket Resource
      *
-     * @var Resource
+     * @var resource
      * @access private
-     * @see System_SSH_Agent_Identity::sign()
+     * @see self::sign()
      */
     var $fsock;
 
     /**
      * Default Constructor.
      *
-     * @param Resource $fsock
+     * @param resource $fsock
      * @return System_SSH_Agent_Identity
      * @access private
      */
-    function System_SSH_Agent_Identity($fsock)
+    function __construct($fsock)
     {
         $this->fsock = $fsock;
+    }
+
+    /**
+     * PHP4 compatible Default Constructor.
+     *
+     * @see self::__construct()
+     * @param resource $fsock
+     * @access public
+     */
+    function System_SSH_Agent_Identity($fsock)
+    {
+        $this->__construct($fsock);
     }
 
     /**
@@ -155,7 +167,7 @@ class System_SSH_Agent_Identity
      * Called by System_SSH_Agent::requestIdentities(). The key blob could be extracted from $this->key
      * but this saves a small amount of computation.
      *
-     * @param String $key_blob
+     * @param string $key_blob
      * @access private
      */
     function setPublicKeyBlob($key_blob)
@@ -168,8 +180,8 @@ class System_SSH_Agent_Identity
      *
      * Wrapper for $this->key->getPublicKey()
      *
-     * @param Integer $format optional
-     * @return Mixed
+     * @param int $format optional
+     * @return mixed
      * @access public
      */
     function getPublicKey($format = null)
@@ -183,7 +195,7 @@ class System_SSH_Agent_Identity
      * Doesn't do anything as ssh-agent doesn't let you pick and choose the signature mode. ie.
      * ssh-agent's only supported mode is CRYPT_RSA_SIGNATURE_PKCS1
      *
-     * @param Integer $mode
+     * @param int $mode
      * @access public
      */
     function setSignatureMode($mode)
@@ -195,8 +207,8 @@ class System_SSH_Agent_Identity
      *
      * See "2.6.2 Protocol 2 private key signature request"
      *
-     * @param String $message
-     * @return String
+     * @param string $message
+     * @return string
      * @access public
      */
     function sign($message)
@@ -235,7 +247,7 @@ class System_SSH_Agent
     /**
      * Socket Resource
      *
-     * @var Resource
+     * @var resource
      * @access private
      */
     var $fsock;
@@ -269,7 +281,7 @@ class System_SSH_Agent
      * @return System_SSH_Agent
      * @access public
      */
-    function System_SSH_Agent()
+    function __construct()
     {
         switch (true) {
             case isset($_SERVER['SSH_AUTH_SOCK']):
@@ -290,12 +302,23 @@ class System_SSH_Agent
     }
 
     /**
+     * PHP4 compatible Default Constructor.
+     *
+     * @see self::__construct()
+     * @access public
+     */
+    function System_SSH_Agent()
+    {
+        $this->__construct();
+    }
+
+    /**
      * Request Identities
      *
      * See "2.5.2 Requesting a list of protocol 2 keys"
      * Returns an array containing zero or more System_SSH_Agent_Identity objects
      *
-     * @return Array
+     * @return array
      * @access public
      */
     function requestIdentities()
@@ -320,8 +343,11 @@ class System_SSH_Agent
         for ($i = 0; $i < $keyCount; $i++) {
             $length = current(unpack('N', fread($this->fsock, 4)));
             $key_blob = fread($this->fsock, $length);
+            $key_str = 'ssh-rsa ' . base64_encode($key_blob);
             $length = current(unpack('N', fread($this->fsock, 4)));
-            $key_comment = fread($this->fsock, $length);
+            if ($length) {
+                $key_str.= ' ' . fread($this->fsock, $length);
+            }
             $length = current(unpack('N', substr($key_blob, 0, 4)));
             $key_type = substr($key_blob, 4, $length);
             switch ($key_type) {
@@ -330,7 +356,7 @@ class System_SSH_Agent
                         include_once 'Crypt/RSA.php';
                     }
                     $key = new Crypt_RSA();
-                    $key->loadKey('ssh-rsa ' . base64_encode($key_blob) . ' ' . $key_comment);
+                    $key->loadKey($key_str);
                     break;
                 case 'ssh-dss':
                     // not currently supported
@@ -354,7 +380,7 @@ class System_SSH_Agent
      * be requested when a channel is opened
      *
      * @param Net_SSH2 $ssh
-     * @return Boolean
+     * @return bool
      * @access public
      */
     function startSSHForwarding($ssh)
@@ -368,7 +394,7 @@ class System_SSH_Agent
      * Request agent forwarding of remote server
      *
      * @param Net_SSH2 $ssh
-     * @return Boolean
+     * @return bool
      * @access private
      */
     function _request_forwarding($ssh)
@@ -424,7 +450,7 @@ class System_SSH_Agent
     /**
      * Forward data to SSH Agent and return data reply
      *
-     * @param String $data
+     * @param string $data
      * @return data from SSH Agent
      * @access private
      */
