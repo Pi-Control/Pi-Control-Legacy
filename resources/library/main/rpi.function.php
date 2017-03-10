@@ -37,11 +37,15 @@ function rpi_getCoreTemprature()
 	return 0;
 }
 
-function rpi_getCpuClock()
+function rpi_getCpuClock($customInput = NULL)
 {
-	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
-	if ($file != false)
-		return round(trim($file)/1000);
+	if (!isset($customInput) || empty($customInput))
+		$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
+	else
+		$file = $customInput;
+	
+	if ($file !== false)
+		return (int) round(trim($file)/1000);
 	
 	return 0;
 }
@@ -49,8 +53,9 @@ function rpi_getCpuClock()
 function rpi_getCpuMinClock()
 {
 	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq');
-	if ($file != false)
-		return round(trim($file)/1000);
+	
+	if ($file !== false)
+		return (int) round(trim($file)/1000);
 	
 	return 0;
 }
@@ -58,8 +63,9 @@ function rpi_getCpuMinClock()
 function rpi_getCpuMaxClock()
 {
 	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq');
-	if ($file != false)
-		return round(trim($file)/1000);
+	
+	if ($file !== false)
+		return (int) round(trim($file)/1000);
 	
 	return 0;
 }
@@ -123,9 +129,9 @@ function rpi_getCPULoad($accurate = false, $mulitcore = false)
 		$idle = $curIdle - $prevIdle;
 		
 		if ($mulitcore == true)
-			$return[$prevCPU[0]] = round(($total - $idle) / $total * 100, 0);
+			$return[$prevCPU[0]] = (int) round(($total - $idle) / $total * 100);
 		else
-			$return = round(($total - $idle) / $total * 100, 0);
+			$return = (int) round(($total - $idle) / $total * 100);
 	}
 	
 	return $return;
@@ -249,7 +255,7 @@ function rpi_getMemorySplit()
 	$rev = $this->getRpiRevision();
 	if ($rev >= 7)
 	{
-		// 512MB
+		// 512 MB
 		$config = @shell_exec('cat /boot/config.txt');
 		preg_match('#gpu_mem=([0-9]+)#i', $config, $match);
 		$total = intval($match[1]);
@@ -262,10 +268,11 @@ function rpi_getMemorySplit()
 			return array('system' => '448 MiB', 'video' => '64 MiB');
 		elseif ($total == 128)
 			return array('system' => '384 MiB', 'video' => '128 MiB');
+		
 		return array('system' => '256 MiB', 'video' => '256 MiB');
 	}
 	
-	// 256MB
+	// 256 MB
 	$mem = $this->getMemoryUsage();
 	$total = round($mem['total'] / 1024 / 1024, 0);
 	
@@ -275,6 +282,7 @@ function rpi_getMemorySplit()
 		return array('system' => '192 MiB', 'video' => '64 MiB');
 	elseif ($total > 192 && $total <= 224)
 		return array('system' => '224 MiB', 'video' => '32 MiB');
+	
 	return array('system' => '240 MiB', 'video' => '16 MiB');
 }
 
@@ -282,7 +290,7 @@ function rpi_getMemoryUsage()
 {
 	exec('free -bo', $data);
 	list($type, $total, $used, $free, $shared, $buffers, $cached) = preg_split('#\s+#', $data[1]);
-	$usage = round(($used - $buffers - $cached) / $total * 100);
+	$usage = (int) round(($used - $buffers - $cached) / $total * 100);
 	
 	return array('percent' => $usage, 'total' => $total, 'free' => ($free + $buffers + $cached), 'used' => ($used - $buffers - $cached));
 }
@@ -291,7 +299,7 @@ function rpi_getSwapUsage()
 {
 	exec('free -bo', $data);
 	list($type, $total, $used, $free) = preg_split('#\s+#', $data[2]);
-	$usage = round($used / $total * 100);
+	$usage = (int) round($used / $total * 100);
 	
 	return array('percent' => $usage, 'total' => $total, 'free' => $free, 'used' => $used);
 }
@@ -329,7 +337,7 @@ function rpi_getMemoryInfo()
 						'total'			=> $blocks * 1024,
 						'used'			=> $use * 1024,
 						'free'			=> $available * 1024,
-						'percent'		=> round(($use * 100 / $blocks), 0),
+						'percent'		=> (int) round(($use * 100 / $blocks)),
 						'mountpoint'	=> $mountpoint
 						);
 	}
@@ -339,7 +347,7 @@ function rpi_getMemoryInfo()
     	return strcasecmp($a['device'], $b['device']);
 	});
 	
-	$devices[] = array('total' => $totalSize, 'used' => $usedSize, 'free' => $totalSize - $usedSize, 'percent' => round(($usedSize * 100 / $totalSize), 0));
+	$devices[] = array('total' => $totalSize, 'used' => $usedSize, 'free' => $totalSize - $usedSize, 'percent' => (int) round(($usedSize * 100 / $totalSize)));
 	
 	return $devices;
 }

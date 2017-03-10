@@ -6,6 +6,12 @@ $doNotCheckForAuthentification = true;
 (include_once realpath(dirname(__FILE__)).'/../init.php')	or die('Error: 0x0000');
 (include_once LIBRARY_PATH.'main/main.function.php')		or die('Error: 0x0001');
 
+if (date('i', time()) % 5 == 0)
+{
+	sleep(7);
+	$cpuClock = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
+}
+
 $folder = CRON_PATH;
 $fileArray = array();
 
@@ -25,7 +31,7 @@ foreach ($fileArray as $file)
 	
 	if (is_numeric($rest) && $rest == 0)
 	{
-		exec('/usr/bin/php -f "'.CRON_PATH.$file.'"');
+		exec('/usr/bin/php -f "'.CRON_PATH.$file.'"'.((isset($cpuClock) && $cpuClock !== false && $file == '5-cpufrequency.php') ? ' '.escapeshellarg($cpuClock) : ''));
 		set_time_limit(30);
 		usleep(500000);
 	}
