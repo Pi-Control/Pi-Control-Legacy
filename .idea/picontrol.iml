@@ -16,6 +16,7 @@
     </orderEntry>
     <orderEntry type="module" module-name="philips-hue" />
     <orderEntry type="module" module-name="temperature" />
-    <orderEntry type="module" module-name="willy-fritzsche" />
+    <orderEntry type="module" module-name="air_pressure" />
+    <orderEntry type="module" module-name="humidity" />
   </component>
 </module>
