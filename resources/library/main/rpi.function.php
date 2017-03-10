@@ -37,12 +37,9 @@ function rpi_getCoreTemprature()
 	return 0;
 }
 
-function rpi_getCpuClock($customInput = NULL)
+function rpi_getCpuClock()
 {
-	if (!isset($customInput) || empty($customInput))
-		$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
-	else
-		$file = $customInput;
+	$file = shell_exec('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
 	
 	if ($file !== false)
 		return (int) round(trim($file)/1000);

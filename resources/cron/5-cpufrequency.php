@@ -11,6 +11,7 @@ $doNotCheckForAuthentification = true;
 $log = new LogStatistic();
 $log->setFile(LOG_PATH.'statistic/cpufrequency.csv');
 $log->setLimit(2016);
-$log->add(array(time(), rpi_getCpuClock((isset($argv[1]) && !empty($argv[1])) ? $argv[1] : NULL)));
+sleep(7);
+$log->add(array(time(), rpi_getCpuClock()));
 $log->close();
 ?>
