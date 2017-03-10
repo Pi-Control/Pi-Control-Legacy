@@ -167,7 +167,7 @@ function deletePlugin($pluginId, $referer = NULL)
 			continue;
 		
 		if (substr($file, $pos+1, strlen($pluginId)+8) == 'plugin.'.$pluginId.'.')
-			var_dump(CRON_PATH.$file);
+			unlink(CRON_PATH.$file);
 	}
 	
 	foreach (scandir(CONFIG_PATH) as $file)
