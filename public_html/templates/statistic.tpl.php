@@ -1,12 +1,15 @@
 <?php if (!defined('PICONTROL')) exit(); ?>
 <noscript>
-<div>
-	<div class="info_red box">
-		<div class="inner">
-			<strong><?php _e('Bitte aktiviere JavaScript, um dir die Statistiken anzusehen.'); ?></strong>
+	<div class="box error">
+		<div>
+			<div class="inner-header">
+				<span><?php _e('JavaScript deaktiviert') ?></span>
+			</div>
+			<div class="inner">
+				<?php _e('Bitte aktiviere JavaScript, um dir die Statistiken anzusehen.'); ?>
+			</div>
 		</div>
 	</div>
-</div>
 </noscript>
 <div class="sidebar order-2">
 	<div class="box">
