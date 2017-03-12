@@ -89,7 +89,7 @@
 								<td><textarea name="privatekey_" style="width: 80%; height: 100px;"></textarea></td>
 							</tr>
 							<tr>
-								<td><strong><?php _e('SSH-Passwort (falls n&ouml;tig)'); ?></strong></td>
+								<td><strong><?php _e('Privatekey-Passwort (falls n&ouml;tig)'); ?></strong></td>
 								<td><input type="password" name="password_" style="width: 40%;" /></td>
 							</tr>
 					</table>
