@@ -48,7 +48,7 @@
 									<option value="wunderground"<?php if ($data['weather-service'] == 'wunderground') echo ' selected="selected"'; ?> data-url="https://www.wunderground.com/">Wunderground</option>
 								</optgroup>
 							</select></td>
-						<td><input type="text" name="weather-service-token" value="<?php echo $data['weather-service-token']; ?>" placeholder="API-Key" maxlength="32"<?php if ($data['weather-service'] == 'yahoo') echo ' style="display: none;"'; ?> /> <a href="#" class="weather-service-link button" target="_blank">Zum Anbieter</a></td>
+						<td><input type="text" name="weather-service-token" value="<?php echo $data['weather-service-token']; ?>" placeholder="API-Key" maxlength="32"<?php if ($data['weather-service'] == 'yahoo') echo ' style="display: none;"'; ?> /> <a href="#" class="weather-service-link button" target="_blank"><?php _e('Zum Anbieter'); ?></a></td>
 					</tr>
 					<tr>
 						<td><?php _e('Standort'); ?></td>
@@ -73,8 +73,8 @@
 					<tr class="weather-location-type-coordinates">
 						<td></td>
 						<td><input type="radio" name="weather-location-type" id="cb-weather-location-coordinates" value="coordinates"<?php if ($data['weather-type'] == 'coordinates') echo ' checked="checked"'; ?> /><label for="cb-weather-location-coordinates" class="radio"><?php _e('Koordinaten'); ?></label></td>
-						<td>Breitengrad <input type="text" name="weather-location-coordinates-latitude-text" value="<?php echo $data['weather-coordinates-latitude']; ?>" /><br />
-							L&auml;ngengrad <input type="text" name="weather-location-coordinates-longitude-text" value="<?php echo $data['weather-coordinates-longitude']; ?>" /></td>
+						<td><?php _e('Breitengrad'); ?> <input type="text" name="weather-location-coordinates-latitude-text" value="<?php echo $data['weather-coordinates-latitude']; ?>" /><br />
+							<?php _e('L&auml;ngengrad'); ?> <input type="text" name="weather-location-coordinates-longitude-text" value="<?php echo $data['weather-coordinates-longitude']; ?>" /></td>
 					</tr>
 				</table>
 			</div>
