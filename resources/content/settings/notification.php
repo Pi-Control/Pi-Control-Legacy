@@ -88,7 +88,7 @@ if ($token != '')
     {
 		$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 		$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-		$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control', 'body' => _t('Dein Pi Control hat dir eine Testbenachrichtigung gesendet.'))));
+		$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control', 'body' => _t('Dein Pi Control "%s" hat dir eine Testbenachrichtigung gesendet.', getConfig('main:main.label', 'Raspberry Pi')))));
 		$curl->execute();
 		
 		if ($curl->getStatusCode() != 200)

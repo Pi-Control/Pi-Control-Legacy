@@ -30,7 +30,7 @@ if (getConfig('main:notificationPB.enabled', false))
                 
 				$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 				$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-				$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Aktualisierung verfügbar'), 'body' => _t('Pi Control Version %s steht ab sofort zum herunterladen bereit.', $picontrolUpdate['version']))));
+				$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Aktualisierung verfügbar'), 'body' => _t('Pi Control Version %s steht ab sofort für dein Pi Control "%s" zum herunterladen bereit.', $picontrolUpdate['version'], getConfig('main:main.label', 'Raspberry Pi')))));
 				$curl->execute();
                 
                 // Reduziere Traffic, da selbst bei Fehler erst wieder nach 21600 Sek. geprüft wird
@@ -59,7 +59,7 @@ if (getConfig('main:notificationPB.enabled', false))
         {
 			$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 			$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Temperaturüberschreitung'), 'body' => _t('Dein Pi Control meldet eine erhöhte Temperatur der CPU von %s °C.', $temp))));
+			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Temperaturüberschreitung'), 'body' => _t('Dein Pi Control "%s" meldet eine erhöhte Temperatur der CPU von %s °C.', getConfig('main:main.label', 'Raspberry Pi'), $temp))));
 			$curl->execute();
 			
 			if ($curl->getResult($data) == JSON_ERROR_NONE)
@@ -88,7 +88,7 @@ if (getConfig('main:notificationPB.enabled', false))
         {
 			$curl = new cURL('https://api.pushbullet.com/v2/pushes', HTTP_POST);
 			$curl->addHeader(array('Authorization: Bearer '.$token, 'Content-Type: application/json'));
-			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Speicherverbrauch'), 'body' => _t('Dein Pi Control meldet einen Speicherverbrauch von %d%%.', $percent))));
+			$curl->setParameterRaw(json_encode(array('type' => 'note', 'title' => 'Pi Control | '._t('Speicherverbrauch'), 'body' => _t('Dein Pi Control "%s" meldet einen Speicherverbrauch von %d%%.', getConfig('main:main.label', 'Raspberry Pi'), $percent))));
 			$curl->execute();
 			
 			if ($curl->getResult($data) == JSON_ERROR_NONE)
