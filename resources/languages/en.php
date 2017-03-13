@@ -559,6 +559,8 @@ $langArray = array(
 	'fb79710d' => 'To the provider',
 	'a520cdd1' => 'Coordinates',
 	'9440e2eb' => 'Latitude',
-	'e045e08f' => 'Longitude'
+	'e045e08f' => 'Longitude',
+	'8360feef' => 'Info display',
+	'b44005b5' => 'Select the format for the info display.'
 );
 ?>
