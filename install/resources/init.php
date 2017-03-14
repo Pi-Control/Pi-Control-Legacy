@@ -8,8 +8,8 @@ if (!isset($config))
 			'ssh_ip'							=> '127.0.0.1'
 		),
 		'version' => array(
-			'version'							=> '2.0',
-			'versioncode'						=> 26,
+			'version'							=> '2.0.1',
+			'versioncode'						=> 27,
 			'android_comp_level'				=> 19
 		),
 		'url' => array(
