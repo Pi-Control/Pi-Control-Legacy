@@ -65,6 +65,9 @@ function getRowsFromLog(&$arr, &$info, $log, $columns, $cycle)
 	
 	foreach ($log as $row)
 	{
+		foreach ($row as &$data)
+			$data = trim($data);
+		
 		if ($leapyearSkip != 0)
 		{
 			$leapyearSkip--;
