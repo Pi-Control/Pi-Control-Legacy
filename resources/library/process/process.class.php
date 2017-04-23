@@ -8,7 +8,7 @@ class ProcessController
 	
 	private function runCommand()
 	{
-		$this->rawOutput = shell_exec('top -b -n 1 | tail -n +8');
+		$this->rawOutput = shell_exec('ps axo pid,ppid,user,stat,pcpu,pmem,etime,time,comm | tail -n +2');
 	}
 	
 	private function handleRawOutput()
@@ -33,17 +33,14 @@ class ProcessController
 			
 			$newProcess = new ProcessEntry();
 			$newProcess->setPid($split[0]);
-			$newProcess->setUser($split[1]);
-			$newProcess->setPriority($split[2]);
-			$newProcess->setNice($split[3]);
-			$newProcess->setVirtualMemory($split[4]);
-			$newProcess->setPhysicalMemory($split[5]);
-			$newProcess->setSharedMemory($split[6]);
-			$newProcess->setStatus($split[7]);
-			$newProcess->setCpu($split[8]);
-			$newProcess->setRam($split[9]);
-			$newProcess->setRuntime($split[10]);
-			$newProcess->setCommand($split[11]);
+			$newProcess->setPpid($split[1]);
+			$newProcess->setUser($split[2]);
+			$newProcess->setStatus($split[3]);
+			$newProcess->setCpu($split[4]);
+			$newProcess->setRam($split[5]);
+			$newProcess->setElapsedTime($split[6]);
+			$newProcess->setRuntime($split[7]);
+			$newProcess->setCommand($split[8]);
 			
 			$this->processes[] = $newProcess;
 		}
@@ -80,21 +77,53 @@ class ProcessController
 		
 		return $count;
 	}
+	
+	static public function isPidWithStartTimeExists($pid, $time) {
+		if (!function_exists('getStartTimeFromTime'))
+			(include_once LIBRARY_PATH.'process/process.function.php');
+		
+		$rawOutput = shell_exec('ps -eo pid,etime | grep -E \'^[[:space:]]*'.escapeshellarg($pid).' \' | head -n 1');
+		
+		$split = preg_split('#[\s]+#', $rawOutput);
+		
+		if ($split[0] == '')
+		{
+			unset($split[0]);
+			$split = array_values($split);
+		}
+		
+		return ($split[0] == $pid && abs(getStartTimeFromTime($split[1]) -  $time) < 10);
+	}
+	
+	public function terminatePid($pid)
+	{
+		global $tpl;
+		
+		list ($SSHReturn, $SSHError, $SSHExitStatus) = $tpl->executeSSH('sudo kill -SIGTERM '.escapeshellarg($pid));
+		
+		return ($SSHError == '' && $SSHExitStatus == 0) ? true : false;
+	}
+	
+	public function killPid($pid)
+	{
+		global $tpl;
+		
+		list ($SSHReturn, $SSHError, $SSHExitStatus) = $tpl->executeSSH('sudo kill -SIGKILL '.escapeshellarg($pid));
+		
+		return ($SSHError == '' && $SSHExitStatus == 0) ? true : false;
+	}
 }
 
 class ProcessEntry
 {
 
 	private $pid;
+	private $ppid;
 	private $user;
-	private $priority;
-	private $nice;
-	private $virtualMemory;
-	private $physicalMemory;
-	private $sharedMemory;
 	private $status;
 	private $cpu;
 	private $ram;
+	private $elapsedTime;
 	private $runtime;
 	private $command;
 	
@@ -108,6 +137,16 @@ class ProcessEntry
 		$this->pid = $pid;
 	}
 	
+	public function getPpid()
+	{
+		return $this->ppid;
+	}
+	
+	public function setPpid($ppid)
+	{
+		$this->ppid = $ppid;
+	}
+	
 	public function getUser()
 	{
 		return $this->user;
@@ -116,56 +155,6 @@ class ProcessEntry
 	public function setUser($user)
 	{
 		$this->user = $user;
-	}
-	
-	public function getPriority()
-	{
-		return $this->priority;
-	}
-	
-	public function setPriority($priority)
-	{
-		$this->priority = $priority;
-	}
-	
-	public function getNice()
-	{
-		return $this->nice;
-	}
-	
-	public function setNice($nice)
-	{
-		$this->nice = $nice;
-	}
-	
-	public function getVirtualMemory()
-	{
-		return $this->virtualMemory;
-	}
-	
-	public function setVirtualMemory($virtualMemory)
-	{
-		$this->virtualMemory = $virtualMemory;
-	}
-	
-	public function getPhysicalMemory()
-	{
-		return $this->physicalMemory;
-	}
-	
-	public function setPhysicalMemory($physicalMemory)
-	{
-		$this->physicalMemory = $physicalMemory;
-	}
-	
-	public function getSharedMemory()
-	{
-		return $this->sharedMemory;
-	}
-	
-	public function setSharedMemory($sharedMemory)
-	{
-		$this->sharedMemory = $sharedMemory;
 	}
 	
 	public function getStatus()
@@ -198,6 +187,16 @@ class ProcessEntry
 		$this->ram = $ram;
 	}
 	
+	public function getElapsedTime()
+	{
+		return $this->elapsedTime;
+	}
+	
+	public function setElapsedTime($elapsedTime)
+	{
+		$this->elapsedTime = $elapsedTime;
+	}
+	
 	public function getRuntime()
 	{
 		return $this->runtime;
@@ -217,6 +216,8 @@ class ProcessEntry
 	{
 		$this->command = $command;
 	}
+	
+	
 
 }
 
