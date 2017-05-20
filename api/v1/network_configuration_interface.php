@@ -12,11 +12,12 @@ $api = new API;
 
 if (isset($_POST['interface']) && ($pInterface = trim($_POST['interface'])) != '')
 {
-	list ($status, $error) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface).' && sudo ifup '.escapeshellarg($pInterface), 60);
+	list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface).' && sudo ifup '.escapeshellarg($pInterface), 60);
 	
 	$api->addData('success', 'true');
 	$api->addData('status', $status);
 	$api->addData('error', $error);
+	$api->addData('exitStatus', $exitStatus);
 }
 else
 	$api->setError('error', 'No interface set.');

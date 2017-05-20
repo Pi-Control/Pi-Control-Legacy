@@ -23,10 +23,10 @@ if (isset($_POST['execute']))
 		switch ($_POST['execute'])
 		{
 			case 'shutdown':
-				list ($SSHReturn, $SSHError) = $tpl->executeSSH('sudo /sbin/shutdown -h now', true, 0);
+				list ($SSHReturn, $SSHError, $SSHExitStatus) = $tpl->executeSSH('sudo /sbin/shutdown -h now', true, 0);
 					break;
 			case 'restart':
-				list ($SSHReturn, $SSHError) = $tpl->executeSSH('sudo /sbin/shutdown -r now', true, 0);
+				list ($SSHReturn, $SSHError, $SSHExitStatus) = $tpl->executeSSH('sudo /sbin/shutdown -r now', true, 0);
 					break;
 			default:
 				$api->setError('error', 'Unknown execute.');

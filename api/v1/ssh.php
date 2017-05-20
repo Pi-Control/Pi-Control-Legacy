@@ -87,14 +87,11 @@ if (isset($_POST['execute']))
 		
 		switch ($_POST['execute'])
 		{
-			case 'directory':
-				list ($SSHReturn, $SSHError) = $tpl->executeSSH('ls -l', true, 0);
-					break;
 			case 'shutdown':
-				list ($SSHReturn, $SSHError) = $tpl->executeSSH('sudo shutdown -h now', true, 0);
+				list ($SSHReturn, $SSHError, $SSHExitStatus) = $tpl->executeSSH('sudo shutdown -h now', true, 0);
 					break;
 			case 'restart':
-				list ($SSHReturn, $SSHError) = $tpl->executeSSH('sudo shutdown -r now', true, 0);
+				list ($SSHReturn, $SSHError, $SSHExitStatus) = $tpl->executeSSH('sudo shutdown -r now', true, 0);
 					break;
 			default:
 				$api->setError('error', 'Unknown execute.');
@@ -103,6 +100,7 @@ if (isset($_POST['execute']))
 		
 		$api->addData('return', $SSHReturn);
 		$api->addData('error', $SSHError);
+		$api->addData('exitStatus', $SSHExitStatus);
 	}
 	while (false);
 }

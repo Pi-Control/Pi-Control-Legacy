@@ -814,8 +814,9 @@ class PiTpl
 			return false;
 		
 		$error = $this->tplSSH->getStdError();
+		$exitStatus = $this->tplSSH->getExitStatus();
 		
-		return array($output, $error);
+		return array($output, $error, $exitStatus);
 	}
 	
 	/**

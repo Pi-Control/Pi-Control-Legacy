@@ -23,7 +23,7 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 			$networkInterface = new NetworkInterface($tpl);
 			$pPsk = $_POST['psk'];
 			
-			list ($passphrase, $error) = $tpl->executeSSH('sudo wpa_passphrase '.escapeshellarg($pSsid).' '.escapeshellarg($pPsk).' | grep "psk=[[:alnum:]]"', true);
+			list ($passphrase, $error, $exitStatus) = $tpl->executeSSH('sudo wpa_passphrase '.escapeshellarg($pSsid).' '.escapeshellarg($pPsk).' | grep "psk=[[:alnum:]]"', true);
 			$passphrase = trim(str_replace('psk=', '', $passphrase));
 			
 			$network = array('ssid' => '"'.$pSsid.'"', 'psk' => $passphrase);
@@ -50,11 +50,12 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 		{
 			set_time_limit(60);
 			
-			list ($status, $error) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface));
+			list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface));
 			
 			$api->addData('success', 'true');
 			$api->addData('status', $status);
 			$api->addData('error', $error);
+			$api->addData('exitStatus', $exitStatus);
 		}
 		else
 			$api->setError('error', 'No interface set.');
@@ -65,11 +66,12 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 		{
 			set_time_limit(60);
 			
-			list ($status, $error) = $tpl->executeSSH('sudo ifup '.escapeshellarg($pInterface), 60);
+			list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifup '.escapeshellarg($pInterface), 60);
 			
 			$api->addData('success', 'true');
 			$api->addData('status', $status);
 			$api->addData('error', $error);
+			$api->addData('exitStatus', $exitStatus);
 		}
 		else
 			$api->setError('error', 'No interface set.');
@@ -78,13 +80,14 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'get':
 		if (isset($_POST['interface']) && ($pInterface = trim($_POST['interface'])) != '')
 		{
-			list ($status, $error) = $tpl->executeSSH('sudo /sbin/ifconfig '.escapeshellarg($pInterface).' | sed -n \'2s/[^:]*:\([^ ]*\).*/\1/p\'');
+			list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo /sbin/ifconfig '.escapeshellarg($pInterface).' | sed -n \'2s/[^:]*:\([^ ]*\).*/\1/p\'');
 			
 			$api->addData('success', 'true');
 			$api->addData('ip', (filter_var(trim($status), FILTER_VALIDATE_IP) !== false) ? trim($status) : 'no ip');
 			$api->addData('errorMsg', _t('Konnte IP-Adresse nicht abrufen!'));
 			$api->addData('status', $status);
 			$api->addData('error', $error);
+			$api->addData('exitStatus', $exitStatus);
 		}
 		else
 			$api->setError('error', 'No interface set.');
