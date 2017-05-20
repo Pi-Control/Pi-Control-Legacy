@@ -25,7 +25,7 @@ function writeNetworkWPASupplicant($lines)
 			$fileLines .= $line.PHP_EOL;
 	}
 	
-	list ($status, $error) = $tpl->executeSSH('echo -e '.escapeshellarg($fileLines).' | sudo /bin/su -c "cat > /etc/wpa_supplicant/wpa_supplicant.conf"');
+	list ($status, $error, $exitStatus) = $tpl->executeSSH('echo -e '.escapeshellarg($fileLines).' | sudo /bin/su -c "cat > /etc/wpa_supplicant/wpa_supplicant.conf"');
 	
 	if ($status == '')
 		return true;
@@ -37,7 +37,7 @@ function getAllNetworkWPASupplicant()
 {
 	global $tpl;
 	
-	list ($status, $error) = $tpl->executeSSH('sudo cat /etc/wpa_supplicant/wpa_supplicant.conf');
+	list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo cat /etc/wpa_supplicant/wpa_supplicant.conf');
 	
 	$splits = explode(PHP_EOL, $status);
 	$lines = array();
@@ -120,10 +120,10 @@ function editHostname($hostname)
 	
 	$new = preg_replace('/^(127\.0\.1\.1[\s]+)(.+)$/im', '$1'.$hostname, $hosts);
 	
-	list ($status, $error) = $tpl->executeSSH('echo -e '.escapeshellarg($new).' | sudo /bin/su -c "cat > /etc/hosts"');
+	list ($status, $error, $exitStatus) = $tpl->executeSSH('echo -e '.escapeshellarg($new).' | sudo /bin/su -c "cat > /etc/hosts"');
 	
 	if ($status == '')
-		list ($status2, $error2) = $tpl->executeSSH('echo -e '.escapeshellarg($hostname).' | sudo /bin/su -c "cat > /etc/hostname"');
+		list ($status2, $error2, $exitStatus2) = $tpl->executeSSH('echo -e '.escapeshellarg($hostname).' | sudo /bin/su -c "cat > /etc/hostname"');
 	else
 		return $status;
 	

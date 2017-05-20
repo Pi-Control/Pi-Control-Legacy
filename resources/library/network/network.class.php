@@ -211,7 +211,7 @@ class NetworkInterface
 		foreach ($this->comments as $comment)
 			$fileLines .= trim($comment).PHP_EOL;
 		
-		list ($status, $error) = $this->tpl->executeSSH('echo -e '.escapeshellarg($fileLines).' | sudo /bin/su -c "cat > /etc/network/interfaces"');
+		list ($status, $error, $exitStatus) = $this->tpl->executeSSH('echo -e '.escapeshellarg($fileLines).' | sudo /bin/su -c "cat > /etc/network/interfaces"');
 		
 		if ($status == '')
 			return $this->readInterfaces();
