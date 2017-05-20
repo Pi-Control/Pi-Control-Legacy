@@ -121,8 +121,8 @@ $statisticConfig = array(
 		)
 	),
 	'network' => array(
-		'title' => '',
-		'label' => 'Traffic (MB)',
+		'title' => 'Netzwerkdaten - %%s',
+		'label' => 'Daten (MB)',
 		'unit' => 'MB',
 		'cycle' => 5,
 		'columns' => array(
@@ -142,6 +142,41 @@ $statisticConfig = array(
 				'type' => 'number',
 				'downloadTitle' => 'Empfangen in Byte',
 				'division' => 1048576
+			)
+		),
+		'limits' => array(
+			'min' => array(
+				'value' => 0.90,
+				'use' => 'multiply',
+				'fix' => false
+			),
+			'max' => array(
+				'value' => 1.10,
+				'use' => 'multiply',
+				'fix' => false
+			)
+		)
+	),
+	'network_packets' => array(
+		'title' => 'Netzwerkpakete - %%s',
+		'label' => 'Pakete',
+		'unit' => 'Pakete',
+		'cycle' => 5,
+		'columns' => array(
+			array(
+				'label' => 'Zeit',
+				'type' => 'datetime',
+				'downloadTitle' => 'Datum'
+			),
+			array(
+				'label' => 'Gesendet',
+				'type' => 'number',
+				'downloadTitle' => 'Gesendete Pakete'
+			),
+			array(
+				'label' => 'Empfangen',
+				'type' => 'number',
+				'downloadTitle' => 'Empfangene Pakete'
 			)
 		),
 		'limits' => array(

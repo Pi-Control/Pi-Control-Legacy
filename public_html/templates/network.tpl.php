@@ -12,6 +12,7 @@
 			<span><?php _e('Traffic'); ?></span>
 		</div>
 		<div class="inner-table">
+			<strong>Daten</strong><br /><br />
 			<table class="table table-borderless">
 				<tr>
 					<th style="width: 20%;"><?php _e('Interface'); ?></th>
@@ -25,6 +26,23 @@
 					<td><?php echo sizeUnit($value['receive']); ?></td>
 				</tr>
 <?php } ?>
+			</table>
+		</div>
+		<div class="inner-table">
+			<br /><strong>Pakete</strong><br /><br />
+			<table class="table table-borderless">
+				<tr>
+					<th style="width: 20%;"><?php _e('Interface'); ?></th>
+					<th style="width: 40%;"><?php _e('Gesendet'); ?></th>
+					<th style="width: 40%;"><?php _e('Empfangen'); ?></th>
+				</tr>
+				<?php foreach ($data['network_connections'] as $value) { ?>
+					<tr>
+						<td><?php echo $value['interface']; ?></td>
+						<td><?php echo $value['packets']['sent']; ?></td>
+						<td><?php echo $value['packets']['received']; ?></td>
+					</tr>
+				<?php } ?>
 			</table>
 		</div>
 	</div>
@@ -75,6 +93,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php echo $key; ?></span>
+			<div><a href="?s=network&amp;refresh_wlan" class="inner-title-icon"><img src="public_html/img/refresh-icon.svg" title="Aktualisieren" /></a></div>
 		</div>
 		<div class="inner-table">
 			<table class="table table-borderless responsive-network-wlan-table">

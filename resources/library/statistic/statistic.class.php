@@ -23,7 +23,7 @@ class LogStatistic
 	
 	public function setLength($pLength = 100)
 	{
-		$this->$length = $pLength;
+		$this->length = $pLength;
 	}
 	
 	public function add($entry, $moreThanOne = false)
@@ -304,6 +304,10 @@ class StatisticBuilder
 			}
 			
 			$this->columns[] = $column;
+		}
+		
+		if (substr_count($this->title, '%s') == 1) {
+			$this->title = sprintf($this->title, $this->suffix);
 		}
 		
 		if ($this->title == '')

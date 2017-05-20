@@ -437,6 +437,12 @@ function getAllNetworkConnections()
 		$output3 = $match_rx[1];
 		$output4 = $match_tx[1];
 		
+		preg_match('#RX packets:([\d]+)#', $streamInterface, $match_rx);
+		preg_match('#TX packets:([\d]+)#', $streamInterface, $match_tx);
+		
+		$output5 = $match_rx[1];
+		$output6 = $match_tx[1];
+		
 		if (substr($output0, 0, 4) == 'wlan')
 		{
 			$streamWirelessInterface = shell_exec('/sbin/iwconfig '.$output0);
@@ -471,7 +477,7 @@ function getAllNetworkConnections()
 			}
 		}
 		
-		$output[] = array('interface' => $output0, 'mac' => $output1, 'ip' => $output2, 'sent' => $output4, 'receive' => $output3, 'option' => $wirelessOption);
+		$output[] = array('interface' => $output0, 'mac' => $output1, 'ip' => $output2, 'sent' => $output4, 'receive' => $output3, 'option' => $wirelessOption, 'packets' => array('sent' => $output5, 'received' => $output6));
 	}
 	
 	return $output;
@@ -491,7 +497,7 @@ function scanAccessPoints($networkConnections, $ssh = false)
 		$wlan[$interface['interface']] = array();
 		
 		if ($ssh == true)
-			list ($streamWlan, ) = $tpl->executeSSH('sudo /sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
+			list ($streamWlan, , ) = $tpl->executeSSH('sudo /sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
 		else
 			$streamWlan = shell_exec('/sbin/iwlist '.escapeshellarg($interface['interface']).' scan');
 		
