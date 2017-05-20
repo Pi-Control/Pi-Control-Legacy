@@ -17,7 +17,7 @@
 					<tr>
 						<th style="width: 5%;"></th>
 						<th style="width: 75%;"><?php _e('Name'); ?></th>
-						<th style="width: 10%;" class="table-center"><?php _e('Download'); ?></th>
+						<th style="width: 10%;" class="table-center"><?php _e('Herunterladen'); ?></th>
 						<th style="width: 10%;"></th>
 					</tr>
 <?php foreach ($data['statistics'] as $id => $statistic) { ?>

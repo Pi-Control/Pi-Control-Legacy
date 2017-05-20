@@ -7,7 +7,6 @@
 		</div>
 		<div class="inner">
 			<strong><?php _e('Anzahl an installierten Paketen: %s', $data['installedPackagesCount']); ?></strong>
-			</table>
 		</div>
 		<div class="inner-table overflow-auto">
 			<table class="table table-borderless">
