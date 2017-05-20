@@ -42,6 +42,7 @@ elseif (isset($_POST['kill'], $_POST['pid'], $_POST['startTime']) && $_POST['kil
 $tpl->assign('processCount', $processController->getCount());
 $tpl->assign('processCountRunning', $processController->getCountRunning());
 $tpl->assign('processes', $processController->getProcesses());
+$tpl->assign('sshAvailable', ($tpl->getSSHResource() instanceof Net_SSH2) ? true : false);
 
 $tpl->draw('processes');
 
