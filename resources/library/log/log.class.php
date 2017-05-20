@@ -30,6 +30,16 @@ class LogController
 		return $this->logs;
 	}
 	
+	public function getAllArray()
+	{
+		$output = [];
+		
+		foreach ($this->logs as $log)
+			$output[] = $log->toArray();
+		
+		return $output;
+	}
+	
 	public function getGroupFromRelativePath($path)
 	{
 		$log = $this->getGroupFromPath($this->logPath.$path);
@@ -293,6 +303,20 @@ class LogGroup
 	{
 		$this->sshAvailable = $sshAvailable;
 	}
+	
+	public function toArray() {
+		$entries = [];
+		
+		foreach ($this->entries as $entry)
+			$entries[] = $entry->toArray();
+		
+		return [
+			'name' => $this->name,
+			'path' => $this->path,
+			'relativePath' => $this->relativePath,
+			'entries' => $entries
+		];
+	}
 }
 
 class LogEntry
@@ -347,6 +371,17 @@ class LogEntry
 	public function getRelativePath()
 	{
 		return $this->logGroup->getRelativePath().$this->filename;
+	}
+	
+	public function toArray() {
+		return [
+			'filename' => $this->filename,
+			'readable' => $this->getReadable(),
+			'filesize' => $this->getFilesize(),
+			'modified' => $this->getModified(),
+			'path' => $this->getPath(),
+			'relativePath' => $this->getRelativePath()
+		];
 	}
 }
 

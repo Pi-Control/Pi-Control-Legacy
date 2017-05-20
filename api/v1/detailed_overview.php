@@ -85,11 +85,6 @@ if (isset($_POST['data']))
 				$memory = rpi_getMemoryInfo();
 				$api->addData('memoryCount', count($memory));
 					break;
-			case 'allUsers':
-				$users = new Cache('users', 'rpi_getAllUsers');
-				$users->load();
-				$api->addData('allUsers', array('data' => $users->getContent(), 'hint' => $users->displayHint(true)));
-					break;
 			case 'runningTasksCount':
 				$api->addData('runningTasksCount', rpi_getCountRunningTasks());
 					break;

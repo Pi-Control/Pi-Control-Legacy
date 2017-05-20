@@ -54,6 +54,17 @@ class ProcessController
 		return $this->processes;
 	}
 	
+	public function getProcessesArray()
+	{
+		$output = [];
+		
+		foreach ($this->getProcesses() as $process) {
+			$output[] = $process->toArray();
+		}
+		
+		return $output;
+	}
+	
 	public function getCount()
 	{
 		if ($this->rawOutput === NULL)
@@ -116,7 +127,6 @@ class ProcessController
 
 class ProcessEntry
 {
-
 	private $pid;
 	private $ppid;
 	private $user;
@@ -217,7 +227,19 @@ class ProcessEntry
 		$this->command = $command;
 	}
 	
-	
+	public function toArray() {
+		return [
+			'pid' => $this->pid,
+			'ppid' => $this->ppid,
+			'user' => $this->user,
+			'status' => $this->status,
+			'cpu' => $this->cpu,
+			'ram' => $this->ram,
+			'elapsedTime' => $this->elapsedTime,
+			'runtime' => $this->runtime,
+			'command' => $this->command
+		];
+	}
 
 }
 
