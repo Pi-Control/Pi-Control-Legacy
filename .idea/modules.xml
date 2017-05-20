@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/philips-hue/.idea/philips-hue.iml" filepath="$PROJECT_DIR$/../picontrol.plugin/2.0 Fertig/philips-hue/.idea/philips-hue.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/picontrol.iml" filepath="$PROJECT_DIR$/.idea/picontrol.iml" />
     </modules>
   </component>
