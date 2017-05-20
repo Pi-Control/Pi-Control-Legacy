@@ -8,9 +8,6 @@ $tpl->setHeaderTitle(_t('Detaillierte &Uuml;bersicht'));
 $cpu = rpi_getCPULoad(true, true);
 $ram = rpi_getMemoryUsage();
 $memory = rpi_getMemoryInfo();
-$users = new Cache('users', 'rpi_getAllUsers');
-
-$users->load();
 
 $tpl->assign('time', date('d.m.Y H:i:s', time()));
 $tpl->assign('timezone', date('e (P)', time()));
@@ -33,8 +30,6 @@ $tpl->assign('cpu_temp', numberFormat(rpi_getCoreTemprature()).' &deg;C');
 $tpl->assign('ram_percentage', $ram['percent'].'%');
 $tpl->assign('memory', $memory);
 $tpl->assign('memory_count', count($memory));
-$tpl->assign('all_users', $users->getContent());
-$tpl->assign('users_cache_hint', $users->displayHint());
 $tpl->assign('runningTasksCount', rpi_getCountRunningTasks());
 $tpl->assign('installedPackagesCount', rpi_getCountInstalledPackages());
 
