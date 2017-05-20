@@ -14,7 +14,10 @@ $site = array(
 	'settings' => 'settings.php',
 	'ssh_login' => 'ssh_login.php',
 	'terminal' => 'terminal.php',
-	'shutdown' => 'shutdown.php'
+	'shutdown' => 'shutdown.php',
+	'users_groups' => 'users_groups.php',
+	'logs' => 'logs.php',
+	'processes' => 'processes.php'
 );
 
 $include = array(

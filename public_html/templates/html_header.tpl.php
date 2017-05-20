@@ -69,6 +69,13 @@
 <?php } } ?>
 					</div>
 				</div>
+				<div class="navi-dropdown"><a href="#"><span style="transform: rotate(90deg); display: block; font-weight: normal; line-height: 15px;">&#10095;</span></a>
+					<div class="navi-dropdown-container">
+						<a href="?s=users_groups">Benutzer/Gruppen</a>
+						<a href="?s=logs">Logdateien</a>
+						<a href="?s=processes">Prozesse</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
