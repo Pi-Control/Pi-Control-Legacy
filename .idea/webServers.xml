@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="61065588-e3cb-4efb-bf6c-26f39094c946" name="Willys-Pi" url="http://willys-pi/">
-        <fileTransfer host="willys-pi" port="22" privateKey="C:\Users\wfrit\.ssh\Willys-PC\id_rsa" rootFolder="/var/www/html" accessType="SFTP" keyPair="true">
+        <fileTransfer host="192.168.178.90" port="22" privateKey="C:\Users\wfrit\.ssh\Willys-PC\id_rsa" rootFolder="/var/www/html" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
