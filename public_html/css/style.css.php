@@ -854,6 +854,39 @@ td.table-middle *, th.table-middle * {
 	width: 100%;
 }
 
+.log-view {
+	overflow: auto;
+	height: 400px;
+	font-family: monospace;
+}
+
+.log-view-outer {
+	display: table;
+	height: 100%;
+}
+
+.log-view-line_numbers {
+	display: table-cell;
+	background: <?php echo $colorPallet[0]; ?>;
+	min-width: 30px;
+	text-align: right;
+	padding: 2px 10px;
+}
+
+.log-view-text {
+	display: table-cell;
+	white-space: nowrap;
+	padding: 2px 5px;
+}
+
+.process-table-min-width-text-overflow td:nth-child(8) {
+	min-width: 150px;
+	max-width: 150px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 .navi-dropdown-update {
 	display: block;
 	background: #FFC107;
@@ -998,25 +1031,13 @@ img {
 	color: #999999;
 }
 
-.settings-shortcut-icon {
+.settings-shortcut-icon, .go-back-icon, .inner-title-icon {
 	text-decoration: none;
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.settings-shortcut-icon img {
-	width: 16px;
-	height: 16px;
-	display: block;
-}
-
-.go-back-icon {
-	text-decoration: none;
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.go-back-icon img {
+.settings-shortcut-icon img, .go-back-icon img, .inner-title-icon img {
 	width: 16px;
 	height: 16px;
 	display: block;
@@ -1156,6 +1177,7 @@ input[type="button"], button, input[type="submit"], .button {
 	font-size: 13px;
 	display: inline-block;
 	transition: all 100ms linear;
+	user-select: none;
 }
 
 input[type="button"]:hover, button:hover, input[type="submit"]:hover, .button:hover {
