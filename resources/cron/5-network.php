@@ -47,6 +47,12 @@ foreach ($networkConnections as $network)
 	
 	$log->add(array(time(), ($last[1] + (4294967295 * $countSent - $last[1]) + $network['sent']), ($last[2] + (4294967295 * $countReceive - $last[2]) + $network['receive'])));
 	$log->close();
+	
+	$log = new LogStatistic();
+	$log->setFile(LOG_PATH.'statistic/network_packets_'.$network['interface'].'.csv');
+	$log->setLimit(2016);
+	$log->add(array(time(), $network['packets']['sent'], $network['packets']['receive']));
+	$log->close();
 }
 
 setConfig('main:network.overflowCount', htmlspecialchars(serialize($networkCounts)));
