@@ -62,7 +62,7 @@ foreach ($filesFolders as $file => $info)
 }
 
 // Sonstiges
-if ($otherDistribution['version'] == 'Raspbian GNU/Linux 7' || $otherDistribution['version'] == 'Raspbian GNU/Linux 8')
+if ($otherDistribution['version'] == 'Raspbian GNU/Linux 7' || $otherDistribution['version'] == 'Raspbian GNU/Linux 8' || $otherDistribution['version'] == 'Raspbian GNU/Linux 9')
 	$otherDistribution['status'] = true;
 
 if (isset($_COOKIE['_pi-control_install_language']) && $_COOKIE['_pi-control_install_language'] != '')

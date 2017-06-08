@@ -11,7 +11,7 @@ class Cache
 	private $cachePath = CACHE_PATH;
 	private $fileSuffix = '.cache.php';
 	
-	public function Cache()
+	public function __construct()
 	{
 		if (!func_num_args() >= 3)
 		{

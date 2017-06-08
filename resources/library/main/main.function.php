@@ -420,28 +420,20 @@ function getAllNetworkConnections()
 		
 	$streamInterfaces = explode('-#-', shell_exec($shell_string));
 	
-	foreach ($streamInterfaces as $streamInterface)
+	foreach ($streamInterfaces as $index => $streamInterface)
 	{
 		$wirelessOption = '';
 		
-		$output0 = $networkInterfaces[count($output)];
-		$output1 = trim(strtoupper(substr($streamInterface, strpos($streamInterface, 'HWaddr', 0) + 7, 17)));
-		$output2 = trim(substr($streamInterface, strpos($streamInterface, 'inet addr:', 0) + 10, strpos($streamInterface, 'Bcast:', 0) - strpos($streamInterface, 'inet addr:', 0) - 10));
+		$interface = $networkInterfaces[$index];
 		
-		if (strlen($output2) >= 50)
-			$output2 = 0;
+		preg_match('#inet(?:[ ]+(?:addr\:)?)([\w\.]+)#', $streamInterface, $ipAddress);
+		preg_match('#(?:HWaddr|ether) ([\w\:]+)#', $streamInterface, $macAddress);
+		preg_match('#RX(?:.*?)bytes[:| ]([\d]+)#', $streamInterface, $bytesSent);
+		preg_match('#TX(?:.*?)bytes[:| ]([\d]+)#', $streamInterface, $bytesReceived);
+		preg_match('#RX(?:.*?)packets[:| ]([\d]+)#', $streamInterface, $packetsSent);
+		preg_match('#TX(?:.*?)packets[:| ]([\d]+)#', $streamInterface, $packetsReceived);
 		
-		preg_match('#RX bytes:([\d]+)#', $streamInterface, $match_rx);
-		preg_match('#TX bytes:([\d]+)#', $streamInterface, $match_tx);
-		
-		$output3 = $match_rx[1];
-		$output4 = $match_tx[1];
-		
-		preg_match('#RX packets:([\d]+)#', $streamInterface, $match_rx);
-		preg_match('#TX packets:([\d]+)#', $streamInterface, $match_tx);
-		
-		$output5 = $match_rx[1];
-		$output6 = $match_tx[1];
+		$output0 = $interface;
 		
 		if (substr($output0, 0, 4) == 'wlan')
 		{
@@ -477,7 +469,7 @@ function getAllNetworkConnections()
 			}
 		}
 		
-		$output[] = array('interface' => $output0, 'mac' => $output1, 'ip' => $output2, 'sent' => $output4, 'receive' => $output3, 'option' => $wirelessOption, 'packets' => array('sent' => $output5, 'received' => $output6));
+		$output[] = array('interface' => $interface, 'mac' => strtoupper($macAddress[1]), 'ip' => $ipAddress[1], 'sent' => $bytesSent[1], 'receive' => $bytesReceived[1], 'option' => $wirelessOption, 'packets' => array('sent' => $packetsSent[1], 'received' => $packetsReceived[1]));
 	}
 	
 	return $output;

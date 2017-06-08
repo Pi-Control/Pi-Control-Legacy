@@ -10,7 +10,7 @@ class cURL
 {
 	private $handler, $result, $info, $method = HTTP_GET, $url, $parameter = array(), $parameterRaw = '', $header = array(), $statusCode = 0, $customStatusCode = 0;
 	
-	public function cURL($url, $method = HTTP_GET, $parameter = NULL)
+	public function __construct($url, $method = HTTP_GET, $parameter = NULL)
 	{
 		$this->setUrl($url);
 		$this->setMethod($method);
