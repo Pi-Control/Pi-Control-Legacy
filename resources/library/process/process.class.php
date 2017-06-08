@@ -1,4 +1,5 @@
 <?php
+if (!defined('PICONTROL')) exit();
 
 class ProcessController
 {
@@ -90,7 +91,7 @@ class ProcessController
 	}
 	
 	static public function isPidWithStartTimeExists($pid, $time) {
-		if (!function_exists('getStartTimeFromTime'))
+		if (!function_exists('getSecondsFromTime'))
 			(include_once LIBRARY_PATH.'process/process.function.php');
 		
 		$rawOutput = shell_exec('ps -eo pid,etime | grep -E \'^[[:space:]]*'.escapeshellarg($pid).' \' | head -n 1');
@@ -103,7 +104,7 @@ class ProcessController
 			$split = array_values($split);
 		}
 		
-		return ($split[0] == $pid && abs(getStartTimeFromTime($split[1]) -  $time) < 10);
+		return ($split[0] == $pid && abs((time() - getSecondsFromTime($split[1])) -  $time) < 10);
 	}
 	
 	public function terminatePid($pid)
@@ -199,7 +200,10 @@ class ProcessEntry
 	
 	public function getElapsedTime()
 	{
-		return $this->elapsedTime;
+		if (!function_exists('getSecondsFromTime'))
+			(include_once LIBRARY_PATH.'process/process.function.php');
+		
+		return getSecondsFromTime($this->elapsedTime);
 	}
 	
 	public function setElapsedTime($elapsedTime)
@@ -209,7 +213,10 @@ class ProcessEntry
 	
 	public function getRuntime()
 	{
-		return $this->runtime;
+		if (!function_exists('getSecondsFromTime'))
+			(include_once LIBRARY_PATH.'process/process.function.php');
+		
+		return getSecondsFromTime($this->runtime);
 	}
 	
 	public function setRuntime($runtime)
@@ -235,8 +242,8 @@ class ProcessEntry
 			'status' => $this->status,
 			'cpu' => $this->cpu,
 			'ram' => $this->ram,
-			'elapsedTime' => $this->elapsedTime,
-			'runtime' => $this->runtime,
+			'elapsedTime' => $this->getElapsedTime(),
+			'runtime' => $this->getRuntime(),
 			'command' => $this->command
 		];
 	}

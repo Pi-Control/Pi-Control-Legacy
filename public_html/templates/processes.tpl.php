@@ -41,10 +41,10 @@
 						<td><?php echo getReadableStatus($process->getStatus()); ?></td>
 						<td><?php echo numberFormat($process->getCpu()); ?>%</td>
 						<td><?php echo numberFormat($process->getRam()); ?>%</td>
-						<td><?php echo formatTime(getStartTimeFromTime($process->getElapsedTime())); ?></td>
-						<td><?php echo getDateFormat(getSecondsFromTime($process->getRuntime())); ?></td>
+						<td><?php echo formatTime(time() - $process->getElapsedTime()); ?></td>
+						<td><?php echo getDateFormat($process->getRuntime()); ?></td>
 						<td title="<?php echo htmlspecialchars($process->getCommand()); ?>"><?php echo htmlspecialchars($process->getCommand()); ?></td>
-						<td class="table-right white-space-nowrap"><form action="?s=processes" method="post"><input type="hidden" name="pid" value="<?php echo $process->getPid(); ?>" /><input type="hidden" name="startTime" value="<?php echo getStartTimeFromTime($process->getElapsedTime()); ?>" /><input class="button-small" type="submit" name="terminate" value="Beenden"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /> <input class="button-small" type="submit" name="kill" value="Abw&uuml;rgen"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /></form></td>
+						<td class="table-right white-space-nowrap"><form action="?s=processes" method="post"><input type="hidden" name="pid" value="<?php echo $process->getPid(); ?>" /><input type="hidden" name="startTime" value="<?php echo (time() - $process->getElapsedTime()); ?>" /><input class="button-small" type="submit" name="terminate" value="Beenden"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /> <input class="button-small" type="submit" name="kill" value="Abw&uuml;rgen"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /></form></td>
 					</tr>
 				<?php } ?>
 			</table>

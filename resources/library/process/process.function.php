@@ -1,4 +1,5 @@
 <?php
+if (!defined('PICONTROL')) exit();
 
 function getReadableStatus($status)
 {
@@ -27,10 +28,5 @@ function getSecondsFromTime($time)
 		return $split[0]*3600 + $split[1]*60 + $split[2];
 	
 	return $split[0]*60 + $split[1];
-}
-
-function getStartTimeFromTime($time)
-{
-	return time() - getSecondsFromTime($time);
 }
 ?>
