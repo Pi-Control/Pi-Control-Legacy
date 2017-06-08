@@ -1,4 +1,5 @@
 <?php
+if (!defined('PICONTROL')) exit();
 
 class LogController
 {

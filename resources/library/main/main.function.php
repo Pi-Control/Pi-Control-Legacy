@@ -1287,7 +1287,7 @@ function getWeather()
 			
 			if (isset($data['response']['results']) && count($data['response']['results']) > 0 && $iMax >= 0)
 			{
-				$i--;
+				$iMax--;
 				
 				setConfig('main:weather.wundergroundCache', $data['response']['results'][0]['zmw']);
 				continue;
