@@ -311,6 +311,7 @@ body {
 	background: #FFFFFF;
 	border-radius: 2px;
 	margin-bottom: 20px;
+	line-height: 1.4;
 }
 
 .box .inner-header {
@@ -720,6 +721,7 @@ td.table-middle *, th.table-middle * {
 	transition: 100ms linear;
 	display: inline-block;
 	vertical-align: middle;
+	line-height: initial;
 }
 
 .cached span {
@@ -1156,6 +1158,7 @@ input[type="text"], input[type="password"], textarea {
 	padding: 5px;
 	margin: 2px 0px;
 	transition: all 100ms linear;
+	line-height: 1.4;
 }
 
 input[type="text"]:hover, input[type="password"]:hover, textarea:hover  {
@@ -1178,6 +1181,7 @@ input[type="button"], button, input[type="submit"], .button {
 	display: inline-block;
 	transition: all 100ms linear;
 	user-select: none;
+	line-height: 1.4;
 }
 
 input[type="button"]:hover, button:hover, input[type="submit"]:hover, .button:hover {
@@ -1250,12 +1254,12 @@ label.checkbox::before, label.radio::before {
 }
 
 label.checkbox::before {
-	margin: 3px 3px -1px 0px;
+	margin: 2px 3px 1px 0px;
 	border-radius: 2px;
 }
 
 label.radio::before {
-	margin: 3px 3px -1px 0px;
+	margin: 2px 3px 1px 0px;
 	border-radius: 50%;
 }
 
@@ -1460,6 +1464,7 @@ input[type=radio]:checked + label.settings-pi-control-theme-color-blueGrey::befo
 
 .button-small, input.button-small {
 	padding: 2px 5px;
+	line-height: initial;
 }
 
 .color-0 {
