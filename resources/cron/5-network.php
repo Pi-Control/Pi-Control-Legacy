@@ -51,7 +51,7 @@ foreach ($networkConnections as $network)
 	$log = new LogStatistic();
 	$log->setFile(LOG_PATH.'statistic/network_packets_'.$network['interface'].'.csv');
 	$log->setLimit(2016);
-	$log->add(array(time(), $network['packets']['sent'], $network['packets']['receive']));
+	$log->add(array(time(), $network['packets']['sent'], $network['packets']['received']));
 	$log->close();
 }
 
