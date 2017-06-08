@@ -24,6 +24,7 @@ class cURL
 		curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, $this->method);
 		curl_setopt($this->handler, CURLOPT_CONNECTTIMEOUT, 2);
 		curl_setopt($this->handler, CURLOPT_TIMEOUT, 3);
+		curl_setopt($this->handler, CURLOPT_FOLLOWLOCATION, true);
 		
 		if ($this->method != HTTP_GET && !empty($this->parameter))
 		{
@@ -135,6 +136,61 @@ class cURL
 	{
 		$this->customStatusCode = $code;
 		return;
+	}
+	
+	public function downloadFile($destination)
+	{
+		if (empty($destination))
+			return false;
+		
+		if (!($filestream = fopen($destination, 'w+')))
+			return 1;
+		
+		// Setze Zeitlimit auf unendlich
+		set_time_limit(0);
+		
+		$this->handler = curl_init();
+		curl_setopt($this->handler, CURLOPT_URL, $this->url);
+		curl_setopt($this->handler, CURLOPT_FILE, $filestream);
+		curl_setopt($this->handler, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt($this->handler, CURLOPT_TIMEOUT, 50);
+		curl_setopt($this->handler, CURLOPT_FOLLOWLOCATION, true);
+		
+		// Pruefe ob Datei blockiert
+		$startTime = microtime();
+		do
+		{
+			$canWrite = flock($filestream, LOCK_EX);
+			
+			if (!$canWrite)
+				usleep(round(rand(0, 100)*1000));
+		}
+		while ((!$canWrite) && ((microtime()-$startTime) < 2000));
+		
+		if (!$canWrite)
+			return 2;
+		
+		if (($data = curl_exec($this->handler)) === false)
+		{
+			if (curl_errno($this->handler))
+				$this->customStatusCode = curl_errno($this->handler);
+			
+			$this->info = curl_getinfo($this->handler);
+			curl_close($this->handler);
+			
+			flock($filestream, LOCK_UN);
+			fclose($filestream);
+			
+			return false;
+		}
+		
+		$this->info = curl_getinfo($this->handler);
+		curl_close($this->handler);
+		
+		flock($filestream, LOCK_UN);
+		fclose($filestream);
+		
+		return true;
 	}
 }
 ?>
