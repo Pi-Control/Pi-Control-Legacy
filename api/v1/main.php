@@ -8,7 +8,11 @@ $doNotCheckForAuthentification = true;
 
 $api = new API;
 
-$api->addData('version', array('name' => $config['version']['version'], 'code' => $config['version']['versioncode'], 'androidCompLevel' => $config['version']['android_comp_level']));
+$api->addData('version', [
+	'name' => $config['version']['version'],
+	'code' => $config['version']['versioncode'],
+	'androidCompLevel' => $config['version']['android_comp_level']
+]);
 $api->addData('installed', (file_exists(INSTALL_PATH) && is_dir(INSTALL_PATH)) ? false : true);
 $api->addData('language', $globalLanguage);
 $api->addData('theme', getConfig('main:theme.color', 'blue'));
