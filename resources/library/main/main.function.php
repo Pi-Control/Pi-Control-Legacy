@@ -469,7 +469,7 @@ function getAllNetworkConnections()
 			}
 		}
 		
-		$output[] = array('interface' => $interface, 'mac' => strtoupper($macAddress[1]), 'ip' => $ipAddress[1], 'sent' => $bytesSent[1], 'receive' => $bytesReceived[1], 'option' => $wirelessOption, 'packets' => array('sent' => $packetsSent[1], 'received' => $packetsReceived[1]));
+		$output[] = array('interface' => $interface, 'mac' => strtoupper($macAddress[1]), 'ip' => (isset($ipAddress[1])) ? $ipAddress[1] : NULL, 'sent' => $bytesSent[1], 'receive' => $bytesReceived[1], 'option' => $wirelessOption, 'packets' => array('sent' => $packetsSent[1], 'received' => $packetsReceived[1]));
 	}
 	
 	return $output;
