@@ -17,9 +17,9 @@ if (isset($_GET['add']) && $_GET['add'] == '')
 				$lowerUsername = strtolower($pUsername);
 				if (getConfig('user:user_'.$lowerUsername.'.username', '') == '')
 				{
-					if (preg_match('/^[a-z0-9_\-\+\*\/\#\.]{4,64}$/i', $pPassword) === 1)
+					if (preg_match('/^[a-z0-9_\-\+\*\/\#.\!\?@\(\)\[\]\{\}\<\>\=\$%&,\|\:~§;]{4,64}$/i', $pPassword) === 1)
 					{
-						if ($pPassword == $pPassword2)
+						if ($pPassword === $pPassword2)
 						{
 							setConfig('user:user_'.$lowerUsername.'.username', $pUsername);
 							setConfig('user:user_'.$lowerUsername.'.created', time());
@@ -31,7 +31,7 @@ if (isset($_GET['add']) && $_GET['add'] == '')
 							$tpl->msg('error', _t('Fehler'), _t('Die angegebenen Passw&ouml;rter stimmen nicht &uuml;berein!'));
 					}
 					else
-						$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # .'));
+						$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # . ! ? @ ( ) [ ] { } < > = $ %% & , | : ~ § ;'));
 				}
 				else
 					$tpl->msg('error', _t('Fehler'), _t('Leider ist der Benutzername bereits vergeben! Bitte w&auml;hle einen anderen.'));
@@ -105,13 +105,13 @@ elseif (isset($_GET['edit']) && $_GET['edit'] != '')
 		{
 			if (isset($_POST['passwordOld'], $_POST['passwordNew'], $_POST['passwordNew2']) && ($pPasswordOld = $_POST['passwordOld']) != '' && ($pPasswordNew = $_POST['passwordNew']) != '' && ($pPasswordNew2 = $_POST['passwordNew2']) != '')
 			{
-				if (preg_match('/^[a-z0-9_\-\+\*\/\#\.]{4,64}$/i', $pPasswordNew) === 1)
+				if (preg_match('/^[a-z0-9_\-\+\*\/\#.\!\?@\(\)\[\]\{\}\<\>\=\$%&,\|\:~§;]{4,64}$/i', $pPasswordNew) === 1)
 				{
 					$passwordOld = getConfig('user:user_'.$lowerUsername.'.password', '');
 					
 					if (password_verify($pPasswordOld, $passwordOld) === true)
 					{
-						if ($pPasswordNew == $pPasswordNew2)
+						if ($pPasswordNew === $pPasswordNew2)
 						{
 							setConfig('user:user_'.$lowerUsername.'.password', password_hash($pPasswordNew, PASSWORD_BCRYPT));
 							$tpl->msg('success', _t('Benutzer bearbeitet'), _t('Der Benutzer "%s" wurde erfolgreich bearbeitet und gespeichert.', $username));
@@ -123,7 +123,7 @@ elseif (isset($_GET['edit']) && $_GET['edit'] != '')
 						$tpl->msg('error', _t('Fehler'), _t('Das alte Passwort ist nicht korrekt!'));
 				}
 				else
-					$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # .'));
+					$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # . ! ? @ ( ) [ ] { } < > = $ %% & , | : ~ § ;'));
 			}
 			else
 				$tpl->msg('error', _t('Fehler'), _t('Bitte alle Felder ausf&uuml;llen.'));

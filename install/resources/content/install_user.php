@@ -13,9 +13,9 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 		if (preg_match('/^[a-z][a-z0-9\-_]{1,31}$/i', $pUsername) === 1)
 		{
 			$lowerUsername = strtolower($pUsername);
-			if (preg_match('/^[a-z0-9_\-\+\*\/\#\.]{4,64}$/i', $pPassword) === 1)
+			if (preg_match('/^[a-z0-9_\-\+\*\/\#.\!\?@\(\)\[\]\{\}\<\>\=\$%&,\|\:~§;]{4,64}$/i', $pPassword) === 1)
 			{
-				if ($pPassword == $pPassword2)
+				if ($pPassword === $pPassword2)
 				{
 					if (($return = writeToFile('user', json_encode(array('username' => $pUsername, 'password' => password_hash($pPassword, PASSWORD_BCRYPT))))) === 0)
 						$showInfo = true;
@@ -26,7 +26,7 @@ if (isset($_POST['submit']) && $_POST['submit'] != '')
 					$tpl->msg('error', _t('Fehler'), _t('Die angegebenen Passw&ouml;rter stimmen nicht &uuml;berein!'));
 			}
 			else
-				$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # .'));
+				$tpl->msg('error', _t('Fehler'), _t('Leider ist das Passwort ung&uuml;ltig! Das Passwort muss aus 4 bis 64 Zeichen bestehen und darf nur folgende Zeichen beinhalten: A-Z 0-9 - _ + * / # . ! ? @ ( ) [ ] { } < > = $ %% & , | : ~ § ;'));
 		}
 		else
 			$tpl->msg('error', _t('Fehler'), _t('Leider ist der Benutzername ung&uuml;ltig! Der Benutzername muss aus 2 bis 32 Zeichen bestehen. Das erste Zeichen muss ein Buchstabe sein und es sind nur folgende Zeichen erlaubt: A-Z 0-9 - _'));

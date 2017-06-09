@@ -426,7 +426,7 @@ $langArray = array(
 	'21caa2f6' => 'User created',
 	'8c5d3ec0' => 'The user "%s" was successfully created.',
 	'11379b49' => 'The specified passwords do not match!',
-	'c2a659cc' => 'Unfortunately, the password is invalid! The password must consist of 4 to 64 characters and must contain only the following characters: A-Z 0-9 - _ + * / # .',
+	'cfca6225' => 'Unfortunately, the password is invalid! The password must consist of 4 to 64 characters and must contain only the following characters: A-Z 0-9 - _ + * / # . ! ? @ ( ) [ ] { } < > = $ %% & , | : ~ § ;',
 	'8f37b0f8' => 'Unfortunately, the username is already taken! Please choose another.',
 	'fceff235' => 'Unfortunately, the username is invalid! The username must consist of 2 to 32 characters. The first character must be a letter, and only the following characters are allowed: A-Z 0-9 - _',
 	'23341f35' => 'Please fill all fields.',

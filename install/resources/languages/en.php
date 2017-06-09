@@ -34,7 +34,7 @@ $langArray = array(
 	'95a05cd9' => 'It was already created a user for Pi Control. You can <a href="%s">skip this step</a> or just overwrite the current user, by creating a new user here.',
 	'60c06a93' => 'There was an error during a file operation! Error code: %s',
 	'11379b49' => 'The specified passwords do not match!',
-	'c2a659cc' => 'Unfortunately, the password is invalid! The password must consist of 4 to 64 characters and must contain only the following characters: A-Z 0-9 - _ + * / #.',
+	'cfca6225' => 'Unfortunately, the password is invalid! The password must consist of 4 to 64 characters and must contain only the following characters: A-Z 0-9 - _ + * / # . ! ? @ ( ) [ ] { } < > = $ %% & , | : ~ § ;',
 	'fceff235' => 'Unfortunately, the username is invalid! The username must consist of 2 to 32 characters. The first character must be a letter, and only the following characters are allowed: A-Z 0-9 - _',
 	'0f9a3027' => 'Please fill out all fields!',
 	'd4c21508' => 'At this step you can create a user for Pi Control. This user has nothing to do with the SSH login and will be used only to log on to Pi Control.',
