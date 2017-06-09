@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-	<meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-title" content="Pi Control" />
 	<meta name="application-name" content="Pi Control" />
 	<meta name="theme-color" content="#1565C0" />
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<div class="login-footer">
-			<div class="login-footer-inner"><?php _e('Mit %s entwickelt von %s.', '&#10084;', 'Willy Fritzsche'); ?> 2013-2016<br /><?php _e('Raspberry Pi ist ein Markenzeichen der Raspberry Pi Foundation.'); ?></div>
+			<div class="login-footer-inner"><?php _e('Mit %s entwickelt von %s.', '&#10084;', 'Willy Fritzsche'); ?> 2013-2017<br /><?php _e('Raspberry Pi ist ein Markenzeichen der Raspberry Pi Foundation.'); ?></div>
 		</div>
 	</div>
 </body>
