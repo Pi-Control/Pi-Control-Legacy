@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-	<meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-title" content="Pi Control" />
 	<meta name="application-name" content="Pi Control" />
 	<meta name="theme-color" content="#1565C0" />
@@ -40,7 +40,7 @@
 <!-- Footer -->
 	<div id="footer" style="background: none; border: none; min-height: auto;">
 		<div id="footer-inner">
-			<div id="footer-copyright"><?php _e('Mit %s entwickelt von %s.', '<span style="color: #F44336;">&#10084;</span>', '<a href="https://willy-tech.de/" target="_blank">Willy Fritzsche</a>'); ?> 2013-2016</div>
+			<div id="footer-copyright"><?php _e('Mit %s entwickelt von %s.', '<span style="color: #F44336;">&#10084;</span>', '<a href="https://willy-tech.de/" target="_blank">Willy Fritzsche</a>'); ?> 2013-2017</div>
 		</div>
 	</div>
 </body>
