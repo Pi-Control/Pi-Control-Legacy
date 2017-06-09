@@ -71,7 +71,7 @@
 	function createTable()
 	{
 <?php foreach ($data['statistics'] as $statistic) { ?>
-		statisticBuilder(<?php echo $statistic['json']; ?>);
+		statisticBuilder(<?php echo $statistic['json']; ?>, null);
 <?php } ?>
 	}
 </script>

@@ -1,7 +1,7 @@
 var dataSlider = [];
 var dataPeriods = [];
 
-function statisticBuilder(builder, plugin = null)
+function statisticBuilder(builder, plugin)
 {
 	var jsonData = jQuery.ajax({
 		url: 'api/v1/statistic.php',
