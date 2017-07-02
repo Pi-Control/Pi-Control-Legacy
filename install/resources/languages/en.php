@@ -104,6 +104,7 @@ $langArray = array(
 	'28c330db' => 'Some data must be collected for the feedback.',
 	'fcb4bb2f' => 'Diagnostic data was collected. A new window will open when you click on the button below.',
 	'db72d0d6' => 'Open feedback',
-	'9979a4ea' => 'Manual to installation'
+	'9979a4ea' => 'Manual to installation',
+	'cf0a6993' => 'GitLab'
 );
 ?>
