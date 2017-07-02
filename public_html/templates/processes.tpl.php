@@ -6,7 +6,7 @@
 		</div>
 <?php if (!$data['sshAvailable']) { ?>
 			<div class="inner">
-				<strong class="red">Aufgrund mangelnder Berechtigungen k&ouml;nnen Prozesse nicht beendet werden. Melde dich per SSH an, um Prozesse zu beenden. <a href="?s=ssh_login">Jetzt anmelden.</a></strong>
+				<strong class="red"><?php _e('Aufgrund mangelnder Berechtigungen k&ouml;nnen Prozesse nicht beendet werden. Melde dich per SSH an, um Prozesse zu beenden. <a href="%s">Jetzt anmelden.</a>', '?s=ssh_login'); ?></strong>
 			</div>
 <?php } ?>
 		<div class="inner-table">
@@ -44,7 +44,7 @@
 						<td><?php echo formatTime(time() - $process->getElapsedTime()); ?></td>
 						<td><?php echo getDateFormat($process->getRuntime()); ?></td>
 						<td title="<?php echo htmlspecialchars($process->getCommand()); ?>"><?php echo htmlspecialchars($process->getCommand()); ?></td>
-						<td class="table-right white-space-nowrap"><form action="?s=processes" method="post"><input type="hidden" name="pid" value="<?php echo $process->getPid(); ?>" /><input type="hidden" name="startTime" value="<?php echo (time() - $process->getElapsedTime()); ?>" /><input class="button-small" type="submit" name="terminate" value="Beenden"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /> <input class="button-small" type="submit" name="kill" value="Abw&uuml;rgen"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /></form></td>
+						<td class="table-right white-space-nowrap"><form action="?s=processes" method="post"><input type="hidden" name="pid" value="<?php echo $process->getPid(); ?>" /><input type="hidden" name="startTime" value="<?php echo (time() - $process->getElapsedTime()); ?>" /><input class="button-small" type="submit" name="terminate" value="<?php _e('Beenden'); ?>"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /> <input class="button-small" type="submit" name="kill" value="<?php _e('Abw&uuml;rgen'); ?>"<?php if (!$data['sshAvailable']) echo ' disabled="disabled"'; ?> /></form></td>
 					</tr>
 				<?php } ?>
 			</table>

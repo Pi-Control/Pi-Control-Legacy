@@ -32,7 +32,7 @@
 				<?php foreach ($data['log']->getLogGroup()->getAll() as $log) { ?>
 								<option value="<?php echo $log->getFilename(); ?>"<?php if ($log->getFilename() == $data['log']->getFilename()) echo ' disabled="disabled"'; ?>><?php echo $log->getFilename().'&nbsp;&nbsp;&nbsp;&nbsp;('.sizeUnit($log->getFilesize()).')'; ?></option>
 				<?php } ?>
-							</select> <input type="submit" name="open_file" value="&Ouml;ffnen" />
+							</select> <input type="submit" name="open_file" value="<?php _e('&Ouml;ffnen'); ?>" />
 						</form></td>
 				</tr>
 				<?php } ?>
@@ -40,7 +40,7 @@
 		</div>
 <?php if (isset($data['filesizeError'])) { ?>
 		<div class="inner">
-			<strong class="red">Leider kann die angeforderte Datei, aufgrund ihrer Dateigr&ouml;ße (&lt; 10 MB), nicht ge&ouml;ffnet werden.</strong>
+			<strong class="red"><?php _e('Leider kann die angeforderte Datei, aufgrund ihrer Dateigr&ouml;ße (&lt; %s), nicht ge&ouml;ffnet werden.', '10 MB'); ?></strong>
 		</div>
 <?php } else { ?>
 		<div class="inner padding-0 log-view">

@@ -71,9 +71,9 @@
 				</div>
 				<div class="navi-dropdown"><a href="#"><span style="transform: rotate(90deg); display: block; font-weight: normal; line-height: 15px;">&#10095;</span></a>
 					<div class="navi-dropdown-container">
-						<a href="?s=users_groups">Benutzer/Gruppen</a>
-						<a href="?s=logs">Logdateien</a>
-						<a href="?s=processes">Prozesse</a>
+						<a href="?s=users_groups"><?php _e('Benutzer/Gruppen'); ?></a>
+						<a href="?s=logs"><?php _e('Logdateien'); ?></a>
+						<a href="?s=processes"><?php _e('Prozesse'); ?></a>
 					</div>
 				</div>
 			</div>

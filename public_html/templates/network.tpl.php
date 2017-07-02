@@ -12,7 +12,7 @@
 			<span><?php _e('Traffic'); ?></span>
 		</div>
 		<div class="inner-table">
-			<strong>Daten</strong><br /><br />
+			<strong><?php _e('Daten'); ?></strong><br /><br />
 			<table class="table table-borderless">
 				<tr>
 					<th style="width: 20%;"><?php _e('Interface'); ?></th>
@@ -29,7 +29,7 @@
 			</table>
 		</div>
 		<div class="inner-table">
-			<br /><strong>Pakete</strong><br /><br />
+			<br /><strong><?php _e('Pakete'); ?></strong><br /><br />
 			<table class="table table-borderless">
 				<tr>
 					<th style="width: 20%;"><?php _e('Interface'); ?></th>
@@ -93,7 +93,7 @@
 	<div class="box">
 		<div class="inner-header">
 			<span><?php echo $key; ?></span>
-			<div><a href="?s=network&amp;refresh_wlan" class="inner-title-icon"><img src="public_html/img/refresh-icon.svg" title="Aktualisieren" /></a></div>
+			<div><a href="?s=network&amp;refresh_wlan" class="inner-title-icon"><img src="public_html/img/refresh-icon.svg" title="<?php _e('Aktualisieren'); ?>" /></a></div>
 		</div>
 		<div class="inner-table">
 			<table class="table table-borderless responsive-network-wlan-table">

@@ -17,7 +17,7 @@ if (isset($_GET['view']) && ($view = trim(urldecode($_GET['view']))) != '')
 	$log = $logController->getLogFromRelativePath($view);
 	
 	if (!$log instanceof LogEntry) {
-		$tpl->error('Logdatei nicht gefunden', 'Leider konnte die angegebene Logdatei nicht gefunden oder ge&ouml;ffnet werden!');
+		$tpl->error(_t('Logdatei nicht gefunden'), _t('Leider konnte die angegebene Logdatei nicht gefunden oder ge&ouml;ffnet werden!'));
 	}
 	else
 	{
