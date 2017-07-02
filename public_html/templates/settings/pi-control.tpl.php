@@ -98,7 +98,7 @@
 						<td><?php _e('Aktion'); ?></td>
 						<td style="width: 130px;"><input type="checkbox" name="temperature-action-email" id="cb-temperature-email" value="checked"<?php if ($data['temperature-action-email'] == true) echo ' checked="checked"'; ?> /><label for="cb-temperature-email" class="checkbox"><?php _e('E-Mail senden'); ?></label></td>
 						<td><input type="text" name="temperature-action-email-text"<?php echo ' value="'.$data['temperature-action-email-text'].'"'; ?> />
-							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="'._t('Best&auml;tigen').'" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">'._t('&Uuml;berpr&uuml;fen').'</a> '.showHelper('wie-bestaetige-ich-meine-e-mail', true) : '<strong class="green">'._t('Best&auml;tigt').'</strong>'; } ?></td>
+							<?php if ($data['temperature-action-email-text'] != '') { echo ($data['temperature-action-email-status'] == 0) ? '<form action="?s=settings&amp;do=pi-control" method="post"><input type="submit" name="submit-temperature-confirmation" value="'._t('Best&auml;tigen').'" /></form> <a href="?s=settings&amp;do=pi-control&amp;mail_check" class="button">'._t('&Uuml;berpr&uuml;fen').'</a>' : '<strong class="green">'._t('Best&auml;tigt').'</strong>'; } ?></td>
 					</tr>
 					<tr>
 						<td></td>
