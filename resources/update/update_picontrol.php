@@ -5,7 +5,11 @@ define('PICONTROL', true);
 (include_once LIBRARY_PATH.'main/tpl.class.php')			or die('Error: 0x0001');
 (include_once LIBRARY_PATH.'main/main.function.php')		or die('Error: 0x0002');
 
-$update = checkUpdate();
+$updateController = new UpdateController();
+if ($updateController->fetchData())
+{
+
+}
 
 $tpl = new PiTpl;
 $tpl->setTpl($tpl);

@@ -605,6 +605,15 @@ $langArray = array(
 	'c85db4fc' => 'Network packets - %%s',
 	'02c1e560' => 'Data (MB)',
 	'78ce56f4' => 'Sent packets',
-	'509c39f5' => 'Received packets'
+	'509c39f5' => 'Received packets',
+	'5b345635' => 'Pi Control Beta',
+	'714afec3' => 'With the participation in Pi Control Beta, you will get an initial insight into upcoming functions and features, even before the final release of Pi Control. By participating, you will also receive regular and stable updates, in addition to the updates for the beta.<br />You can withdraw from Pi Control beta at any time, but you cannot downgrade to an older/regular version. Afterwards, you will receive the stable updates as usual.',
+	'6625894z' => 'NOTE: During the beta, Pi Control may appear unexpectedly, either by mistake or data loss (Pi Control only). Please send me your feedback (see below).',
+	'a2d6a573' => 'Join Pi Control Beta',
+	'df5b26ea' => 'Leave Pi Control Beta',
+	'68507e1d' => 'Successfully resigned',
+	'a1638677' => 'You have successfully resigned from Pi Control Beta. From now on you get only stable updates.',
+	'c1cde0d1' => 'Successfully participated',
+	'557d925e' => 'Thank you for your participation in Pi Control Beta. From now on you get beta updates.'
 );
 ?>
