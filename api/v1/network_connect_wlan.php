@@ -20,26 +20,36 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'set':
 		if (isset($_POST['interface'], $_POST['ssid'], $_POST['psk']) && ($pInterface = trim($_POST['interface'])) != '' && ($pSsid = trim($_POST['ssid'])) != '')
 		{
-			$networkInterface = new NetworkInterface($tpl);
-			$pPsk = $_POST['psk'];
-			
-			list ($passphrase, $error, $exitStatus) = $tpl->executeSSH('sudo wpa_passphrase '.escapeshellarg($pSsid).' '.escapeshellarg($pPsk).' | grep "psk=[[:alnum:]]"', true);
-			$passphrase = trim(str_replace('psk=', '', $passphrase));
-			
-			$network = array('ssid' => '"'.$pSsid.'"', 'psk' => $passphrase);
-			
-			if (($status = addNetworkWPASupplicant($network)) === true)
+			if ($tpl->getSSHResource() !== false)
 			{
-				$newInterface = array('auto' => true, 'protocol' => 'inet', 'method' => 'dhcp', 'iface' => array('wpa-conf' => '/etc/wpa_supplicant/wpa_supplicant.conf'));
-				$networkInterface->deleteInterface($pInterface, false);
+				$networkInterface = new NetworkInterface($tpl);
+				$pPsk = $_POST['psk'];
 				
-				if (($status2 = $networkInterface->addInterface($pInterface, $newInterface)) === true)
-					$api->addData('success', 'true');
+				list ($passphrase, $error, $exitStatus) = $tpl->executeSSH('sudo wpa_passphrase ' . escapeshellarg($pSsid) . ' ' . escapeshellarg($pPsk) . ' | grep "psk=[[:alnum:]]"', true);
+				$passphrase = trim(str_replace('psk=', '', $passphrase));
+				
+				$network = array('ssid' => '"' . $pSsid . '"', 'psk' => $passphrase);
+				
+				if (($status = addNetworkWPASupplicant($network)) === true)
+				{
+					$newInterface = array('auto' => true, 'protocol' => 'inet', 'method' => 'dhcp', 'iface' => array('wpa-conf' => '/etc/wpa_supplicant/wpa_supplicant.conf'));
+					$networkInterface->deleteInterface($pInterface, false);
+					
+					if (($status2 = $networkInterface->addInterface($pInterface, $newInterface)) === true)
+					{
+						$api->addData('success', 'true');
+						$api->addData('status', $status);
+						$api->addData('error', $error);
+						$api->addData('exitStatus', $exitStatus);
+					}
+					else
+						$api->setError('error', 'Errorcode: ' . $status2);
+				}
 				else
-					$api->setError('error', 'Errorcode: '.$status2);
+					$api->setError('error', 'Errorcode: ' . $status);
 			}
 			else
-				$api->setError('error', 'Errorcode: '.$status);
+				$api->setError('error', 'No ssh-login.');
 		}
 		else
 			$api->setError('error', 'No interface, ssid or psk set.');
@@ -48,14 +58,19 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'down':
 		if (isset($_POST['interface']) && ($pInterface = trim($_POST['interface'])) != '')
 		{
-			set_time_limit(60);
-			
-			list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface));
-			
-			$api->addData('success', 'true');
-			$api->addData('status', $status);
-			$api->addData('error', $error);
-			$api->addData('exitStatus', $exitStatus);
+			if ($tpl->getSSHResource() !== false)
+			{
+				set_time_limit(60);
+				
+				list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifdown '.escapeshellarg($pInterface));
+				
+				$api->addData('success', 'true');
+				$api->addData('status', $status);
+				$api->addData('error', $error);
+				$api->addData('exitStatus', $exitStatus);
+			}
+			else
+				$api->setError('error', 'No ssh-login.');
 		}
 		else
 			$api->setError('error', 'No interface set.');
@@ -64,14 +79,19 @@ switch (isset($_POST['type']) ? $_POST['type'] : '')
 	case 'up':
 		if (isset($_POST['interface']) && ($pInterface = trim($_POST['interface'])) != '')
 		{
-			set_time_limit(60);
-			
-			list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifup '.escapeshellarg($pInterface), 60);
-			
-			$api->addData('success', 'true');
-			$api->addData('status', $status);
-			$api->addData('error', $error);
-			$api->addData('exitStatus', $exitStatus);
+			if ($tpl->getSSHResource() !== false)
+			{
+				set_time_limit(60);
+				
+				list ($status, $error, $exitStatus) = $tpl->executeSSH('sudo ifup '.escapeshellarg($pInterface), 60);
+				
+				$api->addData('success', 'true');
+				$api->addData('status', $status);
+				$api->addData('error', $error);
+				$api->addData('exitStatus', $exitStatus);
+			}
+			else
+				$api->setError('error', 'No ssh-login.');
 		}
 		else
 			$api->setError('error', 'No interface set.');
