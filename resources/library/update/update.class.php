@@ -254,8 +254,6 @@ class UpdateController
 		if (!class_exists('cURL'))
 			(include LIBRARY_PATH.'curl/curl.class.php');
 		
-		var_dump($version);
-		var_dump($this->updateDownloadURL.'&'.http_build_query(array('file' => $version->getFilename())));
 		$curl = new cURL($this->updateDownloadURL.'&'.http_build_query(array('file' => $version->getFilename())));
 		$curlStatus = $curl->downloadFile(UPDATE_PATH.'update.zip');
 		
