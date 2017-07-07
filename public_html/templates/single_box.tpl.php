@@ -23,7 +23,13 @@
 <body>
 <!-- Header -->
 	<div id="header">
-		<div id="inner-header" style="min-height: 45px;">
+		<input type="checkbox" id="header-mobile" />
+		<div id="inner-header">
+			<label for="header-mobile"></label>
+			<a href="?s=overview" id="header-logo"><img src="public_html/img/logo.svg" /></a>
+			<div id="header-navi">
+			
+			</div>
 		</div>
 	</div>
 <!-- Content -->
