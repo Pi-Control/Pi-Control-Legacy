@@ -254,12 +254,14 @@ class UpdateController
 		if (!class_exists('cURL'))
 			(include LIBRARY_PATH.'curl/curl.class.php');
 		
+		var_dump($version);
+		var_dump($this->updateDownloadURL.'&'.http_build_query(array('file' => $version->getFilename())));
 		$curl = new cURL($this->updateDownloadURL.'&'.http_build_query(array('file' => $version->getFilename())));
 		$curlStatus = $curl->downloadFile(UPDATE_PATH.'update.zip');
 		
 		if (!is_bool($curlStatus))
 		{
-			unlink(UPDATE_PATH . 'update.zip');
+			unlink(UPDATE_PATH.'update.zip');
 			return 3 + $curlStatus;
 		}
 		
@@ -269,7 +271,7 @@ class UpdateController
 			return $curl->getStatusCode();
 		}
 		
-		if (md5_file(UPDATE_PATH.'update.zip') != $version->getChecksum())
+		if (md5_file(UPDATE_PATH.'update.zip') !== $version->getChecksum())
 		{
 			unlink(UPDATE_PATH.'update.zip');
 			return 1;
