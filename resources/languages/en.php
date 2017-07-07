@@ -614,6 +614,7 @@ $langArray = array(
 	'68507e1d' => 'Successfully resigned',
 	'a1638677' => 'You have successfully resigned from Pi Control Beta. From now on you get only stable updates.',
 	'c1cde0d1' => 'Successfully participated',
-	'557d925e' => 'Thank you for your participation in Pi Control Beta. From now on you get beta updates.'
+	'557d925e' => 'Thank you for your participation in Pi Control Beta. From now on you get beta updates.',
+	'8832e0ab' => 'There is no update available at the moment!'
 );
 ?>
