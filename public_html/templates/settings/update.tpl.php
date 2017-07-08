@@ -53,7 +53,7 @@
 	</div>
 </div>
 <div class="clear-both"></div>
-<div>
+<div class="order-3">
 	<div class="box">
 		<div class="inner-header">
 			<span><?php _e('Pi Control Beta'); ?></span>
