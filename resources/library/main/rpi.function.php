@@ -200,7 +200,7 @@ function rpi_getRpiRevision()
 	$revision[20] = array('revision' => '0014', 'model' => 'Compute Module', 'pcb' => '1.0', 'memory' => 512, 'manufacturer' => 'Embest');
 	$revision[21] = array('revision' => '0015', 'model' => 'A+', 'pcb' => '1.1', 'memory' => 256, 'manufacturer' => 'Embest');
 	
-	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module', 7 => 'Zero', 8 => 'Pi 3 B', 9 => 'Zero', 10 => 'Compute Module 3');
+	$revision_model = array(0 => 'A', 1 => 'B', 2 => 'A+', 3 => 'B+', 4 => 'Pi 2 B', 5 => 'Alpha', 6 => 'Compute Module', 7 => 'Zero', 8 => 'Pi 3 B', 9 => 'Zero', 10 => 'Compute Module 3', 12 => 'Zero W');
 	$revision_memory = array(0 => 256, 1 => 512, 2 => 1024);
 	$revision_manufacturer = array(0 => 'Sony', 1 => 'Egoman', 2 => 'Embest', 3 => 'Sony Japan', 4 => 'Embest');
 	
