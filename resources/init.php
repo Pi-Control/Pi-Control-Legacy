@@ -10,9 +10,9 @@ if (!isset($config))
 			'ssh_ip'							=> '127.0.0.1'
 		),
 		'version' => array(
-			'version'							=> '2.0.1',
-			'versioncode'						=> 27,
-			'android_comp_level'				=> 19
+			'version'							=> '2.1',
+			'versioncode'						=> 28,
+			'android_comp_level'				=> 25
 		),
 		'url' => array(
 			'update'							=> 'https://pi-control.de/service/v1/update/',
