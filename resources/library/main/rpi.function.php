@@ -285,7 +285,15 @@ function rpi_getMemorySplit()
 
 function rpi_getMemoryUsage()
 {
-	exec('free -bo', $data);
+	exec('free -bo 2>/dev/null || free -b', $data);
+	
+	if (strpos($data[0], 'available') !== false) {
+		list($type, $total, $used, $free, $shared, $buffers, $available) = preg_split('#\s+#', $data[1]);
+		$usage = (int) round(($total - $available) / $total * 100);
+		
+		return array('percent' => $usage, 'total' => $total, 'free' => $available, 'used' => ($total - $available));
+	}
+	
 	list($type, $total, $used, $free, $shared, $buffers, $cached) = preg_split('#\s+#', $data[1]);
 	$usage = (int) round(($used - $buffers - $cached) / $total * 100);
 	
@@ -294,7 +302,7 @@ function rpi_getMemoryUsage()
 
 function rpi_getSwapUsage()
 {
-	exec('free -bo', $data);
+	exec('free -bo 2>/dev/null || free -b', $data);
 	list($type, $total, $used, $free) = preg_split('#\s+#', $data[2]);
 	$usage = (int) round($used / $total * 100);
 	
@@ -320,7 +328,7 @@ function rpi_getMemoryInfo()
 	
 	foreach ($data as $row)
 	{
-		list($device, $type, $blocks, $use, $available, $used, $mountpoint) = preg_split('#[^\dA-Z/_]+#i', $row);
+		list($device, $type, $blocks, $use, $available, $used, $mountpoint) = preg_split('#[\s%]+#i', $row);
 		
 		if (multiArraySearch($devices, 'device', $device) === false)
 		{
@@ -336,7 +344,7 @@ function rpi_getMemoryInfo()
 						'free'			=> $available * 1024,
 						'percent'		=> (int) round(($use * 100 / $blocks)),
 						'mountpoint'	=> $mountpoint
-						);
+		);
 	}
 	
 	usort($devices, function($a, $b)

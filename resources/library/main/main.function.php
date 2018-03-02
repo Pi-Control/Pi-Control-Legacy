@@ -428,10 +428,10 @@ function getAllNetworkConnections()
 		
 		preg_match('#inet(?:[ ]+(?:addr\:)?)([\w\.]+)#', $streamInterface, $ipAddress);
 		preg_match('#(?:HWaddr|ether) ([\w\:]+)#', $streamInterface, $macAddress);
-		preg_match('#RX(?:.*?)bytes[:| ]([\d]+)#', $streamInterface, $bytesSent);
-		preg_match('#TX(?:.*?)bytes[:| ]([\d]+)#', $streamInterface, $bytesReceived);
-		preg_match('#RX(?:.*?)packets[:| ]([\d]+)#', $streamInterface, $packetsSent);
-		preg_match('#TX(?:.*?)packets[:| ]([\d]+)#', $streamInterface, $packetsReceived);
+		preg_match('#RX(?:.*?)bytes[:| ]([\d]+)#', $streamInterface, $bytesReceived);
+		preg_match('#TX(?:.*?)bytes[:| ]([\d]+)#', $streamInterface, $bytesSent);
+		preg_match('#RX(?:.*?)packets[:| ]([\d]+)#', $streamInterface, $packetsReceived);
+		preg_match('#TX(?:.*?)packets[:| ]([\d]+)#', $streamInterface, $packetsSent);
 		
 		$output0 = $interface;
 		
